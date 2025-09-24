@@ -2,11 +2,10 @@
 	<view class="home-container">
 		<view class="header">
 			<view class="header-left-logo">
-				<img src="/static/image/index/logo-title.png" alt="" />
+				<image src="@/static/image/index/logo-title.png" alt="" />
 			</view>
 			<view class="header-right-message">
-				<!-- <u-badge :is-dot="true" type="success"></u-badge> -->
-				<img src="/static/image/index/information.png" alt="" />
+				<image src="@/static/image/index/information.png" alt="" />
 			</view>
 		</view>
 		<!-- 资产 -->
@@ -16,7 +15,7 @@
 				<view class="assets-select">
 					<view>USD</view>
 					<view class="select-icon">
-						<img src="/static/image/index/selectBottom.png" alt="" />
+						<image src="@/static/image/index/selectBottom.png" alt="" />
 					</view>
 				</view>
 			</view>
@@ -33,7 +32,7 @@
 				<view class="cardDisplay-cardist">
 					<view>卡片列表</view>
 					<view class="cardDisplay-cardist-icon">
-						<img src="/static/image/index/selectRight.png" alt="" />
+						<image src="@/static/image/index/selectRight.png" alt="" />
 					</view>
 				</view>
 			</view>
@@ -54,15 +53,15 @@
 		<view v-else>
 			<view class="cardDisplay cardDisplayBgNull">
 				<view class="cardDisplay-cardist">
-					<!-- <view>卡片申请</view> -->
+					<view>卡片申请</view>
 					<view class="cardDisplay-cardist-icon">
-						<img src="/static/image/index/selectRight.png" alt="" />
+						<image src="@/static/image/index/selectRight.png" alt="" />
 					</view>
 				</view>
 			</view>
 			<view class="wallet wallet2">
 				<view class="valueAddedIconNull">
-					<!-- <span>增值</span> -->
+					<span>增值</span>
 				</view>
 				<view class="cardIconNull">
 					<span>卡片申请</span>
@@ -73,12 +72,12 @@
 		<view class="introduce">
 			<view class="introduce-left">
 				<view class="introduce-left-icon">
-					<img src="/static/image/index/logo-title.png" alt="" />
+					<image src="@/static/image/index/logo-title.png" alt="" />
 				</view>
 				<view class="introduce-left-txt">最受欢迎的一站式交易工具～</view>
 			</view>
 			<view class="introduce-right">
-				<img src="/static/image/index/worldpay.png" alt="" />
+				<image src="@/static/image/index/worldpay.png" alt="" />
 			</view>
 		</view>
 		<!-- 交易记录 -->
@@ -88,13 +87,21 @@
 				<view>交易记录</view>
 				<view class="transactionRecords-title-right">全部</view>
 			</view>
-			<view class="transactionRecords-list">
-				<view class="transactionRecords-item" v-for="(item, index) in 20" :key="index">
+			<view class="transactionRecords-list" v-if="recordsList.length">
+				<view class="transactionRecords-item" v-for="(item, index) in recordsList" :key="index">
 					<view class="transactionRecords-item-left">
 						<view>支付宝消费</view>
 						<view class="transactionRecords-item-time">2025/09/03 10:51</view>
 					</view>
 					<view class="transactionRecords-item-right">- $100</view>
+				</view>
+			</view>
+			<view v-else>
+				<view class="emty">
+					<view class="emtyIcon">
+						<image src="@/static/image/index/emty.png" alt="" />
+					</view>
+					<view>暂无数据</view>
 				</view>
 			</view>
 		</view>
@@ -122,9 +129,9 @@
 	// 标题初始距离顶部的距离
 	let titleTop = 0;
 
-	onPageScroll((options) => {
-		isSticky.value = options.scrollTop >= titleTop;
-	});
+	// onPageScroll((options) => {
+	// 	isSticky.value = options.scrollTop >= titleTop;
+	// });
 
 	onMounted(() => {
 		nextTick(() => {
@@ -149,6 +156,6 @@
 	});
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	@import "./index.scss";
 </style>
