@@ -106,6 +106,7 @@
 				</view>
 			</view>
 		</view>
+		<Tabbar></Tabbar>
 	</view>
 </template>
 
