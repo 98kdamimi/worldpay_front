@@ -56,7 +56,7 @@
 		<!-- 没有卡片 -->
 		<view v-else>
 			<view class="cardDisplay cardDisplayBgNull">
-				<view class="cardDisplay-cardist">
+				<view class="cardDisplay-cardist" @click="openApplyModal()">
 					<view>卡片申请</view>
 					<view class="cardDisplay-cardist-icon">
 						<image src="@/static/image/index/selectRight.png" alt="" mode="widthFix" />
@@ -93,12 +93,14 @@
 		<!-- 交易记录 -->
 		<view class="transactionRecords">
 			<!-- 吸顶标题 -->
-			<view class="transactionRecords-title" :class="{ 'sticky': isSticky }" ref="titleRef">
-				<view>交易记录</view>
-				<view class="transactionRecords-title-right">全部</view>
-			</view>
+			<up-sticky :offset-top="notchHeight">
+				<view class="transactionRecords-title" :class="{ 'sticky': isStickyActive }">
+					<view>交易记录</view>
+					<view class="transactionRecords-title-right">全部</view>
+				</view>
+			</up-sticky>
 			<view class="transactionRecords-list" v-if="recordsList.length">
-				<view class="transactionRecords-item" v-for="(item, index) in recordsList" :key="index">
+				<view class="transactionRecords-item" v-for="(item, index) in 20" :key="index">
 					<view class="transactionRecords-item-left">
 						<view>支付宝消费</view>
 						<view class="transactionRecords-item-time">2025/09/03 10:51</view>
@@ -144,6 +146,22 @@
 				</view>
 			</view>
 		</up-popup>
+		<!-- 是否申请卡片 -->
+		<up-modal :show="applyShow" :showConfirmButton='false' bgColor='#141414'>
+			<view class="applyModal">
+				<view class="applyModal-title">
+					<view>
+						<SvgIcon name="hint" width="36" height="36"></SvgIcon>
+					</view>
+					<view>提示</view>
+				</view>
+				<view class="applyModal-txt">检测到您未持有任何卡片，请先申请卡片</view>
+				<view class="applyModal-button">
+					<view class="cancel" @click="closeApplyModal">取消</view>
+					<view class="apply">立即申请</view>
+				</view>
+			</view>
+		</up-modal>
 		<Tabbar></Tabbar>
 	</view>
 </template>
@@ -151,12 +169,10 @@
 <script setup>
 	import {
 		ref,
-		onMounted,
-		nextTick
+		onMounted
 	} from 'vue';
 	import {
-		onPageScroll,
-		onUnload
+		onReady
 	} from '@dcloudio/uni-app';
 
 	// 卡片列表
@@ -165,12 +181,19 @@
 	const recordsList = ref([])
 	// 卡片弹窗
 	const cardShow = ref(false)
-	// 控制吸顶状态
-	const isSticky = ref(false);
-	const titleRef = ref(null);
-	// 标题初始距离顶部的距离
-	let titleTop = 0;
+	// 是否申请卡片
+	const applyShow = ref(false)
+	// 刘海高度
+	const notchHeight = ref(0);
 
+	// 打开是否申请弹窗
+	function openApplyModal() {
+		applyShow.value = true;
+	}
+	// 关闭是否申请弹窗
+	function closeApplyModal() {
+		applyShow.value = false;
+	}
 	// 打开卡片列表弹窗
 	function openCardList() {
 		cardShow.value = true;
@@ -179,31 +202,19 @@
 	function closeCardList() {
 		cardShow.value = false;
 	}
-
-	// onPageScroll((options) => {
-	// 	isSticky.value = options.scrollTop >= titleTop;
-	// });
-
-	onMounted(() => {
-		nextTick(() => {
-			if (titleRef.value) {
-				uni.createSelectorQuery()
-					.in(titleRef.value)
-					.select('.transactionRecords-title')
-					.boundingClientRect((rect) => {
-						if (rect) {
-							titleTop = rect.top;
-						}
-					})
-					.exec();
+	onReady(() => {
+		// 获取刘海高度
+		uni.getSystemInfo({
+			success: (res) => {
+				notchHeight.value = res.safeArea?.top || 0;
+				if (!notchHeight.value) {
+					notchHeight.value = res.statusBarHeight || 0;
+				}
+			},
+			fail: () => {
+				notchHeight.value = 20;
 			}
 		});
-	});
-	onUnload(() => {
-		// 重置吸顶状态
-		isSticky.value = false;
-		// 重置初始位置
-		titleTop = 0;
 	});
 </script>
 

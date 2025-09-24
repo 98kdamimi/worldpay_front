@@ -237,14 +237,8 @@
 		}
 		// 吸顶核心样式
 		&.sticky {
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			z-index: 99;
-			margin: 0 auto;
+			background: #0f0f0f;
 			box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.5);
-			padding: 18rpx 32rpx;
 		}
 	}
 	.transactionRecords-list {
@@ -272,8 +266,7 @@
 		}
 	}
 	.emty {
-		width: calc(100vw - 64rpx);
-		height: calc(100vw - 64rpx);
+		margin: 90rpx auto;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -374,6 +367,53 @@
 			background: url('@/static/image/index/cardicon4.png');
 			background-repeat: no-repeat;
 			background-size: cover;
+		}
+	}
+}
+// 是否申请卡片
+.applyModal {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	color: #ffffff;
+	> view {
+		border: 0 !important;
+	}
+
+	.applyModal-title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 500;
+		font-size: 36rpx;
+		> view:first-child {
+			margin-right: 24rpx;
+		}
+	}
+	.applyModal-txt {
+		font-weight: 400;
+		font-size: 30rpx;
+		margin: 64rpx 0 90rpx;
+	}
+	.applyModal-button {
+		display: flex;
+		justify-content: center;
+		> view {
+			width: 252rpx;
+			padding: 28rpx 0;
+			text-align: center;
+			font-weight: 400;
+			font-size: 32rpx;
+			border-radius: 24rpx;
+			margin: 0 16rpx;
+		}
+		.cancel {
+			background: #868686;
+		}
+		.apply {
+			background: #1e3ad6;
 		}
 	}
 }
