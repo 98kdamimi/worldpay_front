@@ -1,0 +1,256 @@
+.home-container {
+	width: 100vw;
+	background: #0f0f0f;
+}
+// 标题
+.header {
+	padding: 6px 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	.header-left-logo {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 140px;
+		height: 32px;
+	}
+	.header-right-message {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 20px;
+		height: 20px;
+	}
+}
+// 资产
+.assets {
+	padding: 16px;
+
+	.assets-title {
+		display: flex;
+		align-items: center;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 15px;
+		color: #ffffff;
+		.assets-select {
+			padding: 4px 10px;
+			border-radius: 20px;
+			margin-left: 12px;
+			border: 1px solid #353548;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 12px;
+			.select-icon {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 12px;
+				height: 12px;
+				margin-left: 4px;
+			}
+		}
+	}
+	.assets-approximately {
+		font-family: Helvetica, Helvetica;
+		font-weight: bold;
+		font-size: 32px;
+		color: #ffffff;
+		margin: 22px 0 18px;
+	}
+	.assets-exchange-approximately {
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 12px;
+		color: #646479;
+	}
+}
+// 卡片展示
+.cardDisplay {
+	width: 343px;
+	height: 195px;
+	margin: 0 auto;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	.cardDisplay-cardist {
+		position: absolute;
+		top: 40px;
+		right: 16px;
+		padding: 6px 8px;
+		background: #ffffff17;
+		border-radius: 20px;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 12px;
+		color: #ffffff;
+		display: flex;
+		align-items: center;
+		.cardDisplay-cardist-icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 12px;
+			height: 12px;
+			margin-left: 4px;
+		}
+	}
+}
+.cardDisplayBg {
+	background-image: url('/static/image/index/card.png');
+}
+.cardDisplayBgNull {
+	background-image: url('/static/image/index/cardNull.png');
+}
+// 增资 钱包 卡片申请入口
+.wallet {
+	margin: 16px 16px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	> view {
+		span {
+			display: block;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 14px;
+			color: #ffffff;
+			position: absolute;
+			bottom: 14px;
+		}
+	}
+	.valueAddedIcon {
+		background-image: url('/static/image/index/valueAddedIcon.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.valueAddedIconNull {
+		background-image: url('/static/image/index/valueAddedIconNull.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.walletIcon {
+		background-image: url('/static/image/index/walletIcon.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.cardIcon {
+		background-image: url('/static/image/index/cardIcon.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.cardIconNull {
+		background-image: url('/static/image/index/cardIconNull.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+}
+.wallet1 {
+	> view {
+		display: flex;
+		justify-content: center;
+		width: 90px;
+		height: 80px;
+		position: relative;
+	}
+}
+.wallet2 {
+	> view {
+		display: flex;
+		justify-content: center;
+		width: 165px;
+		height: 44px;
+	}
+}
+// 介绍
+.introduce {
+	margin: 16px 16px 0;
+	padding: 4px 12px;
+	background: linear-gradient(179deg, rgba(102, 102, 129, 0.1) 0%, rgba(54, 54, 74, 0.1) 100%);
+	border-radius: 12px;
+	border: 1px solid #97979747;
+	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 14px;
+	color: #ffffff;
+
+	.introduce-left {
+		.introduce-left-icon {
+			width: 140px;
+			height: 32px;
+		}
+		.introduce-left-txt {
+			margin-top: 8px;
+		}
+	}
+
+	.introduce-right {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 101px;
+		height: 73px;
+	}
+}
+// 交易记录
+.transactionRecords {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 16px;
+	color: #ffffff;
+	margin: 16px 16px 0;
+	padding-bottom: 3px;
+	.transactionRecords-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 0 0 9px;
+		.transactionRecords-title-right {
+			font-weight: 400;
+			font-size: 12px;
+		}
+		// 吸顶核心样式
+		&.sticky {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 99;
+			margin: 0 auto;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+			padding: 9px 16px;
+		}
+	}
+	.transactionRecords-list {
+		.transactionRecords-item {
+			margin: 3px 0;
+			padding: 12px 16px;
+			background: #16171a;
+			border-radius: 12px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.transactionRecords-item-left {
+				.transactionRecords-item-time {
+					font-weight: 400;
+					font-size: 14px;
+					color: #646479;
+					margin-top: 8px;
+				}
+			}
+			.transactionRecords-item-right {
+				font-weight: 500;
+				font-size: 18px;
+				color: #ff0707;
+			}
+		}
+	}
+}
