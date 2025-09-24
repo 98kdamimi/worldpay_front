@@ -1,10 +1,9 @@
 .home-container {
 	width: 100vw;
-	background: #0f0f0f;
 }
 // 标题
 .header {
-	padding: 6px 16px;
+	padding: 12rpx 32rpx;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -12,32 +11,32 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 140px;
-		height: 32px;
+		width: 278rpx;
+		height: 64rpx;
 	}
 	.header-right-message {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 20px;
-		height: 20px;
+		width: 40rpx;
+		height: 40rpx;
 	}
 }
 // 资产
 .assets {
-	padding: 16px;
+	padding: 32rpx;
 
 	.assets-title {
 		display: flex;
 		align-items: center;
 		font-family: PingFangSC, PingFang SC;
 		font-weight: 400;
-		font-size: 15px;
+		font-size: 30rpx;
 		color: #ffffff;
 		.assets-select {
-			padding: 4px 10px;
-			border-radius: 20px;
-			margin-left: 12px;
+			padding: 8rpx 20rpx;
+			border-radius: 40rpx;
+			margin-left: 28rpx;
 			border: 1px solid #353548;
 			display: flex;
 			justify-content: center;
@@ -49,44 +48,44 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				width: 12px;
-				height: 12px;
-				margin-left: 4px;
+				width: 24rpx;
+				height: 24rpx;
+				margin-left: 8rpx;
 			}
 		}
 	}
 	.assets-approximately {
 		font-family: Helvetica, Helvetica;
 		font-weight: bold;
-		font-size: 32px;
+		font-size: 64rpx;
 		color: #ffffff;
-		margin: 22px 0 18px;
+		margin: 44rpx 0 36rpx;
 	}
 	.assets-exchange-approximately {
 		font-family: PingFangSC, PingFang SC;
 		font-weight: 400;
-		font-size: 12px;
+		font-size: 24rpx;
 		color: #646479;
 	}
 }
 // 卡片展示
 .cardDisplay {
-	width: 343px;
-	height: 195px;
+	width: 686rpx;
+	height: 390rpx;
 	margin: 0 auto;
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
 	.cardDisplay-cardist {
 		position: absolute;
-		top: 40px;
-		right: 16px;
-		padding: 6px 8px;
+		top: 80rpx;
+		right: 32rpx;
+		padding: 12rpx 16rpx;
 		background: #ffffff17;
-		border-radius: 20px;
+		border-radius: 40rpx;
 		font-family: PingFangSC, PingFang SC;
 		font-weight: 500;
-		font-size: 12px;
+		font-size: 24rpx;
 		color: #ffffff;
 		display: flex;
 		align-items: center;
@@ -94,57 +93,54 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			width: 12px;
-			height: 12px;
-			margin-left: 4px;
+			width: 24rpx;
+			height: 24rpx;
+			margin-left: 8rpx;
 		}
 	}
 }
 .cardDisplayBg {
-	background-image: url('/static/image/index/card.png');
+	background-image: url('@/static/image/index/card.png');
 }
 .cardDisplayBgNull {
-	background-image: url('/static/image/index/cardNull.png');
+	background-image: url('@/static/image/index/cardNull.png');
 }
 // 增资 钱包 卡片申请入口
 .wallet {
-	margin: 16px 16px 0;
+	margin: 32rpx 32rpx 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	> view {
 		span {
-			display: block;
 			font-family: PingFangSC, PingFang SC;
 			font-weight: 400;
-			font-size: 14px;
+			font-size: 28rpx;
 			color: #ffffff;
-			position: absolute;
-			bottom: 14px;
 		}
 	}
 	.valueAddedIcon {
-		background-image: url('/static/image/index/valueAddedIcon.png');
+		background-image: url('@/static/image/index/valueAddedIcon.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
 	.valueAddedIconNull {
-		background-image: url('/static/image/index/valueAddedIconNull.png');
+		background-image: url('@/static/image/index/valueAddedIconNull.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
 	.walletIcon {
-		background-image: url('/static/image/index/walletIcon.png');
+		background-image: url('@/static/image/index/walletIcon.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
 	.cardIcon {
-		background-image: url('/static/image/index/cardIcon.png');
+		background-image: url('@/static/image/index/cardIcon.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
 	.cardIconNull {
-		background-image: url('/static/image/index/cardIconNull.png');
+		background-image: url('@/static/image/index/cardIconNull.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
@@ -153,42 +149,48 @@
 	> view {
 		display: flex;
 		justify-content: center;
-		width: 90px;
-		height: 80px;
+		width: 180rpx;
+		height: 160rpx;
 		position: relative;
+		span {
+			display: block;
+			position: absolute;
+			bottom: 30rpx;
+		}
 	}
 }
 .wallet2 {
 	> view {
 		display: flex;
 		justify-content: center;
-		width: 165px;
-		height: 44px;
+		align-content: center;
+		width: 330rpx;
+		height: 88rpx;
 	}
 }
 // 介绍
 .introduce {
-	margin: 16px 16px 0;
-	padding: 4px 12px;
+	margin: 32rpx 32rpx 0;
+	padding: 8rpx 24rpx;
 	background: linear-gradient(179deg, rgba(102, 102, 129, 0.1) 0%, rgba(54, 54, 74, 0.1) 100%);
-	border-radius: 12px;
-	border: 1px solid #97979747;
+	border-radius: 24rpx;
+	border: 1rpx solid #97979747;
 	overflow: hidden;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	font-family: PingFangSC, PingFang SC;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 28rpx;
 	color: #ffffff;
 
 	.introduce-left {
 		.introduce-left-icon {
-			width: 140px;
-			height: 32px;
+			width: 280rpx;
+			height: 64rpx;
 		}
 		.introduce-left-txt {
-			margin-top: 8px;
+			margin-top: 16rpx;
 		}
 	}
 
@@ -196,26 +198,26 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 101px;
-		height: 73px;
+		width: 202rpx;
+		height: 146rpx;
 	}
 }
 // 交易记录
 .transactionRecords {
 	font-family: PingFangSC, PingFang SC;
 	font-weight: 500;
-	font-size: 16px;
+	font-size: 30rpx;
 	color: #ffffff;
-	margin: 16px 16px 0;
-	padding-bottom: 3px;
+	margin: 32rpx 32rpx 0;
+	padding-bottom: 6rpx;
 	.transactionRecords-title {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin: 0 0 9px;
+		margin: 0 0 12rpx;
 		.transactionRecords-title-right {
 			font-weight: 400;
-			font-size: 12px;
+			font-size: 24rpx;
 		}
 		// 吸顶核心样式
 		&.sticky {
@@ -225,32 +227,48 @@
 			right: 0;
 			z-index: 99;
 			margin: 0 auto;
-			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-			padding: 9px 16px;
+			box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.5);
+			padding: 18rpx 32rpx;
 		}
 	}
 	.transactionRecords-list {
 		.transactionRecords-item {
-			margin: 3px 0;
-			padding: 12px 16px;
+			margin: 12rpx 0;
+			padding: 32rpx 24rpx;
 			background: #16171a;
-			border-radius: 12px;
+			border-radius: 24rpx;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			.transactionRecords-item-left {
 				.transactionRecords-item-time {
 					font-weight: 400;
-					font-size: 14px;
+					font-size: 24rpx;
 					color: #646479;
-					margin-top: 8px;
+					margin-top: 16rpx;
 				}
 			}
 			.transactionRecords-item-right {
 				font-weight: 500;
-				font-size: 18px;
+				font-size: 36rpx;
 				color: #ff0707;
 			}
+		}
+	}
+	.emty {
+		width: calc(100vw - 64rpx);
+		height: calc(100vw - 64rpx);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		.emtyIcon {
+			width: 222rpx;
+			height: 142rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 24rpx;
 		}
 	}
 }
