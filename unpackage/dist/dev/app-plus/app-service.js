@@ -38,6 +38,23 @@ if (uni.restoreGlobal) {
 (function(vue) {
   "use strict";
   var _a;
+  const _export_sfc = (sfc, props2) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props2) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$2d = {
+    name: "StatusBar",
+    data() {
+      return {};
+    }
+  };
+  function _sfc_render$2c(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "status_bar" });
+  }
+  const __easycom_0$h = /* @__PURE__ */ _export_sfc(_sfc_main$2d, [["render", _sfc_render$2c], ["__scopeId", "data-v-64feb457"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/components/StatusBar/StatusBar.vue"]]);
   const ON_UNLOAD = "onUnload";
   const ON_PAGE_SCROLL = "onPageScroll";
   function formatAppLog(type2, filename, ...args) {
@@ -68,13 +85,7 @@ if (uni.restoreGlobal) {
   const _imports_2 = "/static/image/index/selectBottom.png";
   const _imports_3 = "/static/image/index/selectRight.png";
   const _imports_4 = "/static/image/index/worldpay.png";
-  const _export_sfc = (sfc, props2) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props2) {
-      target[key] = val;
-    }
-    return target;
-  };
+  const _imports_5 = "/static/image/index/emty.png";
   const _sfc_main$2c = {
     __name: "index",
     setup(__props, { expose: __expose }) {
@@ -84,9 +95,6 @@ if (uni.restoreGlobal) {
       const isSticky = vue.ref(false);
       const titleRef = vue.ref(null);
       let titleTop = 0;
-      onPageScroll((options2) => {
-        isSticky.value = options2.scrollTop >= titleTop;
-      });
       vue.onMounted(() => {
         vue.nextTick(() => {
           if (titleRef.value) {
@@ -116,17 +124,18 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$2b(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_StatusBar = resolveEasycom(vue.resolveDynamicComponent("StatusBar"), __easycom_0$h);
     return vue.openBlock(), vue.createElementBlock("view", { class: "home-container" }, [
+      vue.createVNode(_component_StatusBar),
       vue.createElementVNode("view", { class: "header" }, [
         vue.createElementVNode("view", { class: "header-left-logo" }, [
-          vue.createElementVNode("img", {
+          vue.createElementVNode("image", {
             src: _imports_0,
             alt: ""
           })
         ]),
         vue.createElementVNode("view", { class: "header-right-message" }, [
-          vue.createCommentVNode(' <u-badge :is-dot="true" type="success"></u-badge> '),
-          vue.createElementVNode("img", {
+          vue.createElementVNode("image", {
             src: _imports_1,
             alt: ""
           })
@@ -139,7 +148,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("view", { class: "assets-select" }, [
             vue.createElementVNode("view", null, "USD"),
             vue.createElementVNode("view", { class: "select-icon" }, [
-              vue.createElementVNode("img", {
+              vue.createElementVNode("image", {
                 src: _imports_2,
                 alt: ""
               })
@@ -155,7 +164,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("view", { class: "cardDisplay-cardist" }, [
             vue.createElementVNode("view", null, "卡片列表"),
             vue.createElementVNode("view", { class: "cardDisplay-cardist-icon" }, [
-              vue.createElementVNode("img", {
+              vue.createElementVNode("image", {
                 src: _imports_3,
                 alt: ""
               })
@@ -182,9 +191,9 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("view", null, [
             vue.createElementVNode("view", { class: "cardDisplay cardDisplayBgNull" }, [
               vue.createElementVNode("view", { class: "cardDisplay-cardist" }, [
-                vue.createCommentVNode(" <view>卡片申请</view> "),
+                vue.createElementVNode("view", null, "卡片申请"),
                 vue.createElementVNode("view", { class: "cardDisplay-cardist-icon" }, [
-                  vue.createElementVNode("img", {
+                  vue.createElementVNode("image", {
                     src: _imports_3,
                     alt: ""
                   })
@@ -193,7 +202,7 @@ if (uni.restoreGlobal) {
             ]),
             vue.createElementVNode("view", { class: "wallet wallet2" }, [
               vue.createElementVNode("view", { class: "valueAddedIconNull" }, [
-                vue.createCommentVNode(" <span>增值</span> ")
+                vue.createElementVNode("span", null, "增值")
               ]),
               vue.createElementVNode("view", { class: "cardIconNull" }, [
                 vue.createElementVNode("span", null, "卡片申请")
@@ -208,7 +217,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("view", { class: "introduce" }, [
         vue.createElementVNode("view", { class: "introduce-left" }, [
           vue.createElementVNode("view", { class: "introduce-left-icon" }, [
-            vue.createElementVNode("img", {
+            vue.createElementVNode("image", {
               src: _imports_0,
               alt: ""
             })
@@ -216,7 +225,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("view", { class: "introduce-left-txt" }, "最受欢迎的一站式交易工具～")
         ]),
         vue.createElementVNode("view", { class: "introduce-right" }, [
-          vue.createElementVNode("img", {
+          vue.createElementVNode("image", {
             src: _imports_4,
             alt: ""
           })
@@ -238,12 +247,15 @@ if (uni.restoreGlobal) {
           2
           /* CLASS */
         ),
-        vue.createElementVNode("view", { class: "transactionRecords-list" }, [
-          (vue.openBlock(), vue.createElementBlock(
+        $setup.recordsList.length ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "transactionRecords-list"
+        }, [
+          (vue.openBlock(true), vue.createElementBlock(
             vue.Fragment,
             null,
-            vue.renderList(20, (item, index2) => {
-              return vue.createElementVNode("view", {
+            vue.renderList($setup.recordsList, (item, index2) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
                 class: "transactionRecords-item",
                 key: index2
               }, [
@@ -254,14 +266,24 @@ if (uni.restoreGlobal) {
                 vue.createElementVNode("view", { class: "transactionRecords-item-right" }, "- $100")
               ]);
             }),
-            64
-            /* STABLE_FRAGMENT */
+            128
+            /* KEYED_FRAGMENT */
           ))
-        ])
+        ])) : (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+          vue.createElementVNode("view", { class: "emty" }, [
+            vue.createElementVNode("view", { class: "emtyIcon" }, [
+              vue.createElementVNode("image", {
+                src: _imports_5,
+                alt: ""
+              })
+            ]),
+            vue.createElementVNode("view", null, "暂无数据")
+          ])
+        ]))
       ])
     ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2c, [["render", _sfc_render$2b], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2c, [["render", _sfc_render$2b], ["__scopeId", "data-v-1cf27b2a"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/pages/index/index.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   const _sfc_main$2b = {
     onLaunch: function() {

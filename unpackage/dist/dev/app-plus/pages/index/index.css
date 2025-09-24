@@ -1,3 +1,9 @@
+
+.status_bar[data-v-64feb457] {
+	height: var(--status-bar-height);
+	width: 100%;
+}
+
 /**
  * 这里是uni-app内置的常用样式变量
  *
@@ -24,45 +30,44 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.home-container {
+.home-container[data-v-1cf27b2a] {
   width: 100vw;
-  background: #0f0f0f;
 }
-.header {
-  padding: 6px 16px;
+.header[data-v-1cf27b2a] {
+  padding: 0.375rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.header .header-left-logo {
+.header .header-left-logo[data-v-1cf27b2a] {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 140px;
-  height: 32px;
+  width: 8.6875rem;
+  height: 2rem;
 }
-.header .header-right-message {
+.header .header-right-message[data-v-1cf27b2a] {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 }
-.assets {
-  padding: 16px;
+.assets[data-v-1cf27b2a] {
+  padding: 1rem;
 }
-.assets .assets-title {
+.assets .assets-title[data-v-1cf27b2a] {
   display: flex;
   align-items: center;
   font-family: PingFangSC, PingFang SC;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: #ffffff;
 }
-.assets .assets-title .assets-select {
-  padding: 4px 10px;
-  border-radius: 20px;
-  margin-left: 12px;
+.assets .assets-title .assets-select[data-v-1cf27b2a] {
+  padding: 0.25rem 0.625rem;
+  border-radius: 1.25rem;
+  margin-left: 0.875rem;
   border: 1px solid #353548;
   display: flex;
   justify-content: center;
@@ -71,190 +76,209 @@
   font-weight: 400;
   font-size: 12px;
 }
-.assets .assets-title .assets-select .select-icon {
+.assets .assets-title .assets-select .select-icon[data-v-1cf27b2a] {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 12px;
-  height: 12px;
-  margin-left: 4px;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.25rem;
 }
-.assets .assets-approximately {
+.assets .assets-approximately[data-v-1cf27b2a] {
   font-family: Helvetica, Helvetica;
   font-weight: bold;
-  font-size: 32px;
+  font-size: 2rem;
   color: #ffffff;
-  margin: 22px 0 18px;
+  margin: 1.375rem 0 1.125rem;
 }
-.assets .assets-exchange-approximately {
+.assets .assets-exchange-approximately[data-v-1cf27b2a] {
   font-family: PingFangSC, PingFang SC;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #646479;
 }
-.cardDisplay {
-  width: 343px;
-  height: 195px;
+.cardDisplay[data-v-1cf27b2a] {
+  width: 21.4375rem;
+  height: 12.1875rem;
   margin: 0 auto;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
 }
-.cardDisplay .cardDisplay-cardist {
+.cardDisplay .cardDisplay-cardist[data-v-1cf27b2a] {
   position: absolute;
-  top: 40px;
-  right: 16px;
-  padding: 6px 8px;
+  top: 2.5rem;
+  right: 1rem;
+  padding: 0.375rem 0.5rem;
   background: #ffffff17;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   font-family: PingFangSC, PingFang SC;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #ffffff;
   display: flex;
   align-items: center;
 }
-.cardDisplay .cardDisplay-cardist .cardDisplay-cardist-icon {
+.cardDisplay .cardDisplay-cardist .cardDisplay-cardist-icon[data-v-1cf27b2a] {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 12px;
-  height: 12px;
-  margin-left: 4px;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.25rem;
 }
-.cardDisplayBg {
+.cardDisplayBg[data-v-1cf27b2a] {
   background-image: url("../../static/image/index/card.png");
 }
-.cardDisplayBgNull {
+.cardDisplayBgNull[data-v-1cf27b2a] {
   background-image: url("../../static/image/index/cardNull.png");
 }
-.wallet {
-  margin: 16px 16px 0;
+.wallet[data-v-1cf27b2a] {
+  margin: 1rem 1rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.wallet > uni-view span {
-  display: block;
+.wallet > uni-view span[data-v-1cf27b2a] {
   font-family: PingFangSC, PingFang SC;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #ffffff;
-  position: absolute;
-  bottom: 14px;
 }
-.wallet .valueAddedIcon {
+.wallet .valueAddedIcon[data-v-1cf27b2a] {
   background-image: url("../../static/image/index/valueAddedIcon.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
-.wallet .valueAddedIconNull {
+.wallet .valueAddedIconNull[data-v-1cf27b2a] {
   background-image: url("../../static/image/index/valueAddedIconNull.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
-.wallet .walletIcon {
+.wallet .walletIcon[data-v-1cf27b2a] {
   background-image: url("../../static/image/index/walletIcon.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
-.wallet .cardIcon {
+.wallet .cardIcon[data-v-1cf27b2a] {
   background-image: url("../../static/image/index/cardIcon.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
-.wallet .cardIconNull {
+.wallet .cardIconNull[data-v-1cf27b2a] {
   background-image: url("../../static/image/index/cardIconNull.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
-.wallet1 > uni-view {
+.wallet1 > uni-view[data-v-1cf27b2a] {
   display: flex;
   justify-content: center;
-  width: 90px;
-  height: 80px;
+  width: 5.625rem;
+  height: 5rem;
   position: relative;
 }
-.wallet2 > uni-view {
+.wallet1 > uni-view span[data-v-1cf27b2a] {
+  display: block;
+  position: absolute;
+  bottom: 0.9375rem;
+}
+.wallet2 > uni-view[data-v-1cf27b2a] {
   display: flex;
   justify-content: center;
-  width: 165px;
-  height: 44px;
+  align-content: center;
+  width: 10.3125rem;
+  height: 2.75rem;
 }
-.introduce {
-  margin: 16px 16px 0;
-  padding: 4px 12px;
+.introduce[data-v-1cf27b2a] {
+  margin: 1rem 1rem 0;
+  padding: 0.25rem 0.75rem;
   background: linear-gradient(179deg, rgba(102, 102, 129, 0.1) 0%, rgba(54, 54, 74, 0.1) 100%);
-  border-radius: 12px;
-  border: 1px solid #97979747;
+  border-radius: 0.75rem;
+  border: 0.03125rem solid #97979747;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: PingFangSC, PingFang SC;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #ffffff;
 }
-.introduce .introduce-left .introduce-left-icon {
-  width: 140px;
-  height: 32px;
+.introduce .introduce-left .introduce-left-icon[data-v-1cf27b2a] {
+  width: 8.75rem;
+  height: 2rem;
 }
-.introduce .introduce-left .introduce-left-txt {
-  margin-top: 8px;
+.introduce .introduce-left .introduce-left-txt[data-v-1cf27b2a] {
+  margin-top: 0.5rem;
 }
-.introduce .introduce-right {
+.introduce .introduce-right[data-v-1cf27b2a] {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 101px;
-  height: 73px;
+  width: 6.3125rem;
+  height: 4.5625rem;
 }
-.transactionRecords {
+.transactionRecords[data-v-1cf27b2a] {
   font-family: PingFangSC, PingFang SC;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 0.9375rem;
   color: #ffffff;
-  margin: 16px 16px 0;
-  padding-bottom: 3px;
+  margin: 1rem 1rem 0;
+  padding-bottom: 0.1875rem;
 }
-.transactionRecords .transactionRecords-title {
+.transactionRecords .transactionRecords-title[data-v-1cf27b2a] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 0 9px;
+  margin: 0 0 0.375rem;
 }
-.transactionRecords .transactionRecords-title .transactionRecords-title-right {
+.transactionRecords .transactionRecords-title .transactionRecords-title-right[data-v-1cf27b2a] {
   font-weight: 400;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
-.transactionRecords .transactionRecords-title.sticky {
+.transactionRecords .transactionRecords-title.sticky[data-v-1cf27b2a] {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 99;
   margin: 0 auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  padding: 9px 16px;
+  box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.5);
+  padding: 0.5625rem 1rem;
 }
-.transactionRecords .transactionRecords-list .transactionRecords-item {
-  margin: 3px 0;
-  padding: 12px 16px;
+.transactionRecords .transactionRecords-list .transactionRecords-item[data-v-1cf27b2a] {
+  margin: 0.375rem 0;
+  padding: 1rem 0.75rem;
   background: #16171a;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.transactionRecords .transactionRecords-list .transactionRecords-item .transactionRecords-item-left .transactionRecords-item-time {
+.transactionRecords .transactionRecords-list .transactionRecords-item .transactionRecords-item-left .transactionRecords-item-time[data-v-1cf27b2a] {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.75rem;
   color: #646479;
-  margin-top: 8px;
+  margin-top: 0.5rem;
 }
-.transactionRecords .transactionRecords-list .transactionRecords-item .transactionRecords-item-right {
+.transactionRecords .transactionRecords-list .transactionRecords-item .transactionRecords-item-right[data-v-1cf27b2a] {
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #ff0707;
+}
+.transactionRecords .emty[data-v-1cf27b2a] {
+  width: calc(100vw - 2rem);
+  height: calc(100vw - 2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.transactionRecords .emty .emtyIcon[data-v-1cf27b2a] {
+  width: 6.9375rem;
+  height: 4.4375rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.75rem;
 }

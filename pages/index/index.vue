@@ -1,5 +1,6 @@
 <template>
 	<view class="home-container">
+		<StatusBar></StatusBar>
 		<view class="header">
 			<view class="header-left-logo">
 				<image src="@/static/image/index/logo-title.png" alt="" />
