@@ -20,6 +20,15 @@
 		align-items: center;
 		width: 40rpx;
 		height: 40rpx;
+		position: relative;
+		.badge {
+			position: absolute;
+			top: 0;
+			right: 0;
+			.red {
+				color: #ff0000;
+			}
+		}
 	}
 }
 // 资产
@@ -112,37 +121,35 @@
 	justify-content: space-between;
 	align-items: center;
 	> view {
-		span {
-			font-family: PingFangSC, PingFang SC;
-			font-weight: 400;
-			font-size: 28rpx;
-			color: #ffffff;
-		}
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+		color: #ffffff;
 	}
 	.valueAddedIcon {
 		background-image: url('@/static/image/index/valueAddedIcon.png');
 		background-repeat: no-repeat;
-		background-size: cover;
+		background-size: contain;
 	}
 	.valueAddedIconNull {
 		background-image: url('@/static/image/index/valueAddedIconNull.png');
 		background-repeat: no-repeat;
-		background-size: cover;
+		background-size: contain;
 	}
 	.walletIcon {
 		background-image: url('@/static/image/index/walletIcon.png');
 		background-repeat: no-repeat;
-		background-size: cover;
+		background-size: contain;
 	}
 	.cardIcon {
 		background-image: url('@/static/image/index/cardIcon.png');
 		background-repeat: no-repeat;
-		background-size: cover;
+		background-size: contain;
 	}
 	.cardIconNull {
 		background-image: url('@/static/image/index/cardIconNull.png');
 		background-repeat: no-repeat;
-		background-size: cover;
+		background-size: contain;
 	}
 }
 .wallet1 {
@@ -152,7 +159,7 @@
 		width: 180rpx;
 		height: 160rpx;
 		position: relative;
-		span {
+		view {
 			display: block;
 			position: absolute;
 			bottom: 30rpx;
@@ -165,7 +172,16 @@
 		justify-content: center;
 		align-content: center;
 		width: 330rpx;
-		height: 88rpx;
+		padding: 26rpx 0;
+		> view:first-child {
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			width: 48rpx;
+			height: 36rpx;
+			margin-right: 24rpx;
+			margin-top: 2rpx;
+		}
 	}
 }
 // 介绍
@@ -186,7 +202,7 @@
 
 	.introduce-left {
 		.introduce-left-icon {
-			width: 280rpx;
+			width: 278rpx;
 			height: 64rpx;
 		}
 		.introduce-left-txt {
@@ -269,6 +285,95 @@
 			justify-content: center;
 			align-items: center;
 			margin-bottom: 24rpx;
+		}
+	}
+}
+// 卡片弹窗
+.cardpopup {
+	width: 750rpx;
+	padding-bottom: 24rpx;
+	background: #0f0f0f;
+
+	.cardpopup-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 26rpx 0;
+		margin-bottom: 8rpx;
+		border-radius: 32rpx 32rpx 0rpx 0rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 600;
+		font-size: 36rpx;
+		color: #ffffff;
+
+		.closure {
+			width: 40rpx;
+			height: 40rpx;
+			margin-left: 32rpx;
+		}
+	}
+
+	.cardpopup-list {
+		.cardpopup-item {
+			width: 686rpx;
+			height: 280rpx;
+			margin: 24rpx 32rpx;
+			position: relative;
+			font-family: SFMono, SFMono;
+			color: #ffffff;
+			font-weight: 600;
+			.cardpopup-cardNumber {
+				position: absolute;
+				left: 36rpx;
+				bottom: 96rpx;
+				font-size: 36rpx;
+				letter-spacing: 3px;
+				span {
+					margin-right: 32rpx;
+				}
+			}
+			.cardpopup-time {
+				position: absolute;
+				left: 36rpx;
+				bottom: 36rpx;
+				font-size: 24rpx;
+				font-style: normal;
+			}
+			.physicalCard {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				width: 200rpx;
+				height: 64rpx;
+				line-height: 64rpx;
+				text-align: center;
+				font-family: PingFangSC, PingFang SC;
+				font-weight: 600;
+				font-size: 32rpx;
+				color: #48453d;
+				letter-spacing: 3px;
+				font-style: normal;
+			}
+		}
+		.cardpopup-item-bg1 {
+			background: url('@/static/image/index/cardicon1.png');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		.cardpopup-item-bg2 {
+			background: url('@/static/image/index/cardicon2.png');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		.cardpopup-item-bg3 {
+			background: url('@/static/image/index/cardicon3.png');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		.cardpopup-item-bg4 {
+			background: url('@/static/image/index/cardicon4.png');
+			background-repeat: no-repeat;
+			background-size: cover;
 		}
 	}
 }
