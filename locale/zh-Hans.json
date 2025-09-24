@@ -1,0 +1,8 @@
+{
+  "hello": "你好",
+  "welcome": "欢迎使用DigitalShield钱包",
+  "button": {
+    "confirm": "确定",
+    "cancel": "取消"
+  }
+}

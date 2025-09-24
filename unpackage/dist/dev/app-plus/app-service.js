@@ -17,19 +17,19 @@ if (typeof Promise !== "undefined" && !Promise.prototype.finally) {
 }
 ;
 if (typeof uni !== "undefined" && uni && uni.requireGlobal) {
-  const global = uni.requireGlobal();
-  ArrayBuffer = global.ArrayBuffer;
-  Int8Array = global.Int8Array;
-  Uint8Array = global.Uint8Array;
-  Uint8ClampedArray = global.Uint8ClampedArray;
-  Int16Array = global.Int16Array;
-  Uint16Array = global.Uint16Array;
-  Int32Array = global.Int32Array;
-  Uint32Array = global.Uint32Array;
-  Float32Array = global.Float32Array;
-  Float64Array = global.Float64Array;
-  BigInt64Array = global.BigInt64Array;
-  BigUint64Array = global.BigUint64Array;
+  const global2 = uni.requireGlobal();
+  ArrayBuffer = global2.ArrayBuffer;
+  Int8Array = global2.Int8Array;
+  Uint8Array = global2.Uint8Array;
+  Uint8ClampedArray = global2.Uint8ClampedArray;
+  Int16Array = global2.Int16Array;
+  Uint16Array = global2.Uint16Array;
+  Int32Array = global2.Int32Array;
+  Uint32Array = global2.Uint32Array;
+  Float32Array = global2.Float32Array;
+  Float64Array = global2.Float64Array;
+  BigInt64Array = global2.BigInt64Array;
+  BigUint64Array = global2.BigUint64Array;
 }
 ;
 if (uni.restoreGlobal) {
@@ -38,6 +38,8 @@ if (uni.restoreGlobal) {
 (function(vue) {
   "use strict";
   var _a;
+  const ON_UNLOAD = "onUnload";
+  const ON_PAGE_SCROLL = "onPageScroll";
   function formatAppLog(type2, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type2, filename, ...args);
@@ -48,7 +50,446 @@ if (uni.restoreGlobal) {
   function resolveEasycom(component, easycom) {
     return typeof component === "string" ? easycom : component;
   }
-  const defineMixin = (options2) => {
+  const createLifeCycleHook = (lifecycle, flag2 = 0) => (hook, target = vue.getCurrentInstance()) => {
+    !vue.isInSSRComponentSetup && vue.injectHook(lifecycle, hook, target);
+  };
+  const onUnload = /* @__PURE__ */ createLifeCycleHook(
+    ON_UNLOAD,
+    2
+    /* HookFlags.PAGE */
+  );
+  const onPageScroll = /* @__PURE__ */ createLifeCycleHook(
+    ON_PAGE_SCROLL,
+    2
+    /* HookFlags.PAGE */
+  );
+  const _imports_0 = "/static/image/index/logo-title.png";
+  const _imports_1 = "/static/image/index/information.png";
+  const _imports_2 = "/static/image/index/selectBottom.png";
+  const _imports_3 = "/static/image/index/selectRight.png";
+  const _imports_4 = "/static/image/index/worldpay.png";
+  const _export_sfc = (sfc, props2) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props2) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$2c = {
+    __name: "index",
+    setup(__props, { expose: __expose }) {
+      __expose();
+      const cardList = vue.ref([]);
+      const recordsList = vue.ref([]);
+      const isSticky = vue.ref(false);
+      const titleRef = vue.ref(null);
+      let titleTop = 0;
+      onPageScroll((options2) => {
+        isSticky.value = options2.scrollTop >= titleTop;
+      });
+      vue.onMounted(() => {
+        vue.nextTick(() => {
+          if (titleRef.value) {
+            uni.createSelectorQuery().in(titleRef.value).select(".transactionRecords-title").boundingClientRect((rect) => {
+              if (rect) {
+                titleTop = rect.top;
+              }
+            }).exec();
+          }
+        });
+      });
+      onUnload(() => {
+        isSticky.value = false;
+        titleTop = 0;
+      });
+      const __returned__ = { cardList, recordsList, isSticky, titleRef, get titleTop() {
+        return titleTop;
+      }, set titleTop(v2) {
+        titleTop = v2;
+      }, ref: vue.ref, onMounted: vue.onMounted, nextTick: vue.nextTick, get onPageScroll() {
+        return onPageScroll;
+      }, get onUnload() {
+        return onUnload;
+      } };
+      Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
+      return __returned__;
+    }
+  };
+  function _sfc_render$2b(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "home-container" }, [
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("view", { class: "header-left-logo" }, [
+          vue.createElementVNode("img", {
+            src: _imports_0,
+            alt: ""
+          })
+        ]),
+        vue.createElementVNode("view", { class: "header-right-message" }, [
+          vue.createCommentVNode(' <u-badge :is-dot="true" type="success"></u-badge> '),
+          vue.createElementVNode("img", {
+            src: _imports_1,
+            alt: ""
+          })
+        ])
+      ]),
+      vue.createCommentVNode(" 资产 "),
+      vue.createElementVNode("view", { class: "assets" }, [
+        vue.createElementVNode("view", { class: "assets-title" }, [
+          vue.createElementVNode("view", null, "卡片总资产"),
+          vue.createElementVNode("view", { class: "assets-select" }, [
+            vue.createElementVNode("view", null, "USD"),
+            vue.createElementVNode("view", { class: "select-icon" }, [
+              vue.createElementVNode("img", {
+                src: _imports_2,
+                alt: ""
+              })
+            ])
+          ])
+        ]),
+        vue.createElementVNode("view", { class: "assets-approximately" }, " ≈ $ 0.00 "),
+        vue.createElementVNode("view", { class: "assets-exchange-approximately" }, " ≈0.00 USDT ")
+      ]),
+      vue.createCommentVNode(" 卡片展示 "),
+      $setup.cardList.length ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+        vue.createElementVNode("view", { class: "cardDisplay cardDisplayBg" }, [
+          vue.createElementVNode("view", { class: "cardDisplay-cardist" }, [
+            vue.createElementVNode("view", null, "卡片列表"),
+            vue.createElementVNode("view", { class: "cardDisplay-cardist-icon" }, [
+              vue.createElementVNode("img", {
+                src: _imports_3,
+                alt: ""
+              })
+            ])
+          ])
+        ]),
+        vue.createCommentVNode(" 增资 钱包 卡片申请入口 "),
+        vue.createElementVNode("view", { class: "wallet wallet1" }, [
+          vue.createElementVNode("view", { class: "valueAddedIcon" }, [
+            vue.createElementVNode("span", null, "增值")
+          ]),
+          vue.createElementVNode("view", { class: "walletIcon" }, [
+            vue.createElementVNode("span", null, "钱包")
+          ]),
+          vue.createElementVNode("view", { class: "cardIcon" }, [
+            vue.createElementVNode("span", null, "卡片申请")
+          ])
+        ])
+      ])) : (vue.openBlock(), vue.createElementBlock(
+        vue.Fragment,
+        { key: 1 },
+        [
+          vue.createCommentVNode(" 没有卡片 "),
+          vue.createElementVNode("view", null, [
+            vue.createElementVNode("view", { class: "cardDisplay cardDisplayBgNull" }, [
+              vue.createElementVNode("view", { class: "cardDisplay-cardist" }, [
+                vue.createCommentVNode(" <view>卡片申请</view> "),
+                vue.createElementVNode("view", { class: "cardDisplay-cardist-icon" }, [
+                  vue.createElementVNode("img", {
+                    src: _imports_3,
+                    alt: ""
+                  })
+                ])
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "wallet wallet2" }, [
+              vue.createElementVNode("view", { class: "valueAddedIconNull" }, [
+                vue.createCommentVNode(" <span>增值</span> ")
+              ]),
+              vue.createElementVNode("view", { class: "cardIconNull" }, [
+                vue.createElementVNode("span", null, "卡片申请")
+              ])
+            ])
+          ])
+        ],
+        2112
+        /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+      )),
+      vue.createCommentVNode(" 介绍 "),
+      vue.createElementVNode("view", { class: "introduce" }, [
+        vue.createElementVNode("view", { class: "introduce-left" }, [
+          vue.createElementVNode("view", { class: "introduce-left-icon" }, [
+            vue.createElementVNode("img", {
+              src: _imports_0,
+              alt: ""
+            })
+          ]),
+          vue.createElementVNode("view", { class: "introduce-left-txt" }, "最受欢迎的一站式交易工具～")
+        ]),
+        vue.createElementVNode("view", { class: "introduce-right" }, [
+          vue.createElementVNode("img", {
+            src: _imports_4,
+            alt: ""
+          })
+        ])
+      ]),
+      vue.createCommentVNode(" 交易记录 "),
+      vue.createElementVNode("view", { class: "transactionRecords" }, [
+        vue.createCommentVNode(" 吸顶标题 "),
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass(["transactionRecords-title", { "sticky": $setup.isSticky }]),
+            ref: "titleRef"
+          },
+          [
+            vue.createElementVNode("view", null, "交易记录"),
+            vue.createElementVNode("view", { class: "transactionRecords-title-right" }, "全部")
+          ],
+          2
+          /* CLASS */
+        ),
+        vue.createElementVNode("view", { class: "transactionRecords-list" }, [
+          (vue.openBlock(), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList(20, (item, index2) => {
+              return vue.createElementVNode("view", {
+                class: "transactionRecords-item",
+                key: index2
+              }, [
+                vue.createElementVNode("view", { class: "transactionRecords-item-left" }, [
+                  vue.createElementVNode("view", null, "支付宝消费"),
+                  vue.createElementVNode("view", { class: "transactionRecords-item-time" }, "2025/09/03 10:51")
+                ]),
+                vue.createElementVNode("view", { class: "transactionRecords-item-right" }, "- $100")
+              ]);
+            }),
+            64
+            /* STABLE_FRAGMENT */
+          ))
+        ])
+      ])
+    ]);
+  }
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2c, [["render", _sfc_render$2b], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/pages/index/index.vue"]]);
+  __definePage("pages/index/index", PagesIndexIndex);
+  const _sfc_main$2b = {
+    onLaunch: function() {
+      formatAppLog("log", "at App.vue:4", "App Launch");
+    },
+    onShow: function() {
+      formatAppLog("log", "at App.vue:7", "App Show");
+    },
+    onHide: function() {
+      formatAppLog("log", "at App.vue:10", "App Hide");
+    }
+  };
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main$2b, [["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/App.vue"]]);
+  const icons = {
+    "uicon-level": "",
+    "uicon-column-line": "",
+    "uicon-checkbox-mark": "",
+    "uicon-folder": "",
+    "uicon-movie": "",
+    "uicon-star-fill": "",
+    "uicon-star": "",
+    "uicon-phone-fill": "",
+    "uicon-phone": "",
+    "uicon-apple-fill": "",
+    "uicon-chrome-circle-fill": "",
+    "uicon-backspace": "",
+    "uicon-attach": "",
+    "uicon-cut": "",
+    "uicon-empty-car": "",
+    "uicon-empty-coupon": "",
+    "uicon-empty-address": "",
+    "uicon-empty-favor": "",
+    "uicon-empty-permission": "",
+    "uicon-empty-news": "",
+    "uicon-empty-search": "",
+    "uicon-github-circle-fill": "",
+    "uicon-rmb": "",
+    "uicon-person-delete-fill": "",
+    "uicon-reload": "",
+    "uicon-order": "",
+    "uicon-server-man": "",
+    "uicon-search": "",
+    "uicon-fingerprint": "",
+    "uicon-more-dot-fill": "",
+    "uicon-scan": "",
+    "uicon-share-square": "",
+    "uicon-map": "",
+    "uicon-map-fill": "",
+    "uicon-tags": "",
+    "uicon-tags-fill": "",
+    "uicon-bookmark-fill": "",
+    "uicon-bookmark": "",
+    "uicon-eye": "",
+    "uicon-eye-fill": "",
+    "uicon-mic": "",
+    "uicon-mic-off": "",
+    "uicon-calendar": "",
+    "uicon-calendar-fill": "",
+    "uicon-trash": "",
+    "uicon-trash-fill": "",
+    "uicon-play-left": "",
+    "uicon-play-right": "",
+    "uicon-minus": "",
+    "uicon-plus": "",
+    "uicon-info": "",
+    "uicon-info-circle": "",
+    "uicon-info-circle-fill": "",
+    "uicon-question": "",
+    "uicon-error": "",
+    "uicon-close": "",
+    "uicon-checkmark": "",
+    "uicon-android-circle-fill": "",
+    "uicon-android-fill": "",
+    "uicon-ie": "",
+    "uicon-IE-circle-fill": "",
+    "uicon-google": "",
+    "uicon-google-circle-fill": "",
+    "uicon-setting-fill": "",
+    "uicon-setting": "",
+    "uicon-minus-square-fill": "",
+    "uicon-plus-square-fill": "",
+    "uicon-heart": "",
+    "uicon-heart-fill": "",
+    "uicon-camera": "",
+    "uicon-camera-fill": "",
+    "uicon-more-circle": "",
+    "uicon-more-circle-fill": "",
+    "uicon-chat": "",
+    "uicon-chat-fill": "",
+    "uicon-bag-fill": "",
+    "uicon-bag": "",
+    "uicon-error-circle-fill": "",
+    "uicon-error-circle": "",
+    "uicon-close-circle": "",
+    "uicon-close-circle-fill": "",
+    "uicon-checkmark-circle": "",
+    "uicon-checkmark-circle-fill": "",
+    "uicon-question-circle-fill": "",
+    "uicon-question-circle": "",
+    "uicon-share": "",
+    "uicon-share-fill": "",
+    "uicon-shopping-cart": "",
+    "uicon-shopping-cart-fill": "",
+    "uicon-bell": "",
+    "uicon-bell-fill": "",
+    "uicon-list": "",
+    "uicon-list-dot": "",
+    "uicon-zhihu": "",
+    "uicon-zhihu-circle-fill": "",
+    "uicon-zhifubao": "",
+    "uicon-zhifubao-circle-fill": "",
+    "uicon-weixin-circle-fill": "",
+    "uicon-weixin-fill": "",
+    "uicon-twitter-circle-fill": "",
+    "uicon-twitter": "",
+    "uicon-taobao-circle-fill": "",
+    "uicon-taobao": "",
+    "uicon-weibo-circle-fill": "",
+    "uicon-weibo": "",
+    "uicon-qq-fill": "",
+    "uicon-qq-circle-fill": "",
+    "uicon-moments-circel-fill": "",
+    "uicon-moments": "",
+    "uicon-qzone": "",
+    "uicon-qzone-circle-fill": "",
+    "uicon-baidu-circle-fill": "",
+    "uicon-baidu": "",
+    "uicon-facebook-circle-fill": "",
+    "uicon-facebook": "",
+    "uicon-car": "",
+    "uicon-car-fill": "",
+    "uicon-warning-fill": "",
+    "uicon-warning": "",
+    "uicon-clock-fill": "",
+    "uicon-clock": "",
+    "uicon-edit-pen": "",
+    "uicon-edit-pen-fill": "",
+    "uicon-email": "",
+    "uicon-email-fill": "",
+    "uicon-minus-circle": "",
+    "uicon-minus-circle-fill": "",
+    "uicon-plus-circle": "",
+    "uicon-plus-circle-fill": "",
+    "uicon-file-text": "",
+    "uicon-file-text-fill": "",
+    "uicon-pushpin": "",
+    "uicon-pushpin-fill": "",
+    "uicon-grid": "",
+    "uicon-grid-fill": "",
+    "uicon-play-circle": "",
+    "uicon-play-circle-fill": "",
+    "uicon-pause-circle-fill": "",
+    "uicon-pause": "",
+    "uicon-pause-circle": "",
+    "uicon-eye-off": "",
+    "uicon-eye-off-outline": "",
+    "uicon-gift-fill": "",
+    "uicon-gift": "",
+    "uicon-rmb-circle-fill": "",
+    "uicon-rmb-circle": "",
+    "uicon-kefu-ermai": "",
+    "uicon-server-fill": "",
+    "uicon-coupon-fill": "",
+    "uicon-coupon": "",
+    "uicon-integral": "",
+    "uicon-integral-fill": "",
+    "uicon-home-fill": "",
+    "uicon-home": "",
+    "uicon-hourglass-half-fill": "",
+    "uicon-hourglass": "",
+    "uicon-account": "",
+    "uicon-plus-people-fill": "",
+    "uicon-minus-people-fill": "",
+    "uicon-account-fill": "",
+    "uicon-thumb-down-fill": "",
+    "uicon-thumb-down": "",
+    "uicon-thumb-up": "",
+    "uicon-thumb-up-fill": "",
+    "uicon-lock-fill": "",
+    "uicon-lock-open": "",
+    "uicon-lock-opened-fill": "",
+    "uicon-lock": "",
+    "uicon-red-packet-fill": "",
+    "uicon-photo-fill": "",
+    "uicon-photo": "",
+    "uicon-volume-off-fill": "",
+    "uicon-volume-off": "",
+    "uicon-volume-fill": "",
+    "uicon-volume": "",
+    "uicon-red-packet": "",
+    "uicon-download": "",
+    "uicon-arrow-up-fill": "",
+    "uicon-arrow-down-fill": "",
+    "uicon-play-left-fill": "",
+    "uicon-play-right-fill": "",
+    "uicon-rewind-left-fill": "",
+    "uicon-rewind-right-fill": "",
+    "uicon-arrow-downward": "",
+    "uicon-arrow-leftward": "",
+    "uicon-arrow-rightward": "",
+    "uicon-arrow-upward": "",
+    "uicon-arrow-down": "",
+    "uicon-arrow-right": "",
+    "uicon-arrow-left": "",
+    "uicon-arrow-up": "",
+    "uicon-skip-back-left": "",
+    "uicon-skip-forward-right": "",
+    "uicon-rewind-right": "",
+    "uicon-rewind-left": "",
+    "uicon-arrow-right-double": "",
+    "uicon-arrow-left-double": "",
+    "uicon-wifi-off": "",
+    "uicon-wifi": "",
+    "uicon-empty-data": "",
+    "uicon-empty-history": "",
+    "uicon-empty-list": "",
+    "uicon-empty-page": "",
+    "uicon-empty-order": "",
+    "uicon-man": "",
+    "uicon-woman": "",
+    "uicon-man-add": "",
+    "uicon-man-add-fill": "",
+    "uicon-man-delete": "",
+    "uicon-man-delete-fill": "",
+    "uicon-zh": "",
+    "uicon-en": ""
+  };
+  const defineMixin$1 = (options2) => {
     return options2;
   };
   const version = "3";
@@ -133,13 +574,13 @@ if (uni.restoreGlobal) {
     borderColor: "#e4e7ed"
   };
   const { toString } = Object.prototype;
-  function isArray(val) {
+  function isArray$1(val) {
     return toString.call(val) === "[object Array]";
   }
-  function isObject(val) {
+  function isObject$2(val) {
     return val !== null && typeof val === "object";
   }
-  function isDate(val) {
+  function isDate$1(val) {
     return toString.call(val) === "[object Date]";
   }
   function isURLSearchParams(val) {
@@ -152,7 +593,7 @@ if (uni.restoreGlobal) {
     if (typeof obj !== "object") {
       obj = [obj];
     }
-    if (isArray(obj)) {
+    if (isArray$1(obj)) {
       for (let i2 = 0, l2 = obj.length; i2 < l2; i2++) {
         fn.call(null, obj[i2], i2, obj);
       }
@@ -164,7 +605,7 @@ if (uni.restoreGlobal) {
       }
     }
   }
-  function isPlainObject(obj) {
+  function isPlainObject$2(obj) {
     return Object.prototype.toString.call(obj) === "[object Object]";
   }
   function deepMerge$2() {
@@ -202,15 +643,15 @@ if (uni.restoreGlobal) {
         if (val === null || typeof val === "undefined") {
           return;
         }
-        if (isArray(val)) {
+        if (isArray$1(val)) {
           key = `${key}[]`;
         } else {
           val = [val];
         }
         forEach(val, (v2) => {
-          if (isDate(v2)) {
+          if (isDate$1(v2)) {
             v2 = v2.toISOString();
-          } else if (isObject(v2)) {
+          } else if (isObject$2(v2)) {
             v2 = JSON.stringify(v2);
           }
           parts.push(`${encode(key)}=${encode(v2)}`);
@@ -615,7 +1056,7 @@ if (uni.restoreGlobal) {
     * @param {Function(statusCode):Boolean} arg.validateStatus - 全局默认的自定义验证器。默认statusCode >= 200 && statusCode < 300
     */
     constructor(arg = {}) {
-      if (!isPlainObject(arg)) {
+      if (!isPlainObject$2(arg)) {
         arg = {};
         formatAppLog("warn", "at uni_modules/uview-plus/libs/luch-request/core/Request.js:40", "设置全局参数必须接收一个Object");
       }
@@ -752,7 +1193,7 @@ if (uni.restoreGlobal) {
   function dateISO(value2) {
     return /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value2);
   }
-  function number(value2) {
+  function number$1(value2) {
     return /^[\+-]?(\d+\.?\d*|\.\d+|\d\.\d+e\+\d+)$/.test(value2);
   }
   function string$1(value2) {
@@ -883,7 +1324,7 @@ if (uni.restoreGlobal) {
     url,
     date,
     dateISO,
-    number,
+    number: number$1,
     digits,
     idCard,
     carNo,
@@ -973,7 +1414,7 @@ if (uni.restoreGlobal) {
     return Math.max(min, Math.min(max, Number(value2)));
   }
   function getPx(value2, unit = false) {
-    if (number(value2)) {
+    if (number$1(value2)) {
       return unit ? `${value2}px` : Number(value2);
     }
     if (/(rpx|upx)$/.test(value2)) {
@@ -1076,11 +1517,11 @@ if (uni.restoreGlobal) {
     if (!unit) {
       unit = config$1.unit || "px";
     }
-    if (unit == "rpx" && number(String(value2))) {
+    if (unit == "rpx" && number$1(String(value2))) {
       value2 = value2 * 2;
     }
     value2 = String(value2);
-    return number(value2) ? `${value2}${unit}` : value2;
+    return number$1(value2) ? `${value2}${unit}` : value2;
   }
   function deepClone(obj) {
     if ([null, void 0, NaN, false].includes(obj))
@@ -1700,7 +2141,7 @@ if (uni.restoreGlobal) {
       stop: true
     }
   };
-  const zhHans = {
+  const zhHans$1 = {
     "up.common.cancel": "取消",
     "up.common.confirm": "确定",
     "up.common.start": "开始",
@@ -1785,7 +2226,7 @@ if (uni.restoreGlobal) {
     "up.goodsSku.choosed": "已选",
     "up.goodsSku.buyAmount": "购买数量"
   };
-  const zhHant = {
+  const zhHant$1 = {
     "up.common.cancel": "取消",
     "up.common.confirm": "確定",
     "up.common.start": "開始",
@@ -1870,7 +2311,7 @@ if (uni.restoreGlobal) {
     "up.goodsSku.choosed": "已選",
     "up.goodsSku.buyAmount": "購買數量"
   };
-  const en = {
+  const en$1 = {
     "up.common.cancel": "Cancel",
     "up.common.confirm": "Confirm",
     "up.common.start": "Start",
@@ -2468,15 +2909,15 @@ if (uni.restoreGlobal) {
   let settings = {
     lang: uni.getLocale(),
     locales: {
-      en,
+      en: en$1,
       es,
       fr,
       de,
       ko,
       ja,
       ru,
-      "zh-Hant": zhHant,
-      "zh-Hans": zhHans
+      "zh-Hant": zhHant$1,
+      "zh-Hans": zhHans$1
     }
   };
   uni.onLocaleChange((locale) => {
@@ -3980,66 +4421,96 @@ if (uni.restoreGlobal) {
       setConfig$1(temp.options);
     }
   }
-  const props$1x = defineMixin({
+  const props$1x = defineMixin$1({
     props: {
-      // 是否显示组件
-      show: {
-        type: Boolean,
-        default: () => props$1y.loadingIcon.show
+      // 图标类名
+      name: {
+        type: String,
+        default: () => props$1y.icon.name
       },
-      // 颜色
+      // 图标颜色，可接受主题色
       color: {
         type: String,
-        default: () => props$1y.loadingIcon.color
+        default: () => props$1y.icon.color
       },
-      // 提示文字颜色
-      textColor: {
-        type: String,
-        default: () => props$1y.loadingIcon.textColor
-      },
-      // 文字和图标是否垂直排列
-      vertical: {
-        type: Boolean,
-        default: () => props$1y.loadingIcon.vertical
-      },
-      // 模式选择，circle-圆形，spinner-花朵形，semicircle-半圆形
-      mode: {
-        type: String,
-        default: () => props$1y.loadingIcon.mode
-      },
-      // 图标大小，单位默认px
+      // 字体大小，单位px
       size: {
         type: [String, Number],
-        default: () => props$1y.loadingIcon.size
+        default: () => props$1y.icon.size
       },
-      // 文字大小
-      textSize: {
+      // 是否显示粗体
+      bold: {
+        type: Boolean,
+        default: () => props$1y.icon.bold
+      },
+      // 点击图标的时候传递事件出去的index（用于区分点击了哪一个）
+      index: {
         type: [String, Number],
-        default: () => props$1y.loadingIcon.textSize
+        default: () => props$1y.icon.index
       },
-      // 文字内容
-      text: {
-        type: [String, Number],
-        default: () => props$1y.loadingIcon.text
-      },
-      // 动画模式
-      timingFunction: {
+      // 触摸图标时的类名
+      hoverClass: {
         type: String,
-        default: () => props$1y.loadingIcon.timingFunction
+        default: () => props$1y.icon.hoverClass
       },
-      // 动画执行周期时间
-      duration: {
-        type: [String, Number],
-        default: () => props$1y.loadingIcon.duration
-      },
-      // mode=circle时的暗边颜色
-      inactiveColor: {
+      // 自定义扩展前缀，方便用户扩展自己的图标库
+      customPrefix: {
         type: String,
-        default: () => props$1y.loadingIcon.inactiveColor
+        default: () => props$1y.icon.customPrefix
+      },
+      // 图标右边或者下面的文字
+      label: {
+        type: [String, Number],
+        default: () => props$1y.icon.label
+      },
+      // label的位置，只能右边或者下边
+      labelPos: {
+        type: String,
+        default: () => props$1y.icon.labelPos
+      },
+      // label的大小
+      labelSize: {
+        type: [String, Number],
+        default: () => props$1y.icon.labelSize
+      },
+      // label的颜色
+      labelColor: {
+        type: String,
+        default: () => props$1y.icon.labelColor
+      },
+      // label与图标的距离
+      space: {
+        type: [String, Number],
+        default: () => props$1y.icon.space
+      },
+      // 图片的mode
+      imgMode: {
+        type: String,
+        default: () => props$1y.icon.imgMode
+      },
+      // 用于显示图片小图标时，图片的宽度
+      width: {
+        type: [String, Number],
+        default: () => props$1y.icon.width
+      },
+      // 用于显示图片小图标时，图片的高度
+      height: {
+        type: [String, Number],
+        default: () => props$1y.icon.height
+      },
+      // 用于解决某些情况下，让图标垂直居中的用途
+      top: {
+        type: [String, Number],
+        default: () => props$1y.icon.top
+      },
+      // 是否阻止事件传播
+      stop: {
+        type: Boolean,
+        default: () => props$1y.icon.stop
       }
     }
   });
-  const mpMixin = defineMixin({});
+  const mpMixin = defineMixin$1({});
   class Router {
     constructor() {
       this.config = {
@@ -4138,7 +4609,7 @@ if (uni.restoreGlobal) {
     }
   }
   const route = new Router().route;
-  const mixin = defineMixin({
+  const mixin = defineMixin$1({
     // 定义每个组件都可能需要用到的外部样式以及类名
     props: {
       // 每个组件都有的父组件传递的样式，可以为字符串或者对象形式
@@ -4270,556 +4741,6 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  function colorGradient(startColor = "rgb(0, 0, 0)", endColor = "rgb(255, 255, 255)", step = 10) {
-    const startRGB = hexToRgb(startColor, false);
-    const startR = startRGB[0];
-    const startG = startRGB[1];
-    const startB = startRGB[2];
-    const endRGB = hexToRgb(endColor, false);
-    const endR = endRGB[0];
-    const endG = endRGB[1];
-    const endB = endRGB[2];
-    const sR = (endR - startR) / step;
-    const sG = (endG - startG) / step;
-    const sB = (endB - startB) / step;
-    const colorArr = [];
-    for (let i2 = 0; i2 < step; i2++) {
-      let hex = rgbToHex(`rgb(${Math.round(sR * i2 + startR)},${Math.round(sG * i2 + startG)},${Math.round(sB * i2 + startB)})`);
-      if (i2 === 0)
-        hex = rgbToHex(startColor);
-      if (i2 === step - 1)
-        hex = rgbToHex(endColor);
-      colorArr.push(hex);
-    }
-    return colorArr;
-  }
-  function hexToRgb(sColor, str = true) {
-    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-    sColor = String(sColor).toLowerCase();
-    if (sColor && reg.test(sColor)) {
-      if (sColor.length === 4) {
-        let sColorNew = "#";
-        for (let i2 = 1; i2 < 4; i2 += 1) {
-          sColorNew += sColor.slice(i2, i2 + 1).concat(sColor.slice(i2, i2 + 1));
-        }
-        sColor = sColorNew;
-      }
-      const sColorChange = [];
-      for (let i2 = 1; i2 < 7; i2 += 2) {
-        sColorChange.push(parseInt(`0x${sColor.slice(i2, i2 + 2)}`));
-      }
-      if (!str) {
-        return sColorChange;
-      }
-      return `rgb(${sColorChange[0]},${sColorChange[1]},${sColorChange[2]})`;
-    }
-    if (/^(rgb|RGB)/.test(sColor)) {
-      const arr = sColor.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
-      return arr.map((val) => Number(val));
-    }
-    return sColor;
-  }
-  function rgbToHex(rgb) {
-    const _this = rgb;
-    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-    if (/^(rgb|RGB)/.test(_this)) {
-      const aColor = _this.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
-      let strHex = "#";
-      for (let i2 = 0; i2 < aColor.length; i2++) {
-        let hex = Number(aColor[i2]).toString(16);
-        hex = String(hex).length == 1 ? `${0}${hex}` : hex;
-        if (hex === "0") {
-          hex += hex;
-        }
-        strHex += hex;
-      }
-      if (strHex.length !== 7) {
-        strHex = _this;
-      }
-      return strHex;
-    }
-    if (reg.test(_this)) {
-      const aNum = _this.replace(/#/, "").split("");
-      if (aNum.length === 6) {
-        return _this;
-      }
-      if (aNum.length === 3) {
-        let numHex = "#";
-        for (let i2 = 0; i2 < aNum.length; i2 += 1) {
-          numHex += aNum[i2] + aNum[i2];
-        }
-        return numHex;
-      }
-    } else {
-      return _this;
-    }
-  }
-  function colorToRgba(color2, alpha) {
-    color2 = rgbToHex(color2);
-    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-    let sColor = String(color2).toLowerCase();
-    if (sColor && reg.test(sColor)) {
-      if (sColor.length === 4) {
-        let sColorNew = "#";
-        for (let i2 = 1; i2 < 4; i2 += 1) {
-          sColorNew += sColor.slice(i2, i2 + 1).concat(sColor.slice(i2, i2 + 1));
-        }
-        sColor = sColorNew;
-      }
-      const sColorChange = [];
-      for (let i2 = 1; i2 < 7; i2 += 2) {
-        sColorChange.push(parseInt(`0x${sColor.slice(i2, i2 + 2)}`));
-      }
-      return `rgba(${sColorChange.join(",")},${alpha})`;
-    }
-    return sColor;
-  }
-  const colorGradient$1 = {
-    colorGradient,
-    hexToRgb,
-    rgbToHex,
-    colorToRgba
-  };
-  const _export_sfc = (sfc, props2) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props2) {
-      target[key] = val;
-    }
-    return target;
-  };
-  const _sfc_main$2c = {
-    name: "u-loading-icon",
-    mixins: [mpMixin, mixin, props$1x],
-    data() {
-      return {
-        // Array.form可以通过一个伪数组对象创建指定长度的数组
-        // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/from
-        array12: Array.from({
-          length: 12
-        }),
-        // 这里需要设置默认值为360，否则在安卓nvue上，会延迟一个duration周期后才执行
-        // 在iOS nvue上，则会一开始默认执行两个周期的动画
-        aniAngel: 360,
-        // 动画旋转角度
-        webviewHide: false,
-        // 监听webview的状态，如果隐藏了页面，则停止动画，以免性能消耗
-        loading: false
-        // 是否运行中，针对nvue使用
-      };
-    },
-    computed: {
-      // 当为circle类型时，给其另外三边设置一个更轻一些的颜色
-      // 之所以需要这么做的原因是，比如父组件传了color为红色，那么需要另外的三个边为浅红色
-      // 而不能是固定的某一个其他颜色(因为这个固定的颜色可能浅蓝，导致效果没有那么细腻良好)
-      otherBorderColor() {
-        const lightColor = colorGradient(this.color, "#ffffff", 100)[80];
-        if (this.mode === "circle") {
-          return this.inactiveColor ? this.inactiveColor : lightColor;
-        } else {
-          return "transparent";
-        }
-      }
-    },
-    watch: {
-      show(n2) {
-      }
-    },
-    mounted() {
-      this.init();
-    },
-    methods: {
-      addUnit,
-      addStyle,
-      init() {
-        setTimeout(() => {
-          this.show && this.addEventListenerToWebview();
-        }, 20);
-      },
-      // 监听webview的显示与隐藏
-      addEventListenerToWebview() {
-        const pages2 = getCurrentPages();
-        const page2 = pages2[pages2.length - 1];
-        const currentWebview = page2.$getAppWebview();
-        currentWebview.addEventListener("hide", () => {
-          this.webviewHide = true;
-        });
-        currentWebview.addEventListener("show", () => {
-          this.webviewHide = false;
-        });
-      }
-    }
-  };
-  function _sfc_render$2b(_ctx, _cache, $props, $setup, $data, $options) {
-    return _ctx.show ? (vue.openBlock(), vue.createElementBlock(
-      "view",
-      {
-        key: 0,
-        class: vue.normalizeClass(["u-loading-icon", [_ctx.vertical && "u-loading-icon--vertical"]]),
-        style: vue.normalizeStyle([$options.addStyle(_ctx.customStyle)])
-      },
-      [
-        !$data.webviewHide ? (vue.openBlock(), vue.createElementBlock(
-          "view",
-          {
-            key: 0,
-            class: vue.normalizeClass(["u-loading-icon__spinner", [`u-loading-icon__spinner--${_ctx.mode}`]]),
-            ref: "ani",
-            style: vue.normalizeStyle({
-              color: _ctx.color,
-              width: $options.addUnit(_ctx.size),
-              height: $options.addUnit(_ctx.size),
-              borderTopColor: _ctx.color,
-              borderBottomColor: $options.otherBorderColor,
-              borderLeftColor: $options.otherBorderColor,
-              borderRightColor: $options.otherBorderColor,
-              "animation-duration": `${_ctx.duration}ms`,
-              "animation-timing-function": _ctx.mode === "semicircle" || _ctx.mode === "circle" ? _ctx.timingFunction : ""
-            })
-          },
-          [
-            _ctx.mode === "spinner" ? (vue.openBlock(true), vue.createElementBlock(
-              vue.Fragment,
-              { key: 0 },
-              vue.renderList($data.array12, (item, index2) => {
-                return vue.openBlock(), vue.createElementBlock("view", {
-                  key: index2,
-                  class: "u-loading-icon__dot"
-                });
-              }),
-              128
-              /* KEYED_FRAGMENT */
-            )) : vue.createCommentVNode("v-if", true)
-          ],
-          6
-          /* CLASS, STYLE */
-        )) : vue.createCommentVNode("v-if", true),
-        _ctx.text ? (vue.openBlock(), vue.createElementBlock(
-          "text",
-          {
-            key: 1,
-            class: "u-loading-icon__text",
-            style: vue.normalizeStyle({
-              fontSize: $options.addUnit(_ctx.textSize),
-              color: _ctx.textColor
-            })
-          },
-          vue.toDisplayString(_ctx.text),
-          5
-          /* TEXT, STYLE */
-        )) : vue.createCommentVNode("v-if", true)
-      ],
-      6
-      /* CLASS, STYLE */
-    )) : vue.createCommentVNode("v-if", true);
-  }
-  const __easycom_1$f = /* @__PURE__ */ _export_sfc(_sfc_main$2c, [["render", _sfc_render$2b], ["__scopeId", "data-v-2af81691"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-loading-icon/u-loading-icon.vue"]]);
-  const __vite_glob_0_62 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-    __proto__: null,
-    default: __easycom_1$f
-  }, Symbol.toStringTag, { value: "Module" }));
-  const icons = {
-    "uicon-level": "",
-    "uicon-column-line": "",
-    "uicon-checkbox-mark": "",
-    "uicon-folder": "",
-    "uicon-movie": "",
-    "uicon-star-fill": "",
-    "uicon-star": "",
-    "uicon-phone-fill": "",
-    "uicon-phone": "",
-    "uicon-apple-fill": "",
-    "uicon-chrome-circle-fill": "",
-    "uicon-backspace": "",
-    "uicon-attach": "",
-    "uicon-cut": "",
-    "uicon-empty-car": "",
-    "uicon-empty-coupon": "",
-    "uicon-empty-address": "",
-    "uicon-empty-favor": "",
-    "uicon-empty-permission": "",
-    "uicon-empty-news": "",
-    "uicon-empty-search": "",
-    "uicon-github-circle-fill": "",
-    "uicon-rmb": "",
-    "uicon-person-delete-fill": "",
-    "uicon-reload": "",
-    "uicon-order": "",
-    "uicon-server-man": "",
-    "uicon-search": "",
-    "uicon-fingerprint": "",
-    "uicon-more-dot-fill": "",
-    "uicon-scan": "",
-    "uicon-share-square": "",
-    "uicon-map": "",
-    "uicon-map-fill": "",
-    "uicon-tags": "",
-    "uicon-tags-fill": "",
-    "uicon-bookmark-fill": "",
-    "uicon-bookmark": "",
-    "uicon-eye": "",
-    "uicon-eye-fill": "",
-    "uicon-mic": "",
-    "uicon-mic-off": "",
-    "uicon-calendar": "",
-    "uicon-calendar-fill": "",
-    "uicon-trash": "",
-    "uicon-trash-fill": "",
-    "uicon-play-left": "",
-    "uicon-play-right": "",
-    "uicon-minus": "",
-    "uicon-plus": "",
-    "uicon-info": "",
-    "uicon-info-circle": "",
-    "uicon-info-circle-fill": "",
-    "uicon-question": "",
-    "uicon-error": "",
-    "uicon-close": "",
-    "uicon-checkmark": "",
-    "uicon-android-circle-fill": "",
-    "uicon-android-fill": "",
-    "uicon-ie": "",
-    "uicon-IE-circle-fill": "",
-    "uicon-google": "",
-    "uicon-google-circle-fill": "",
-    "uicon-setting-fill": "",
-    "uicon-setting": "",
-    "uicon-minus-square-fill": "",
-    "uicon-plus-square-fill": "",
-    "uicon-heart": "",
-    "uicon-heart-fill": "",
-    "uicon-camera": "",
-    "uicon-camera-fill": "",
-    "uicon-more-circle": "",
-    "uicon-more-circle-fill": "",
-    "uicon-chat": "",
-    "uicon-chat-fill": "",
-    "uicon-bag-fill": "",
-    "uicon-bag": "",
-    "uicon-error-circle-fill": "",
-    "uicon-error-circle": "",
-    "uicon-close-circle": "",
-    "uicon-close-circle-fill": "",
-    "uicon-checkmark-circle": "",
-    "uicon-checkmark-circle-fill": "",
-    "uicon-question-circle-fill": "",
-    "uicon-question-circle": "",
-    "uicon-share": "",
-    "uicon-share-fill": "",
-    "uicon-shopping-cart": "",
-    "uicon-shopping-cart-fill": "",
-    "uicon-bell": "",
-    "uicon-bell-fill": "",
-    "uicon-list": "",
-    "uicon-list-dot": "",
-    "uicon-zhihu": "",
-    "uicon-zhihu-circle-fill": "",
-    "uicon-zhifubao": "",
-    "uicon-zhifubao-circle-fill": "",
-    "uicon-weixin-circle-fill": "",
-    "uicon-weixin-fill": "",
-    "uicon-twitter-circle-fill": "",
-    "uicon-twitter": "",
-    "uicon-taobao-circle-fill": "",
-    "uicon-taobao": "",
-    "uicon-weibo-circle-fill": "",
-    "uicon-weibo": "",
-    "uicon-qq-fill": "",
-    "uicon-qq-circle-fill": "",
-    "uicon-moments-circel-fill": "",
-    "uicon-moments": "",
-    "uicon-qzone": "",
-    "uicon-qzone-circle-fill": "",
-    "uicon-baidu-circle-fill": "",
-    "uicon-baidu": "",
-    "uicon-facebook-circle-fill": "",
-    "uicon-facebook": "",
-    "uicon-car": "",
-    "uicon-car-fill": "",
-    "uicon-warning-fill": "",
-    "uicon-warning": "",
-    "uicon-clock-fill": "",
-    "uicon-clock": "",
-    "uicon-edit-pen": "",
-    "uicon-edit-pen-fill": "",
-    "uicon-email": "",
-    "uicon-email-fill": "",
-    "uicon-minus-circle": "",
-    "uicon-minus-circle-fill": "",
-    "uicon-plus-circle": "",
-    "uicon-plus-circle-fill": "",
-    "uicon-file-text": "",
-    "uicon-file-text-fill": "",
-    "uicon-pushpin": "",
-    "uicon-pushpin-fill": "",
-    "uicon-grid": "",
-    "uicon-grid-fill": "",
-    "uicon-play-circle": "",
-    "uicon-play-circle-fill": "",
-    "uicon-pause-circle-fill": "",
-    "uicon-pause": "",
-    "uicon-pause-circle": "",
-    "uicon-eye-off": "",
-    "uicon-eye-off-outline": "",
-    "uicon-gift-fill": "",
-    "uicon-gift": "",
-    "uicon-rmb-circle-fill": "",
-    "uicon-rmb-circle": "",
-    "uicon-kefu-ermai": "",
-    "uicon-server-fill": "",
-    "uicon-coupon-fill": "",
-    "uicon-coupon": "",
-    "uicon-integral": "",
-    "uicon-integral-fill": "",
-    "uicon-home-fill": "",
-    "uicon-home": "",
-    "uicon-hourglass-half-fill": "",
-    "uicon-hourglass": "",
-    "uicon-account": "",
-    "uicon-plus-people-fill": "",
-    "uicon-minus-people-fill": "",
-    "uicon-account-fill": "",
-    "uicon-thumb-down-fill": "",
-    "uicon-thumb-down": "",
-    "uicon-thumb-up": "",
-    "uicon-thumb-up-fill": "",
-    "uicon-lock-fill": "",
-    "uicon-lock-open": "",
-    "uicon-lock-opened-fill": "",
-    "uicon-lock": "",
-    "uicon-red-packet-fill": "",
-    "uicon-photo-fill": "",
-    "uicon-photo": "",
-    "uicon-volume-off-fill": "",
-    "uicon-volume-off": "",
-    "uicon-volume-fill": "",
-    "uicon-volume": "",
-    "uicon-red-packet": "",
-    "uicon-download": "",
-    "uicon-arrow-up-fill": "",
-    "uicon-arrow-down-fill": "",
-    "uicon-play-left-fill": "",
-    "uicon-play-right-fill": "",
-    "uicon-rewind-left-fill": "",
-    "uicon-rewind-right-fill": "",
-    "uicon-arrow-downward": "",
-    "uicon-arrow-leftward": "",
-    "uicon-arrow-rightward": "",
-    "uicon-arrow-upward": "",
-    "uicon-arrow-down": "",
-    "uicon-arrow-right": "",
-    "uicon-arrow-left": "",
-    "uicon-arrow-up": "",
-    "uicon-skip-back-left": "",
-    "uicon-skip-forward-right": "",
-    "uicon-rewind-right": "",
-    "uicon-rewind-left": "",
-    "uicon-arrow-right-double": "",
-    "uicon-arrow-left-double": "",
-    "uicon-wifi-off": "",
-    "uicon-wifi": "",
-    "uicon-empty-data": "",
-    "uicon-empty-history": "",
-    "uicon-empty-list": "",
-    "uicon-empty-page": "",
-    "uicon-empty-order": "",
-    "uicon-man": "",
-    "uicon-woman": "",
-    "uicon-man-add": "",
-    "uicon-man-add-fill": "",
-    "uicon-man-delete": "",
-    "uicon-man-delete-fill": "",
-    "uicon-zh": "",
-    "uicon-en": ""
-  };
-  const props$1w = defineMixin({
-    props: {
-      // 图标类名
-      name: {
-        type: String,
-        default: () => props$1y.icon.name
-      },
-      // 图标颜色，可接受主题色
-      color: {
-        type: String,
-        default: () => props$1y.icon.color
-      },
-      // 字体大小，单位px
-      size: {
-        type: [String, Number],
-        default: () => props$1y.icon.size
-      },
-      // 是否显示粗体
-      bold: {
-        type: Boolean,
-        default: () => props$1y.icon.bold
-      },
-      // 点击图标的时候传递事件出去的index（用于区分点击了哪一个）
-      index: {
-        type: [String, Number],
-        default: () => props$1y.icon.index
-      },
-      // 触摸图标时的类名
-      hoverClass: {
-        type: String,
-        default: () => props$1y.icon.hoverClass
-      },
-      // 自定义扩展前缀，方便用户扩展自己的图标库
-      customPrefix: {
-        type: String,
-        default: () => props$1y.icon.customPrefix
-      },
-      // 图标右边或者下面的文字
-      label: {
-        type: [String, Number],
-        default: () => props$1y.icon.label
-      },
-      // label的位置，只能右边或者下边
-      labelPos: {
-        type: String,
-        default: () => props$1y.icon.labelPos
-      },
-      // label的大小
-      labelSize: {
-        type: [String, Number],
-        default: () => props$1y.icon.labelSize
-      },
-      // label的颜色
-      labelColor: {
-        type: String,
-        default: () => props$1y.icon.labelColor
-      },
-      // label与图标的距离
-      space: {
-        type: [String, Number],
-        default: () => props$1y.icon.space
-      },
-      // 图片的mode
-      imgMode: {
-        type: String,
-        default: () => props$1y.icon.imgMode
-      },
-      // 用于显示图片小图标时，图片的宽度
-      width: {
-        type: [String, Number],
-        default: () => props$1y.icon.width
-      },
-      // 用于显示图片小图标时，图片的高度
-      height: {
-        type: [String, Number],
-        default: () => props$1y.icon.height
-      },
-      // 用于解决某些情况下，让图标垂直居中的用途
-      top: {
-        type: [String, Number],
-        default: () => props$1y.icon.top
-      },
-      // 是否阻止事件传播
-      stop: {
-        type: Boolean,
-        default: () => props$1y.icon.stop
-      }
-    }
-  });
   let params = {
     loaded: false
   };
@@ -4855,7 +4776,7 @@ if (uni.restoreGlobal) {
     params,
     loadFont
   };
-  const _sfc_main$2b = {
+  const _sfc_main$2a = {
     name: "u-icon",
     beforeCreate() {
       if (!fontUtil.params.loaded) {
@@ -4866,7 +4787,7 @@ if (uni.restoreGlobal) {
       return {};
     },
     emits: ["click"],
-    mixins: [mpMixin, mixin, props$1w],
+    mixins: [mpMixin, mixin, props$1x],
     computed: {
       uClasses() {
         let classes = [];
@@ -4967,524 +4888,12 @@ if (uni.restoreGlobal) {
       /* CLASS */
     );
   }
-  const __easycom_0$g = /* @__PURE__ */ _export_sfc(_sfc_main$2b, [["render", _sfc_render$2a], ["__scopeId", "data-v-ac70166d"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-icon/u-icon.vue"]]);
+  const __easycom_0$g = /* @__PURE__ */ _export_sfc(_sfc_main$2a, [["render", _sfc_render$2a], ["__scopeId", "data-v-ac70166d"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-icon/u-icon.vue"]]);
   const __vite_glob_0_49 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_0$g
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1v = defineMixin({
-    props: {
-      // 是否细边框
-      hairline: {
-        type: Boolean,
-        default: () => props$1y.button.hairline
-      },
-      // 按钮的预置样式，info，primary，error，warning，success
-      type: {
-        type: String,
-        default: () => props$1y.button.type
-      },
-      // 按钮尺寸，large，normal，small，mini
-      size: {
-        type: String,
-        default: () => props$1y.button.size
-      },
-      // 按钮形状，circle（两边为半圆），square（带圆角）
-      shape: {
-        type: String,
-        default: () => props$1y.button.shape
-      },
-      // 按钮是否镂空
-      plain: {
-        type: Boolean,
-        default: () => props$1y.button.plain
-      },
-      // 是否禁止状态
-      disabled: {
-        type: Boolean,
-        default: () => props$1y.button.disabled
-      },
-      // 是否加载中
-      loading: {
-        type: Boolean,
-        default: () => props$1y.button.loading
-      },
-      // 加载中提示文字
-      loadingText: {
-        type: [String, Number],
-        default: () => props$1y.button.loadingText
-      },
-      // 加载状态图标类型
-      loadingMode: {
-        type: String,
-        default: () => props$1y.button.loadingMode
-      },
-      // 加载图标大小
-      loadingSize: {
-        type: [String, Number],
-        default: () => props$1y.button.loadingSize
-      },
-      // 开放能力，具体请看uniapp稳定关于button组件部分说明
-      // https://uniapp.dcloud.io/component/button
-      openType: {
-        type: String,
-        default: () => props$1y.button.openType
-      },
-      // 用于 <form> 组件，点击分别会触发 <form> 组件的 submit/reset 事件
-      // 取值为submit（提交表单），reset（重置表单）
-      formType: {
-        type: String,
-        default: () => props$1y.button.formType
-      },
-      // 打开 APP 时，向 APP 传递的参数，open-type=launchApp时有效
-      // 只微信小程序、QQ小程序有效
-      appParameter: {
-        type: String,
-        default: () => props$1y.button.appParameter
-      },
-      // 指定是否阻止本节点的祖先节点出现点击态，微信小程序有效
-      hoverStopPropagation: {
-        type: Boolean,
-        default: () => props$1y.button.hoverStopPropagation
-      },
-      // 指定返回用户信息的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文。只微信小程序有效
-      lang: {
-        type: String,
-        default: () => props$1y.button.lang
-      },
-      // 会话来源，open-type="contact"时有效。只微信小程序有效
-      sessionFrom: {
-        type: String,
-        default: () => props$1y.button.sessionFrom
-      },
-      // 会话内消息卡片标题，open-type="contact"时有效
-      // 默认当前标题，只微信小程序有效
-      sendMessageTitle: {
-        type: String,
-        default: () => props$1y.button.sendMessageTitle
-      },
-      // 会话内消息卡片点击跳转小程序路径，open-type="contact"时有效
-      // 默认当前分享路径，只微信小程序有效
-      sendMessagePath: {
-        type: String,
-        default: () => props$1y.button.sendMessagePath
-      },
-      // 会话内消息卡片图片，open-type="contact"时有效
-      // 默认当前页面截图，只微信小程序有效
-      sendMessageImg: {
-        type: String,
-        default: () => props$1y.button.sendMessageImg
-      },
-      // 是否显示会话内消息卡片，设置此参数为 true，用户进入客服会话会在右下角显示"可能要发送的小程序"提示，
-      // 用户点击后可以快速发送小程序消息，open-type="contact"时有效
-      showMessageCard: {
-        type: Boolean,
-        default: () => props$1y.button.showMessageCard
-      },
-      // 额外传参参数，用于小程序的data-xxx属性，通过target.dataset.name获取
-      dataName: {
-        type: String,
-        default: () => props$1y.button.dataName
-      },
-      // 节流，一定时间内只能触发一次
-      throttleTime: {
-        type: [String, Number],
-        default: () => props$1y.button.throttleTime
-      },
-      // 按住后多久出现点击态，单位毫秒
-      hoverStartTime: {
-        type: [String, Number],
-        default: () => props$1y.button.hoverStartTime
-      },
-      // 手指松开后点击态保留时间，单位毫秒
-      hoverStayTime: {
-        type: [String, Number],
-        default: () => props$1y.button.hoverStayTime
-      },
-      // 按钮文字，之所以通过props传入，是因为slot传入的话
-      // nvue中无法控制文字的样式
-      text: {
-        type: [String, Number],
-        default: () => props$1y.button.text
-      },
-      // 按钮图标
-      icon: {
-        type: String,
-        default: () => props$1y.button.icon
-      },
-      // 按钮图标
-      iconColor: {
-        type: String,
-        default: () => props$1y.button.icon
-      },
-      // 按钮颜色，支持传入linear-gradient渐变色
-      color: {
-        type: String,
-        default: () => props$1y.button.color
-      },
-      // 停止冒泡
-      stop: {
-        type: Boolean,
-        default: () => props$1y.button.stop
-      }
-    }
-  });
-  let flag;
-  function throttle(func2, wait = 500, immediate = true) {
-    if (immediate) {
-      if (!flag) {
-        flag = true;
-        typeof func2 === "function" && func2();
-        setTimeout(() => {
-          flag = false;
-        }, wait);
-      }
-    } else if (!flag) {
-      flag = true;
-      setTimeout(() => {
-        flag = false;
-        typeof func2 === "function" && func2();
-      }, wait);
-    }
-  }
-  const _sfc_main$2a = {
-    name: "u-button",
-    mixins: [mpMixin, mixin, props$1v],
-    data() {
-      return {};
-    },
-    computed: {
-      // 生成bem风格的类名
-      bemClass() {
-        if (!this.color) {
-          return this.bem(
-            "button",
-            ["type", "shape", "size"],
-            ["disabled", "plain", "hairline"]
-          );
-        } else {
-          return this.bem(
-            "button",
-            ["shape", "size"],
-            ["disabled", "plain", "hairline"]
-          );
-        }
-      },
-      loadingColor() {
-        if (this.plain) {
-          return this.color ? this.color : color$3[`u-${this.type}`];
-        }
-        if (this.type === "info") {
-          return "#c9c9c9";
-        }
-        return "rgb(200, 200, 200)";
-      },
-      iconColorCom() {
-        if (this.iconColor)
-          return this.iconColor;
-        if (this.plain) {
-          return this.color ? this.color : this.type;
-        } else {
-          return this.type === "info" ? "#000000" : "#ffffff";
-        }
-      },
-      baseColor() {
-        let style = {};
-        if (this.color) {
-          style.color = this.plain ? this.color : "white";
-          if (!this.plain) {
-            style["background-color"] = this.color;
-          }
-          if (this.color.indexOf("gradient") !== -1) {
-            style.borderTopWidth = 0;
-            style.borderRightWidth = 0;
-            style.borderBottomWidth = 0;
-            style.borderLeftWidth = 0;
-            if (!this.plain) {
-              style.backgroundImage = this.color;
-            }
-          } else {
-            style.borderColor = this.color;
-            style.borderWidth = "1px";
-            style.borderStyle = "solid";
-          }
-        }
-        return style;
-      },
-      // nvue版本按钮的字体不会继承父组件的颜色，需要对每一个text组件进行单独的设置
-      nvueTextStyle() {
-        let style = {};
-        if (this.type === "info") {
-          style.color = "#323233";
-        }
-        if (this.color) {
-          style.color = this.plain ? this.color : "white";
-        }
-        style.fontSize = this.textSize + "px";
-        return style;
-      },
-      // 字体大小
-      textSize() {
-        let fontSize = 14, { size } = this;
-        if (size === "large")
-          fontSize = 16;
-        if (size === "normal")
-          fontSize = 14;
-        if (size === "small")
-          fontSize = 12;
-        if (size === "mini")
-          fontSize = 10;
-        return fontSize;
-      }
-    },
-    emits: [
-      "click",
-      "getphonenumber",
-      "getuserinfo",
-      "error",
-      "opensetting",
-      "launchapp",
-      "agreeprivacyauthorization"
-    ],
-    methods: {
-      addStyle,
-      clickHandler(e2) {
-        if (!this.disabled && !this.loading) {
-          throttle(() => {
-            this.$emit("click", e2);
-          }, this.throttleTime);
-        }
-        this.stop && this.preventEvent(e2);
-      },
-      // 下面为对接uniapp官方按钮开放能力事件回调的对接
-      getphonenumber(res) {
-        this.$emit("getphonenumber", res);
-      },
-      getuserinfo(res) {
-        this.$emit("getuserinfo", res);
-      },
-      error(res) {
-        this.$emit("error", res);
-      },
-      opensetting(res) {
-        this.$emit("opensetting", res);
-      },
-      launchapp(res) {
-        this.$emit("launchapp", res);
-      },
-      agreeprivacyauthorization(res) {
-        this.$emit("agreeprivacyauthorization", res);
-      }
-    }
-  };
-  function _sfc_render$29(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
-    const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
-    return vue.openBlock(), vue.createElementBlock("button", {
-      "hover-start-time": Number(_ctx.hoverStartTime),
-      "hover-stay-time": Number(_ctx.hoverStayTime),
-      "form-type": _ctx.formType,
-      "open-type": _ctx.openType,
-      "app-parameter": _ctx.appParameter,
-      "hover-stop-propagation": _ctx.hoverStopPropagation,
-      "send-message-title": _ctx.sendMessageTitle,
-      "send-message-path": _ctx.sendMessagePath,
-      lang: _ctx.lang,
-      "data-name": _ctx.dataName,
-      "session-from": _ctx.sessionFrom,
-      "send-message-img": _ctx.sendMessageImg,
-      "show-message-card": _ctx.showMessageCard,
-      onGetphonenumber: _cache[0] || (_cache[0] = (...args) => $options.getphonenumber && $options.getphonenumber(...args)),
-      onGetuserinfo: _cache[1] || (_cache[1] = (...args) => $options.getuserinfo && $options.getuserinfo(...args)),
-      onError: _cache[2] || (_cache[2] = (...args) => $options.error && $options.error(...args)),
-      onOpensetting: _cache[3] || (_cache[3] = (...args) => $options.opensetting && $options.opensetting(...args)),
-      onLaunchapp: _cache[4] || (_cache[4] = (...args) => $options.launchapp && $options.launchapp(...args)),
-      onAgreeprivacyauthorization: _cache[5] || (_cache[5] = (...args) => $options.agreeprivacyauthorization && $options.agreeprivacyauthorization(...args)),
-      "hover-class": !_ctx.disabled && !_ctx.loading ? "u-button--active" : "",
-      class: vue.normalizeClass(["u-button u-reset-button", $options.bemClass]),
-      style: vue.normalizeStyle([$options.baseColor, $options.addStyle(_ctx.customStyle)]),
-      onClick: _cache[6] || (_cache[6] = (...args) => $options.clickHandler && $options.clickHandler(...args))
-    }, [
-      _ctx.loading ? (vue.openBlock(), vue.createElementBlock(
-        vue.Fragment,
-        { key: 0 },
-        [
-          vue.createVNode(_component_u_loading_icon, {
-            mode: _ctx.loadingMode,
-            size: _ctx.loadingSize * 1.15,
-            color: $options.loadingColor
-          }, null, 8, ["mode", "size", "color"]),
-          vue.createElementVNode(
-            "text",
-            {
-              class: "u-button__loading-text",
-              style: vue.normalizeStyle([{ fontSize: $options.textSize + "px" }])
-            },
-            vue.toDisplayString(_ctx.loadingText || _ctx.text),
-            5
-            /* TEXT, STYLE */
-          )
-        ],
-        64
-        /* STABLE_FRAGMENT */
-      )) : (vue.openBlock(), vue.createElementBlock(
-        vue.Fragment,
-        { key: 1 },
-        [
-          _ctx.icon ? (vue.openBlock(), vue.createBlock(_component_up_icon, {
-            key: 0,
-            name: _ctx.icon,
-            color: $options.iconColorCom,
-            size: $options.textSize * 1.35,
-            customStyle: { marginRight: "2px" }
-          }, null, 8, ["name", "color", "size"])) : vue.createCommentVNode("v-if", true),
-          vue.renderSlot(_ctx.$slots, "default", {}, () => [
-            vue.createElementVNode(
-              "text",
-              {
-                class: "u-button__text",
-                style: vue.normalizeStyle([{ fontSize: $options.textSize + "px" }])
-              },
-              vue.toDisplayString(_ctx.text),
-              5
-              /* TEXT, STYLE */
-            )
-          ], true)
-        ],
-        64
-        /* STABLE_FRAGMENT */
-      ))
-    ], 46, ["hover-start-time", "hover-stay-time", "form-type", "open-type", "app-parameter", "hover-stop-propagation", "send-message-title", "send-message-path", "lang", "data-name", "session-from", "send-message-img", "show-message-card", "hover-class"]);
-  }
-  const __easycom_3$3 = /* @__PURE__ */ _export_sfc(_sfc_main$2a, [["render", _sfc_render$29], ["__scopeId", "data-v-5ce41ee6"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-button/u-button.vue"]]);
-  const __vite_glob_0_11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-    __proto__: null,
-    default: __easycom_3$3
-  }, Symbol.toStringTag, { value: "Module" }));
-  const base_url = "http://192.168.3.9:8063";
-  const timeout$1 = 5e3;
-  const request = (params2) => {
-    let url2 = params2.url;
-    let method = params2.method || "get";
-    let data = params2.data || {};
-    let header = {
-      "Authorization": uni.getStorageSync("token") || "",
-      ...params2.header
-    };
-    if (method == "post") {
-      header = {
-        "Content-Type": "multipart/form-data"
-      };
-    }
-    return new Promise((resolve, reject) => {
-      uni.request({
-        url: base_url + url2,
-        method,
-        header,
-        data,
-        timeout: timeout$1,
-        success(response) {
-          const {
-            data: data2
-          } = response;
-          formatAppLog("log", "at request/index.js:36", "请求到数据", data2);
-          if (data2.rtncode == 200) {
-            resolve(data2);
-          } else {
-            formatAppLog("log", "at request/index.js:43", "请求失败", data2.msg);
-            switch (data2.rtncode) {
-              case 403:
-                uni.showToast({
-                  title: "提示"
-                });
-                break;
-              case 404:
-                uni.showToast({
-                  title: "请求地址不存在...",
-                  duration: 2e3
-                });
-                break;
-              default:
-                uni.showToast({
-                  title: "请重试...",
-                  duration: 2e3
-                });
-                break;
-            }
-          }
-        },
-        fail(err) {
-          reject(err);
-        }
-      });
-    }).catch(() => {
-    });
-  };
-  const signUp = (data) => {
-    return request({
-      url: "/ucard/appUser/signUp",
-      method: "post",
-      data
-    });
-  };
-  const _imports_0 = "/static/logo.png";
-  const _sfc_main$29 = {
-    data() {
-      return {
-        title: "Hello",
-        params: {
-          userEmail: "7678t7868@gmail.com",
-          userPassword: "123456"
-        }
-      };
-    },
-    onLoad() {
-    },
-    methods: {
-      async signUp() {
-        let res = await signUp(this.params);
-        formatAppLog("log", "at pages/index/index.vue:27", res);
-      }
-    }
-  };
-  function _sfc_render$28(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$3);
-    return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode("image", {
-        class: "logo",
-        src: _imports_0
-      }),
-      vue.createElementVNode("view", { class: "text-area" }, [
-        vue.createElementVNode(
-          "text",
-          { class: "title" },
-          vue.toDisplayString($data.title),
-          1
-          /* TEXT */
-        )
-      ]),
-      vue.createVNode(_component_up_button, {
-        onClick: $options.signUp,
-        type: "primary",
-        text: "确定"
-      }, null, 8, ["onClick"])
-    ]);
-  }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$29, [["render", _sfc_render$28], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/pages/index/index.vue"]]);
-  __definePage("pages/index/index", PagesIndexIndex);
-  const _sfc_main$28 = {
-    onLaunch: function() {
-      formatAppLog("log", "at App.vue:4", "App Launch");
-    },
-    onShow: function() {
-      formatAppLog("log", "at App.vue:7", "App Show");
-    },
-    onHide: function() {
-      formatAppLog("log", "at App.vue:10", "App Hide");
-    }
-  };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main$28, [["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/App.vue"]]);
-  const props$1u = defineMixin({
+  const props$1w = defineMixin$1({
     props: {
       // 绑定的值
       modelValue: {
@@ -5702,9 +5111,9 @@ if (uni.restoreGlobal) {
       }, wait);
     }
   }
-  const _sfc_main$27 = {
+  const _sfc_main$29 = {
     name: "u-input",
-    mixins: [mpMixin, mixin, props$1u],
+    mixins: [mpMixin, mixin, props$1w],
     data() {
       return {
         // 清除操作
@@ -5895,7 +5304,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$27(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$29(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     return vue.openBlock(), vue.createElementBlock(
       "view",
@@ -5994,12 +5403,12 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$f = /* @__PURE__ */ _export_sfc(_sfc_main$27, [["render", _sfc_render$27], ["__scopeId", "data-v-df79975b"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-input/u-input.vue"]]);
+  const __easycom_0$f = /* @__PURE__ */ _export_sfc(_sfc_main$29, [["render", _sfc_render$29], ["__scopeId", "data-v-df79975b"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-input/u-input.vue"]]);
   const __vite_glob_0_54 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_0$f
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1t = defineMixin({
+  const props$1v = defineMixin$1({
     props: {
       color: {
         type: String,
@@ -6032,9 +5441,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$26 = {
+  const _sfc_main$28 = {
     name: "u-line",
-    mixins: [mpMixin, mixin, props$1t],
+    mixins: [mpMixin, mixin, props$1v],
     computed: {
       lineStyle() {
         const style = {};
@@ -6057,7 +5466,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$26(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$28(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -6069,12 +5478,311 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const __easycom_1$e = /* @__PURE__ */ _export_sfc(_sfc_main$26, [["render", _sfc_render$26], ["__scopeId", "data-v-72791e59"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-line/u-line.vue"]]);
+  const __easycom_1$f = /* @__PURE__ */ _export_sfc(_sfc_main$28, [["render", _sfc_render$28], ["__scopeId", "data-v-72791e59"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-line/u-line.vue"]]);
   const __vite_glob_0_58 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    __proto__: null,
+    default: __easycom_1$f
+  }, Symbol.toStringTag, { value: "Module" }));
+  const props$1u = defineMixin$1({
+    props: {
+      // 是否显示组件
+      show: {
+        type: Boolean,
+        default: () => props$1y.loadingIcon.show
+      },
+      // 颜色
+      color: {
+        type: String,
+        default: () => props$1y.loadingIcon.color
+      },
+      // 提示文字颜色
+      textColor: {
+        type: String,
+        default: () => props$1y.loadingIcon.textColor
+      },
+      // 文字和图标是否垂直排列
+      vertical: {
+        type: Boolean,
+        default: () => props$1y.loadingIcon.vertical
+      },
+      // 模式选择，circle-圆形，spinner-花朵形，semicircle-半圆形
+      mode: {
+        type: String,
+        default: () => props$1y.loadingIcon.mode
+      },
+      // 图标大小，单位默认px
+      size: {
+        type: [String, Number],
+        default: () => props$1y.loadingIcon.size
+      },
+      // 文字大小
+      textSize: {
+        type: [String, Number],
+        default: () => props$1y.loadingIcon.textSize
+      },
+      // 文字内容
+      text: {
+        type: [String, Number],
+        default: () => props$1y.loadingIcon.text
+      },
+      // 动画模式
+      timingFunction: {
+        type: String,
+        default: () => props$1y.loadingIcon.timingFunction
+      },
+      // 动画执行周期时间
+      duration: {
+        type: [String, Number],
+        default: () => props$1y.loadingIcon.duration
+      },
+      // mode=circle时的暗边颜色
+      inactiveColor: {
+        type: String,
+        default: () => props$1y.loadingIcon.inactiveColor
+      }
+    }
+  });
+  function colorGradient(startColor = "rgb(0, 0, 0)", endColor = "rgb(255, 255, 255)", step = 10) {
+    const startRGB = hexToRgb(startColor, false);
+    const startR = startRGB[0];
+    const startG = startRGB[1];
+    const startB = startRGB[2];
+    const endRGB = hexToRgb(endColor, false);
+    const endR = endRGB[0];
+    const endG = endRGB[1];
+    const endB = endRGB[2];
+    const sR = (endR - startR) / step;
+    const sG = (endG - startG) / step;
+    const sB = (endB - startB) / step;
+    const colorArr = [];
+    for (let i2 = 0; i2 < step; i2++) {
+      let hex = rgbToHex(`rgb(${Math.round(sR * i2 + startR)},${Math.round(sG * i2 + startG)},${Math.round(sB * i2 + startB)})`);
+      if (i2 === 0)
+        hex = rgbToHex(startColor);
+      if (i2 === step - 1)
+        hex = rgbToHex(endColor);
+      colorArr.push(hex);
+    }
+    return colorArr;
+  }
+  function hexToRgb(sColor, str = true) {
+    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    sColor = String(sColor).toLowerCase();
+    if (sColor && reg.test(sColor)) {
+      if (sColor.length === 4) {
+        let sColorNew = "#";
+        for (let i2 = 1; i2 < 4; i2 += 1) {
+          sColorNew += sColor.slice(i2, i2 + 1).concat(sColor.slice(i2, i2 + 1));
+        }
+        sColor = sColorNew;
+      }
+      const sColorChange = [];
+      for (let i2 = 1; i2 < 7; i2 += 2) {
+        sColorChange.push(parseInt(`0x${sColor.slice(i2, i2 + 2)}`));
+      }
+      if (!str) {
+        return sColorChange;
+      }
+      return `rgb(${sColorChange[0]},${sColorChange[1]},${sColorChange[2]})`;
+    }
+    if (/^(rgb|RGB)/.test(sColor)) {
+      const arr = sColor.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+      return arr.map((val) => Number(val));
+    }
+    return sColor;
+  }
+  function rgbToHex(rgb) {
+    const _this = rgb;
+    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    if (/^(rgb|RGB)/.test(_this)) {
+      const aColor = _this.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+      let strHex = "#";
+      for (let i2 = 0; i2 < aColor.length; i2++) {
+        let hex = Number(aColor[i2]).toString(16);
+        hex = String(hex).length == 1 ? `${0}${hex}` : hex;
+        if (hex === "0") {
+          hex += hex;
+        }
+        strHex += hex;
+      }
+      if (strHex.length !== 7) {
+        strHex = _this;
+      }
+      return strHex;
+    }
+    if (reg.test(_this)) {
+      const aNum = _this.replace(/#/, "").split("");
+      if (aNum.length === 6) {
+        return _this;
+      }
+      if (aNum.length === 3) {
+        let numHex = "#";
+        for (let i2 = 0; i2 < aNum.length; i2 += 1) {
+          numHex += aNum[i2] + aNum[i2];
+        }
+        return numHex;
+      }
+    } else {
+      return _this;
+    }
+  }
+  function colorToRgba(color2, alpha) {
+    color2 = rgbToHex(color2);
+    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    let sColor = String(color2).toLowerCase();
+    if (sColor && reg.test(sColor)) {
+      if (sColor.length === 4) {
+        let sColorNew = "#";
+        for (let i2 = 1; i2 < 4; i2 += 1) {
+          sColorNew += sColor.slice(i2, i2 + 1).concat(sColor.slice(i2, i2 + 1));
+        }
+        sColor = sColorNew;
+      }
+      const sColorChange = [];
+      for (let i2 = 1; i2 < 7; i2 += 2) {
+        sColorChange.push(parseInt(`0x${sColor.slice(i2, i2 + 2)}`));
+      }
+      return `rgba(${sColorChange.join(",")},${alpha})`;
+    }
+    return sColor;
+  }
+  const colorGradient$1 = {
+    colorGradient,
+    hexToRgb,
+    rgbToHex,
+    colorToRgba
+  };
+  const _sfc_main$27 = {
+    name: "u-loading-icon",
+    mixins: [mpMixin, mixin, props$1u],
+    data() {
+      return {
+        // Array.form可以通过一个伪数组对象创建指定长度的数组
+        // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+        array12: Array.from({
+          length: 12
+        }),
+        // 这里需要设置默认值为360，否则在安卓nvue上，会延迟一个duration周期后才执行
+        // 在iOS nvue上，则会一开始默认执行两个周期的动画
+        aniAngel: 360,
+        // 动画旋转角度
+        webviewHide: false,
+        // 监听webview的状态，如果隐藏了页面，则停止动画，以免性能消耗
+        loading: false
+        // 是否运行中，针对nvue使用
+      };
+    },
+    computed: {
+      // 当为circle类型时，给其另外三边设置一个更轻一些的颜色
+      // 之所以需要这么做的原因是，比如父组件传了color为红色，那么需要另外的三个边为浅红色
+      // 而不能是固定的某一个其他颜色(因为这个固定的颜色可能浅蓝，导致效果没有那么细腻良好)
+      otherBorderColor() {
+        const lightColor = colorGradient(this.color, "#ffffff", 100)[80];
+        if (this.mode === "circle") {
+          return this.inactiveColor ? this.inactiveColor : lightColor;
+        } else {
+          return "transparent";
+        }
+      }
+    },
+    watch: {
+      show(n2) {
+      }
+    },
+    mounted() {
+      this.init();
+    },
+    methods: {
+      addUnit,
+      addStyle,
+      init() {
+        setTimeout(() => {
+          this.show && this.addEventListenerToWebview();
+        }, 20);
+      },
+      // 监听webview的显示与隐藏
+      addEventListenerToWebview() {
+        const pages2 = getCurrentPages();
+        const page2 = pages2[pages2.length - 1];
+        const currentWebview = page2.$getAppWebview();
+        currentWebview.addEventListener("hide", () => {
+          this.webviewHide = true;
+        });
+        currentWebview.addEventListener("show", () => {
+          this.webviewHide = false;
+        });
+      }
+    }
+  };
+  function _sfc_render$27(_ctx, _cache, $props, $setup, $data, $options) {
+    return _ctx.show ? (vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        key: 0,
+        class: vue.normalizeClass(["u-loading-icon", [_ctx.vertical && "u-loading-icon--vertical"]]),
+        style: vue.normalizeStyle([$options.addStyle(_ctx.customStyle)])
+      },
+      [
+        !$data.webviewHide ? (vue.openBlock(), vue.createElementBlock(
+          "view",
+          {
+            key: 0,
+            class: vue.normalizeClass(["u-loading-icon__spinner", [`u-loading-icon__spinner--${_ctx.mode}`]]),
+            ref: "ani",
+            style: vue.normalizeStyle({
+              color: _ctx.color,
+              width: $options.addUnit(_ctx.size),
+              height: $options.addUnit(_ctx.size),
+              borderTopColor: _ctx.color,
+              borderBottomColor: $options.otherBorderColor,
+              borderLeftColor: $options.otherBorderColor,
+              borderRightColor: $options.otherBorderColor,
+              "animation-duration": `${_ctx.duration}ms`,
+              "animation-timing-function": _ctx.mode === "semicircle" || _ctx.mode === "circle" ? _ctx.timingFunction : ""
+            })
+          },
+          [
+            _ctx.mode === "spinner" ? (vue.openBlock(true), vue.createElementBlock(
+              vue.Fragment,
+              { key: 0 },
+              vue.renderList($data.array12, (item, index2) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  key: index2,
+                  class: "u-loading-icon__dot"
+                });
+              }),
+              128
+              /* KEYED_FRAGMENT */
+            )) : vue.createCommentVNode("v-if", true)
+          ],
+          6
+          /* CLASS, STYLE */
+        )) : vue.createCommentVNode("v-if", true),
+        _ctx.text ? (vue.openBlock(), vue.createElementBlock(
+          "text",
+          {
+            key: 1,
+            class: "u-loading-icon__text",
+            style: vue.normalizeStyle({
+              fontSize: $options.addUnit(_ctx.textSize),
+              color: _ctx.textColor
+            })
+          },
+          vue.toDisplayString(_ctx.text),
+          5
+          /* TEXT, STYLE */
+        )) : vue.createCommentVNode("v-if", true)
+      ],
+      6
+      /* CLASS, STYLE */
+    )) : vue.createCommentVNode("v-if", true);
+  }
+  const __easycom_1$e = /* @__PURE__ */ _export_sfc(_sfc_main$27, [["render", _sfc_render$27], ["__scopeId", "data-v-2af81691"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-loading-icon/u-loading-icon.vue"]]);
+  const __vite_glob_0_62 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_1$e
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1s = defineMixin({
+  const props$1t = defineMixin$1({
     props: {
       // 背景颜色（默认transparent）
       bgColor: {
@@ -6098,9 +5806,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$25 = {
+  const _sfc_main$26 = {
     name: "u-gap",
-    mixins: [mpMixin, mixin, props$1s],
+    mixins: [mpMixin, mixin, props$1t],
     computed: {
       gapStyle() {
         const style = {
@@ -6113,7 +5821,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$25(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$26(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -6125,12 +5833,12 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const __easycom_2$4 = /* @__PURE__ */ _export_sfc(_sfc_main$25, [["render", _sfc_render$25], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-gap/u-gap.vue"]]);
+  const __easycom_2$4 = /* @__PURE__ */ _export_sfc(_sfc_main$26, [["render", _sfc_render$26], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-gap/u-gap.vue"]]);
   const __vite_glob_0_45 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_2$4
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1r = defineMixin({
+  const props$1s = defineMixin$1({
     props: {
       // 是否展示组件
       show: {
@@ -6212,7 +5920,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  const _sfc_main$24 = {
+  const _sfc_main$25 = {
     name: "u-transition",
     data() {
       return {
@@ -6245,7 +5953,7 @@ if (uni.restoreGlobal) {
       }
     },
     // 将mixin挂在到组件中，实际上为一个vue格式对象。
-    mixins: [mpMixin, mixin, transitionMixin, props$1r],
+    mixins: [mpMixin, mixin, transitionMixin, props$1s],
     watch: {
       show: {
         handler(newVal) {
@@ -6256,7 +5964,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$24(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$25(_ctx, _cache, $props, $setup, $data, $options) {
     return $data.inited ? (vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -6274,12 +5982,12 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE, NEED_HYDRATION */
     )) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_2$3 = /* @__PURE__ */ _export_sfc(_sfc_main$24, [["render", _sfc_render$24], ["__scopeId", "data-v-5cec8177"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-transition/u-transition.vue"]]);
+  const __easycom_2$3 = /* @__PURE__ */ _export_sfc(_sfc_main$25, [["render", _sfc_render$25], ["__scopeId", "data-v-5cec8177"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-transition/u-transition.vue"]]);
   const __vite_glob_0_128 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_2$3
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1q = defineMixin({
+  const props$1r = defineMixin$1({
     props: {
       // 是否显示遮罩
       show: {
@@ -6303,9 +6011,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$23 = {
+  const _sfc_main$24 = {
     name: "u-overlay",
-    mixins: [mpMixin, mixin, props$1q],
+    mixins: [mpMixin, mixin, props$1r],
     computed: {
       overlayStyle() {
         const style = {
@@ -6327,7 +6035,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$23(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$24(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_transition = resolveEasycom(vue.resolveDynamicComponent("u-transition"), __easycom_2$3);
     return vue.openBlock(), vue.createBlock(_component_u_transition, {
       show: _ctx.show,
@@ -6344,12 +6052,12 @@ if (uni.restoreGlobal) {
       /* FORWARDED */
     }, 8, ["show", "duration", "custom-style", "onClick", "onTouchmove"]);
   }
-  const __easycom_3$2 = /* @__PURE__ */ _export_sfc(_sfc_main$23, [["render", _sfc_render$23], ["__scopeId", "data-v-9112bed9"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-overlay/u-overlay.vue"]]);
+  const __easycom_3$3 = /* @__PURE__ */ _export_sfc(_sfc_main$24, [["render", _sfc_render$24], ["__scopeId", "data-v-9112bed9"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-overlay/u-overlay.vue"]]);
   const __vite_glob_0_75 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
-    default: __easycom_3$2
+    default: __easycom_3$3
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1p = defineMixin({
+  const props$1q = defineMixin$1({
     props: {
       bgColor: {
         type: String,
@@ -6362,9 +6070,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$22 = {
+  const _sfc_main$23 = {
     name: "u-status-bar",
-    mixins: [mpMixin, mixin, props$1p],
+    mixins: [mpMixin, mixin, props$1q],
     data() {
       return {
         isH5: false
@@ -6388,7 +6096,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$22(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$23(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -6402,17 +6110,17 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$e = /* @__PURE__ */ _export_sfc(_sfc_main$22, [["render", _sfc_render$22], ["__scopeId", "data-v-eb8e0cdd"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-status-bar/u-status-bar.vue"]]);
+  const __easycom_0$e = /* @__PURE__ */ _export_sfc(_sfc_main$23, [["render", _sfc_render$23], ["__scopeId", "data-v-eb8e0cdd"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-status-bar/u-status-bar.vue"]]);
   const __vite_glob_0_102 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_0$e
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1o = defineMixin({
+  const props$1p = defineMixin$1({
     props: {}
   });
-  const _sfc_main$21 = {
+  const _sfc_main$22 = {
     name: "u-safe-bottom",
-    mixins: [mpMixin, mixin, props$1o],
+    mixins: [mpMixin, mixin, props$1p],
     data() {
       return {
         safeAreaBottomHeight: 0,
@@ -6428,7 +6136,7 @@ if (uni.restoreGlobal) {
     mounted() {
     }
   };
-  function _sfc_render$21(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$22(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -6440,12 +6148,12 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$d = /* @__PURE__ */ _export_sfc(_sfc_main$21, [["render", _sfc_render$21], ["__scopeId", "data-v-f3d22cfe"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-safe-bottom/u-safe-bottom.vue"]]);
+  const __easycom_0$d = /* @__PURE__ */ _export_sfc(_sfc_main$22, [["render", _sfc_render$22], ["__scopeId", "data-v-f3d22cfe"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-safe-bottom/u-safe-bottom.vue"]]);
   const __vite_glob_0_94 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_0$d
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1n = defineMixin({
+  const props$1o = defineMixin$1({
     props: {
       // 是否展示弹窗
       show: {
@@ -6544,9 +6252,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$20 = {
+  const _sfc_main$21 = {
     name: "u-popup",
-    mixins: [mpMixin, mixin, props$1n],
+    mixins: [mpMixin, mixin, props$1o],
     data() {
       return {
         overlayDuration: this.duration + 50,
@@ -6722,8 +6430,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$20(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$2);
+  function _sfc_render$21(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$3);
     const _component_u_status_bar = resolveEasycom(vue.resolveDynamicComponent("u-status-bar"), __easycom_0$e);
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_u_safe_bottom = resolveEasycom(vue.resolveDynamicComponent("u-safe-bottom"), __easycom_0$d);
@@ -6830,12 +6538,12 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$20, [["render", _sfc_render$20], ["__scopeId", "data-v-05c24e9b"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-popup/u-popup.vue"]]);
+  const __easycom_3$2 = /* @__PURE__ */ _export_sfc(_sfc_main$21, [["render", _sfc_render$21], ["__scopeId", "data-v-05c24e9b"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-popup/u-popup.vue"]]);
   const __vite_glob_0_83 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
-    default: __easycom_3$1
+    default: __easycom_3$2
   }, Symbol.toStringTag, { value: "Module" }));
-  const openType = defineMixin({
+  const openType = defineMixin$1({
     props: {
       openType: String
     },
@@ -6860,7 +6568,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const buttonMixin = defineMixin({
+  const buttonMixin = defineMixin$1({
     props: {
       lang: String,
       sessionFrom: String,
@@ -6873,7 +6581,7 @@ if (uni.restoreGlobal) {
       openType: String
     }
   });
-  const props$1m = defineMixin({
+  const props$1n = defineMixin$1({
     props: {
       // 操作菜单是否展示 （默认false）
       show: {
@@ -6932,10 +6640,10 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1$ = {
+  const _sfc_main$20 = {
     name: "u-action-sheet",
     // 一些props参数和methods方法，通过mixin混入，因为其他文件也会用到
-    mixins: [openType, buttonMixin, mixin, props$1m],
+    mixins: [openType, buttonMixin, mixin, props$1n],
     data() {
       return {};
     },
@@ -6991,12 +6699,12 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1$(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$20(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
     const _component_u_gap = resolveEasycom(vue.resolveDynamicComponent("u-gap"), __easycom_2$4);
-    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$1);
+    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createBlock(_component_u_popup, {
       show: _ctx.show,
       mode: "bottom",
@@ -7154,12 +6862,12 @@ if (uni.restoreGlobal) {
       /* FORWARDED */
     }, 8, ["show", "onClose", "safeAreaInsetBottom", "round"]);
   }
-  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$1$, [["render", _sfc_render$1$], ["__scopeId", "data-v-69669810"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-action-sheet/u-action-sheet.vue"]]);
+  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$20, [["render", _sfc_render$20], ["__scopeId", "data-v-69669810"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-action-sheet/u-action-sheet.vue"]]);
   const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_4
   }, Symbol.toStringTag, { value: "Module" }));
-  const _sfc_main$1_ = {
+  const _sfc_main$1$ = {
     props: {
       modelValue: {
         type: [String, Number],
@@ -7223,7 +6931,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1_(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1$(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_input = resolveEasycom(vue.resolveDynamicComponent("up-input"), __easycom_0$f);
     const _component_up_action_sheet = resolveEasycom(vue.resolveDynamicComponent("up-action-sheet"), __easycom_4);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-action-sheet-data" }, [
@@ -7253,12 +6961,12 @@ if (uni.restoreGlobal) {
       }, null, 8, ["show", "actions", "title", "description", "onSelect"])
     ]);
   }
-  const uActionSheetData = /* @__PURE__ */ _export_sfc(_sfc_main$1_, [["render", _sfc_render$1_], ["__scopeId", "data-v-2ac4c00c"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-action-sheet-data/u-action-sheet-data.vue"]]);
+  const uActionSheetData = /* @__PURE__ */ _export_sfc(_sfc_main$1$, [["render", _sfc_render$1$], ["__scopeId", "data-v-2ac4c00c"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-action-sheet-data/u-action-sheet-data.vue"]]);
   const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: uActionSheetData
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1l = defineMixin({
+  const props$1m = defineMixin$1({
     props: {
       // 是否展示modal
       show: {
@@ -7367,9 +7075,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1Z = {
+  const _sfc_main$1_ = {
     name: "u-modal",
-    mixins: [mpMixin, mixin, props$1l],
+    mixins: [mpMixin, mixin, props$1m],
     data() {
       return {
         loading: false
@@ -7430,10 +7138,10 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1Z(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
-    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$1);
+  function _sfc_render$1_(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
+    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createBlock(_component_u_popup, {
       mode: "center",
       zoom: _ctx.zoom,
@@ -7588,12 +7296,12 @@ if (uni.restoreGlobal) {
       /* FORWARDED */
     }, 8, ["zoom", "show", "class", "customStyle", "closeOnClickOverlay", "duration", "onClick"]);
   }
-  const __easycom_0$c = /* @__PURE__ */ _export_sfc(_sfc_main$1Z, [["render", _sfc_render$1Z], ["__scopeId", "data-v-f667648f"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-modal/u-modal.vue"]]);
+  const __easycom_0$c = /* @__PURE__ */ _export_sfc(_sfc_main$1_, [["render", _sfc_render$1_], ["__scopeId", "data-v-f667648f"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-modal/u-modal.vue"]]);
   const __vite_glob_0_67 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_0$c
   }, Symbol.toStringTag, { value: "Module" }));
-  const _sfc_main$1Y = {
+  const _sfc_main$1Z = {
     name: "up-agreement",
     props: {
       urlProtocol: {
@@ -7629,7 +7337,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1Y(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1Z(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_modal = resolveEasycom(vue.resolveDynamicComponent("up-modal"), __easycom_0$c);
     return vue.openBlock(), vue.createElementBlock("view", { class: "up-agreement" }, [
       vue.createVNode(_component_up_modal, {
@@ -7662,12 +7370,12 @@ if (uni.restoreGlobal) {
       }, 8, ["show", "onConfirm", "onCancel"])
     ]);
   }
-  const uAgreement = /* @__PURE__ */ _export_sfc(_sfc_main$1Y, [["render", _sfc_render$1Y], ["__scopeId", "data-v-1bf68e1e"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-agreement/u-agreement.vue"]]);
+  const uAgreement = /* @__PURE__ */ _export_sfc(_sfc_main$1Z, [["render", _sfc_render$1Z], ["__scopeId", "data-v-1bf68e1e"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-agreement/u-agreement.vue"]]);
   const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: uAgreement
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1k = defineMixin({
+  const props$1l = defineMixin$1({
     props: {
       // 文字颜色
       color: {
@@ -7706,9 +7414,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1X = {
+  const _sfc_main$1Y = {
     name: "u-link",
-    mixins: [mpMixin, mixin, props$1k],
+    mixins: [mpMixin, mixin, props$1l],
     computed: {
       linkStyle() {
         const style = {
@@ -7730,7 +7438,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1X(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1Y(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -7743,12 +7451,12 @@ if (uni.restoreGlobal) {
       /* TEXT, STYLE */
     );
   }
-  const __easycom_1$d = /* @__PURE__ */ _export_sfc(_sfc_main$1X, [["render", _sfc_render$1X], ["__scopeId", "data-v-12f6646d"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-link/u-link.vue"]]);
+  const __easycom_1$d = /* @__PURE__ */ _export_sfc(_sfc_main$1Y, [["render", _sfc_render$1Y], ["__scopeId", "data-v-12f6646d"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-link/u-link.vue"]]);
   const __vite_glob_0_59 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_1$d
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1j = defineMixin({
+  const props$1k = defineMixin$1({
     props: {
       // 主题颜色
       type: {
@@ -7937,9 +7645,9 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  const _sfc_main$1W = {
+  const _sfc_main$1X = {
     name: "up-text",
-    mixins: [mpMixin, mixin, value, props$1j],
+    mixins: [mpMixin, mixin, value, props$1k],
     emits: ["click"],
     computed: {
       wrapStyle() {
@@ -7990,7 +7698,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1W(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1X(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_u_link = resolveEasycom(vue.resolveDynamicComponent("u-link"), __easycom_1$d);
     return _ctx.show ? (vue.openBlock(), vue.createElementBlock(
@@ -8076,12 +7784,12 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     )) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_0$b = /* @__PURE__ */ _export_sfc(_sfc_main$1W, [["render", _sfc_render$1W], ["__scopeId", "data-v-0a574502"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-text/u-text.vue"]]);
+  const __easycom_0$b = /* @__PURE__ */ _export_sfc(_sfc_main$1X, [["render", _sfc_render$1X], ["__scopeId", "data-v-0a574502"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-text/u-text.vue"]]);
   const __vite_glob_0_120 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_0$b
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1i = defineMixin({
+  const props$1j = defineMixin$1({
     props: {
       // 图片地址，Array<String>|Array<Object>形式
       urls: {
@@ -8165,9 +7873,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1V = {
+  const _sfc_main$1W = {
     name: "u-album",
-    mixins: [mpMixin, mixin, props$1i],
+    mixins: [mpMixin, mixin, props$1j],
     data() {
       return {
         // 单图的宽度
@@ -8342,7 +8050,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1V(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1W(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_text = resolveEasycom(vue.resolveDynamicComponent("up-text"), __easycom_0$b);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-album" }, [
       vue.createCommentVNode(" 相册行容器，每行显示 rowCount 个图片 "),
@@ -8415,12 +8123,12 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const uAlbum = /* @__PURE__ */ _export_sfc(_sfc_main$1V, [["render", _sfc_render$1V], ["__scopeId", "data-v-96d28356"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-album/u-album.vue"]]);
+  const uAlbum = /* @__PURE__ */ _export_sfc(_sfc_main$1W, [["render", _sfc_render$1W], ["__scopeId", "data-v-96d28356"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-album/u-album.vue"]]);
   const __vite_glob_0_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: uAlbum
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1h = defineMixin({
+  const props$1i = defineMixin$1({
     props: {
       // 显示文字
       title: {
@@ -8484,9 +8192,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1U = {
+  const _sfc_main$1V = {
     name: "u-alert",
-    mixins: [mpMixin, mixin, props$1h],
+    mixins: [mpMixin, mixin, props$1i],
     data() {
       return {
         // 控制组件显示隐藏
@@ -8556,7 +8264,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1U(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1V(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_up_transition = resolveEasycom(vue.resolveDynamicComponent("up-transition"), __easycom_2$3);
     return vue.openBlock(), vue.createBlock(_component_up_transition, {
@@ -8650,12 +8358,12 @@ if (uni.restoreGlobal) {
       /* FORWARDED */
     }, 8, ["mode", "show"]);
   }
-  const uAlert = /* @__PURE__ */ _export_sfc(_sfc_main$1U, [["render", _sfc_render$1U], ["__scopeId", "data-v-158e540a"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-alert/u-alert.vue"]]);
+  const uAlert = /* @__PURE__ */ _export_sfc(_sfc_main$1V, [["render", _sfc_render$1V], ["__scopeId", "data-v-158e540a"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-alert/u-alert.vue"]]);
   const __vite_glob_0_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: uAlert
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1g = defineMixin({
+  const props$1h = defineMixin$1({
     props: {
       // 头像图片路径(不能为相对路径)
       src: {
@@ -8734,9 +8442,9 @@ if (uni.restoreGlobal) {
     }
   });
   const base64Avatar = "data:image/jpg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QMraHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjREMEQwRkY0RjgwNDExRUE5OTY2RDgxODY3NkJFODMxIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjREMEQwRkY1RjgwNDExRUE5OTY2RDgxODY3NkJFODMxIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NEQwRDBGRjJGODA0MTFFQTk5NjZEODE4Njc2QkU4MzEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NEQwRDBGRjNGODA0MTFFQTk5NjZEODE4Njc2QkU4MzEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7/7gAOQWRvYmUAZMAAAAAB/9sAhAAGBAQEBQQGBQUGCQYFBgkLCAYGCAsMCgoLCgoMEAwMDAwMDBAMDg8QDw4MExMUFBMTHBsbGxwfHx8fHx8fHx8fAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCADIAMgDAREAAhEBAxEB/8QAcQABAQEAAwEBAAAAAAAAAAAAAAUEAQMGAgcBAQAAAAAAAAAAAAAAAAAAAAAQAAIBAwICBgkDBQAAAAAAAAABAhEDBCEFMVFBYXGREiKBscHRMkJSEyOh4XLxYjNDFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A/fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHbHFyZ/Dam+yLA+Z2L0Pjtyj2poD4AAAAAAAAAAAAAAAAAAAAAAAAKWFs9y6lcvvwQeqj8z9wFaziY1n/HbUX9XF97A7QAGXI23EvJ1goyfzR0YEfN269jeZ+a03pNe0DIAAAAAAAAAAAAAAAAAAAACvtO3RcVkXlWutuL9YFYAAAAAOJRjKLjJVi9GmB5/csH/mu1h/in8PU+QGMAAAAAAAAAAAAAAAAAAaMDG/6MmMH8C80+xAelSSVFolwQAAAAAAAHVlWI37ErUulaPk+hgeYnCUJuElSUXRrrQHAAAAAAAAAAAAAAAAABa2Oz4bM7r4zdF2ICmAAAAAAAAAg7zZ8GX41wuJP0rRgYAAAAAAAAAAAAAAAAAD0m2R8ODaXU33tsDSAAAAAAAAAlb9HyWZcnJd9PcBHAAAAAAAAAAAAAAAAAPS7e64Vn+KA0AAAAAAAAAJm+v8Ftf3ewCKAAAAAAAAAAAAAAAAAX9muqeGo9NttP06+0DcAAAAAAAAAjb7dTu2ra+VOT9P8AQCWAAAAAAAAAAAAAAAAAUNmyPt5Ltv4bui/kuAF0AAAAAAADiUlGLlJ0SVW+oDzOXfd/Ind6JPRdS0QHSAAAAAAAAAAAAAAAAAE2nVaNcGB6Lbs6OTao9LsF51z60BrAAAAAABJ3jOVHjW3r/sa9QEgAAAAAAAAAAAAAAAAAAAPu1duWriuW34ZR4MC9hbnZyEoy8l36XwfYBsAAADaSq9EuLAlZ+7xSdrGdW9Hc5dgEdtt1erfFgAAAAAAAAAAAAAAAAADVjbblX6NR8MH80tEBRs7HYivyzlN8lovaBPzduvY0m6eK10TXtAyAarO55lpJK54orolr+4GqO/Xaea1FvqbXvA+Z77kNeW3GPbV+4DJfzcm/pcm3H6Vou5AdAFLC2ed2Pjv1txa8sV8T6wOL+yZEKu1JXFy4MDBOE4ScZxcZLinoB8gAAAAAAAAAAAB242LeyJ+C3GvN9C7QLmJtePYpKS+5c+p8F2IDYAANJqj1T4oCfk7Nj3G5Wn9qXJax7gJ93Z82D8sVNc4v30A6Xg5i42Z+iLfqARwcyT0sz9MWvWBps7LlTf5Grce9/oBTxdtxseklHxT+uWr9AGoAB138ezfj4bsFJdD6V2MCPm7RdtJzs1uW1xXzL3gTgAAAAAAAAADRhYc8q74I6RWs5ckB6GxYtWLat21SK731sDsAAAAAAAAAAAAAAAASt021NO/YjrxuQXT1oCOAAAAAAABzGLlJRSq26JAelwsWONYjbXxcZvmwO8AAAAAAAAAAAAAAAAAAef3TEWPkVivx3NY9T6UBiAAAAAABo2+VmGXblddIJ8eivRUD0oAAAAAAAAAAAAAAAAAAAYt4tKeFKVNYNSXfRgefAAAAAAAAr7VuSSWPedKaW5v1MCsAAAAAAAAAAAAAAAAAAIe6bj96Ts2n+JPzSXzP3ATgAAAAAAAAFbbt1UUrOQ9FpC4/UwK6aaqtU+DAAAAAAAAAAAAAAA4lKMIuUmoxWrb4ARNx3R3q2rLpa4Sl0y/YCcAAAAAAAAAAANmFud7G8r89r6X0dgFvGzLGRGtuWvTF6NAdwAAAAAAAAAAAy5W442PVN+K59EePp5ARMvOv5MvO6QXCC4AZwAAAAAAAAAAAAAcxlKLUotprg1owN+PvORborq+7Hnwl3gUbO74VzRydt8pKn68ANcJwmqwkpLmnUDkAAAAfNy9atqtyagut0AxXt5xIV8Fbj6lRd7Am5G65V6qUvtwfyx94GMAAAAAAAAAAAAAAAAAAAOU2nVOj5gdsc3LiqRvTpyqwOxbnnrhdfpSfrQB7pnv/AGvuS9gHXPMy5/Fem1yq0v0A6W29XqwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//Z";
-  const _sfc_main$1T = {
+  const _sfc_main$1U = {
     name: "u-avatar",
-    mixins: [mpMixin, mixin, props$1g],
+    mixins: [mpMixin, mixin, props$1h],
     data() {
       return {
         // 如果配置randomBgColor参数为true，在图标或者文字的模式下，会随机从中取出一个颜色值当做背景色
@@ -8808,7 +8516,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1T(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1U(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_up_text = resolveEasycom(vue.resolveDynamicComponent("up-text"), __easycom_0$b);
     return vue.openBlock(), vue.createElementBlock(
@@ -8859,12 +8567,12 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$1T, [["render", _sfc_render$1T], ["__scopeId", "data-v-34d954f9"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-avatar/u-avatar.vue"]]);
+  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$1U, [["render", _sfc_render$1U], ["__scopeId", "data-v-34d954f9"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-avatar/u-avatar.vue"]]);
   const __vite_glob_0_6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_2$2
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1f = defineMixin({
+  const props$1g = defineMixin$1({
     props: {
       // 头像图片组
       urls: {
@@ -8916,9 +8624,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1S = {
+  const _sfc_main$1T = {
     name: "u-avatar-group",
-    mixins: [mpMixin, mixin, props$1f],
+    mixins: [mpMixin, mixin, props$1g],
     data() {
       return {};
     },
@@ -8936,7 +8644,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1S(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1T(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_avatar = resolveEasycom(vue.resolveDynamicComponent("u-avatar"), __easycom_2$2);
     const _component_up_text = resolveEasycom(vue.resolveDynamicComponent("up-text"), __easycom_0$b);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-avatar-group" }, [
@@ -8983,12 +8691,12 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const uAvatarGroup = /* @__PURE__ */ _export_sfc(_sfc_main$1S, [["render", _sfc_render$1S], ["__scopeId", "data-v-3bd09520"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-avatar-group/u-avatar-group.vue"]]);
+  const uAvatarGroup = /* @__PURE__ */ _export_sfc(_sfc_main$1T, [["render", _sfc_render$1T], ["__scopeId", "data-v-3bd09520"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-avatar-group/u-avatar-group.vue"]]);
   const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: uAvatarGroup
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1e = defineMixin({
+  const props$1f = defineMixin$1({
     props: {
       // 返回顶部的形状，circle-圆形，square-方形
       mode: {
@@ -9042,9 +8750,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1R = {
+  const _sfc_main$1S = {
     name: "u-back-top",
-    mixins: [mpMixin, mixin, props$1e],
+    mixins: [mpMixin, mixin, props$1f],
     computed: {
       backTopStyle() {
         const style = {
@@ -9086,7 +8794,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1R(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1S(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_u_transition = resolveEasycom(vue.resolveDynamicComponent("u-transition"), __easycom_2$3);
     return vue.openBlock(), vue.createBlock(_component_u_transition, {
@@ -9127,12 +8835,12 @@ if (uni.restoreGlobal) {
       /* FORWARDED */
     }, 8, ["customStyle", "show"]);
   }
-  const uBackTop = /* @__PURE__ */ _export_sfc(_sfc_main$1R, [["render", _sfc_render$1R], ["__scopeId", "data-v-91347e36"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-back-top/u-back-top.vue"]]);
+  const uBackTop = /* @__PURE__ */ _export_sfc(_sfc_main$1S, [["render", _sfc_render$1S], ["__scopeId", "data-v-91347e36"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-back-top/u-back-top.vue"]]);
   const __vite_glob_0_7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: uBackTop
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1d = defineMixin({
+  const props$1e = defineMixin$1({
     props: {
       // 是否显示圆点
       isDot: {
@@ -9209,9 +8917,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1Q = {
+  const _sfc_main$1R = {
     name: "u-badge",
-    mixins: [mpMixin, props$1d, mixin],
+    mixins: [mpMixin, props$1e, mixin],
     computed: {
       // 是否将badge中心与父组件右上角重合
       boxStyle() {
@@ -9255,7 +8963,7 @@ if (uni.restoreGlobal) {
       addStyle
     }
   };
-  function _sfc_render$1Q(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1R(_ctx, _cache, $props, $setup, $data, $options) {
     return _ctx.show && ((Number(_ctx.value) === 0 ? _ctx.showZero : true) || _ctx.isDot) ? (vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -9268,12 +8976,12 @@ if (uni.restoreGlobal) {
       /* TEXT, CLASS, STYLE */
     )) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_1$c = /* @__PURE__ */ _export_sfc(_sfc_main$1Q, [["render", _sfc_render$1Q], ["__scopeId", "data-v-06cca9b7"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-badge/u-badge.vue"]]);
+  const __easycom_1$c = /* @__PURE__ */ _export_sfc(_sfc_main$1R, [["render", _sfc_render$1R], ["__scopeId", "data-v-06cca9b7"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-badge/u-badge.vue"]]);
   const __vite_glob_0_8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: __easycom_1$c
   }, Symbol.toStringTag, { value: "Module" }));
-  const _sfc_main$1P = {
+  const _sfc_main$1Q = {
     name: "u-barcode",
     props: {
       // 条码值
@@ -10185,7 +9893,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1P(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1Q(_ctx, _cache, $props, $setup, $data, $options) {
     return $data.calcSizeDone ? (vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       class: "u-barcode"
@@ -10221,12 +9929,12 @@ if (uni.restoreGlobal) {
       ))
     ])) : vue.createCommentVNode("v-if", true);
   }
-  const uBarcode = /* @__PURE__ */ _export_sfc(_sfc_main$1P, [["render", _sfc_render$1P], ["__scopeId", "data-v-f3ca37b6"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-barcode/u-barcode.vue"]]);
+  const uBarcode = /* @__PURE__ */ _export_sfc(_sfc_main$1Q, [["render", _sfc_render$1Q], ["__scopeId", "data-v-f3ca37b6"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-barcode/u-barcode.vue"]]);
   const __vite_glob_0_9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: uBarcode
   }, Symbol.toStringTag, { value: "Module" }));
-  const propsBox = defineMixin({
+  const propsBox = defineMixin$1({
     props: {
       // 背景色
       bgColors: {
@@ -10250,7 +9958,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$1O = {
+  const _sfc_main$1P = {
     name: "up-box",
     data() {
       return {};
@@ -10262,7 +9970,7 @@ if (uni.restoreGlobal) {
       addStyle
     }
   };
-  function _sfc_render$1O(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1P(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -10339,10 +10047,399 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const uBox = /* @__PURE__ */ _export_sfc(_sfc_main$1O, [["render", _sfc_render$1O], ["__scopeId", "data-v-5409417d"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-box/u-box.vue"]]);
+  const uBox = /* @__PURE__ */ _export_sfc(_sfc_main$1P, [["render", _sfc_render$1P], ["__scopeId", "data-v-5409417d"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-box/u-box.vue"]]);
   const __vite_glob_0_10 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: uBox
+  }, Symbol.toStringTag, { value: "Module" }));
+  const props$1d = defineMixin$1({
+    props: {
+      // 是否细边框
+      hairline: {
+        type: Boolean,
+        default: () => props$1y.button.hairline
+      },
+      // 按钮的预置样式，info，primary，error，warning，success
+      type: {
+        type: String,
+        default: () => props$1y.button.type
+      },
+      // 按钮尺寸，large，normal，small，mini
+      size: {
+        type: String,
+        default: () => props$1y.button.size
+      },
+      // 按钮形状，circle（两边为半圆），square（带圆角）
+      shape: {
+        type: String,
+        default: () => props$1y.button.shape
+      },
+      // 按钮是否镂空
+      plain: {
+        type: Boolean,
+        default: () => props$1y.button.plain
+      },
+      // 是否禁止状态
+      disabled: {
+        type: Boolean,
+        default: () => props$1y.button.disabled
+      },
+      // 是否加载中
+      loading: {
+        type: Boolean,
+        default: () => props$1y.button.loading
+      },
+      // 加载中提示文字
+      loadingText: {
+        type: [String, Number],
+        default: () => props$1y.button.loadingText
+      },
+      // 加载状态图标类型
+      loadingMode: {
+        type: String,
+        default: () => props$1y.button.loadingMode
+      },
+      // 加载图标大小
+      loadingSize: {
+        type: [String, Number],
+        default: () => props$1y.button.loadingSize
+      },
+      // 开放能力，具体请看uniapp稳定关于button组件部分说明
+      // https://uniapp.dcloud.io/component/button
+      openType: {
+        type: String,
+        default: () => props$1y.button.openType
+      },
+      // 用于 <form> 组件，点击分别会触发 <form> 组件的 submit/reset 事件
+      // 取值为submit（提交表单），reset（重置表单）
+      formType: {
+        type: String,
+        default: () => props$1y.button.formType
+      },
+      // 打开 APP 时，向 APP 传递的参数，open-type=launchApp时有效
+      // 只微信小程序、QQ小程序有效
+      appParameter: {
+        type: String,
+        default: () => props$1y.button.appParameter
+      },
+      // 指定是否阻止本节点的祖先节点出现点击态，微信小程序有效
+      hoverStopPropagation: {
+        type: Boolean,
+        default: () => props$1y.button.hoverStopPropagation
+      },
+      // 指定返回用户信息的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文。只微信小程序有效
+      lang: {
+        type: String,
+        default: () => props$1y.button.lang
+      },
+      // 会话来源，open-type="contact"时有效。只微信小程序有效
+      sessionFrom: {
+        type: String,
+        default: () => props$1y.button.sessionFrom
+      },
+      // 会话内消息卡片标题，open-type="contact"时有效
+      // 默认当前标题，只微信小程序有效
+      sendMessageTitle: {
+        type: String,
+        default: () => props$1y.button.sendMessageTitle
+      },
+      // 会话内消息卡片点击跳转小程序路径，open-type="contact"时有效
+      // 默认当前分享路径，只微信小程序有效
+      sendMessagePath: {
+        type: String,
+        default: () => props$1y.button.sendMessagePath
+      },
+      // 会话内消息卡片图片，open-type="contact"时有效
+      // 默认当前页面截图，只微信小程序有效
+      sendMessageImg: {
+        type: String,
+        default: () => props$1y.button.sendMessageImg
+      },
+      // 是否显示会话内消息卡片，设置此参数为 true，用户进入客服会话会在右下角显示"可能要发送的小程序"提示，
+      // 用户点击后可以快速发送小程序消息，open-type="contact"时有效
+      showMessageCard: {
+        type: Boolean,
+        default: () => props$1y.button.showMessageCard
+      },
+      // 额外传参参数，用于小程序的data-xxx属性，通过target.dataset.name获取
+      dataName: {
+        type: String,
+        default: () => props$1y.button.dataName
+      },
+      // 节流，一定时间内只能触发一次
+      throttleTime: {
+        type: [String, Number],
+        default: () => props$1y.button.throttleTime
+      },
+      // 按住后多久出现点击态，单位毫秒
+      hoverStartTime: {
+        type: [String, Number],
+        default: () => props$1y.button.hoverStartTime
+      },
+      // 手指松开后点击态保留时间，单位毫秒
+      hoverStayTime: {
+        type: [String, Number],
+        default: () => props$1y.button.hoverStayTime
+      },
+      // 按钮文字，之所以通过props传入，是因为slot传入的话
+      // nvue中无法控制文字的样式
+      text: {
+        type: [String, Number],
+        default: () => props$1y.button.text
+      },
+      // 按钮图标
+      icon: {
+        type: String,
+        default: () => props$1y.button.icon
+      },
+      // 按钮图标
+      iconColor: {
+        type: String,
+        default: () => props$1y.button.icon
+      },
+      // 按钮颜色，支持传入linear-gradient渐变色
+      color: {
+        type: String,
+        default: () => props$1y.button.color
+      },
+      // 停止冒泡
+      stop: {
+        type: Boolean,
+        default: () => props$1y.button.stop
+      }
+    }
+  });
+  let flag;
+  function throttle(func2, wait = 500, immediate = true) {
+    if (immediate) {
+      if (!flag) {
+        flag = true;
+        typeof func2 === "function" && func2();
+        setTimeout(() => {
+          flag = false;
+        }, wait);
+      }
+    } else if (!flag) {
+      flag = true;
+      setTimeout(() => {
+        flag = false;
+        typeof func2 === "function" && func2();
+      }, wait);
+    }
+  }
+  const _sfc_main$1O = {
+    name: "u-button",
+    mixins: [mpMixin, mixin, props$1d],
+    data() {
+      return {};
+    },
+    computed: {
+      // 生成bem风格的类名
+      bemClass() {
+        if (!this.color) {
+          return this.bem(
+            "button",
+            ["type", "shape", "size"],
+            ["disabled", "plain", "hairline"]
+          );
+        } else {
+          return this.bem(
+            "button",
+            ["shape", "size"],
+            ["disabled", "plain", "hairline"]
+          );
+        }
+      },
+      loadingColor() {
+        if (this.plain) {
+          return this.color ? this.color : color$3[`u-${this.type}`];
+        }
+        if (this.type === "info") {
+          return "#c9c9c9";
+        }
+        return "rgb(200, 200, 200)";
+      },
+      iconColorCom() {
+        if (this.iconColor)
+          return this.iconColor;
+        if (this.plain) {
+          return this.color ? this.color : this.type;
+        } else {
+          return this.type === "info" ? "#000000" : "#ffffff";
+        }
+      },
+      baseColor() {
+        let style = {};
+        if (this.color) {
+          style.color = this.plain ? this.color : "white";
+          if (!this.plain) {
+            style["background-color"] = this.color;
+          }
+          if (this.color.indexOf("gradient") !== -1) {
+            style.borderTopWidth = 0;
+            style.borderRightWidth = 0;
+            style.borderBottomWidth = 0;
+            style.borderLeftWidth = 0;
+            if (!this.plain) {
+              style.backgroundImage = this.color;
+            }
+          } else {
+            style.borderColor = this.color;
+            style.borderWidth = "1px";
+            style.borderStyle = "solid";
+          }
+        }
+        return style;
+      },
+      // nvue版本按钮的字体不会继承父组件的颜色，需要对每一个text组件进行单独的设置
+      nvueTextStyle() {
+        let style = {};
+        if (this.type === "info") {
+          style.color = "#323233";
+        }
+        if (this.color) {
+          style.color = this.plain ? this.color : "white";
+        }
+        style.fontSize = this.textSize + "px";
+        return style;
+      },
+      // 字体大小
+      textSize() {
+        let fontSize = 14, { size } = this;
+        if (size === "large")
+          fontSize = 16;
+        if (size === "normal")
+          fontSize = 14;
+        if (size === "small")
+          fontSize = 12;
+        if (size === "mini")
+          fontSize = 10;
+        return fontSize;
+      }
+    },
+    emits: [
+      "click",
+      "getphonenumber",
+      "getuserinfo",
+      "error",
+      "opensetting",
+      "launchapp",
+      "agreeprivacyauthorization"
+    ],
+    methods: {
+      addStyle,
+      clickHandler(e2) {
+        if (!this.disabled && !this.loading) {
+          throttle(() => {
+            this.$emit("click", e2);
+          }, this.throttleTime);
+        }
+        this.stop && this.preventEvent(e2);
+      },
+      // 下面为对接uniapp官方按钮开放能力事件回调的对接
+      getphonenumber(res) {
+        this.$emit("getphonenumber", res);
+      },
+      getuserinfo(res) {
+        this.$emit("getuserinfo", res);
+      },
+      error(res) {
+        this.$emit("error", res);
+      },
+      opensetting(res) {
+        this.$emit("opensetting", res);
+      },
+      launchapp(res) {
+        this.$emit("launchapp", res);
+      },
+      agreeprivacyauthorization(res) {
+        this.$emit("agreeprivacyauthorization", res);
+      }
+    }
+  };
+  function _sfc_render$1O(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
+    const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
+    return vue.openBlock(), vue.createElementBlock("button", {
+      "hover-start-time": Number(_ctx.hoverStartTime),
+      "hover-stay-time": Number(_ctx.hoverStayTime),
+      "form-type": _ctx.formType,
+      "open-type": _ctx.openType,
+      "app-parameter": _ctx.appParameter,
+      "hover-stop-propagation": _ctx.hoverStopPropagation,
+      "send-message-title": _ctx.sendMessageTitle,
+      "send-message-path": _ctx.sendMessagePath,
+      lang: _ctx.lang,
+      "data-name": _ctx.dataName,
+      "session-from": _ctx.sessionFrom,
+      "send-message-img": _ctx.sendMessageImg,
+      "show-message-card": _ctx.showMessageCard,
+      onGetphonenumber: _cache[0] || (_cache[0] = (...args) => $options.getphonenumber && $options.getphonenumber(...args)),
+      onGetuserinfo: _cache[1] || (_cache[1] = (...args) => $options.getuserinfo && $options.getuserinfo(...args)),
+      onError: _cache[2] || (_cache[2] = (...args) => $options.error && $options.error(...args)),
+      onOpensetting: _cache[3] || (_cache[3] = (...args) => $options.opensetting && $options.opensetting(...args)),
+      onLaunchapp: _cache[4] || (_cache[4] = (...args) => $options.launchapp && $options.launchapp(...args)),
+      onAgreeprivacyauthorization: _cache[5] || (_cache[5] = (...args) => $options.agreeprivacyauthorization && $options.agreeprivacyauthorization(...args)),
+      "hover-class": !_ctx.disabled && !_ctx.loading ? "u-button--active" : "",
+      class: vue.normalizeClass(["u-button u-reset-button", $options.bemClass]),
+      style: vue.normalizeStyle([$options.baseColor, $options.addStyle(_ctx.customStyle)]),
+      onClick: _cache[6] || (_cache[6] = (...args) => $options.clickHandler && $options.clickHandler(...args))
+    }, [
+      _ctx.loading ? (vue.openBlock(), vue.createElementBlock(
+        vue.Fragment,
+        { key: 0 },
+        [
+          vue.createVNode(_component_u_loading_icon, {
+            mode: _ctx.loadingMode,
+            size: _ctx.loadingSize * 1.15,
+            color: $options.loadingColor
+          }, null, 8, ["mode", "size", "color"]),
+          vue.createElementVNode(
+            "text",
+            {
+              class: "u-button__loading-text",
+              style: vue.normalizeStyle([{ fontSize: $options.textSize + "px" }])
+            },
+            vue.toDisplayString(_ctx.loadingText || _ctx.text),
+            5
+            /* TEXT, STYLE */
+          )
+        ],
+        64
+        /* STABLE_FRAGMENT */
+      )) : (vue.openBlock(), vue.createElementBlock(
+        vue.Fragment,
+        { key: 1 },
+        [
+          _ctx.icon ? (vue.openBlock(), vue.createBlock(_component_up_icon, {
+            key: 0,
+            name: _ctx.icon,
+            color: $options.iconColorCom,
+            size: $options.textSize * 1.35,
+            customStyle: { marginRight: "2px" }
+          }, null, 8, ["name", "color", "size"])) : vue.createCommentVNode("v-if", true),
+          vue.renderSlot(_ctx.$slots, "default", {}, () => [
+            vue.createElementVNode(
+              "text",
+              {
+                class: "u-button__text",
+                style: vue.normalizeStyle([{ fontSize: $options.textSize + "px" }])
+              },
+              vue.toDisplayString(_ctx.text),
+              5
+              /* TEXT, STYLE */
+            )
+          ], true)
+        ],
+        64
+        /* STABLE_FRAGMENT */
+      ))
+    ], 46, ["hover-start-time", "hover-stay-time", "form-type", "open-type", "app-parameter", "hover-stop-propagation", "send-message-title", "send-message-path", "lang", "data-name", "session-from", "send-message-img", "show-message-card", "hover-class"]);
+  }
+  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$1O, [["render", _sfc_render$1O], ["__scopeId", "data-v-5ce41ee6"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-button/u-button.vue"]]);
+  const __vite_glob_0_11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    __proto__: null,
+    default: __easycom_3$1
   }, Symbol.toStringTag, { value: "Module" }));
   const _sfc_main$1N = {
     name: "u-calendar-header",
@@ -11234,7 +11331,7 @@ if (uni.restoreGlobal) {
     );
   }
   const uMonth = /* @__PURE__ */ _export_sfc(_sfc_main$1M, [["render", _sfc_render$1M], ["__scopeId", "data-v-3c847935"], ["__file", "/Users/rayn/Documents/HBuilderProjects/UCard/uni_modules/uview-plus/components/u-calendar/month.vue"]]);
-  const props$1c = defineMixin({
+  const props$1c = defineMixin$1({
     props: {
       // 日历顶部标题
       title: {
@@ -12478,8 +12575,8 @@ if (uni.restoreGlobal) {
   function _sfc_render$1L(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uHeader = vue.resolveComponent("uHeader");
     const _component_uMonth = vue.resolveComponent("uMonth");
-    const _component_u_button = resolveEasycom(vue.resolveDynamicComponent("u-button"), __easycom_3$3);
-    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$1);
+    const _component_u_button = resolveEasycom(vue.resolveDynamicComponent("u-button"), __easycom_3$1);
+    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createBlock(_component_u_popup, {
       show: _ctx.show,
       mode: "bottom",
@@ -12555,7 +12652,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCalendar
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1b = defineMixin({
+  const props$1b = defineMixin$1({
     props: {
       // 是否打乱键盘按键的顺序
       random: {
@@ -12823,7 +12920,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_1$b
   }, Symbol.toStringTag, { value: "Module" }));
-  const propsCard = defineMixin({
+  const propsCard = defineMixin$1({
     props: {
       // 与屏幕两侧是否留空隙
       full: {
@@ -13098,7 +13195,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCard
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1a = defineMixin({
+  const props$1a = defineMixin$1({
     props: {
       // 标题
       title: {
@@ -13394,7 +13491,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_0$a
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$19 = defineMixin({
+  const props$19 = defineMixin$1({
     props: {
       // 排列方向
       direction: {
@@ -13490,7 +13587,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_1$a
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$18 = defineMixin({
+  const props$18 = defineMixin$1({
     props: {
       // 滑块的移动过渡时间，单位ms
       duration: {
@@ -13875,7 +13972,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_1$9
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$17 = defineMixin({
+  const props$17 = defineMixin$1({
     props: {
       // 标题
       title: {
@@ -14014,7 +14111,7 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render$1F(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["u-cell", [_ctx.customClass]]),
       style: vue.normalizeStyle([$options.addStyle(_ctx.customStyle)]),
@@ -14121,7 +14218,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_1$8
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$16 = defineMixin({
+  const props$16 = defineMixin$1({
     props: {
       // 分组标题
       title: {
@@ -14143,7 +14240,7 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$1E(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -14390,8 +14487,8 @@ if (uni.restoreGlobal) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_up_cell = resolveEasycom(vue.resolveDynamicComponent("up-cell"), __easycom_1$8);
     const _component_up_cell_group = resolveEasycom(vue.resolveDynamicComponent("up-cell-group"), __easycom_2$1);
-    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$3);
-    const _component_up_popup = resolveEasycom(vue.resolveDynamicComponent("up-popup"), __easycom_3$1);
+    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$1);
+    const _component_up_popup = resolveEasycom(vue.resolveDynamicComponent("up-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createBlock(_component_up_popup, {
       show: $data.popupShow,
       mode: "bottom",
@@ -14911,7 +15008,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCateTab
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$15 = defineMixin({
+  const props$15 = defineMixin$1({
     props: {
       // 标识符
       name: {
@@ -15067,7 +15164,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCheckboxGroup
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$14 = defineMixin({
+  const props$14 = defineMixin$1({
     props: {
       // checkbox的名称
       name: {
@@ -15394,7 +15491,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_1$7
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$13 = defineMixin({
+  const props$13 = defineMixin$1({
     props: {
       // 标签类型info、primary、success、warning、error
       type: {
@@ -15819,7 +15916,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uChoose
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$12 = defineMixin({
+  const props$12 = defineMixin$1({
     props: {
       percentage: {
         type: [String, Number],
@@ -15904,7 +16001,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCircleProgress
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$11 = defineMixin({
+  const props$11 = defineMixin$1({
     props: {
       // 列表锚点文本内容
       text: {
@@ -16003,7 +16100,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_0$8
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$10 = defineMixin({
+  const props$10 = defineMixin$1({
     props: {}
   });
   const _sfc_main$1v = {
@@ -16058,7 +16155,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_2
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$$ = defineMixin({
+  const props$$ = defineMixin$1({
     props: {
       // 右边锚点非激活的颜色
       inactiveColor: {
@@ -16580,7 +16677,7 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render$1t(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_index_anchor = resolveEasycom(vue.resolveDynamicComponent("up-index-anchor"), __easycom_0$8);
-    const _component_up_line = resolveEasycom(vue.resolveDynamicComponent("up-line"), __easycom_1$e);
+    const _component_up_line = resolveEasycom(vue.resolveDynamicComponent("up-line"), __easycom_1$f);
     const _component_up_index_item = resolveEasycom(vue.resolveDynamicComponent("up-index-item"), __easycom_2);
     const _component_up_index_list = resolveEasycom(vue.resolveDynamicComponent("up-index-list"), __easycom_3);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-city-locate" }, [
@@ -16698,7 +16795,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCityLocate
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$_ = defineMixin({
+  const props$_ = defineMixin$1({
     props: {
       // 键盘弹起时，是否自动上推页面
       adjustPosition: {
@@ -16956,7 +17053,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCodeInput
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$Z = defineMixin({
+  const props$Z = defineMixin$1({
     props: {
       // 倒计时总秒数
       seconds: {
@@ -17090,7 +17187,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCode
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$Y = defineMixin({
+  const props$Y = defineMixin$1({
     props: {
       // 占父容器宽度的多少等分，总分为12份
       span: {
@@ -17208,7 +17305,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCol
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$X = defineMixin({
+  const props$X = defineMixin$1({
     props: {
       // 标题
       title: {
@@ -17399,7 +17496,7 @@ if (uni.restoreGlobal) {
   function _sfc_render$1p(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_u_cell = resolveEasycom(vue.resolveDynamicComponent("u-cell"), __easycom_1$8);
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-collapse-item" }, [
       vue.createVNode(_component_u_cell, {
         title: _ctx.$slots.title ? "" : _ctx.title,
@@ -17486,7 +17583,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCollapseItem
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$W = defineMixin({
+  const props$W = defineMixin$1({
     props: {
       // 当前展开面板的name，非手风琴模式：[<string | number>]，手风琴模式：string | number
       value: {
@@ -17565,7 +17662,7 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$1o(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-collapse" }, [
       _ctx.border ? (vue.openBlock(), vue.createBlock(_component_u_line, { key: 0 })) : vue.createCommentVNode("v-if", true),
       vue.renderSlot(_ctx.$slots, "default")
@@ -17576,7 +17673,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCollapse
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$V = defineMixin({
+  const props$V = defineMixin$1({
     props: {
       // tab的数据
       list: {
@@ -18387,8 +18484,8 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render$1m(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_subsection = resolveEasycom(vue.resolveDynamicComponent("up-subsection"), __easycom_0$7);
-    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$3);
-    const _component_up_popup = resolveEasycom(vue.resolveDynamicComponent("up-popup"), __easycom_3$1);
+    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$1);
+    const _component_up_popup = resolveEasycom(vue.resolveDynamicComponent("up-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createElementBlock("view", { class: "up-color-picker" }, [
       vue.createElementVNode(
         "view",
@@ -18679,7 +18776,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uColorPicker
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$U = defineMixin({
+  const props$U = defineMixin$1({
     props: {
       // 显示的内容，字符串
       text: {
@@ -18945,7 +19042,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCopy
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$T = defineMixin({
+  const props$T = defineMixin$1({
     props: {
       // 倒计时时长，单位ms
       time: {
@@ -19158,7 +19255,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCountDown
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$S = defineMixin({
+  const props$S = defineMixin$1({
     props: {
       // 开始的数值，默认从0增长到某一个数
       startVal: {
@@ -20710,7 +20807,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uCropper
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$R = defineMixin({
+  const props$R = defineMixin$1({
     props: {
       // 是否展示工具条
       show: {
@@ -20836,7 +20933,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_1$6
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$Q = defineMixin({
+  const props$Q = defineMixin$1({
     props: {
       modelValue: {
         type: Array,
@@ -21244,8 +21341,8 @@ if (uni.restoreGlobal) {
   function _sfc_render$1e(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_input = resolveEasycom(vue.resolveDynamicComponent("up-input"), __easycom_0$f);
     const _component_u_toolbar = resolveEasycom(vue.resolveDynamicComponent("u-toolbar"), __easycom_1$6);
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
-    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$1);
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
+    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-picker-wraper" }, [
       _ctx.hasInput ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -21359,7 +21456,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_1$5
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$P = defineMixin({
+  const props$P = defineMixin$1({
     props: {
       // 是否显示input
       hasInput: {
@@ -21919,7 +22016,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uDatetimePicker
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$O = defineMixin({
+  const props$O = defineMixin$1({
     props: {
       // 是否虚线
       dashed: {
@@ -22004,7 +22101,7 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$1c(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -22356,7 +22453,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uDragsort
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$N = defineMixin({
+  const props$N = defineMixin$1({
     props: {
       // 当前选中项的value值
       modelValue: {
@@ -22532,7 +22629,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uDropdownItem
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$M = defineMixin({
+  const props$M = defineMixin$1({
     props: {
       // 菜单标题和选项的激活态颜色
       activeColor: {
@@ -22806,7 +22903,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uDropdown
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$L = defineMixin({
+  const props$L = defineMixin$1({
     props: {
       // 内置图标名称，或图片路径，建议绝对路径
       icon: {
@@ -23144,7 +23241,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uFloatButton
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$K = defineMixin({
+  const props$K = defineMixin$1({
     props: {
       // input的label提示语
       label: {
@@ -23278,7 +23375,7 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render$16(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -23390,7 +23487,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uFormItem
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$J = defineMixin({
+  const props$J = defineMixin$1({
     props: {
       // 当前form的需要验证字段的集合
       model: {
@@ -23459,7 +23556,7 @@ if (uni.restoreGlobal) {
     });
     return fields;
   }
-  function format() {
+  function format$1() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
@@ -23636,12 +23733,12 @@ if (uni.restoreGlobal) {
   }
   function required(rule, value2, source, errors, options2, type2) {
     if (rule.required && (!source.hasOwnProperty(rule.field) || isEmptyValue(value2, type2 || rule.type))) {
-      errors.push(format(options2.messages.required, rule.fullField));
+      errors.push(format$1(options2.messages.required, rule.fullField));
     }
   }
   function whitespace(rule, value2, source, errors, options2) {
     if (/^\s+$/.test(value2) || value2 === "") {
-      errors.push(format(options2.messages.whitespace, rule.fullField));
+      errors.push(format$1(options2.messages.whitespace, rule.fullField));
     }
   }
   const pattern = {
@@ -23707,10 +23804,10 @@ if (uni.restoreGlobal) {
     const ruleType = rule.type;
     if (custom.indexOf(ruleType) > -1) {
       if (!types[ruleType](value2)) {
-        errors.push(format(options2.messages.types[ruleType], rule.fullField, rule.type));
+        errors.push(format$1(options2.messages.types[ruleType], rule.fullField, rule.type));
       }
     } else if (ruleType && typeof value2 !== rule.type) {
-      errors.push(format(options2.messages.types[ruleType], rule.fullField, rule.type));
+      errors.push(format$1(options2.messages.types[ruleType], rule.fullField, rule.type));
     }
   }
   function range(rule, value2, source, errors, options2) {
@@ -23741,21 +23838,21 @@ if (uni.restoreGlobal) {
     }
     if (len) {
       if (val !== rule.len) {
-        errors.push(format(options2.messages[key].len, rule.fullField, rule.len));
+        errors.push(format$1(options2.messages[key].len, rule.fullField, rule.len));
       }
     } else if (min && !max && val < rule.min) {
-      errors.push(format(options2.messages[key].min, rule.fullField, rule.min));
+      errors.push(format$1(options2.messages[key].min, rule.fullField, rule.min));
     } else if (max && !min && val > rule.max) {
-      errors.push(format(options2.messages[key].max, rule.fullField, rule.max));
+      errors.push(format$1(options2.messages[key].max, rule.fullField, rule.max));
     } else if (min && max && (val < rule.min || val > rule.max)) {
-      errors.push(format(options2.messages[key].range, rule.fullField, rule.min, rule.max));
+      errors.push(format$1(options2.messages[key].range, rule.fullField, rule.min, rule.max));
     }
   }
   const ENUM = "enum";
   function enumerable(rule, value2, source, errors, options2) {
     rule[ENUM] = Array.isArray(rule[ENUM]) ? rule[ENUM] : [];
     if (rule[ENUM].indexOf(value2) === -1) {
-      errors.push(format(options2.messages[ENUM], rule.fullField, rule[ENUM].join(", ")));
+      errors.push(format$1(options2.messages[ENUM], rule.fullField, rule[ENUM].join(", ")));
     }
   }
   function pattern$1(rule, value2, source, errors, options2) {
@@ -23763,12 +23860,12 @@ if (uni.restoreGlobal) {
       if (rule.pattern instanceof RegExp) {
         rule.pattern.lastIndex = 0;
         if (!rule.pattern.test(value2)) {
-          errors.push(format(options2.messages.pattern.mismatch, rule.fullField, value2, rule.pattern));
+          errors.push(format$1(options2.messages.pattern.mismatch, rule.fullField, value2, rule.pattern));
         }
       } else if (typeof rule.pattern === "string") {
         const _pattern = new RegExp(rule.pattern);
         if (!_pattern.test(value2)) {
-          errors.push(format(options2.messages.pattern.mismatch, rule.fullField, value2, rule.pattern));
+          errors.push(format$1(options2.messages.pattern.mismatch, rule.fullField, value2, rule.pattern));
         }
       }
     }
@@ -24076,10 +24173,10 @@ if (uni.restoreGlobal) {
       }
     };
   }
-  const messages = newMessages();
+  const messages$1 = newMessages();
   function Schema(descriptor) {
     this.rules = null;
-    this._messages = messages;
+    this._messages = messages$1;
     this.define(descriptor);
   }
   Schema.prototype = {
@@ -24152,12 +24249,12 @@ if (uni.restoreGlobal) {
         callback(errors, fields);
       }
       if (options2.messages) {
-        let messages$1 = this.messages();
-        if (messages$1 === messages) {
-          messages$1 = newMessages();
+        let messages$1$1 = this.messages();
+        if (messages$1$1 === messages$1) {
+          messages$1$1 = newMessages();
         }
-        deepMerge(messages$1, options2.messages);
-        options2.messages = messages$1;
+        deepMerge(messages$1$1, options2.messages);
+        options2.messages = messages$1$1;
       } else {
         options2.messages = this.messages();
       }
@@ -24234,7 +24331,7 @@ if (uni.restoreGlobal) {
               if (rule.message) {
                 errors = [].concat(rule.message).map(complementError(rule));
               } else if (options2.error) {
-                errors = [options2.error(rule, format(options2.messages.required, rule.field))];
+                errors = [options2.error(rule, format$1(options2.messages.required, rule.field))];
               } else {
                 errors = [];
               }
@@ -24300,7 +24397,7 @@ if (uni.restoreGlobal) {
         rule.type = "pattern";
       }
       if (typeof rule.validator !== "function" && rule.type && !validators.hasOwnProperty(rule.type)) {
-        throw new Error(format("Unknown rule type %s", rule.type));
+        throw new Error(format$1("Unknown rule type %s", rule.type));
       }
       return rule.type || "string";
     },
@@ -24326,7 +24423,7 @@ if (uni.restoreGlobal) {
     validators[type2] = validator;
   };
   Schema.warning = warning;
-  Schema.messages = messages;
+  Schema.messages = messages$1;
   Schema.warning = function() {
   };
   const _sfc_main$15 = {
@@ -24532,7 +24629,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uForm
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$I = defineMixin({
+  const props$I = defineMixin$1({
     props: {
       // 步进器标识符，在change回调返回
       name: {
@@ -25202,8 +25299,8 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render$13(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_number_box = resolveEasycom(vue.resolveDynamicComponent("up-number-box"), __easycom_0$5);
-    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$3);
-    const _component_up_popup = resolveEasycom(vue.resolveDynamicComponent("up-popup"), __easycom_3$1);
+    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$1);
+    const _component_up_popup = resolveEasycom(vue.resolveDynamicComponent("up-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createElementBlock("view", { class: "up-goods-sku" }, [
       vue.createElementVNode("view", {
         onClick: _cache[0] || (_cache[0] = (...args) => $options.open && $options.open(...args))
@@ -25365,7 +25462,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uGoodsSku
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$H = defineMixin({
+  const props$H = defineMixin$1({
     props: {
       // 宫格的name
       name: {
@@ -25488,7 +25585,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uGridItem
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$G = defineMixin({
+  const props$G = defineMixin$1({
     props: {
       // 分成几列
       col: {
@@ -25599,7 +25696,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uGrid
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$F = defineMixin({
+  const props$F = defineMixin$1({
     props: {
       // 图片地址
       src: {
@@ -25862,7 +25959,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uImage
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$E = defineMixin({
+  const props$E = defineMixin$1({
     props: {
       // 键盘的类型，number-数字键盘，card-身份证键盘
       mode: {
@@ -26031,7 +26128,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: __easycom_0$4
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$D = defineMixin({
+  const props$D = defineMixin$1({
     props: {
       // 键盘的类型，number-数字键盘，card-身份证键盘，car-车牌号键盘
       mode: {
@@ -26147,7 +26244,7 @@ if (uni.restoreGlobal) {
   function _sfc_render$_(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_number_keyboard = resolveEasycom(vue.resolveDynamicComponent("u-number-keyboard"), __easycom_0$4);
     const _component_u_car_keyboard = resolveEasycom(vue.resolveDynamicComponent("u-car-keyboard"), __easycom_1$b);
-    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$1);
+    const _component_u_popup = resolveEasycom(vue.resolveDynamicComponent("u-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createBlock(_component_u_popup, {
       overlay: _ctx.overlay,
       closeOnClickOverlay: _ctx.closeOnClickOverlay,
@@ -26461,7 +26558,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uLazyLoad
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$C = defineMixin({
+  const props$C = defineMixin$1({
     props: {
       // 激活部分的颜色
       activeColor: {
@@ -26603,7 +26700,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uLineProgress
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$B = defineMixin({
+  const props$B = defineMixin$1({
     props: {
       // 用于滚动到指定item
       anchor: {
@@ -26689,7 +26786,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uListItem
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$A = defineMixin({
+  const props$A = defineMixin$1({
     props: {
       // 控制是否出现滚动条，仅nvue有效
       showScrollbar: {
@@ -26913,7 +27010,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uList
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$z = defineMixin({
+  const props$z = defineMixin$1({
     props: {
       // 提示内容
       loadingText: {
@@ -26978,7 +27075,7 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$V(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
     const _component_u_transition = resolveEasycom(vue.resolveDynamicComponent("u-transition"), __easycom_2$3);
     return vue.openBlock(), vue.createBlock(_component_u_transition, {
       show: _ctx.loading,
@@ -27041,7 +27138,7 @@ if (uni.restoreGlobal) {
     __proto__: null,
     default: uLoadingPage
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$y = defineMixin({
+  const props$y = defineMixin$1({
     props: {
       // 组件状态，loadmore-加载前的状态，loading-加载中的状态，nomore-没有更多的状态
       status: {
@@ -27179,8 +27276,8 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$U(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -30429,7 +30526,7 @@ ${e2}</tr>
     __proto__: null,
     default: uMessageInput
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$x = defineMixin({
+  const props$x = defineMixin$1({
     props: {
       // 是否开启顶部安全区适配
       safeAreaInsetTop: {
@@ -30509,7 +30606,7 @@ ${e2}</tr>
   function _sfc_render$P(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_status_bar = resolveEasycom(vue.resolveDynamicComponent("u-status-bar"), __easycom_0$e);
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
-    const _component_up_line = resolveEasycom(vue.resolveDynamicComponent("up-line"), __easycom_1$e);
+    const _component_up_line = resolveEasycom(vue.resolveDynamicComponent("up-line"), __easycom_1$f);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -30584,7 +30681,7 @@ ${e2}</tr>
     __proto__: null,
     default: uNavbarMini
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$w = defineMixin({
+  const props$w = defineMixin$1({
     props: {
       // 是否开启顶部安全区适配
       safeAreaInsetTop: {
@@ -30833,7 +30930,7 @@ ${e2}</tr>
     __proto__: null,
     default: uNavbar
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$v = defineMixin({
+  const props$v = defineMixin$1({
     props: {
       // 页面文字提示
       tips: {
@@ -30978,8 +31075,8 @@ ${e2}</tr>
   };
   function _sfc_render$N(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
-    const _component_u_button = resolveEasycom(vue.resolveDynamicComponent("u-button"), __easycom_3$3);
-    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$2);
+    const _component_u_button = resolveEasycom(vue.resolveDynamicComponent("u-button"), __easycom_3$1);
+    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$3);
     return vue.openBlock(), vue.createBlock(_component_u_overlay, {
       show: !$data.isConnected,
       zIndex: _ctx.zIndex,
@@ -31045,7 +31142,7 @@ ${e2}</tr>
     __proto__: null,
     default: uNoNetwork
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$u = defineMixin({
+  const props$u = defineMixin$1({
     props: {
       // 显示的内容，字符串
       text: {
@@ -31278,7 +31375,7 @@ ${e2}</tr>
     __proto__: null,
     default: __easycom_1$3
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$t = defineMixin({
+  const props$t = defineMixin$1({
     props: {
       // 显示的内容，数组
       text: {
@@ -31428,7 +31525,7 @@ ${e2}</tr>
     __proto__: null,
     default: uNoticeBar
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$s = defineMixin({
+  const props$s = defineMixin$1({
     props: {
       // 到顶部的距离
       top: {
@@ -31974,7 +32071,7 @@ ${e2}</tr>
     __proto__: null,
     default: uPdfReader
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$q = defineMixin({
+  const props$q = defineMixin$1({
     props: {}
   });
   const _sfc_main$H = {
@@ -32124,7 +32221,7 @@ ${e2}</tr>
     __proto__: null,
     default: uPickerData
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$p = defineMixin({
+  const props$p = defineMixin$1({
     props: {
       // 需要显示的提示文字
       text: {
@@ -32367,8 +32464,8 @@ ${e2}</tr>
     }
   };
   function _sfc_render$F(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$2);
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$e);
+    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$3);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$f);
     const _component_u_transition = resolveEasycom(vue.resolveDynamicComponent("u-transition"), __easycom_2$3);
     return vue.openBlock(), vue.createElementBlock(
       "view",
@@ -32534,7 +32631,7 @@ ${e2}</tr>
     __proto__: null,
     default: __easycom_0$2
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$o = defineMixin({
+  const props$o = defineMixin$1({
     props: {
       // 显示的文字内容
       text: {
@@ -34128,7 +34225,7 @@ ${e2}</tr>
     computed: {}
   };
   function _sfc_render$D(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_up_loading_icon = resolveEasycom(vue.resolveDynamicComponent("up-loading-icon"), __easycom_1$f);
+    const _component_up_loading_icon = resolveEasycom(vue.resolveDynamicComponent("up-loading-icon"), __easycom_1$e);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "u-qrcode",
       id: $data.rootId,
@@ -34948,7 +35045,7 @@ ${e2}</tr>
     __proto__: null,
     default: __easycom_1$2
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$n = defineMixin({
+  const props$n = defineMixin$1({
     props: {
       // 绑定的值
       modelValue: {
@@ -35120,7 +35217,7 @@ ${e2}</tr>
     __proto__: null,
     default: uRadioGroup
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$m = defineMixin({
+  const props$m = defineMixin$1({
     props: {
       // radio的名称
       name: {
@@ -35411,7 +35508,7 @@ ${e2}</tr>
     __proto__: null,
     default: uRadio
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$l = defineMixin({
+  const props$l = defineMixin$1({
     props: {
       // 用于v-model双向绑定选中的星星数量
       modelValue: {
@@ -35683,7 +35780,7 @@ ${e2}</tr>
     __proto__: null,
     default: uRate
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$k = defineMixin({
+  const props$k = defineMixin$1({
     props: {
       // 默认的显示占位高度
       showHeight: {
@@ -36202,7 +36299,7 @@ ${e2}</tr>
     __proto__: null,
     default: uRefreshVirtualList
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$j = defineMixin({
+  const props$j = defineMixin$1({
     props: {
       // 给col添加间距，左右边距各占一半
       gutter: {
@@ -36292,7 +36389,7 @@ ${e2}</tr>
     __proto__: null,
     default: uRow
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$i = defineMixin({
+  const props$i = defineMixin$1({
     props: {
       // 指示器的整体宽度
       indicatorWidth: {
@@ -36453,7 +36550,7 @@ ${e2}</tr>
     __proto__: null,
     default: uScrollList
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$h = defineMixin({
+  const props$h = defineMixin$1({
     props: {
       // 绑定的值
       modelValue: {
@@ -36923,7 +37020,7 @@ ${e2}</tr>
   };
   function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
-    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$2);
+    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$3);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-select" }, [
       vue.createElementVNode("view", { class: "u-select__content" }, [
         vue.createElementVNode("view", {
@@ -37021,7 +37118,7 @@ ${e2}</tr>
     __proto__: null,
     default: uSelect
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$g = defineMixin({
+  const props$g = defineMixin$1({
     props: {
       // 最小可选值
       min: {
@@ -37509,7 +37606,7 @@ ${e2}</tr>
     __proto__: null,
     default: __easycom_1$1
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$f = defineMixin({
+  const props$f = defineMixin$1({
     props: {
       // item标签的名称，作为与u-tabbar的value参数匹配的标识符
       name: {
@@ -37677,7 +37774,7 @@ ${e2}</tr>
     __proto__: null,
     default: __easycom_6
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$e = defineMixin({
+  const props$e = defineMixin$1({
     props: {
       // 当前匹配项的name
       value: {
@@ -37976,7 +38073,7 @@ ${e2}</tr>
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_up_tabs = resolveEasycom(vue.resolveDynamicComponent("up-tabs"), __easycom_1$9);
     const _component_u_avatar = resolveEasycom(vue.resolveDynamicComponent("u-avatar"), __easycom_2$2);
-    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$3);
+    const _component_up_button = resolveEasycom(vue.resolveDynamicComponent("up-button"), __easycom_3$1);
     const _component_up_action_sheet = resolveEasycom(vue.resolveDynamicComponent("up-action-sheet"), __easycom_4);
     const _component_up_slider = resolveEasycom(vue.resolveDynamicComponent("up-slider"), __easycom_1$1);
     const _component_up_tabbar_item = resolveEasycom(vue.resolveDynamicComponent("up-tabbar-item"), __easycom_6);
@@ -38651,7 +38748,7 @@ ${e2}</tr>
     __proto__: null,
     default: uSignature
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$d = defineMixin({
+  const props$d = defineMixin$1({
     props: {
       // 是否展示骨架组件
       loading: {
@@ -38856,7 +38953,7 @@ ${e2}</tr>
     __proto__: null,
     default: uSkeleton
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$c = defineMixin({
+  const props$c = defineMixin$1({
     props: {
       // 吸顶容器到顶部某个距离的时候，进行吸顶，在H5平台，NavigationBar为44px
       offsetTop: {
@@ -39055,7 +39152,7 @@ ${e2}</tr>
     }
     return "";
   }
-  const touchMixin = defineMixin({
+  const touchMixin = defineMixin$1({
     methods: {
       getTouchPoint(e2) {
         if (!e2) {
@@ -39104,7 +39201,7 @@ ${e2}</tr>
       }
     }
   });
-  const props$b = defineMixin({
+  const props$b = defineMixin$1({
     props: {
       // 控制打开或者关闭
       show: {
@@ -39354,7 +39451,7 @@ ${e2}</tr>
     __proto__: null,
     default: uSwipeActionItem
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$a = defineMixin({
+  const props$a = defineMixin$1({
     props: {
       // 是否自动关闭其他swipe按钮组
       autoClose: {
@@ -39436,7 +39533,7 @@ ${e2}</tr>
     __proto__: null,
     default: uSwipeAction
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$9 = defineMixin({
+  const props$9 = defineMixin$1({
     props: {
       // 轮播的长度
       length: {
@@ -39553,7 +39650,7 @@ ${e2}</tr>
     __proto__: null,
     default: __easycom_1
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$8 = defineMixin({
+  const props$8 = defineMixin$1({
     props: {
       // 列表数组，元素可为字符串，如为对象可通过keyName指定目标属性名
       list: {
@@ -39764,7 +39861,7 @@ ${e2}</tr>
     }
   };
   function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_up_loading_icon = resolveEasycom(vue.resolveDynamicComponent("up-loading-icon"), __easycom_1$f);
+    const _component_up_loading_icon = resolveEasycom(vue.resolveDynamicComponent("up-loading-icon"), __easycom_1$e);
     const _component_up_swiper_indicator = resolveEasycom(vue.resolveDynamicComponent("up-swiper-indicator"), __easycom_1);
     return vue.openBlock(), vue.createElementBlock(
       "view",
@@ -39901,7 +39998,7 @@ ${e2}</tr>
     __proto__: null,
     default: uSwiper
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$7 = defineMixin({
+  const props$7 = defineMixin$1({
     props: {
       // 是否为加载中状态
       loading: {
@@ -40024,7 +40121,7 @@ ${e2}</tr>
     }
   };
   function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -40072,7 +40169,7 @@ ${e2}</tr>
     __proto__: null,
     default: uSwitch
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$6 = defineMixin({
+  const props$6 = defineMixin$1({
     props: {}
   });
   const _sfc_main$e = {
@@ -41283,7 +41380,7 @@ ${e2}</tr>
     __proto__: null,
     default: uTable2
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$5 = defineMixin({
+  const props$5 = defineMixin$1({
     props: {}
   });
   const _sfc_main$b = {
@@ -41303,7 +41400,7 @@ ${e2}</tr>
     __proto__: null,
     default: uTabsItem
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$4 = defineMixin({
+  const props$4 = defineMixin$1({
     props: {}
   });
   const _sfc_main$a = {
@@ -41387,7 +41484,7 @@ ${e2}</tr>
     __proto__: null,
     default: uTd
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$3 = defineMixin({
+  const props$3 = defineMixin$1({
     props: {
       // 输入框的内容
       value: {
@@ -41673,7 +41770,7 @@ ${e2}</tr>
     __proto__: null,
     default: uTextarea
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$2 = defineMixin({
+  const props$2 = defineMixin$1({
     props: {}
   });
   const _sfc_main$8 = {
@@ -41868,10 +41965,10 @@ ${e2}</tr>
     }
   };
   function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
     const _component_u_gap = resolveEasycom(vue.resolveDynamicComponent("u-gap"), __easycom_2$4);
-    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$2);
+    const _component_u_overlay = resolveEasycom(vue.resolveDynamicComponent("u-overlay"), __easycom_3$3);
     return vue.openBlock(), vue.createElementBlock("view", { class: "u-toast" }, [
       vue.createVNode(_component_u_overlay, {
         show: $data.isShow,
@@ -41929,7 +42026,7 @@ ${e2}</tr>
     __proto__: null,
     default: uToast
   }, Symbol.toStringTag, { value: "Module" }));
-  const props$1 = defineMixin({
+  const props$1 = defineMixin$1({
     props: {}
   });
   const _sfc_main$5 = {
@@ -42329,7 +42426,7 @@ ${e2}</tr>
       }
     }
   };
-  const props = defineMixin({
+  const props = defineMixin$1({
     props: {
       // 接受的文件类型, 可选值为all media image file video
       accept: {
@@ -42926,9 +43023,9 @@ ${e2}</tr>
   };
   function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_icon = resolveEasycom(vue.resolveDynamicComponent("up-icon"), __easycom_0$g);
-    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$f);
+    const _component_u_loading_icon = resolveEasycom(vue.resolveDynamicComponent("u-loading-icon"), __easycom_1$e);
     const _component_up_gap = resolveEasycom(vue.resolveDynamicComponent("up-gap"), __easycom_2$4);
-    const _component_up_popup = resolveEasycom(vue.resolveDynamicComponent("up-popup"), __easycom_3$1);
+    const _component_up_popup = resolveEasycom(vue.resolveDynamicComponent("up-popup"), __easycom_3$2);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -43625,11 +43722,5184 @@ ${e2}</tr>
   const uviewPlus = {
     install
   };
+  var isVue2 = false;
+  function set(target, key, val) {
+    if (Array.isArray(target)) {
+      target.length = Math.max(target.length, key);
+      target.splice(key, 1, val);
+      return val;
+    }
+    target[key] = val;
+    return val;
+  }
+  function del(target, key) {
+    if (Array.isArray(target)) {
+      target.splice(key, 1);
+      return;
+    }
+    delete target[key];
+  }
+  function getDevtoolsGlobalHook$1() {
+    return getTarget$1().__VUE_DEVTOOLS_GLOBAL_HOOK__;
+  }
+  function getTarget$1() {
+    return typeof navigator !== "undefined" && typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};
+  }
+  const isProxyAvailable$1 = typeof Proxy === "function";
+  const HOOK_SETUP$1 = "devtools-plugin:setup";
+  const HOOK_PLUGIN_SETTINGS_SET$1 = "plugin:settings:set";
+  let supported;
+  let perf;
+  function isPerformanceSupported() {
+    var _a2;
+    if (supported !== void 0) {
+      return supported;
+    }
+    if (typeof window !== "undefined" && window.performance) {
+      supported = true;
+      perf = window.performance;
+    } else if (typeof global !== "undefined" && ((_a2 = global.perf_hooks) === null || _a2 === void 0 ? void 0 : _a2.performance)) {
+      supported = true;
+      perf = global.perf_hooks.performance;
+    } else {
+      supported = false;
+    }
+    return supported;
+  }
+  function now() {
+    return isPerformanceSupported() ? perf.now() : Date.now();
+  }
+  let ApiProxy$1 = class ApiProxy {
+    constructor(plugin, hook) {
+      this.target = null;
+      this.targetQueue = [];
+      this.onQueue = [];
+      this.plugin = plugin;
+      this.hook = hook;
+      const defaultSettings = {};
+      if (plugin.settings) {
+        for (const id in plugin.settings) {
+          const item = plugin.settings[id];
+          defaultSettings[id] = item.defaultValue;
+        }
+      }
+      const localSettingsSaveId = `__vue-devtools-plugin-settings__${plugin.id}`;
+      let currentSettings = Object.assign({}, defaultSettings);
+      try {
+        const raw = localStorage.getItem(localSettingsSaveId);
+        const data = JSON.parse(raw);
+        Object.assign(currentSettings, data);
+      } catch (e2) {
+      }
+      this.fallbacks = {
+        getSettings() {
+          return currentSettings;
+        },
+        setSettings(value2) {
+          try {
+            localStorage.setItem(localSettingsSaveId, JSON.stringify(value2));
+          } catch (e2) {
+          }
+          currentSettings = value2;
+        },
+        now() {
+          return now();
+        }
+      };
+      if (hook) {
+        hook.on(HOOK_PLUGIN_SETTINGS_SET$1, (pluginId, value2) => {
+          if (pluginId === this.plugin.id) {
+            this.fallbacks.setSettings(value2);
+          }
+        });
+      }
+      this.proxiedOn = new Proxy({}, {
+        get: (_target, prop) => {
+          if (this.target) {
+            return this.target.on[prop];
+          } else {
+            return (...args) => {
+              this.onQueue.push({
+                method: prop,
+                args
+              });
+            };
+          }
+        }
+      });
+      this.proxiedTarget = new Proxy({}, {
+        get: (_target, prop) => {
+          if (this.target) {
+            return this.target[prop];
+          } else if (prop === "on") {
+            return this.proxiedOn;
+          } else if (Object.keys(this.fallbacks).includes(prop)) {
+            return (...args) => {
+              this.targetQueue.push({
+                method: prop,
+                args,
+                resolve: () => {
+                }
+              });
+              return this.fallbacks[prop](...args);
+            };
+          } else {
+            return (...args) => {
+              return new Promise((resolve) => {
+                this.targetQueue.push({
+                  method: prop,
+                  args,
+                  resolve
+                });
+              });
+            };
+          }
+        }
+      });
+    }
+    async setRealTarget(target) {
+      this.target = target;
+      for (const item of this.onQueue) {
+        this.target.on[item.method](...item.args);
+      }
+      for (const item of this.targetQueue) {
+        item.resolve(await this.target[item.method](...item.args));
+      }
+    }
+  };
+  function setupDevtoolsPlugin$1(pluginDescriptor, setupFn) {
+    const descriptor = pluginDescriptor;
+    const target = getTarget$1();
+    const hook = getDevtoolsGlobalHook$1();
+    const enableProxy = isProxyAvailable$1 && descriptor.enableEarlyProxy;
+    if (hook && (target.__VUE_DEVTOOLS_PLUGIN_API_AVAILABLE__ || !enableProxy)) {
+      hook.emit(HOOK_SETUP$1, pluginDescriptor, setupFn);
+    } else {
+      const proxy = enableProxy ? new ApiProxy$1(descriptor, hook) : null;
+      const list = target.__VUE_DEVTOOLS_PLUGINS__ = target.__VUE_DEVTOOLS_PLUGINS__ || [];
+      list.push({
+        pluginDescriptor: descriptor,
+        setupFn,
+        proxy
+      });
+      if (proxy)
+        setupFn(proxy.proxiedTarget);
+    }
+  }
+  /*!
+   * pinia v2.1.7
+   * (c) 2023 Eduardo San Martin Morote
+   * @license MIT
+   */
+  let activePinia;
+  const setActivePinia = (pinia) => activePinia = pinia;
+  const getActivePinia = () => vue.hasInjectionContext() && vue.inject(piniaSymbol) || activePinia;
+  const piniaSymbol = Symbol("pinia");
+  function isPlainObject$1(o2) {
+    return o2 && typeof o2 === "object" && Object.prototype.toString.call(o2) === "[object Object]" && typeof o2.toJSON !== "function";
+  }
+  var MutationType;
+  (function(MutationType2) {
+    MutationType2["direct"] = "direct";
+    MutationType2["patchObject"] = "patch object";
+    MutationType2["patchFunction"] = "patch function";
+  })(MutationType || (MutationType = {}));
+  const IS_CLIENT = typeof window !== "undefined";
+  const USE_DEVTOOLS = IS_CLIENT;
+  const _global = /* @__PURE__ */ (() => typeof window === "object" && window.window === window ? window : typeof self === "object" && self.self === self ? self : typeof global === "object" && global.global === global ? global : typeof globalThis === "object" ? globalThis : { HTMLElement: null })();
+  function bom(blob, { autoBom = false } = {}) {
+    if (autoBom && /^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
+      return new Blob([String.fromCharCode(65279), blob], { type: blob.type });
+    }
+    return blob;
+  }
+  function download(url2, name2, opts) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url2);
+    xhr.responseType = "blob";
+    xhr.onload = function() {
+      saveAs(xhr.response, name2, opts);
+    };
+    xhr.onerror = function() {
+      console.error("could not download file");
+    };
+    xhr.send();
+  }
+  function corsEnabled(url2) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("HEAD", url2, false);
+    try {
+      xhr.send();
+    } catch (e2) {
+    }
+    return xhr.status >= 200 && xhr.status <= 299;
+  }
+  function click(node2) {
+    try {
+      node2.dispatchEvent(new MouseEvent("click"));
+    } catch (e2) {
+      const evt = document.createEvent("MouseEvents");
+      evt.initMouseEvent("click", true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
+      node2.dispatchEvent(evt);
+    }
+  }
+  const _navigator = typeof navigator === "object" ? navigator : { userAgent: "" };
+  const isMacOSWebView = /* @__PURE__ */ (() => /Macintosh/.test(_navigator.userAgent) && /AppleWebKit/.test(_navigator.userAgent) && !/Safari/.test(_navigator.userAgent))();
+  const saveAs = !IS_CLIENT ? () => {
+  } : (
+    // Use download attribute first if possible (#193 Lumia mobile) unless this is a macOS WebView or mini program
+    typeof HTMLAnchorElement !== "undefined" && "download" in HTMLAnchorElement.prototype && !isMacOSWebView ? downloadSaveAs : (
+      // Use msSaveOrOpenBlob as a second approach
+      "msSaveOrOpenBlob" in _navigator ? msSaveAs : (
+        // Fallback to using FileReader and a popup
+        fileSaverSaveAs
+      )
+    )
+  );
+  function downloadSaveAs(blob, name2 = "download", opts) {
+    const a2 = document.createElement("a");
+    a2.download = name2;
+    a2.rel = "noopener";
+    if (typeof blob === "string") {
+      a2.href = blob;
+      if (a2.origin !== location.origin) {
+        if (corsEnabled(a2.href)) {
+          download(blob, name2, opts);
+        } else {
+          a2.target = "_blank";
+          click(a2);
+        }
+      } else {
+        click(a2);
+      }
+    } else {
+      a2.href = URL.createObjectURL(blob);
+      setTimeout(function() {
+        URL.revokeObjectURL(a2.href);
+      }, 4e4);
+      setTimeout(function() {
+        click(a2);
+      }, 0);
+    }
+  }
+  function msSaveAs(blob, name2 = "download", opts) {
+    if (typeof blob === "string") {
+      if (corsEnabled(blob)) {
+        download(blob, name2, opts);
+      } else {
+        const a2 = document.createElement("a");
+        a2.href = blob;
+        a2.target = "_blank";
+        setTimeout(function() {
+          click(a2);
+        });
+      }
+    } else {
+      navigator.msSaveOrOpenBlob(bom(blob, opts), name2);
+    }
+  }
+  function fileSaverSaveAs(blob, name2, opts, popup) {
+    popup = popup || open("", "_blank");
+    if (popup) {
+      popup.document.title = popup.document.body.innerText = "downloading...";
+    }
+    if (typeof blob === "string")
+      return download(blob, name2, opts);
+    const force = blob.type === "application/octet-stream";
+    const isSafari = /constructor/i.test(String(_global.HTMLElement)) || "safari" in _global;
+    const isChromeIOS = /CriOS\/[\d]+/.test(navigator.userAgent);
+    if ((isChromeIOS || force && isSafari || isMacOSWebView) && typeof FileReader !== "undefined") {
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        let url2 = reader.result;
+        if (typeof url2 !== "string") {
+          popup = null;
+          throw new Error("Wrong reader.result type");
+        }
+        url2 = isChromeIOS ? url2 : url2.replace(/^data:[^;]*;/, "data:attachment/file;");
+        if (popup) {
+          popup.location.href = url2;
+        } else {
+          location.assign(url2);
+        }
+        popup = null;
+      };
+      reader.readAsDataURL(blob);
+    } else {
+      const url2 = URL.createObjectURL(blob);
+      if (popup)
+        popup.location.assign(url2);
+      else
+        location.href = url2;
+      popup = null;
+      setTimeout(function() {
+        URL.revokeObjectURL(url2);
+      }, 4e4);
+    }
+  }
+  function toastMessage(message, type2) {
+    const piniaMessage = "🍍 " + message;
+    if (typeof __VUE_DEVTOOLS_TOAST__ === "function") {
+      __VUE_DEVTOOLS_TOAST__(piniaMessage, type2);
+    } else if (type2 === "error") {
+      console.error(piniaMessage);
+    } else if (type2 === "warn") {
+      console.warn(piniaMessage);
+    } else {
+      console.log(piniaMessage);
+    }
+  }
+  function isPinia(o2) {
+    return "_a" in o2 && "install" in o2;
+  }
+  function checkClipboardAccess() {
+    if (!("clipboard" in navigator)) {
+      toastMessage(`Your browser doesn't support the Clipboard API`, "error");
+      return true;
+    }
+  }
+  function checkNotFocusedError(error2) {
+    if (error2 instanceof Error && error2.message.toLowerCase().includes("document is not focused")) {
+      toastMessage('You need to activate the "Emulate a focused page" setting in the "Rendering" panel of devtools.', "warn");
+      return true;
+    }
+    return false;
+  }
+  async function actionGlobalCopyState(pinia) {
+    if (checkClipboardAccess())
+      return;
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(pinia.state.value));
+      toastMessage("Global state copied to clipboard.");
+    } catch (error2) {
+      if (checkNotFocusedError(error2))
+        return;
+      toastMessage(`Failed to serialize the state. Check the console for more details.`, "error");
+      console.error(error2);
+    }
+  }
+  async function actionGlobalPasteState(pinia) {
+    if (checkClipboardAccess())
+      return;
+    try {
+      loadStoresState(pinia, JSON.parse(await navigator.clipboard.readText()));
+      toastMessage("Global state pasted from clipboard.");
+    } catch (error2) {
+      if (checkNotFocusedError(error2))
+        return;
+      toastMessage(`Failed to deserialize the state from clipboard. Check the console for more details.`, "error");
+      console.error(error2);
+    }
+  }
+  async function actionGlobalSaveState(pinia) {
+    try {
+      saveAs(new Blob([JSON.stringify(pinia.state.value)], {
+        type: "text/plain;charset=utf-8"
+      }), "pinia-state.json");
+    } catch (error2) {
+      toastMessage(`Failed to export the state as JSON. Check the console for more details.`, "error");
+      console.error(error2);
+    }
+  }
+  let fileInput;
+  function getFileOpener() {
+    if (!fileInput) {
+      fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = ".json";
+    }
+    function openFile() {
+      return new Promise((resolve, reject) => {
+        fileInput.onchange = async () => {
+          const files = fileInput.files;
+          if (!files)
+            return resolve(null);
+          const file = files.item(0);
+          if (!file)
+            return resolve(null);
+          return resolve({ text: await file.text(), file });
+        };
+        fileInput.oncancel = () => resolve(null);
+        fileInput.onerror = reject;
+        fileInput.click();
+      });
+    }
+    return openFile;
+  }
+  async function actionGlobalOpenStateFile(pinia) {
+    try {
+      const open2 = getFileOpener();
+      const result = await open2();
+      if (!result)
+        return;
+      const { text, file } = result;
+      loadStoresState(pinia, JSON.parse(text));
+      toastMessage(`Global state imported from "${file.name}".`);
+    } catch (error2) {
+      toastMessage(`Failed to import the state from JSON. Check the console for more details.`, "error");
+      console.error(error2);
+    }
+  }
+  function loadStoresState(pinia, state) {
+    for (const key in state) {
+      const storeState = pinia.state.value[key];
+      if (storeState) {
+        Object.assign(storeState, state[key]);
+      } else {
+        pinia.state.value[key] = state[key];
+      }
+    }
+  }
+  function formatDisplay(display) {
+    return {
+      _custom: {
+        display
+      }
+    };
+  }
+  const PINIA_ROOT_LABEL = "🍍 Pinia (root)";
+  const PINIA_ROOT_ID = "_root";
+  function formatStoreForInspectorTree(store) {
+    return isPinia(store) ? {
+      id: PINIA_ROOT_ID,
+      label: PINIA_ROOT_LABEL
+    } : {
+      id: store.$id,
+      label: store.$id
+    };
+  }
+  function formatStoreForInspectorState(store) {
+    if (isPinia(store)) {
+      const storeNames = Array.from(store._s.keys());
+      const storeMap = store._s;
+      const state2 = {
+        state: storeNames.map((storeId) => ({
+          editable: true,
+          key: storeId,
+          value: store.state.value[storeId]
+        })),
+        getters: storeNames.filter((id) => storeMap.get(id)._getters).map((id) => {
+          const store2 = storeMap.get(id);
+          return {
+            editable: false,
+            key: id,
+            value: store2._getters.reduce((getters, key) => {
+              getters[key] = store2[key];
+              return getters;
+            }, {})
+          };
+        })
+      };
+      return state2;
+    }
+    const state = {
+      state: Object.keys(store.$state).map((key) => ({
+        editable: true,
+        key,
+        value: store.$state[key]
+      }))
+    };
+    if (store._getters && store._getters.length) {
+      state.getters = store._getters.map((getterName) => ({
+        editable: false,
+        key: getterName,
+        value: store[getterName]
+      }));
+    }
+    if (store._customProperties.size) {
+      state.customProperties = Array.from(store._customProperties).map((key) => ({
+        editable: true,
+        key,
+        value: store[key]
+      }));
+    }
+    return state;
+  }
+  function formatEventData(events) {
+    if (!events)
+      return {};
+    if (Array.isArray(events)) {
+      return events.reduce((data, event) => {
+        data.keys.push(event.key);
+        data.operations.push(event.type);
+        data.oldValue[event.key] = event.oldValue;
+        data.newValue[event.key] = event.newValue;
+        return data;
+      }, {
+        oldValue: {},
+        keys: [],
+        operations: [],
+        newValue: {}
+      });
+    } else {
+      return {
+        operation: formatDisplay(events.type),
+        key: formatDisplay(events.key),
+        oldValue: events.oldValue,
+        newValue: events.newValue
+      };
+    }
+  }
+  function formatMutationType(type2) {
+    switch (type2) {
+      case MutationType.direct:
+        return "mutation";
+      case MutationType.patchFunction:
+        return "$patch";
+      case MutationType.patchObject:
+        return "$patch";
+      default:
+        return "unknown";
+    }
+  }
+  let isTimelineActive = true;
+  const componentStateTypes = [];
+  const MUTATIONS_LAYER_ID = "pinia:mutations";
+  const INSPECTOR_ID = "pinia";
+  const { assign: assign$1 } = Object;
+  const getStoreType = (id) => "🍍 " + id;
+  function registerPiniaDevtools(app, pinia) {
+    setupDevtoolsPlugin$1({
+      id: "dev.esm.pinia",
+      label: "Pinia 🍍",
+      logo: "https://pinia.vuejs.org/logo.svg",
+      packageName: "pinia",
+      homepage: "https://pinia.vuejs.org",
+      componentStateTypes,
+      app
+    }, (api) => {
+      if (typeof api.now !== "function") {
+        toastMessage("You seem to be using an outdated version of Vue Devtools. Are you still using the Beta release instead of the stable one? You can find the links at https://devtools.vuejs.org/guide/installation.html.");
+      }
+      api.addTimelineLayer({
+        id: MUTATIONS_LAYER_ID,
+        label: `Pinia 🍍`,
+        color: 15064968
+      });
+      api.addInspector({
+        id: INSPECTOR_ID,
+        label: "Pinia 🍍",
+        icon: "storage",
+        treeFilterPlaceholder: "Search stores",
+        actions: [
+          {
+            icon: "content_copy",
+            action: () => {
+              actionGlobalCopyState(pinia);
+            },
+            tooltip: "Serialize and copy the state"
+          },
+          {
+            icon: "content_paste",
+            action: async () => {
+              await actionGlobalPasteState(pinia);
+              api.sendInspectorTree(INSPECTOR_ID);
+              api.sendInspectorState(INSPECTOR_ID);
+            },
+            tooltip: "Replace the state with the content of your clipboard"
+          },
+          {
+            icon: "save",
+            action: () => {
+              actionGlobalSaveState(pinia);
+            },
+            tooltip: "Save the state as a JSON file"
+          },
+          {
+            icon: "folder_open",
+            action: async () => {
+              await actionGlobalOpenStateFile(pinia);
+              api.sendInspectorTree(INSPECTOR_ID);
+              api.sendInspectorState(INSPECTOR_ID);
+            },
+            tooltip: "Import the state from a JSON file"
+          }
+        ],
+        nodeActions: [
+          {
+            icon: "restore",
+            tooltip: 'Reset the state (with "$reset")',
+            action: (nodeId) => {
+              const store = pinia._s.get(nodeId);
+              if (!store) {
+                toastMessage(`Cannot reset "${nodeId}" store because it wasn't found.`, "warn");
+              } else if (typeof store.$reset !== "function") {
+                toastMessage(`Cannot reset "${nodeId}" store because it doesn't have a "$reset" method implemented.`, "warn");
+              } else {
+                store.$reset();
+                toastMessage(`Store "${nodeId}" reset.`);
+              }
+            }
+          }
+        ]
+      });
+      api.on.inspectComponent((payload, ctx) => {
+        const proxy = payload.componentInstance && payload.componentInstance.proxy;
+        if (proxy && proxy._pStores) {
+          const piniaStores = payload.componentInstance.proxy._pStores;
+          Object.values(piniaStores).forEach((store) => {
+            payload.instanceData.state.push({
+              type: getStoreType(store.$id),
+              key: "state",
+              editable: true,
+              value: store._isOptionsAPI ? {
+                _custom: {
+                  value: vue.toRaw(store.$state),
+                  actions: [
+                    {
+                      icon: "restore",
+                      tooltip: "Reset the state of this store",
+                      action: () => store.$reset()
+                    }
+                  ]
+                }
+              } : (
+                // NOTE: workaround to unwrap transferred refs
+                Object.keys(store.$state).reduce((state, key) => {
+                  state[key] = store.$state[key];
+                  return state;
+                }, {})
+              )
+            });
+            if (store._getters && store._getters.length) {
+              payload.instanceData.state.push({
+                type: getStoreType(store.$id),
+                key: "getters",
+                editable: false,
+                value: store._getters.reduce((getters, key) => {
+                  try {
+                    getters[key] = store[key];
+                  } catch (error2) {
+                    getters[key] = error2;
+                  }
+                  return getters;
+                }, {})
+              });
+            }
+          });
+        }
+      });
+      api.on.getInspectorTree((payload) => {
+        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
+          let stores = [pinia];
+          stores = stores.concat(Array.from(pinia._s.values()));
+          payload.rootNodes = (payload.filter ? stores.filter((store) => "$id" in store ? store.$id.toLowerCase().includes(payload.filter.toLowerCase()) : PINIA_ROOT_LABEL.toLowerCase().includes(payload.filter.toLowerCase())) : stores).map(formatStoreForInspectorTree);
+        }
+      });
+      api.on.getInspectorState((payload) => {
+        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
+          const inspectedStore = payload.nodeId === PINIA_ROOT_ID ? pinia : pinia._s.get(payload.nodeId);
+          if (!inspectedStore) {
+            return;
+          }
+          if (inspectedStore) {
+            payload.state = formatStoreForInspectorState(inspectedStore);
+          }
+        }
+      });
+      api.on.editInspectorState((payload, ctx) => {
+        if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
+          const inspectedStore = payload.nodeId === PINIA_ROOT_ID ? pinia : pinia._s.get(payload.nodeId);
+          if (!inspectedStore) {
+            return toastMessage(`store "${payload.nodeId}" not found`, "error");
+          }
+          const { path } = payload;
+          if (!isPinia(inspectedStore)) {
+            if (path.length !== 1 || !inspectedStore._customProperties.has(path[0]) || path[0] in inspectedStore.$state) {
+              path.unshift("$state");
+            }
+          } else {
+            path.unshift("state");
+          }
+          isTimelineActive = false;
+          payload.set(inspectedStore, path, payload.state.value);
+          isTimelineActive = true;
+        }
+      });
+      api.on.editComponentState((payload) => {
+        if (payload.type.startsWith("🍍")) {
+          const storeId = payload.type.replace(/^🍍\s*/, "");
+          const store = pinia._s.get(storeId);
+          if (!store) {
+            return toastMessage(`store "${storeId}" not found`, "error");
+          }
+          const { path } = payload;
+          if (path[0] !== "state") {
+            return toastMessage(`Invalid path for store "${storeId}":
+${path}
+Only state can be modified.`);
+          }
+          path[0] = "$state";
+          isTimelineActive = false;
+          payload.set(store, path, payload.state.value);
+          isTimelineActive = true;
+        }
+      });
+    });
+  }
+  function addStoreToDevtools(app, store) {
+    if (!componentStateTypes.includes(getStoreType(store.$id))) {
+      componentStateTypes.push(getStoreType(store.$id));
+    }
+    setupDevtoolsPlugin$1({
+      id: "dev.esm.pinia",
+      label: "Pinia 🍍",
+      logo: "https://pinia.vuejs.org/logo.svg",
+      packageName: "pinia",
+      homepage: "https://pinia.vuejs.org",
+      componentStateTypes,
+      app,
+      settings: {
+        logStoreChanges: {
+          label: "Notify about new/deleted stores",
+          type: "boolean",
+          defaultValue: true
+        }
+        // useEmojis: {
+        //   label: 'Use emojis in messages ⚡️',
+        //   type: 'boolean',
+        //   defaultValue: true,
+        // },
+      }
+    }, (api) => {
+      const now2 = typeof api.now === "function" ? api.now.bind(api) : Date.now;
+      store.$onAction(({ after, onError, name: name2, args }) => {
+        const groupId = runningActionId++;
+        api.addTimelineEvent({
+          layerId: MUTATIONS_LAYER_ID,
+          event: {
+            time: now2(),
+            title: "🛫 " + name2,
+            subtitle: "start",
+            data: {
+              store: formatDisplay(store.$id),
+              action: formatDisplay(name2),
+              args
+            },
+            groupId
+          }
+        });
+        after((result) => {
+          activeAction = void 0;
+          api.addTimelineEvent({
+            layerId: MUTATIONS_LAYER_ID,
+            event: {
+              time: now2(),
+              title: "🛬 " + name2,
+              subtitle: "end",
+              data: {
+                store: formatDisplay(store.$id),
+                action: formatDisplay(name2),
+                args,
+                result
+              },
+              groupId
+            }
+          });
+        });
+        onError((error2) => {
+          activeAction = void 0;
+          api.addTimelineEvent({
+            layerId: MUTATIONS_LAYER_ID,
+            event: {
+              time: now2(),
+              logType: "error",
+              title: "💥 " + name2,
+              subtitle: "end",
+              data: {
+                store: formatDisplay(store.$id),
+                action: formatDisplay(name2),
+                args,
+                error: error2
+              },
+              groupId
+            }
+          });
+        });
+      }, true);
+      store._customProperties.forEach((name2) => {
+        vue.watch(() => vue.unref(store[name2]), (newValue, oldValue) => {
+          api.notifyComponentUpdate();
+          api.sendInspectorState(INSPECTOR_ID);
+          if (isTimelineActive) {
+            api.addTimelineEvent({
+              layerId: MUTATIONS_LAYER_ID,
+              event: {
+                time: now2(),
+                title: "Change",
+                subtitle: name2,
+                data: {
+                  newValue,
+                  oldValue
+                },
+                groupId: activeAction
+              }
+            });
+          }
+        }, { deep: true });
+      });
+      store.$subscribe(({ events, type: type2 }, state) => {
+        api.notifyComponentUpdate();
+        api.sendInspectorState(INSPECTOR_ID);
+        if (!isTimelineActive)
+          return;
+        const eventData = {
+          time: now2(),
+          title: formatMutationType(type2),
+          data: assign$1({ store: formatDisplay(store.$id) }, formatEventData(events)),
+          groupId: activeAction
+        };
+        if (type2 === MutationType.patchFunction) {
+          eventData.subtitle = "⤵️";
+        } else if (type2 === MutationType.patchObject) {
+          eventData.subtitle = "🧩";
+        } else if (events && !Array.isArray(events)) {
+          eventData.subtitle = events.type;
+        }
+        if (events) {
+          eventData.data["rawEvent(s)"] = {
+            _custom: {
+              display: "DebuggerEvent",
+              type: "object",
+              tooltip: "raw DebuggerEvent[]",
+              value: events
+            }
+          };
+        }
+        api.addTimelineEvent({
+          layerId: MUTATIONS_LAYER_ID,
+          event: eventData
+        });
+      }, { detached: true, flush: "sync" });
+      const hotUpdate = store._hotUpdate;
+      store._hotUpdate = vue.markRaw((newStore) => {
+        hotUpdate(newStore);
+        api.addTimelineEvent({
+          layerId: MUTATIONS_LAYER_ID,
+          event: {
+            time: now2(),
+            title: "🔥 " + store.$id,
+            subtitle: "HMR update",
+            data: {
+              store: formatDisplay(store.$id),
+              info: formatDisplay(`HMR update`)
+            }
+          }
+        });
+        api.notifyComponentUpdate();
+        api.sendInspectorTree(INSPECTOR_ID);
+        api.sendInspectorState(INSPECTOR_ID);
+      });
+      const { $dispose } = store;
+      store.$dispose = () => {
+        $dispose();
+        api.notifyComponentUpdate();
+        api.sendInspectorTree(INSPECTOR_ID);
+        api.sendInspectorState(INSPECTOR_ID);
+        api.getSettings().logStoreChanges && toastMessage(`Disposed "${store.$id}" store 🗑`);
+      };
+      api.notifyComponentUpdate();
+      api.sendInspectorTree(INSPECTOR_ID);
+      api.sendInspectorState(INSPECTOR_ID);
+      api.getSettings().logStoreChanges && toastMessage(`"${store.$id}" store installed 🆕`);
+    });
+  }
+  let runningActionId = 0;
+  let activeAction;
+  function patchActionForGrouping(store, actionNames, wrapWithProxy) {
+    const actions = actionNames.reduce((storeActions, actionName) => {
+      storeActions[actionName] = vue.toRaw(store)[actionName];
+      return storeActions;
+    }, {});
+    for (const actionName in actions) {
+      store[actionName] = function() {
+        const _actionId = runningActionId;
+        const trackedStore = wrapWithProxy ? new Proxy(store, {
+          get(...args) {
+            activeAction = _actionId;
+            return Reflect.get(...args);
+          },
+          set(...args) {
+            activeAction = _actionId;
+            return Reflect.set(...args);
+          }
+        }) : store;
+        activeAction = _actionId;
+        const retValue = actions[actionName].apply(trackedStore, arguments);
+        activeAction = void 0;
+        return retValue;
+      };
+    }
+  }
+  function devtoolsPlugin({ app, store, options: options2 }) {
+    if (store.$id.startsWith("__hot:")) {
+      return;
+    }
+    store._isOptionsAPI = !!options2.state;
+    patchActionForGrouping(store, Object.keys(options2.actions), store._isOptionsAPI);
+    const originalHotUpdate = store._hotUpdate;
+    vue.toRaw(store)._hotUpdate = function(newStore) {
+      originalHotUpdate.apply(this, arguments);
+      patchActionForGrouping(store, Object.keys(newStore._hmrPayload.actions), !!store._isOptionsAPI);
+    };
+    addStoreToDevtools(
+      app,
+      // FIXME: is there a way to allow the assignment from Store<Id, S, G, A> to StoreGeneric?
+      store
+    );
+  }
+  function createPinia() {
+    const scope = vue.effectScope(true);
+    const state = scope.run(() => vue.ref({}));
+    let _p = [];
+    let toBeInstalled = [];
+    const pinia = vue.markRaw({
+      install(app) {
+        setActivePinia(pinia);
+        {
+          pinia._a = app;
+          app.provide(piniaSymbol, pinia);
+          app.config.globalProperties.$pinia = pinia;
+          if (USE_DEVTOOLS) {
+            registerPiniaDevtools(app, pinia);
+          }
+          toBeInstalled.forEach((plugin) => _p.push(plugin));
+          toBeInstalled = [];
+        }
+      },
+      use(plugin) {
+        if (!this._a && !isVue2) {
+          toBeInstalled.push(plugin);
+        } else {
+          _p.push(plugin);
+        }
+        return this;
+      },
+      _p,
+      // it's actually undefined here
+      // @ts-expect-error
+      _a: null,
+      _e: scope,
+      _s: /* @__PURE__ */ new Map(),
+      state
+    });
+    if (USE_DEVTOOLS && typeof Proxy !== "undefined") {
+      pinia.use(devtoolsPlugin);
+    }
+    return pinia;
+  }
+  const isUseStore = (fn) => {
+    return typeof fn === "function" && typeof fn.$id === "string";
+  };
+  function patchObject(newState, oldState) {
+    for (const key in oldState) {
+      const subPatch = oldState[key];
+      if (!(key in newState)) {
+        continue;
+      }
+      const targetValue = newState[key];
+      if (isPlainObject$1(targetValue) && isPlainObject$1(subPatch) && !vue.isRef(subPatch) && !vue.isReactive(subPatch)) {
+        newState[key] = patchObject(targetValue, subPatch);
+      } else {
+        {
+          newState[key] = subPatch;
+        }
+      }
+    }
+    return newState;
+  }
+  function acceptHMRUpdate(initialUseStore, hot) {
+    return (newModule) => {
+      const pinia = hot.data.pinia || initialUseStore._pinia;
+      if (!pinia) {
+        return;
+      }
+      hot.data.pinia = pinia;
+      for (const exportName in newModule) {
+        const useStore = newModule[exportName];
+        if (isUseStore(useStore) && pinia._s.has(useStore.$id)) {
+          const id = useStore.$id;
+          if (id !== initialUseStore.$id) {
+            console.warn(`The id of the store changed from "${initialUseStore.$id}" to "${id}". Reloading.`);
+            return hot.invalidate();
+          }
+          const existingStore = pinia._s.get(id);
+          if (!existingStore) {
+            console.log(`[Pinia]: skipping hmr because store doesn't exist yet`);
+            return;
+          }
+          useStore(pinia, existingStore);
+        }
+      }
+    };
+  }
+  const noop = () => {
+  };
+  function addSubscription(subscriptions, callback, detached, onCleanup = noop) {
+    subscriptions.push(callback);
+    const removeSubscription = () => {
+      const idx = subscriptions.indexOf(callback);
+      if (idx > -1) {
+        subscriptions.splice(idx, 1);
+        onCleanup();
+      }
+    };
+    if (!detached && vue.getCurrentScope()) {
+      vue.onScopeDispose(removeSubscription);
+    }
+    return removeSubscription;
+  }
+  function triggerSubscriptions(subscriptions, ...args) {
+    subscriptions.slice().forEach((callback) => {
+      callback(...args);
+    });
+  }
+  const fallbackRunWithContext = (fn) => fn();
+  function mergeReactiveObjects(target, patchToApply) {
+    if (target instanceof Map && patchToApply instanceof Map) {
+      patchToApply.forEach((value2, key) => target.set(key, value2));
+    }
+    if (target instanceof Set && patchToApply instanceof Set) {
+      patchToApply.forEach(target.add, target);
+    }
+    for (const key in patchToApply) {
+      if (!patchToApply.hasOwnProperty(key))
+        continue;
+      const subPatch = patchToApply[key];
+      const targetValue = target[key];
+      if (isPlainObject$1(targetValue) && isPlainObject$1(subPatch) && target.hasOwnProperty(key) && !vue.isRef(subPatch) && !vue.isReactive(subPatch)) {
+        target[key] = mergeReactiveObjects(targetValue, subPatch);
+      } else {
+        target[key] = subPatch;
+      }
+    }
+    return target;
+  }
+  const skipHydrateSymbol = Symbol("pinia:skipHydration");
+  function skipHydrate(obj) {
+    return Object.defineProperty(obj, skipHydrateSymbol, {});
+  }
+  function shouldHydrate(obj) {
+    return !isPlainObject$1(obj) || !obj.hasOwnProperty(skipHydrateSymbol);
+  }
+  const { assign: assign$2 } = Object;
+  function isComputed(o2) {
+    return !!(vue.isRef(o2) && o2.effect);
+  }
+  function createOptionsStore(id, options2, pinia, hot) {
+    const { state, actions, getters } = options2;
+    const initialState = pinia.state.value[id];
+    let store;
+    function setup() {
+      if (!initialState && !hot) {
+        {
+          pinia.state.value[id] = state ? state() : {};
+        }
+      }
+      const localState = hot ? (
+        // use ref() to unwrap refs inside state TODO: check if this is still necessary
+        vue.toRefs(vue.ref(state ? state() : {}).value)
+      ) : vue.toRefs(pinia.state.value[id]);
+      return assign$2(localState, actions, Object.keys(getters || {}).reduce((computedGetters, name2) => {
+        if (name2 in localState) {
+          console.warn(`[🍍]: A getter cannot have the same name as another state property. Rename one of them. Found with "${name2}" in store "${id}".`);
+        }
+        computedGetters[name2] = vue.markRaw(vue.computed(() => {
+          setActivePinia(pinia);
+          const store2 = pinia._s.get(id);
+          return getters[name2].call(store2, store2);
+        }));
+        return computedGetters;
+      }, {}));
+    }
+    store = createSetupStore(id, setup, options2, pinia, hot, true);
+    return store;
+  }
+  function createSetupStore($id, setup, options2 = {}, pinia, hot, isOptionsStore) {
+    let scope;
+    const optionsForPlugin = assign$2({ actions: {} }, options2);
+    if (!pinia._e.active) {
+      throw new Error("Pinia destroyed");
+    }
+    const $subscribeOptions = {
+      deep: true
+      // flush: 'post',
+    };
+    {
+      $subscribeOptions.onTrigger = (event) => {
+        if (isListening) {
+          debuggerEvents = event;
+        } else if (isListening == false && !store._hotUpdating) {
+          if (Array.isArray(debuggerEvents)) {
+            debuggerEvents.push(event);
+          } else {
+            console.error("🍍 debuggerEvents should be an array. This is most likely an internal Pinia bug.");
+          }
+        }
+      };
+    }
+    let isListening;
+    let isSyncListening;
+    let subscriptions = [];
+    let actionSubscriptions = [];
+    let debuggerEvents;
+    const initialState = pinia.state.value[$id];
+    if (!isOptionsStore && !initialState && !hot) {
+      {
+        pinia.state.value[$id] = {};
+      }
+    }
+    const hotState = vue.ref({});
+    let activeListener;
+    function $patch(partialStateOrMutator) {
+      let subscriptionMutation;
+      isListening = isSyncListening = false;
+      {
+        debuggerEvents = [];
+      }
+      if (typeof partialStateOrMutator === "function") {
+        partialStateOrMutator(pinia.state.value[$id]);
+        subscriptionMutation = {
+          type: MutationType.patchFunction,
+          storeId: $id,
+          events: debuggerEvents
+        };
+      } else {
+        mergeReactiveObjects(pinia.state.value[$id], partialStateOrMutator);
+        subscriptionMutation = {
+          type: MutationType.patchObject,
+          payload: partialStateOrMutator,
+          storeId: $id,
+          events: debuggerEvents
+        };
+      }
+      const myListenerId = activeListener = Symbol();
+      vue.nextTick().then(() => {
+        if (activeListener === myListenerId) {
+          isListening = true;
+        }
+      });
+      isSyncListening = true;
+      triggerSubscriptions(subscriptions, subscriptionMutation, pinia.state.value[$id]);
+    }
+    const $reset = isOptionsStore ? function $reset2() {
+      const { state } = options2;
+      const newState = state ? state() : {};
+      this.$patch(($state) => {
+        assign$2($state, newState);
+      });
+    } : (
+      /* istanbul ignore next */
+      () => {
+        throw new Error(`🍍: Store "${$id}" is built using the setup syntax and does not implement $reset().`);
+      }
+    );
+    function $dispose() {
+      scope.stop();
+      subscriptions = [];
+      actionSubscriptions = [];
+      pinia._s.delete($id);
+    }
+    function wrapAction(name2, action) {
+      return function() {
+        setActivePinia(pinia);
+        const args = Array.from(arguments);
+        const afterCallbackList = [];
+        const onErrorCallbackList = [];
+        function after(callback) {
+          afterCallbackList.push(callback);
+        }
+        function onError(callback) {
+          onErrorCallbackList.push(callback);
+        }
+        triggerSubscriptions(actionSubscriptions, {
+          args,
+          name: name2,
+          store,
+          after,
+          onError
+        });
+        let ret;
+        try {
+          ret = action.apply(this && this.$id === $id ? this : store, args);
+        } catch (error2) {
+          triggerSubscriptions(onErrorCallbackList, error2);
+          throw error2;
+        }
+        if (ret instanceof Promise) {
+          return ret.then((value2) => {
+            triggerSubscriptions(afterCallbackList, value2);
+            return value2;
+          }).catch((error2) => {
+            triggerSubscriptions(onErrorCallbackList, error2);
+            return Promise.reject(error2);
+          });
+        }
+        triggerSubscriptions(afterCallbackList, ret);
+        return ret;
+      };
+    }
+    const _hmrPayload = /* @__PURE__ */ vue.markRaw({
+      actions: {},
+      getters: {},
+      state: [],
+      hotState
+    });
+    const partialStore = {
+      _p: pinia,
+      // _s: scope,
+      $id,
+      $onAction: addSubscription.bind(null, actionSubscriptions),
+      $patch,
+      $reset,
+      $subscribe(callback, options22 = {}) {
+        const removeSubscription = addSubscription(subscriptions, callback, options22.detached, () => stopWatcher());
+        const stopWatcher = scope.run(() => vue.watch(() => pinia.state.value[$id], (state) => {
+          if (options22.flush === "sync" ? isSyncListening : isListening) {
+            callback({
+              storeId: $id,
+              type: MutationType.direct,
+              events: debuggerEvents
+            }, state);
+          }
+        }, assign$2({}, $subscribeOptions, options22)));
+        return removeSubscription;
+      },
+      $dispose
+    };
+    const store = vue.reactive(assign$2(
+      {
+        _hmrPayload,
+        _customProperties: vue.markRaw(/* @__PURE__ */ new Set())
+        // devtools custom properties
+      },
+      partialStore
+      // must be added later
+      // setupStore
+    ));
+    pinia._s.set($id, store);
+    const runWithContext = pinia._a && pinia._a.runWithContext || fallbackRunWithContext;
+    const setupStore = runWithContext(() => pinia._e.run(() => (scope = vue.effectScope()).run(setup)));
+    for (const key in setupStore) {
+      const prop = setupStore[key];
+      if (vue.isRef(prop) && !isComputed(prop) || vue.isReactive(prop)) {
+        if (hot) {
+          set(hotState.value, key, vue.toRef(setupStore, key));
+        } else if (!isOptionsStore) {
+          if (initialState && shouldHydrate(prop)) {
+            if (vue.isRef(prop)) {
+              prop.value = initialState[key];
+            } else {
+              mergeReactiveObjects(prop, initialState[key]);
+            }
+          }
+          {
+            pinia.state.value[$id][key] = prop;
+          }
+        }
+        {
+          _hmrPayload.state.push(key);
+        }
+      } else if (typeof prop === "function") {
+        const actionValue = hot ? prop : wrapAction(key, prop);
+        {
+          setupStore[key] = actionValue;
+        }
+        {
+          _hmrPayload.actions[key] = prop;
+        }
+        optionsForPlugin.actions[key] = prop;
+      } else {
+        if (isComputed(prop)) {
+          _hmrPayload.getters[key] = isOptionsStore ? (
+            // @ts-expect-error
+            options2.getters[key]
+          ) : prop;
+          if (IS_CLIENT) {
+            const getters = setupStore._getters || // @ts-expect-error: same
+            (setupStore._getters = vue.markRaw([]));
+            getters.push(key);
+          }
+        }
+      }
+    }
+    {
+      assign$2(store, setupStore);
+      assign$2(vue.toRaw(store), setupStore);
+    }
+    Object.defineProperty(store, "$state", {
+      get: () => hot ? hotState.value : pinia.state.value[$id],
+      set: (state) => {
+        if (hot) {
+          throw new Error("cannot set hotState");
+        }
+        $patch(($state) => {
+          assign$2($state, state);
+        });
+      }
+    });
+    {
+      store._hotUpdate = vue.markRaw((newStore) => {
+        store._hotUpdating = true;
+        newStore._hmrPayload.state.forEach((stateKey) => {
+          if (stateKey in store.$state) {
+            const newStateTarget = newStore.$state[stateKey];
+            const oldStateSource = store.$state[stateKey];
+            if (typeof newStateTarget === "object" && isPlainObject$1(newStateTarget) && isPlainObject$1(oldStateSource)) {
+              patchObject(newStateTarget, oldStateSource);
+            } else {
+              newStore.$state[stateKey] = oldStateSource;
+            }
+          }
+          set(store, stateKey, vue.toRef(newStore.$state, stateKey));
+        });
+        Object.keys(store.$state).forEach((stateKey) => {
+          if (!(stateKey in newStore.$state)) {
+            del(store, stateKey);
+          }
+        });
+        isListening = false;
+        isSyncListening = false;
+        pinia.state.value[$id] = vue.toRef(newStore._hmrPayload, "hotState");
+        isSyncListening = true;
+        vue.nextTick().then(() => {
+          isListening = true;
+        });
+        for (const actionName in newStore._hmrPayload.actions) {
+          const action = newStore[actionName];
+          set(store, actionName, wrapAction(actionName, action));
+        }
+        for (const getterName in newStore._hmrPayload.getters) {
+          const getter = newStore._hmrPayload.getters[getterName];
+          const getterValue = isOptionsStore ? (
+            // special handling of options api
+            vue.computed(() => {
+              setActivePinia(pinia);
+              return getter.call(store, store);
+            })
+          ) : getter;
+          set(store, getterName, getterValue);
+        }
+        Object.keys(store._hmrPayload.getters).forEach((key) => {
+          if (!(key in newStore._hmrPayload.getters)) {
+            del(store, key);
+          }
+        });
+        Object.keys(store._hmrPayload.actions).forEach((key) => {
+          if (!(key in newStore._hmrPayload.actions)) {
+            del(store, key);
+          }
+        });
+        store._hmrPayload = newStore._hmrPayload;
+        store._getters = newStore._getters;
+        store._hotUpdating = false;
+      });
+    }
+    if (USE_DEVTOOLS) {
+      const nonEnumerable = {
+        writable: true,
+        configurable: true,
+        // avoid warning on devtools trying to display this property
+        enumerable: false
+      };
+      ["_p", "_hmrPayload", "_getters", "_customProperties"].forEach((p2) => {
+        Object.defineProperty(store, p2, assign$2({ value: store[p2] }, nonEnumerable));
+      });
+    }
+    pinia._p.forEach((extender) => {
+      if (USE_DEVTOOLS) {
+        const extensions = scope.run(() => extender({
+          store,
+          app: pinia._a,
+          pinia,
+          options: optionsForPlugin
+        }));
+        Object.keys(extensions || {}).forEach((key) => store._customProperties.add(key));
+        assign$2(store, extensions);
+      } else {
+        assign$2(store, scope.run(() => extender({
+          store,
+          app: pinia._a,
+          pinia,
+          options: optionsForPlugin
+        })));
+      }
+    });
+    if (store.$state && typeof store.$state === "object" && typeof store.$state.constructor === "function" && !store.$state.constructor.toString().includes("[native code]")) {
+      console.warn(`[🍍]: The "state" must be a plain object. It cannot be
+	state: () => new MyClass()
+Found in store "${store.$id}".`);
+    }
+    if (initialState && isOptionsStore && options2.hydrate) {
+      options2.hydrate(store.$state, initialState);
+    }
+    isListening = true;
+    isSyncListening = true;
+    return store;
+  }
+  function defineStore(idOrOptions, setup, setupOptions) {
+    let id;
+    let options2;
+    const isSetupStore = typeof setup === "function";
+    if (typeof idOrOptions === "string") {
+      id = idOrOptions;
+      options2 = isSetupStore ? setupOptions : setup;
+    } else {
+      options2 = idOrOptions;
+      id = idOrOptions.id;
+      if (typeof id !== "string") {
+        throw new Error(`[🍍]: "defineStore()" must be passed a store id as its first argument.`);
+      }
+    }
+    function useStore(pinia, hot) {
+      const hasContext = vue.hasInjectionContext();
+      pinia = // in test mode, ignore the argument provided as we can always retrieve a
+      // pinia instance with getActivePinia()
+      pinia || (hasContext ? vue.inject(piniaSymbol, null) : null);
+      if (pinia)
+        setActivePinia(pinia);
+      if (!activePinia) {
+        throw new Error(`[🍍]: "getActivePinia()" was called but there was no active Pinia. Are you trying to use a store before calling "app.use(pinia)"?
+See https://pinia.vuejs.org/core-concepts/outside-component-usage.html for help.
+This will fail in production.`);
+      }
+      pinia = activePinia;
+      if (!pinia._s.has(id)) {
+        if (isSetupStore) {
+          createSetupStore(id, setup, options2, pinia);
+        } else {
+          createOptionsStore(id, options2, pinia);
+        }
+        {
+          useStore._pinia = pinia;
+        }
+      }
+      const store = pinia._s.get(id);
+      if (hot) {
+        const hotId = "__hot:" + id;
+        const newStore = isSetupStore ? createSetupStore(hotId, setup, options2, pinia, true) : createOptionsStore(hotId, assign$2({}, options2), pinia, true);
+        hot._hotUpdate(newStore);
+        delete pinia.state.value[hotId];
+        pinia._s.delete(hotId);
+      }
+      if (IS_CLIENT) {
+        const currentInstance = vue.getCurrentInstance();
+        if (currentInstance && currentInstance.proxy && // avoid adding stores that are just built for hot module replacement
+        !hot) {
+          const vm = currentInstance.proxy;
+          const cache2 = "_pStores" in vm ? vm._pStores : vm._pStores = {};
+          cache2[id] = store;
+        }
+      }
+      return store;
+    }
+    useStore.$id = id;
+    return useStore;
+  }
+  let mapStoreSuffix = "Store";
+  function setMapStoreSuffix(suffix) {
+    mapStoreSuffix = suffix;
+  }
+  function mapStores(...stores) {
+    if (Array.isArray(stores[0])) {
+      console.warn(`[🍍]: Directly pass all stores to "mapStores()" without putting them in an array:
+Replace
+	mapStores([useAuthStore, useCartStore])
+with
+	mapStores(useAuthStore, useCartStore)
+This will fail in production if not fixed.`);
+      stores = stores[0];
+    }
+    return stores.reduce((reduced, useStore) => {
+      reduced[useStore.$id + mapStoreSuffix] = function() {
+        return useStore(this.$pinia);
+      };
+      return reduced;
+    }, {});
+  }
+  function mapState(useStore, keysOrMapper) {
+    return Array.isArray(keysOrMapper) ? keysOrMapper.reduce((reduced, key) => {
+      reduced[key] = function() {
+        return useStore(this.$pinia)[key];
+      };
+      return reduced;
+    }, {}) : Object.keys(keysOrMapper).reduce((reduced, key) => {
+      reduced[key] = function() {
+        const store = useStore(this.$pinia);
+        const storeKey = keysOrMapper[key];
+        return typeof storeKey === "function" ? storeKey.call(this, store) : store[storeKey];
+      };
+      return reduced;
+    }, {});
+  }
+  const mapGetters = mapState;
+  function mapActions(useStore, keysOrMapper) {
+    return Array.isArray(keysOrMapper) ? keysOrMapper.reduce((reduced, key) => {
+      reduced[key] = function(...args) {
+        return useStore(this.$pinia)[key](...args);
+      };
+      return reduced;
+    }, {}) : Object.keys(keysOrMapper).reduce((reduced, key) => {
+      reduced[key] = function(...args) {
+        return useStore(this.$pinia)[keysOrMapper[key]](...args);
+      };
+      return reduced;
+    }, {});
+  }
+  function mapWritableState(useStore, keysOrMapper) {
+    return Array.isArray(keysOrMapper) ? keysOrMapper.reduce((reduced, key) => {
+      reduced[key] = {
+        get() {
+          return useStore(this.$pinia)[key];
+        },
+        set(value2) {
+          return useStore(this.$pinia)[key] = value2;
+        }
+      };
+      return reduced;
+    }, {}) : Object.keys(keysOrMapper).reduce((reduced, key) => {
+      reduced[key] = {
+        get() {
+          return useStore(this.$pinia)[keysOrMapper[key]];
+        },
+        set(value2) {
+          return useStore(this.$pinia)[keysOrMapper[key]] = value2;
+        }
+      };
+      return reduced;
+    }, {});
+  }
+  function storeToRefs(store) {
+    {
+      store = vue.toRaw(store);
+      const refs = {};
+      for (const key in store) {
+        const value2 = store[key];
+        if (vue.isRef(value2) || vue.isReactive(value2)) {
+          refs[key] = // ---
+          vue.toRef(store, key);
+        }
+      }
+      return refs;
+    }
+  }
+  const PiniaVuePlugin = function(_Vue) {
+    _Vue.mixin({
+      beforeCreate() {
+        const options2 = this.$options;
+        if (options2.pinia) {
+          const pinia = options2.pinia;
+          if (!this._provided) {
+            const provideCache = {};
+            Object.defineProperty(this, "_provided", {
+              get: () => provideCache,
+              set: (v2) => Object.assign(provideCache, v2)
+            });
+          }
+          this._provided[piniaSymbol] = pinia;
+          if (!this.$pinia) {
+            this.$pinia = pinia;
+          }
+          pinia._a = this;
+          if (IS_CLIENT) {
+            setActivePinia(pinia);
+          }
+          if (USE_DEVTOOLS) {
+            registerPiniaDevtools(pinia._a, pinia);
+          }
+        } else if (!this.$pinia && options2.parent && options2.parent.$pinia) {
+          this.$pinia = options2.parent.$pinia;
+        }
+      },
+      destroyed() {
+        delete this._pStores;
+      }
+    });
+  };
+  const Pinia = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    __proto__: null,
+    get MutationType() {
+      return MutationType;
+    },
+    PiniaVuePlugin,
+    acceptHMRUpdate,
+    createPinia,
+    defineStore,
+    getActivePinia,
+    mapActions,
+    mapGetters,
+    mapState,
+    mapStores,
+    mapWritableState,
+    setActivePinia,
+    setMapStoreSuffix,
+    skipHydrate,
+    storeToRefs
+  }, Symbol.toStringTag, { value: "Module" }));
+  /*!
+    * @intlify/shared v9.1.9
+    * (c) 2021 kazuya kawaguchi
+    * Released under the MIT License.
+    */
+  const inBrowser = typeof window !== "undefined";
+  let mark;
+  let measure;
+  {
+    const perf2 = inBrowser && window.performance;
+    if (perf2 && perf2.mark && perf2.measure && perf2.clearMarks && perf2.clearMeasures) {
+      mark = (tag) => perf2.mark(tag);
+      measure = (name2, startTag, endTag) => {
+        perf2.measure(name2, startTag, endTag);
+        perf2.clearMarks(startTag);
+        perf2.clearMarks(endTag);
+      };
+    }
+  }
+  const RE_ARGS = /\{([0-9a-zA-Z]+)\}/g;
+  function format(message, ...args) {
+    if (args.length === 1 && isObject$1(args[0])) {
+      args = args[0];
+    }
+    if (!args || !args.hasOwnProperty) {
+      args = {};
+    }
+    return message.replace(RE_ARGS, (match, identifier) => {
+      return args.hasOwnProperty(identifier) ? args[identifier] : "";
+    });
+  }
+  const hasSymbol = typeof Symbol === "function" && typeof Symbol.toStringTag === "symbol";
+  const makeSymbol = (name2) => hasSymbol ? Symbol(name2) : name2;
+  const generateFormatCacheKey = (locale, key, source) => friendlyJSONstringify({ l: locale, k: key, s: source });
+  const friendlyJSONstringify = (json) => JSON.stringify(json).replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029").replace(/\u0027/g, "\\u0027");
+  const isNumber = (val) => typeof val === "number" && isFinite(val);
+  const isDate = (val) => toTypeString(val) === "[object Date]";
+  const isRegExp = (val) => toTypeString(val) === "[object RegExp]";
+  const isEmptyObject = (val) => isPlainObject(val) && Object.keys(val).length === 0;
+  function warn(msg, err) {
+    if (typeof console !== "undefined") {
+      console.warn(`[intlify] ` + msg);
+      if (err) {
+        console.warn(err.stack);
+      }
+    }
+  }
+  const assign = Object.assign;
+  let _globalThis;
+  const getGlobalThis = () => {
+    return _globalThis || (_globalThis = typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
+  };
+  function escapeHtml(rawText) {
+    return rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+  }
+  const hasOwnProperty$1 = Object.prototype.hasOwnProperty;
+  function hasOwn$1(obj, key) {
+    return hasOwnProperty$1.call(obj, key);
+  }
+  const isArray = Array.isArray;
+  const isFunction = (val) => typeof val === "function";
+  const isString = (val) => typeof val === "string";
+  const isBoolean = (val) => typeof val === "boolean";
+  const isObject$1 = (val) => (
+    // eslint-disable-line
+    val !== null && typeof val === "object"
+  );
+  const objectToString = Object.prototype.toString;
+  const toTypeString = (value2) => objectToString.call(value2);
+  const isPlainObject = (val) => toTypeString(val) === "[object Object]";
+  const toDisplayString = (val) => {
+    return val == null ? "" : isArray(val) || isPlainObject(val) && val.toString === objectToString ? JSON.stringify(val, null, 2) : String(val);
+  };
+  const RANGE = 2;
+  function generateCodeFrame(source, start = 0, end = source.length) {
+    const lines = source.split(/\r?\n/);
+    let count = 0;
+    const res = [];
+    for (let i2 = 0; i2 < lines.length; i2++) {
+      count += lines[i2].length + 1;
+      if (count >= start) {
+        for (let j2 = i2 - RANGE; j2 <= i2 + RANGE || end > count; j2++) {
+          if (j2 < 0 || j2 >= lines.length)
+            continue;
+          const line = j2 + 1;
+          res.push(`${line}${" ".repeat(3 - String(line).length)}|  ${lines[j2]}`);
+          const lineLength = lines[j2].length;
+          if (j2 === i2) {
+            const pad = start - (count - lineLength) + 1;
+            const length = Math.max(1, end > count ? lineLength - pad : end - start);
+            res.push(`   |  ` + " ".repeat(pad) + "^".repeat(length));
+          } else if (j2 > i2) {
+            if (end > count) {
+              const length = Math.max(Math.min(end - count, lineLength), 1);
+              res.push(`   |  ` + "^".repeat(length));
+            }
+            count += lineLength + 1;
+          }
+        }
+        break;
+      }
+    }
+    return res.join("\n");
+  }
+  function createEmitter() {
+    const events = /* @__PURE__ */ new Map();
+    const emitter = {
+      events,
+      on(event, handler) {
+        const handlers = events.get(event);
+        const added = handlers && handlers.push(handler);
+        if (!added) {
+          events.set(event, [handler]);
+        }
+      },
+      off(event, handler) {
+        const handlers = events.get(event);
+        if (handlers) {
+          handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+        }
+      },
+      emit(event, payload) {
+        (events.get(event) || []).slice().map((handler) => handler(payload));
+        (events.get("*") || []).slice().map((handler) => handler(event, payload));
+      }
+    };
+    return emitter;
+  }
+  /*!
+    * @intlify/message-resolver v9.1.9
+    * (c) 2021 kazuya kawaguchi
+    * Released under the MIT License.
+    */
+  const hasOwnProperty = Object.prototype.hasOwnProperty;
+  function hasOwn(obj, key) {
+    return hasOwnProperty.call(obj, key);
+  }
+  const isObject = (val) => (
+    // eslint-disable-line
+    val !== null && typeof val === "object"
+  );
+  const pathStateMachine = [];
+  pathStateMachine[
+    0
+    /* BEFORE_PATH */
+  ] = {
+    [
+      "w"
+      /* WORKSPACE */
+    ]: [
+      0
+      /* BEFORE_PATH */
+    ],
+    [
+      "i"
+      /* IDENT */
+    ]: [
+      3,
+      0
+      /* APPEND */
+    ],
+    [
+      "["
+      /* LEFT_BRACKET */
+    ]: [
+      4
+      /* IN_SUB_PATH */
+    ],
+    [
+      "o"
+      /* END_OF_FAIL */
+    ]: [
+      7
+      /* AFTER_PATH */
+    ]
+  };
+  pathStateMachine[
+    1
+    /* IN_PATH */
+  ] = {
+    [
+      "w"
+      /* WORKSPACE */
+    ]: [
+      1
+      /* IN_PATH */
+    ],
+    [
+      "."
+      /* DOT */
+    ]: [
+      2
+      /* BEFORE_IDENT */
+    ],
+    [
+      "["
+      /* LEFT_BRACKET */
+    ]: [
+      4
+      /* IN_SUB_PATH */
+    ],
+    [
+      "o"
+      /* END_OF_FAIL */
+    ]: [
+      7
+      /* AFTER_PATH */
+    ]
+  };
+  pathStateMachine[
+    2
+    /* BEFORE_IDENT */
+  ] = {
+    [
+      "w"
+      /* WORKSPACE */
+    ]: [
+      2
+      /* BEFORE_IDENT */
+    ],
+    [
+      "i"
+      /* IDENT */
+    ]: [
+      3,
+      0
+      /* APPEND */
+    ],
+    [
+      "0"
+      /* ZERO */
+    ]: [
+      3,
+      0
+      /* APPEND */
+    ]
+  };
+  pathStateMachine[
+    3
+    /* IN_IDENT */
+  ] = {
+    [
+      "i"
+      /* IDENT */
+    ]: [
+      3,
+      0
+      /* APPEND */
+    ],
+    [
+      "0"
+      /* ZERO */
+    ]: [
+      3,
+      0
+      /* APPEND */
+    ],
+    [
+      "w"
+      /* WORKSPACE */
+    ]: [
+      1,
+      1
+      /* PUSH */
+    ],
+    [
+      "."
+      /* DOT */
+    ]: [
+      2,
+      1
+      /* PUSH */
+    ],
+    [
+      "["
+      /* LEFT_BRACKET */
+    ]: [
+      4,
+      1
+      /* PUSH */
+    ],
+    [
+      "o"
+      /* END_OF_FAIL */
+    ]: [
+      7,
+      1
+      /* PUSH */
+    ]
+  };
+  pathStateMachine[
+    4
+    /* IN_SUB_PATH */
+  ] = {
+    [
+      "'"
+      /* SINGLE_QUOTE */
+    ]: [
+      5,
+      0
+      /* APPEND */
+    ],
+    [
+      '"'
+      /* DOUBLE_QUOTE */
+    ]: [
+      6,
+      0
+      /* APPEND */
+    ],
+    [
+      "["
+      /* LEFT_BRACKET */
+    ]: [
+      4,
+      2
+      /* INC_SUB_PATH_DEPTH */
+    ],
+    [
+      "]"
+      /* RIGHT_BRACKET */
+    ]: [
+      1,
+      3
+      /* PUSH_SUB_PATH */
+    ],
+    [
+      "o"
+      /* END_OF_FAIL */
+    ]: 8,
+    [
+      "l"
+      /* ELSE */
+    ]: [
+      4,
+      0
+      /* APPEND */
+    ]
+  };
+  pathStateMachine[
+    5
+    /* IN_SINGLE_QUOTE */
+  ] = {
+    [
+      "'"
+      /* SINGLE_QUOTE */
+    ]: [
+      4,
+      0
+      /* APPEND */
+    ],
+    [
+      "o"
+      /* END_OF_FAIL */
+    ]: 8,
+    [
+      "l"
+      /* ELSE */
+    ]: [
+      5,
+      0
+      /* APPEND */
+    ]
+  };
+  pathStateMachine[
+    6
+    /* IN_DOUBLE_QUOTE */
+  ] = {
+    [
+      '"'
+      /* DOUBLE_QUOTE */
+    ]: [
+      4,
+      0
+      /* APPEND */
+    ],
+    [
+      "o"
+      /* END_OF_FAIL */
+    ]: 8,
+    [
+      "l"
+      /* ELSE */
+    ]: [
+      6,
+      0
+      /* APPEND */
+    ]
+  };
+  const literalValueRE = /^\s?(?:true|false|-?[\d.]+|'[^']*'|"[^"]*")\s?$/;
+  function isLiteral(exp) {
+    return literalValueRE.test(exp);
+  }
+  function stripQuotes(str) {
+    const a2 = str.charCodeAt(0);
+    const b2 = str.charCodeAt(str.length - 1);
+    return a2 === b2 && (a2 === 34 || a2 === 39) ? str.slice(1, -1) : str;
+  }
+  function getPathCharType(ch) {
+    if (ch === void 0 || ch === null) {
+      return "o";
+    }
+    const code2 = ch.charCodeAt(0);
+    switch (code2) {
+      case 91:
+      case 93:
+      case 46:
+      case 34:
+      case 39:
+        return ch;
+      case 95:
+      case 36:
+      case 45:
+        return "i";
+      case 9:
+      case 10:
+      case 13:
+      case 160:
+      case 65279:
+      case 8232:
+      case 8233:
+        return "w";
+    }
+    return "i";
+  }
+  function formatSubPath(path) {
+    const trimmed = path.trim();
+    if (path.charAt(0) === "0" && isNaN(parseInt(path))) {
+      return false;
+    }
+    return isLiteral(trimmed) ? stripQuotes(trimmed) : "*" + trimmed;
+  }
+  function parse(path) {
+    const keys = [];
+    let index2 = -1;
+    let mode = 0;
+    let subPathDepth = 0;
+    let c2;
+    let key;
+    let newChar;
+    let type2;
+    let transition;
+    let action;
+    let typeMap;
+    const actions = [];
+    actions[
+      0
+      /* APPEND */
+    ] = () => {
+      if (key === void 0) {
+        key = newChar;
+      } else {
+        key += newChar;
+      }
+    };
+    actions[
+      1
+      /* PUSH */
+    ] = () => {
+      if (key !== void 0) {
+        keys.push(key);
+        key = void 0;
+      }
+    };
+    actions[
+      2
+      /* INC_SUB_PATH_DEPTH */
+    ] = () => {
+      actions[
+        0
+        /* APPEND */
+      ]();
+      subPathDepth++;
+    };
+    actions[
+      3
+      /* PUSH_SUB_PATH */
+    ] = () => {
+      if (subPathDepth > 0) {
+        subPathDepth--;
+        mode = 4;
+        actions[
+          0
+          /* APPEND */
+        ]();
+      } else {
+        subPathDepth = 0;
+        if (key === void 0) {
+          return false;
+        }
+        key = formatSubPath(key);
+        if (key === false) {
+          return false;
+        } else {
+          actions[
+            1
+            /* PUSH */
+          ]();
+        }
+      }
+    };
+    function maybeUnescapeQuote() {
+      const nextChar = path[index2 + 1];
+      if (mode === 5 && nextChar === "'" || mode === 6 && nextChar === '"') {
+        index2++;
+        newChar = "\\" + nextChar;
+        actions[
+          0
+          /* APPEND */
+        ]();
+        return true;
+      }
+    }
+    while (mode !== null) {
+      index2++;
+      c2 = path[index2];
+      if (c2 === "\\" && maybeUnescapeQuote()) {
+        continue;
+      }
+      type2 = getPathCharType(c2);
+      typeMap = pathStateMachine[mode];
+      transition = typeMap[type2] || typeMap[
+        "l"
+        /* ELSE */
+      ] || 8;
+      if (transition === 8) {
+        return;
+      }
+      mode = transition[0];
+      if (transition[1] !== void 0) {
+        action = actions[transition[1]];
+        if (action) {
+          newChar = c2;
+          if (action() === false) {
+            return;
+          }
+        }
+      }
+      if (mode === 7) {
+        return keys;
+      }
+    }
+  }
+  const cache = /* @__PURE__ */ new Map();
+  function resolveValue(obj, path) {
+    if (!isObject(obj)) {
+      return null;
+    }
+    let hit = cache.get(path);
+    if (!hit) {
+      hit = parse(path);
+      if (hit) {
+        cache.set(path, hit);
+      }
+    }
+    if (!hit) {
+      return null;
+    }
+    const len = hit.length;
+    let last = obj;
+    let i2 = 0;
+    while (i2 < len) {
+      const val = last[hit[i2]];
+      if (val === void 0) {
+        return null;
+      }
+      last = val;
+      i2++;
+    }
+    return last;
+  }
+  function handleFlatJson(obj) {
+    if (!isObject(obj)) {
+      return obj;
+    }
+    for (const key in obj) {
+      if (!hasOwn(obj, key)) {
+        continue;
+      }
+      if (!key.includes(
+        "."
+        /* DOT */
+      )) {
+        if (isObject(obj[key])) {
+          handleFlatJson(obj[key]);
+        }
+      } else {
+        const subKeys = key.split(
+          "."
+          /* DOT */
+        );
+        const lastIndex = subKeys.length - 1;
+        let currentObj = obj;
+        for (let i2 = 0; i2 < lastIndex; i2++) {
+          if (!(subKeys[i2] in currentObj)) {
+            currentObj[subKeys[i2]] = {};
+          }
+          currentObj = currentObj[subKeys[i2]];
+        }
+        currentObj[subKeys[lastIndex]] = obj[key];
+        delete obj[key];
+        if (isObject(currentObj[subKeys[lastIndex]])) {
+          handleFlatJson(currentObj[subKeys[lastIndex]]);
+        }
+      }
+    }
+    return obj;
+  }
+  /*!
+    * @intlify/runtime v9.1.9
+    * (c) 2021 kazuya kawaguchi
+    * Released under the MIT License.
+    */
+  const DEFAULT_MODIFIER = (str) => str;
+  const DEFAULT_MESSAGE = (ctx) => "";
+  const DEFAULT_MESSAGE_DATA_TYPE = "text";
+  const DEFAULT_NORMALIZE = (values) => values.length === 0 ? "" : values.join("");
+  const DEFAULT_INTERPOLATE = toDisplayString;
+  function pluralDefault(choice, choicesLength) {
+    choice = Math.abs(choice);
+    if (choicesLength === 2) {
+      return choice ? choice > 1 ? 1 : 0 : 1;
+    }
+    return choice ? Math.min(choice, 2) : 0;
+  }
+  function getPluralIndex(options2) {
+    const index2 = isNumber(options2.pluralIndex) ? options2.pluralIndex : -1;
+    return options2.named && (isNumber(options2.named.count) || isNumber(options2.named.n)) ? isNumber(options2.named.count) ? options2.named.count : isNumber(options2.named.n) ? options2.named.n : index2 : index2;
+  }
+  function normalizeNamed(pluralIndex, props2) {
+    if (!props2.count) {
+      props2.count = pluralIndex;
+    }
+    if (!props2.n) {
+      props2.n = pluralIndex;
+    }
+  }
+  function createMessageContext(options2 = {}) {
+    const locale = options2.locale;
+    const pluralIndex = getPluralIndex(options2);
+    const pluralRule = isObject$1(options2.pluralRules) && isString(locale) && isFunction(options2.pluralRules[locale]) ? options2.pluralRules[locale] : pluralDefault;
+    const orgPluralRule = isObject$1(options2.pluralRules) && isString(locale) && isFunction(options2.pluralRules[locale]) ? pluralDefault : void 0;
+    const plural = (messages2) => messages2[pluralRule(pluralIndex, messages2.length, orgPluralRule)];
+    const _list = options2.list || [];
+    const list = (index2) => _list[index2];
+    const _named = options2.named || {};
+    isNumber(options2.pluralIndex) && normalizeNamed(pluralIndex, _named);
+    const named = (key) => _named[key];
+    function message(key) {
+      const msg = isFunction(options2.messages) ? options2.messages(key) : isObject$1(options2.messages) ? options2.messages[key] : false;
+      return !msg ? options2.parent ? options2.parent.message(key) : DEFAULT_MESSAGE : msg;
+    }
+    const _modifier = (name2) => options2.modifiers ? options2.modifiers[name2] : DEFAULT_MODIFIER;
+    const normalize = isPlainObject(options2.processor) && isFunction(options2.processor.normalize) ? options2.processor.normalize : DEFAULT_NORMALIZE;
+    const interpolate = isPlainObject(options2.processor) && isFunction(options2.processor.interpolate) ? options2.processor.interpolate : DEFAULT_INTERPOLATE;
+    const type2 = isPlainObject(options2.processor) && isString(options2.processor.type) ? options2.processor.type : DEFAULT_MESSAGE_DATA_TYPE;
+    const ctx = {
+      [
+        "list"
+        /* LIST */
+      ]: list,
+      [
+        "named"
+        /* NAMED */
+      ]: named,
+      [
+        "plural"
+        /* PLURAL */
+      ]: plural,
+      [
+        "linked"
+        /* LINKED */
+      ]: (key, modifier) => {
+        const msg = message(key)(ctx);
+        return isString(modifier) ? _modifier(modifier)(msg) : msg;
+      },
+      [
+        "message"
+        /* MESSAGE */
+      ]: message,
+      [
+        "type"
+        /* TYPE */
+      ]: type2,
+      [
+        "interpolate"
+        /* INTERPOLATE */
+      ]: interpolate,
+      [
+        "normalize"
+        /* NORMALIZE */
+      ]: normalize
+    };
+    return ctx;
+  }
+  /*!
+    * @intlify/message-compiler v9.1.9
+    * (c) 2021 kazuya kawaguchi
+    * Released under the MIT License.
+    */
+  const errorMessages$2 = {
+    // tokenizer error messages
+    [
+      0
+      /* EXPECTED_TOKEN */
+    ]: `Expected token: '{0}'`,
+    [
+      1
+      /* INVALID_TOKEN_IN_PLACEHOLDER */
+    ]: `Invalid token in placeholder: '{0}'`,
+    [
+      2
+      /* UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER */
+    ]: `Unterminated single quote in placeholder`,
+    [
+      3
+      /* UNKNOWN_ESCAPE_SEQUENCE */
+    ]: `Unknown escape sequence: \\{0}`,
+    [
+      4
+      /* INVALID_UNICODE_ESCAPE_SEQUENCE */
+    ]: `Invalid unicode escape sequence: {0}`,
+    [
+      5
+      /* UNBALANCED_CLOSING_BRACE */
+    ]: `Unbalanced closing brace`,
+    [
+      6
+      /* UNTERMINATED_CLOSING_BRACE */
+    ]: `Unterminated closing brace`,
+    [
+      7
+      /* EMPTY_PLACEHOLDER */
+    ]: `Empty placeholder`,
+    [
+      8
+      /* NOT_ALLOW_NEST_PLACEHOLDER */
+    ]: `Not allowed nest placeholder`,
+    [
+      9
+      /* INVALID_LINKED_FORMAT */
+    ]: `Invalid linked format`,
+    // parser error messages
+    [
+      10
+      /* MUST_HAVE_MESSAGES_IN_PLURAL */
+    ]: `Plural must have messages`,
+    [
+      11
+      /* UNEXPECTED_EMPTY_LINKED_MODIFIER */
+    ]: `Unexpected empty linked modifier`,
+    [
+      12
+      /* UNEXPECTED_EMPTY_LINKED_KEY */
+    ]: `Unexpected empty linked key`,
+    [
+      13
+      /* UNEXPECTED_LEXICAL_ANALYSIS */
+    ]: `Unexpected lexical analysis in token: '{0}'`
+  };
+  function createCompileError(code2, loc, options2 = {}) {
+    const { domain, messages: messages2, args } = options2;
+    const msg = format((messages2 || errorMessages$2)[code2] || "", ...args || []);
+    const error2 = new SyntaxError(String(msg));
+    error2.code = code2;
+    if (loc) {
+      error2.location = loc;
+    }
+    error2.domain = domain;
+    return error2;
+  }
+  /*!
+    * @intlify/devtools-if v9.1.9
+    * (c) 2021 kazuya kawaguchi
+    * Released under the MIT License.
+    */
+  const IntlifyDevToolsHooks = {
+    I18nInit: "i18n:init",
+    FunctionTranslate: "function:translate"
+  };
+  /*!
+    * @intlify/core-base v9.1.9
+    * (c) 2021 kazuya kawaguchi
+    * Released under the MIT License.
+    */
+  let devtools = null;
+  function setDevToolsHook(hook) {
+    devtools = hook;
+  }
+  function initI18nDevTools(i18n2, version2, meta) {
+    devtools && devtools.emit(IntlifyDevToolsHooks.I18nInit, {
+      timestamp: Date.now(),
+      i18n: i18n2,
+      version: version2,
+      meta
+    });
+  }
+  const translateDevTools = /* @__PURE__ */ createDevToolsHook(IntlifyDevToolsHooks.FunctionTranslate);
+  function createDevToolsHook(hook) {
+    return (payloads) => devtools && devtools.emit(hook, payloads);
+  }
+  const warnMessages$1 = {
+    [
+      0
+      /* NOT_FOUND_KEY */
+    ]: `Not found '{key}' key in '{locale}' locale messages.`,
+    [
+      1
+      /* FALLBACK_TO_TRANSLATE */
+    ]: `Fall back to translate '{key}' key with '{target}' locale.`,
+    [
+      2
+      /* CANNOT_FORMAT_NUMBER */
+    ]: `Cannot format a number value due to not supported Intl.NumberFormat.`,
+    [
+      3
+      /* FALLBACK_TO_NUMBER_FORMAT */
+    ]: `Fall back to number format '{key}' key with '{target}' locale.`,
+    [
+      4
+      /* CANNOT_FORMAT_DATE */
+    ]: `Cannot format a date value due to not supported Intl.DateTimeFormat.`,
+    [
+      5
+      /* FALLBACK_TO_DATE_FORMAT */
+    ]: `Fall back to datetime format '{key}' key with '{target}' locale.`
+  };
+  function getWarnMessage$1(code2, ...args) {
+    return format(warnMessages$1[code2], ...args);
+  }
+  const VERSION$1 = "9.1.9";
+  const NOT_REOSLVED = -1;
+  const MISSING_RESOLVE_VALUE = "";
+  function getDefaultLinkedModifiers() {
+    return {
+      upper: (val) => isString(val) ? val.toUpperCase() : val,
+      lower: (val) => isString(val) ? val.toLowerCase() : val,
+      // prettier-ignore
+      capitalize: (val) => isString(val) ? `${val.charAt(0).toLocaleUpperCase()}${val.substr(1)}` : val
+    };
+  }
+  let _compiler;
+  let _additionalMeta = null;
+  const setAdditionalMeta = (meta) => {
+    _additionalMeta = meta;
+  };
+  const getAdditionalMeta = () => _additionalMeta;
+  let _cid = 0;
+  function createCoreContext(options2 = {}) {
+    const version2 = isString(options2.version) ? options2.version : VERSION$1;
+    const locale = isString(options2.locale) ? options2.locale : "en-US";
+    const fallbackLocale = isArray(options2.fallbackLocale) || isPlainObject(options2.fallbackLocale) || isString(options2.fallbackLocale) || options2.fallbackLocale === false ? options2.fallbackLocale : locale;
+    const messages2 = isPlainObject(options2.messages) ? options2.messages : { [locale]: {} };
+    const datetimeFormats = isPlainObject(options2.datetimeFormats) ? options2.datetimeFormats : { [locale]: {} };
+    const numberFormats = isPlainObject(options2.numberFormats) ? options2.numberFormats : { [locale]: {} };
+    const modifiers = assign({}, options2.modifiers || {}, getDefaultLinkedModifiers());
+    const pluralRules = options2.pluralRules || {};
+    const missing = isFunction(options2.missing) ? options2.missing : null;
+    const missingWarn = isBoolean(options2.missingWarn) || isRegExp(options2.missingWarn) ? options2.missingWarn : true;
+    const fallbackWarn = isBoolean(options2.fallbackWarn) || isRegExp(options2.fallbackWarn) ? options2.fallbackWarn : true;
+    const fallbackFormat = !!options2.fallbackFormat;
+    const unresolving = !!options2.unresolving;
+    const postTranslation = isFunction(options2.postTranslation) ? options2.postTranslation : null;
+    const processor = isPlainObject(options2.processor) ? options2.processor : null;
+    const warnHtmlMessage = isBoolean(options2.warnHtmlMessage) ? options2.warnHtmlMessage : true;
+    const escapeParameter = !!options2.escapeParameter;
+    const messageCompiler = isFunction(options2.messageCompiler) ? options2.messageCompiler : _compiler;
+    const onWarn = isFunction(options2.onWarn) ? options2.onWarn : warn;
+    const internalOptions = options2;
+    const __datetimeFormatters = isObject$1(internalOptions.__datetimeFormatters) ? internalOptions.__datetimeFormatters : /* @__PURE__ */ new Map();
+    const __numberFormatters = isObject$1(internalOptions.__numberFormatters) ? internalOptions.__numberFormatters : /* @__PURE__ */ new Map();
+    const __meta = isObject$1(internalOptions.__meta) ? internalOptions.__meta : {};
+    _cid++;
+    const context = {
+      version: version2,
+      cid: _cid,
+      locale,
+      fallbackLocale,
+      messages: messages2,
+      datetimeFormats,
+      numberFormats,
+      modifiers,
+      pluralRules,
+      missing,
+      missingWarn,
+      fallbackWarn,
+      fallbackFormat,
+      unresolving,
+      postTranslation,
+      processor,
+      warnHtmlMessage,
+      escapeParameter,
+      messageCompiler,
+      onWarn,
+      __datetimeFormatters,
+      __numberFormatters,
+      __meta
+    };
+    {
+      context.__v_emitter = internalOptions.__v_emitter != null ? internalOptions.__v_emitter : void 0;
+    }
+    {
+      initI18nDevTools(context, version2, __meta);
+    }
+    return context;
+  }
+  function isTranslateFallbackWarn(fallback, key) {
+    return fallback instanceof RegExp ? fallback.test(key) : fallback;
+  }
+  function isTranslateMissingWarn(missing, key) {
+    return missing instanceof RegExp ? missing.test(key) : missing;
+  }
+  function handleMissing(context, key, locale, missingWarn, type2) {
+    const { missing, onWarn } = context;
+    {
+      const emitter = context.__v_emitter;
+      if (emitter) {
+        emitter.emit("missing", {
+          locale,
+          key,
+          type: type2,
+          groupId: `${type2}:${key}`
+        });
+      }
+    }
+    if (missing !== null) {
+      const ret = missing(context, locale, key, type2);
+      return isString(ret) ? ret : key;
+    } else {
+      if (isTranslateMissingWarn(missingWarn, key)) {
+        onWarn(getWarnMessage$1(0, { key, locale }));
+      }
+      return key;
+    }
+  }
+  function getLocaleChain(ctx, fallback, start) {
+    const context = ctx;
+    if (!context.__localeChainCache) {
+      context.__localeChainCache = /* @__PURE__ */ new Map();
+    }
+    let chain = context.__localeChainCache.get(start);
+    if (!chain) {
+      chain = [];
+      let block = [start];
+      while (isArray(block)) {
+        block = appendBlockToChain(chain, block, fallback);
+      }
+      const defaults2 = isArray(fallback) ? fallback : isPlainObject(fallback) ? fallback["default"] ? fallback["default"] : null : fallback;
+      block = isString(defaults2) ? [defaults2] : defaults2;
+      if (isArray(block)) {
+        appendBlockToChain(chain, block, false);
+      }
+      context.__localeChainCache.set(start, chain);
+    }
+    return chain;
+  }
+  function appendBlockToChain(chain, block, blocks) {
+    let follow = true;
+    for (let i2 = 0; i2 < block.length && isBoolean(follow); i2++) {
+      const locale = block[i2];
+      if (isString(locale)) {
+        follow = appendLocaleToChain(chain, block[i2], blocks);
+      }
+    }
+    return follow;
+  }
+  function appendLocaleToChain(chain, locale, blocks) {
+    let follow;
+    const tokens = locale.split("-");
+    do {
+      const target = tokens.join("-");
+      follow = appendItemToChain(chain, target, blocks);
+      tokens.splice(-1, 1);
+    } while (tokens.length && follow === true);
+    return follow;
+  }
+  function appendItemToChain(chain, target, blocks) {
+    let follow = false;
+    if (!chain.includes(target)) {
+      follow = true;
+      if (target) {
+        follow = target[target.length - 1] !== "!";
+        const locale = target.replace(/!/g, "");
+        chain.push(locale);
+        if ((isArray(blocks) || isPlainObject(blocks)) && blocks[locale]) {
+          follow = blocks[locale];
+        }
+      }
+    }
+    return follow;
+  }
+  function updateFallbackLocale(ctx, locale, fallback) {
+    const context = ctx;
+    context.__localeChainCache = /* @__PURE__ */ new Map();
+    getLocaleChain(ctx, fallback, locale);
+  }
+  function createCoreError(code2) {
+    return createCompileError(code2, null, { messages: errorMessages$1 });
+  }
+  const errorMessages$1 = {
+    [
+      14
+      /* INVALID_ARGUMENT */
+    ]: "Invalid arguments",
+    [
+      15
+      /* INVALID_DATE_ARGUMENT */
+    ]: "The date provided is an invalid Date object.Make sure your Date represents a valid date.",
+    [
+      16
+      /* INVALID_ISO_DATE_ARGUMENT */
+    ]: "The argument provided is not a valid ISO date string"
+  };
+  const NOOP_MESSAGE_FUNCTION = () => "";
+  const isMessageFunction = (val) => isFunction(val);
+  function translate(context, ...args) {
+    const { fallbackFormat, postTranslation, unresolving, fallbackLocale, messages: messages2 } = context;
+    const [key, options2] = parseTranslateArgs(...args);
+    const missingWarn = isBoolean(options2.missingWarn) ? options2.missingWarn : context.missingWarn;
+    const fallbackWarn = isBoolean(options2.fallbackWarn) ? options2.fallbackWarn : context.fallbackWarn;
+    const escapeParameter = isBoolean(options2.escapeParameter) ? options2.escapeParameter : context.escapeParameter;
+    const resolvedMessage = !!options2.resolvedMessage;
+    const defaultMsgOrKey = isString(options2.default) || isBoolean(options2.default) ? !isBoolean(options2.default) ? options2.default : key : fallbackFormat ? key : "";
+    const enableDefaultMsg = fallbackFormat || defaultMsgOrKey !== "";
+    const locale = isString(options2.locale) ? options2.locale : context.locale;
+    escapeParameter && escapeParams(options2);
+    let [format2, targetLocale, message] = !resolvedMessage ? resolveMessageFormat(context, key, locale, fallbackLocale, fallbackWarn, missingWarn) : [
+      key,
+      locale,
+      messages2[locale] || {}
+    ];
+    let cacheBaseKey = key;
+    if (!resolvedMessage && !(isString(format2) || isMessageFunction(format2))) {
+      if (enableDefaultMsg) {
+        format2 = defaultMsgOrKey;
+        cacheBaseKey = format2;
+      }
+    }
+    if (!resolvedMessage && (!(isString(format2) || isMessageFunction(format2)) || !isString(targetLocale))) {
+      return unresolving ? NOT_REOSLVED : key;
+    }
+    if (isString(format2) && context.messageCompiler == null) {
+      warn(`The message format compilation is not supported in this build. Because message compiler isn't included. You need to pre-compilation all message format. So translate function return '${key}'.`);
+      return key;
+    }
+    let occurred = false;
+    const errorDetector = () => {
+      occurred = true;
+    };
+    const msg = !isMessageFunction(format2) ? compileMessageFormat(context, key, targetLocale, format2, cacheBaseKey, errorDetector) : format2;
+    if (occurred) {
+      return format2;
+    }
+    const ctxOptions = getMessageContextOptions(context, targetLocale, message, options2);
+    const msgContext = createMessageContext(ctxOptions);
+    const messaged = evaluateMessage(context, msg, msgContext);
+    const ret = postTranslation ? postTranslation(messaged) : messaged;
+    {
+      const payloads = {
+        timestamp: Date.now(),
+        key: isString(key) ? key : isMessageFunction(format2) ? format2.key : "",
+        locale: targetLocale || (isMessageFunction(format2) ? format2.locale : ""),
+        format: isString(format2) ? format2 : isMessageFunction(format2) ? format2.source : "",
+        message: ret
+      };
+      payloads.meta = assign({}, context.__meta, getAdditionalMeta() || {});
+      translateDevTools(payloads);
+    }
+    return ret;
+  }
+  function escapeParams(options2) {
+    if (isArray(options2.list)) {
+      options2.list = options2.list.map((item) => isString(item) ? escapeHtml(item) : item);
+    } else if (isObject$1(options2.named)) {
+      Object.keys(options2.named).forEach((key) => {
+        if (isString(options2.named[key])) {
+          options2.named[key] = escapeHtml(options2.named[key]);
+        }
+      });
+    }
+  }
+  function resolveMessageFormat(context, key, locale, fallbackLocale, fallbackWarn, missingWarn) {
+    const { messages: messages2, onWarn } = context;
+    const locales = getLocaleChain(context, fallbackLocale, locale);
+    let message = {};
+    let targetLocale;
+    let format2 = null;
+    let from = locale;
+    let to = null;
+    const type2 = "translate";
+    for (let i2 = 0; i2 < locales.length; i2++) {
+      targetLocale = to = locales[i2];
+      if (locale !== targetLocale && isTranslateFallbackWarn(fallbackWarn, key)) {
+        onWarn(getWarnMessage$1(1, {
+          key,
+          target: targetLocale
+        }));
+      }
+      if (locale !== targetLocale) {
+        const emitter = context.__v_emitter;
+        if (emitter) {
+          emitter.emit("fallback", {
+            type: type2,
+            key,
+            from,
+            to,
+            groupId: `${type2}:${key}`
+          });
+        }
+      }
+      message = messages2[targetLocale] || {};
+      let start = null;
+      let startTag;
+      let endTag;
+      if (inBrowser) {
+        start = window.performance.now();
+        startTag = "intlify-message-resolve-start";
+        endTag = "intlify-message-resolve-end";
+        mark && mark(startTag);
+      }
+      if ((format2 = resolveValue(message, key)) === null) {
+        format2 = message[key];
+      }
+      if (inBrowser) {
+        const end = window.performance.now();
+        const emitter = context.__v_emitter;
+        if (emitter && start && format2) {
+          emitter.emit("message-resolve", {
+            type: "message-resolve",
+            key,
+            message: format2,
+            time: end - start,
+            groupId: `${type2}:${key}`
+          });
+        }
+        if (startTag && endTag && mark && measure) {
+          mark(endTag);
+          measure("intlify message resolve", startTag, endTag);
+        }
+      }
+      if (isString(format2) || isFunction(format2))
+        break;
+      const missingRet = handleMissing(context, key, targetLocale, missingWarn, type2);
+      if (missingRet !== key) {
+        format2 = missingRet;
+      }
+      from = to;
+    }
+    return [format2, targetLocale, message];
+  }
+  function compileMessageFormat(context, key, targetLocale, format2, cacheBaseKey, errorDetector) {
+    const { messageCompiler, warnHtmlMessage } = context;
+    if (isMessageFunction(format2)) {
+      const msg2 = format2;
+      msg2.locale = msg2.locale || targetLocale;
+      msg2.key = msg2.key || key;
+      return msg2;
+    }
+    let start = null;
+    let startTag;
+    let endTag;
+    if (inBrowser) {
+      start = window.performance.now();
+      startTag = "intlify-message-compilation-start";
+      endTag = "intlify-message-compilation-end";
+      mark && mark(startTag);
+    }
+    const msg = messageCompiler(format2, getCompileOptions(context, targetLocale, cacheBaseKey, format2, warnHtmlMessage, errorDetector));
+    if (inBrowser) {
+      const end = window.performance.now();
+      const emitter = context.__v_emitter;
+      if (emitter && start) {
+        emitter.emit("message-compilation", {
+          type: "message-compilation",
+          message: format2,
+          time: end - start,
+          groupId: `${"translate"}:${key}`
+        });
+      }
+      if (startTag && endTag && mark && measure) {
+        mark(endTag);
+        measure("intlify message compilation", startTag, endTag);
+      }
+    }
+    msg.locale = targetLocale;
+    msg.key = key;
+    msg.source = format2;
+    return msg;
+  }
+  function evaluateMessage(context, msg, msgCtx) {
+    let start = null;
+    let startTag;
+    let endTag;
+    if (inBrowser) {
+      start = window.performance.now();
+      startTag = "intlify-message-evaluation-start";
+      endTag = "intlify-message-evaluation-end";
+      mark && mark(startTag);
+    }
+    const messaged = msg(msgCtx);
+    if (inBrowser) {
+      const end = window.performance.now();
+      const emitter = context.__v_emitter;
+      if (emitter && start) {
+        emitter.emit("message-evaluation", {
+          type: "message-evaluation",
+          value: messaged,
+          time: end - start,
+          groupId: `${"translate"}:${msg.key}`
+        });
+      }
+      if (startTag && endTag && mark && measure) {
+        mark(endTag);
+        measure("intlify message evaluation", startTag, endTag);
+      }
+    }
+    return messaged;
+  }
+  function parseTranslateArgs(...args) {
+    const [arg1, arg2, arg3] = args;
+    const options2 = {};
+    if (!isString(arg1) && !isNumber(arg1) && !isMessageFunction(arg1)) {
+      throw createCoreError(
+        14
+        /* INVALID_ARGUMENT */
+      );
+    }
+    const key = isNumber(arg1) ? String(arg1) : isMessageFunction(arg1) ? arg1 : arg1;
+    if (isNumber(arg2)) {
+      options2.plural = arg2;
+    } else if (isString(arg2)) {
+      options2.default = arg2;
+    } else if (isPlainObject(arg2) && !isEmptyObject(arg2)) {
+      options2.named = arg2;
+    } else if (isArray(arg2)) {
+      options2.list = arg2;
+    }
+    if (isNumber(arg3)) {
+      options2.plural = arg3;
+    } else if (isString(arg3)) {
+      options2.default = arg3;
+    } else if (isPlainObject(arg3)) {
+      assign(options2, arg3);
+    }
+    return [key, options2];
+  }
+  function getCompileOptions(context, locale, key, source, warnHtmlMessage, errorDetector) {
+    return {
+      warnHtmlMessage,
+      onError: (err) => {
+        errorDetector && errorDetector(err);
+        {
+          const message = `Message compilation error: ${err.message}`;
+          const codeFrame = err.location && generateCodeFrame(source, err.location.start.offset, err.location.end.offset);
+          const emitter = context.__v_emitter;
+          if (emitter) {
+            emitter.emit("compile-error", {
+              message: source,
+              error: err.message,
+              start: err.location && err.location.start.offset,
+              end: err.location && err.location.end.offset,
+              groupId: `${"translate"}:${key}`
+            });
+          }
+          console.error(codeFrame ? `${message}
+${codeFrame}` : message);
+        }
+      },
+      onCacheKey: (source2) => generateFormatCacheKey(locale, key, source2)
+    };
+  }
+  function getMessageContextOptions(context, locale, message, options2) {
+    const { modifiers, pluralRules } = context;
+    const resolveMessage = (key) => {
+      const val = resolveValue(message, key);
+      if (isString(val)) {
+        let occurred = false;
+        const errorDetector = () => {
+          occurred = true;
+        };
+        const msg = compileMessageFormat(context, key, locale, val, key, errorDetector);
+        return !occurred ? msg : NOOP_MESSAGE_FUNCTION;
+      } else if (isMessageFunction(val)) {
+        return val;
+      } else {
+        return NOOP_MESSAGE_FUNCTION;
+      }
+    };
+    const ctxOptions = {
+      locale,
+      modifiers,
+      pluralRules,
+      messages: resolveMessage
+    };
+    if (context.processor) {
+      ctxOptions.processor = context.processor;
+    }
+    if (options2.list) {
+      ctxOptions.list = options2.list;
+    }
+    if (options2.named) {
+      ctxOptions.named = options2.named;
+    }
+    if (isNumber(options2.plural)) {
+      ctxOptions.pluralIndex = options2.plural;
+    }
+    return ctxOptions;
+  }
+  const intlDefined = typeof Intl !== "undefined";
+  const Availabilities = {
+    dateTimeFormat: intlDefined && typeof Intl.DateTimeFormat !== "undefined",
+    numberFormat: intlDefined && typeof Intl.NumberFormat !== "undefined"
+  };
+  function datetime(context, ...args) {
+    const { datetimeFormats, unresolving, fallbackLocale, onWarn } = context;
+    const { __datetimeFormatters } = context;
+    if (!Availabilities.dateTimeFormat) {
+      onWarn(getWarnMessage$1(
+        4
+        /* CANNOT_FORMAT_DATE */
+      ));
+      return MISSING_RESOLVE_VALUE;
+    }
+    const [key, value2, options2, overrides] = parseDateTimeArgs(...args);
+    const missingWarn = isBoolean(options2.missingWarn) ? options2.missingWarn : context.missingWarn;
+    const fallbackWarn = isBoolean(options2.fallbackWarn) ? options2.fallbackWarn : context.fallbackWarn;
+    const part = !!options2.part;
+    const locale = isString(options2.locale) ? options2.locale : context.locale;
+    const locales = getLocaleChain(context, fallbackLocale, locale);
+    if (!isString(key) || key === "") {
+      return new Intl.DateTimeFormat(locale).format(value2);
+    }
+    let datetimeFormat = {};
+    let targetLocale;
+    let format2 = null;
+    let from = locale;
+    let to = null;
+    const type2 = "datetime format";
+    for (let i2 = 0; i2 < locales.length; i2++) {
+      targetLocale = to = locales[i2];
+      if (locale !== targetLocale && isTranslateFallbackWarn(fallbackWarn, key)) {
+        onWarn(getWarnMessage$1(5, {
+          key,
+          target: targetLocale
+        }));
+      }
+      if (locale !== targetLocale) {
+        const emitter = context.__v_emitter;
+        if (emitter) {
+          emitter.emit("fallback", {
+            type: type2,
+            key,
+            from,
+            to,
+            groupId: `${type2}:${key}`
+          });
+        }
+      }
+      datetimeFormat = datetimeFormats[targetLocale] || {};
+      format2 = datetimeFormat[key];
+      if (isPlainObject(format2))
+        break;
+      handleMissing(context, key, targetLocale, missingWarn, type2);
+      from = to;
+    }
+    if (!isPlainObject(format2) || !isString(targetLocale)) {
+      return unresolving ? NOT_REOSLVED : key;
+    }
+    let id = `${targetLocale}__${key}`;
+    if (!isEmptyObject(overrides)) {
+      id = `${id}__${JSON.stringify(overrides)}`;
+    }
+    let formatter = __datetimeFormatters.get(id);
+    if (!formatter) {
+      formatter = new Intl.DateTimeFormat(targetLocale, assign({}, format2, overrides));
+      __datetimeFormatters.set(id, formatter);
+    }
+    return !part ? formatter.format(value2) : formatter.formatToParts(value2);
+  }
+  function parseDateTimeArgs(...args) {
+    const [arg1, arg2, arg3, arg4] = args;
+    let options2 = {};
+    let overrides = {};
+    let value2;
+    if (isString(arg1)) {
+      if (!/\d{4}-\d{2}-\d{2}(T.*)?/.test(arg1)) {
+        throw createCoreError(
+          16
+          /* INVALID_ISO_DATE_ARGUMENT */
+        );
+      }
+      value2 = new Date(arg1);
+      try {
+        value2.toISOString();
+      } catch (e2) {
+        throw createCoreError(
+          16
+          /* INVALID_ISO_DATE_ARGUMENT */
+        );
+      }
+    } else if (isDate(arg1)) {
+      if (isNaN(arg1.getTime())) {
+        throw createCoreError(
+          15
+          /* INVALID_DATE_ARGUMENT */
+        );
+      }
+      value2 = arg1;
+    } else if (isNumber(arg1)) {
+      value2 = arg1;
+    } else {
+      throw createCoreError(
+        14
+        /* INVALID_ARGUMENT */
+      );
+    }
+    if (isString(arg2)) {
+      options2.key = arg2;
+    } else if (isPlainObject(arg2)) {
+      options2 = arg2;
+    }
+    if (isString(arg3)) {
+      options2.locale = arg3;
+    } else if (isPlainObject(arg3)) {
+      overrides = arg3;
+    }
+    if (isPlainObject(arg4)) {
+      overrides = arg4;
+    }
+    return [options2.key || "", value2, options2, overrides];
+  }
+  function clearDateTimeFormat(ctx, locale, format2) {
+    const context = ctx;
+    for (const key in format2) {
+      const id = `${locale}__${key}`;
+      if (!context.__datetimeFormatters.has(id)) {
+        continue;
+      }
+      context.__datetimeFormatters.delete(id);
+    }
+  }
+  function number(context, ...args) {
+    const { numberFormats, unresolving, fallbackLocale, onWarn } = context;
+    const { __numberFormatters } = context;
+    if (!Availabilities.numberFormat) {
+      onWarn(getWarnMessage$1(
+        2
+        /* CANNOT_FORMAT_NUMBER */
+      ));
+      return MISSING_RESOLVE_VALUE;
+    }
+    const [key, value2, options2, overrides] = parseNumberArgs(...args);
+    const missingWarn = isBoolean(options2.missingWarn) ? options2.missingWarn : context.missingWarn;
+    const fallbackWarn = isBoolean(options2.fallbackWarn) ? options2.fallbackWarn : context.fallbackWarn;
+    const part = !!options2.part;
+    const locale = isString(options2.locale) ? options2.locale : context.locale;
+    const locales = getLocaleChain(context, fallbackLocale, locale);
+    if (!isString(key) || key === "") {
+      return new Intl.NumberFormat(locale).format(value2);
+    }
+    let numberFormat = {};
+    let targetLocale;
+    let format2 = null;
+    let from = locale;
+    let to = null;
+    const type2 = "number format";
+    for (let i2 = 0; i2 < locales.length; i2++) {
+      targetLocale = to = locales[i2];
+      if (locale !== targetLocale && isTranslateFallbackWarn(fallbackWarn, key)) {
+        onWarn(getWarnMessage$1(3, {
+          key,
+          target: targetLocale
+        }));
+      }
+      if (locale !== targetLocale) {
+        const emitter = context.__v_emitter;
+        if (emitter) {
+          emitter.emit("fallback", {
+            type: type2,
+            key,
+            from,
+            to,
+            groupId: `${type2}:${key}`
+          });
+        }
+      }
+      numberFormat = numberFormats[targetLocale] || {};
+      format2 = numberFormat[key];
+      if (isPlainObject(format2))
+        break;
+      handleMissing(context, key, targetLocale, missingWarn, type2);
+      from = to;
+    }
+    if (!isPlainObject(format2) || !isString(targetLocale)) {
+      return unresolving ? NOT_REOSLVED : key;
+    }
+    let id = `${targetLocale}__${key}`;
+    if (!isEmptyObject(overrides)) {
+      id = `${id}__${JSON.stringify(overrides)}`;
+    }
+    let formatter = __numberFormatters.get(id);
+    if (!formatter) {
+      formatter = new Intl.NumberFormat(targetLocale, assign({}, format2, overrides));
+      __numberFormatters.set(id, formatter);
+    }
+    return !part ? formatter.format(value2) : formatter.formatToParts(value2);
+  }
+  function parseNumberArgs(...args) {
+    const [arg1, arg2, arg3, arg4] = args;
+    let options2 = {};
+    let overrides = {};
+    if (!isNumber(arg1)) {
+      throw createCoreError(
+        14
+        /* INVALID_ARGUMENT */
+      );
+    }
+    const value2 = arg1;
+    if (isString(arg2)) {
+      options2.key = arg2;
+    } else if (isPlainObject(arg2)) {
+      options2 = arg2;
+    }
+    if (isString(arg3)) {
+      options2.locale = arg3;
+    } else if (isPlainObject(arg3)) {
+      overrides = arg3;
+    }
+    if (isPlainObject(arg4)) {
+      overrides = arg4;
+    }
+    return [options2.key || "", value2, options2, overrides];
+  }
+  function clearNumberFormat(ctx, locale, format2) {
+    const context = ctx;
+    for (const key in format2) {
+      const id = `${locale}__${key}`;
+      if (!context.__numberFormatters.has(id)) {
+        continue;
+      }
+      context.__numberFormatters.delete(id);
+    }
+  }
+  function getDevtoolsGlobalHook() {
+    return getTarget().__VUE_DEVTOOLS_GLOBAL_HOOK__;
+  }
+  function getTarget() {
+    return typeof navigator !== "undefined" && typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};
+  }
+  const isProxyAvailable = typeof Proxy === "function";
+  const HOOK_SETUP = "devtools-plugin:setup";
+  const HOOK_PLUGIN_SETTINGS_SET = "plugin:settings:set";
+  class ApiProxy {
+    constructor(plugin, hook) {
+      this.target = null;
+      this.targetQueue = [];
+      this.onQueue = [];
+      this.plugin = plugin;
+      this.hook = hook;
+      const defaultSettings = {};
+      if (plugin.settings) {
+        for (const id in plugin.settings) {
+          const item = plugin.settings[id];
+          defaultSettings[id] = item.defaultValue;
+        }
+      }
+      const localSettingsSaveId = `__vue-devtools-plugin-settings__${plugin.id}`;
+      let currentSettings = { ...defaultSettings };
+      try {
+        const raw = localStorage.getItem(localSettingsSaveId);
+        const data = JSON.parse(raw);
+        Object.assign(currentSettings, data);
+      } catch (e2) {
+      }
+      this.fallbacks = {
+        getSettings() {
+          return currentSettings;
+        },
+        setSettings(value2) {
+          try {
+            localStorage.setItem(localSettingsSaveId, JSON.stringify(value2));
+          } catch (e2) {
+          }
+          currentSettings = value2;
+        }
+      };
+      hook.on(HOOK_PLUGIN_SETTINGS_SET, (pluginId, value2) => {
+        if (pluginId === this.plugin.id) {
+          this.fallbacks.setSettings(value2);
+        }
+      });
+      this.proxiedOn = new Proxy({}, {
+        get: (_target, prop) => {
+          if (this.target) {
+            return this.target.on[prop];
+          } else {
+            return (...args) => {
+              this.onQueue.push({
+                method: prop,
+                args
+              });
+            };
+          }
+        }
+      });
+      this.proxiedTarget = new Proxy({}, {
+        get: (_target, prop) => {
+          if (this.target) {
+            return this.target[prop];
+          } else if (prop === "on") {
+            return this.proxiedOn;
+          } else if (Object.keys(this.fallbacks).includes(prop)) {
+            return (...args) => {
+              this.targetQueue.push({
+                method: prop,
+                args,
+                resolve: () => {
+                }
+              });
+              return this.fallbacks[prop](...args);
+            };
+          } else {
+            return (...args) => {
+              return new Promise((resolve) => {
+                this.targetQueue.push({
+                  method: prop,
+                  args,
+                  resolve
+                });
+              });
+            };
+          }
+        }
+      });
+    }
+    async setRealTarget(target) {
+      this.target = target;
+      for (const item of this.onQueue) {
+        this.target.on[item.method](...item.args);
+      }
+      for (const item of this.targetQueue) {
+        item.resolve(await this.target[item.method](...item.args));
+      }
+    }
+  }
+  function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
+    const target = getTarget();
+    const hook = getDevtoolsGlobalHook();
+    const enableProxy = isProxyAvailable && pluginDescriptor.enableEarlyProxy;
+    if (hook && (target.__VUE_DEVTOOLS_PLUGIN_API_AVAILABLE__ || !enableProxy)) {
+      hook.emit(HOOK_SETUP, pluginDescriptor, setupFn);
+    } else {
+      const proxy = enableProxy ? new ApiProxy(pluginDescriptor, hook) : null;
+      const list = target.__VUE_DEVTOOLS_PLUGINS__ = target.__VUE_DEVTOOLS_PLUGINS__ || [];
+      list.push({
+        pluginDescriptor,
+        setupFn,
+        proxy
+      });
+      if (proxy)
+        setupFn(proxy.proxiedTarget);
+    }
+  }
+  /*!
+    * @intlify/vue-devtools v9.1.9
+    * (c) 2021 kazuya kawaguchi
+    * Released under the MIT License.
+    */
+  const VueDevToolsLabels = {
+    [
+      "vue-devtools-plugin-vue-i18n"
+      /* PLUGIN */
+    ]: "Vue I18n devtools",
+    [
+      "vue-i18n-resource-inspector"
+      /* CUSTOM_INSPECTOR */
+    ]: "I18n Resources",
+    [
+      "vue-i18n-timeline"
+      /* TIMELINE */
+    ]: "Vue I18n"
+  };
+  const VueDevToolsPlaceholders = {
+    [
+      "vue-i18n-resource-inspector"
+      /* CUSTOM_INSPECTOR */
+    ]: "Search for scopes ..."
+  };
+  const VueDevToolsTimelineColors = {
+    [
+      "vue-i18n-timeline"
+      /* TIMELINE */
+    ]: 16764185
+  };
+  /*!
+    * vue-i18n v9.1.9
+    * (c) 2022 kazuya kawaguchi
+    * Released under the MIT License.
+    */
+  const VERSION = "9.1.9";
+  function initFeatureFlags() {
+    let needWarn = false;
+    {
+      needWarn = true;
+    }
+    if (needWarn) {
+      console.warn(`You are running the esm-bundler build of vue-i18n. It is recommended to configure your bundler to explicitly replace feature flag globals with boolean literals to get proper tree-shaking in the final bundle.`);
+    }
+  }
+  const warnMessages = {
+    [
+      6
+      /* FALLBACK_TO_ROOT */
+    ]: `Fall back to {type} '{key}' with root locale.`,
+    [
+      7
+      /* NOT_SUPPORTED_PRESERVE */
+    ]: `Not supported 'preserve'.`,
+    [
+      8
+      /* NOT_SUPPORTED_FORMATTER */
+    ]: `Not supported 'formatter'.`,
+    [
+      9
+      /* NOT_SUPPORTED_PRESERVE_DIRECTIVE */
+    ]: `Not supported 'preserveDirectiveContent'.`,
+    [
+      10
+      /* NOT_SUPPORTED_GET_CHOICE_INDEX */
+    ]: `Not supported 'getChoiceIndex'.`,
+    [
+      11
+      /* COMPONENT_NAME_LEGACY_COMPATIBLE */
+    ]: `Component name legacy compatible: '{name}' -> 'i18n'`,
+    [
+      12
+      /* NOT_FOUND_PARENT_SCOPE */
+    ]: `Not found parent scope. use the global scope.`
+  };
+  function getWarnMessage(code2, ...args) {
+    return format(warnMessages[code2], ...args);
+  }
+  function createI18nError(code2, ...args) {
+    return createCompileError(code2, null, { messages: errorMessages, args });
+  }
+  const errorMessages = {
+    [
+      14
+      /* UNEXPECTED_RETURN_TYPE */
+    ]: "Unexpected return type in composer",
+    [
+      15
+      /* INVALID_ARGUMENT */
+    ]: "Invalid argument",
+    [
+      16
+      /* MUST_BE_CALL_SETUP_TOP */
+    ]: "Must be called at the top of a `setup` function",
+    [
+      17
+      /* NOT_INSLALLED */
+    ]: "Need to install with `app.use` function",
+    [
+      22
+      /* UNEXPECTED_ERROR */
+    ]: "Unexpected error",
+    [
+      18
+      /* NOT_AVAILABLE_IN_LEGACY_MODE */
+    ]: "Not available in legacy mode",
+    [
+      19
+      /* REQUIRED_VALUE */
+    ]: `Required in value: {0}`,
+    [
+      20
+      /* INVALID_VALUE */
+    ]: `Invalid value`,
+    [
+      21
+      /* CANNOT_SETUP_VUE_DEVTOOLS_PLUGIN */
+    ]: `Cannot setup vue-devtools plugin`
+  };
+  const DEVTOOLS_META = "__INTLIFY_META__";
+  const TransrateVNodeSymbol = makeSymbol("__transrateVNode");
+  const DatetimePartsSymbol = makeSymbol("__datetimeParts");
+  const NumberPartsSymbol = makeSymbol("__numberParts");
+  const EnableEmitter = makeSymbol("__enableEmitter");
+  const DisableEmitter = makeSymbol("__disableEmitter");
+  const SetPluralRulesSymbol = makeSymbol("__setPluralRules");
+  const InejctWithOption = makeSymbol("__injectWithOption");
+  let composerID = 0;
+  function defineCoreMissingHandler(missing) {
+    return (ctx, locale, key, type2) => {
+      return missing(locale, key, vue.getCurrentInstance() || void 0, type2);
+    };
+  }
+  function getLocaleMessages(locale, options2) {
+    const { messages: messages2, __i18n } = options2;
+    const ret = isPlainObject(messages2) ? messages2 : isArray(__i18n) ? {} : { [locale]: {} };
+    if (isArray(__i18n)) {
+      __i18n.forEach(({ locale: locale2, resource }) => {
+        if (locale2) {
+          ret[locale2] = ret[locale2] || {};
+          deepCopy(resource, ret[locale2]);
+        } else {
+          deepCopy(resource, ret);
+        }
+      });
+    }
+    if (options2.flatJson) {
+      for (const key in ret) {
+        if (hasOwn$1(ret, key)) {
+          handleFlatJson(ret[key]);
+        }
+      }
+    }
+    return ret;
+  }
+  const isNotObjectOrIsArray = (val) => !isObject$1(val) || isArray(val);
+  function deepCopy(src, des) {
+    if (isNotObjectOrIsArray(src) || isNotObjectOrIsArray(des)) {
+      throw createI18nError(
+        20
+        /* INVALID_VALUE */
+      );
+    }
+    for (const key in src) {
+      if (hasOwn$1(src, key)) {
+        if (isNotObjectOrIsArray(src[key]) || isNotObjectOrIsArray(des[key])) {
+          des[key] = src[key];
+        } else {
+          deepCopy(src[key], des[key]);
+        }
+      }
+    }
+  }
+  const getMetaInfo = () => {
+    const instance = vue.getCurrentInstance();
+    return instance && instance.type[DEVTOOLS_META] ? { [DEVTOOLS_META]: instance.type[DEVTOOLS_META] } : null;
+  };
+  function createComposer(options2 = {}) {
+    const { __root } = options2;
+    const _isGlobal = __root === void 0;
+    let _inheritLocale = isBoolean(options2.inheritLocale) ? options2.inheritLocale : true;
+    const _locale = vue.ref(
+      // prettier-ignore
+      __root && _inheritLocale ? __root.locale.value : isString(options2.locale) ? options2.locale : "en-US"
+    );
+    const _fallbackLocale = vue.ref(
+      // prettier-ignore
+      __root && _inheritLocale ? __root.fallbackLocale.value : isString(options2.fallbackLocale) || isArray(options2.fallbackLocale) || isPlainObject(options2.fallbackLocale) || options2.fallbackLocale === false ? options2.fallbackLocale : _locale.value
+    );
+    const _messages = vue.ref(getLocaleMessages(_locale.value, options2));
+    const _datetimeFormats = vue.ref(isPlainObject(options2.datetimeFormats) ? options2.datetimeFormats : { [_locale.value]: {} });
+    const _numberFormats = vue.ref(isPlainObject(options2.numberFormats) ? options2.numberFormats : { [_locale.value]: {} });
+    let _missingWarn = __root ? __root.missingWarn : isBoolean(options2.missingWarn) || isRegExp(options2.missingWarn) ? options2.missingWarn : true;
+    let _fallbackWarn = __root ? __root.fallbackWarn : isBoolean(options2.fallbackWarn) || isRegExp(options2.fallbackWarn) ? options2.fallbackWarn : true;
+    let _fallbackRoot = __root ? __root.fallbackRoot : isBoolean(options2.fallbackRoot) ? options2.fallbackRoot : true;
+    let _fallbackFormat = !!options2.fallbackFormat;
+    let _missing = isFunction(options2.missing) ? options2.missing : null;
+    let _runtimeMissing = isFunction(options2.missing) ? defineCoreMissingHandler(options2.missing) : null;
+    let _postTranslation = isFunction(options2.postTranslation) ? options2.postTranslation : null;
+    let _warnHtmlMessage = isBoolean(options2.warnHtmlMessage) ? options2.warnHtmlMessage : true;
+    let _escapeParameter = !!options2.escapeParameter;
+    const _modifiers = __root ? __root.modifiers : isPlainObject(options2.modifiers) ? options2.modifiers : {};
+    let _pluralRules = options2.pluralRules || __root && __root.pluralRules;
+    let _context;
+    function getCoreContext() {
+      return createCoreContext({
+        version: VERSION,
+        locale: _locale.value,
+        fallbackLocale: _fallbackLocale.value,
+        messages: _messages.value,
+        messageCompiler: function compileToFunction(source) {
+          return (ctx) => {
+            return ctx.normalize([source]);
+          };
+        },
+        datetimeFormats: _datetimeFormats.value,
+        numberFormats: _numberFormats.value,
+        modifiers: _modifiers,
+        pluralRules: _pluralRules,
+        missing: _runtimeMissing === null ? void 0 : _runtimeMissing,
+        missingWarn: _missingWarn,
+        fallbackWarn: _fallbackWarn,
+        fallbackFormat: _fallbackFormat,
+        unresolving: true,
+        postTranslation: _postTranslation === null ? void 0 : _postTranslation,
+        warnHtmlMessage: _warnHtmlMessage,
+        escapeParameter: _escapeParameter,
+        __datetimeFormatters: isPlainObject(_context) ? _context.__datetimeFormatters : void 0,
+        __numberFormatters: isPlainObject(_context) ? _context.__numberFormatters : void 0,
+        __v_emitter: isPlainObject(_context) ? _context.__v_emitter : void 0,
+        __meta: { framework: "vue" }
+      });
+    }
+    _context = getCoreContext();
+    updateFallbackLocale(_context, _locale.value, _fallbackLocale.value);
+    function trackReactivityValues() {
+      return [
+        _locale.value,
+        _fallbackLocale.value,
+        _messages.value,
+        _datetimeFormats.value,
+        _numberFormats.value
+      ];
+    }
+    const locale = vue.computed({
+      get: () => _locale.value,
+      set: (val) => {
+        _locale.value = val;
+        _context.locale = _locale.value;
+      }
+    });
+    const fallbackLocale = vue.computed({
+      get: () => _fallbackLocale.value,
+      set: (val) => {
+        _fallbackLocale.value = val;
+        _context.fallbackLocale = _fallbackLocale.value;
+        updateFallbackLocale(_context, _locale.value, val);
+      }
+    });
+    const messages2 = vue.computed(() => _messages.value);
+    const datetimeFormats = vue.computed(() => _datetimeFormats.value);
+    const numberFormats = vue.computed(() => _numberFormats.value);
+    function getPostTranslationHandler() {
+      return isFunction(_postTranslation) ? _postTranslation : null;
+    }
+    function setPostTranslationHandler(handler) {
+      _postTranslation = handler;
+      _context.postTranslation = handler;
+    }
+    function getMissingHandler() {
+      return _missing;
+    }
+    function setMissingHandler(handler) {
+      if (handler !== null) {
+        _runtimeMissing = defineCoreMissingHandler(handler);
+      }
+      _missing = handler;
+      _context.missing = _runtimeMissing;
+    }
+    function isResolvedTranslateMessage(type2, arg) {
+      return type2 !== "translate" || !!arg.resolvedMessage === false;
+    }
+    function wrapWithDeps(fn, argumentParser, warnType, fallbackSuccess, fallbackFail, successCondition) {
+      trackReactivityValues();
+      let ret;
+      {
+        try {
+          setAdditionalMeta(getMetaInfo());
+          ret = fn(_context);
+        } finally {
+          setAdditionalMeta(null);
+        }
+      }
+      if (isNumber(ret) && ret === NOT_REOSLVED) {
+        const [key, arg2] = argumentParser();
+        if (__root && isString(key) && isResolvedTranslateMessage(warnType, arg2)) {
+          if (_fallbackRoot && (isTranslateFallbackWarn(_fallbackWarn, key) || isTranslateMissingWarn(_missingWarn, key))) {
+            warn(getWarnMessage(6, {
+              key,
+              type: warnType
+            }));
+          }
+          {
+            const { __v_emitter: emitter } = _context;
+            if (emitter && _fallbackRoot) {
+              emitter.emit("fallback", {
+                type: warnType,
+                key,
+                to: "global",
+                groupId: `${warnType}:${key}`
+              });
+            }
+          }
+        }
+        return __root && _fallbackRoot ? fallbackSuccess(__root) : fallbackFail(key);
+      } else if (successCondition(ret)) {
+        return ret;
+      } else {
+        throw createI18nError(
+          14
+          /* UNEXPECTED_RETURN_TYPE */
+        );
+      }
+    }
+    function t2(...args) {
+      return wrapWithDeps((context) => translate(context, ...args), () => parseTranslateArgs(...args), "translate", (root) => root.t(...args), (key) => key, (val) => isString(val));
+    }
+    function rt(...args) {
+      const [arg1, arg2, arg3] = args;
+      if (arg3 && !isObject$1(arg3)) {
+        throw createI18nError(
+          15
+          /* INVALID_ARGUMENT */
+        );
+      }
+      return t2(...[arg1, arg2, assign({ resolvedMessage: true }, arg3 || {})]);
+    }
+    function d2(...args) {
+      return wrapWithDeps((context) => datetime(context, ...args), () => parseDateTimeArgs(...args), "datetime format", (root) => root.d(...args), () => MISSING_RESOLVE_VALUE, (val) => isString(val));
+    }
+    function n2(...args) {
+      return wrapWithDeps((context) => number(context, ...args), () => parseNumberArgs(...args), "number format", (root) => root.n(...args), () => MISSING_RESOLVE_VALUE, (val) => isString(val));
+    }
+    function normalize(values) {
+      return values.map((val) => isString(val) ? vue.createVNode(vue.Text, null, val, 0) : val);
+    }
+    const interpolate = (val) => val;
+    const processor = {
+      normalize,
+      interpolate,
+      type: "vnode"
+    };
+    function transrateVNode(...args) {
+      return wrapWithDeps(
+        (context) => {
+          let ret;
+          const _context2 = context;
+          try {
+            _context2.processor = processor;
+            ret = translate(_context2, ...args);
+          } finally {
+            _context2.processor = null;
+          }
+          return ret;
+        },
+        () => parseTranslateArgs(...args),
+        "translate",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (root) => root[TransrateVNodeSymbol](...args),
+        (key) => [vue.createVNode(vue.Text, null, key, 0)],
+        (val) => isArray(val)
+      );
+    }
+    function numberParts(...args) {
+      return wrapWithDeps(
+        (context) => number(context, ...args),
+        () => parseNumberArgs(...args),
+        "number format",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (root) => root[NumberPartsSymbol](...args),
+        () => [],
+        (val) => isString(val) || isArray(val)
+      );
+    }
+    function datetimeParts(...args) {
+      return wrapWithDeps(
+        (context) => datetime(context, ...args),
+        () => parseDateTimeArgs(...args),
+        "datetime format",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (root) => root[DatetimePartsSymbol](...args),
+        () => [],
+        (val) => isString(val) || isArray(val)
+      );
+    }
+    function setPluralRules(rules2) {
+      _pluralRules = rules2;
+      _context.pluralRules = _pluralRules;
+    }
+    function te2(key, locale2) {
+      const targetLocale = isString(locale2) ? locale2 : _locale.value;
+      const message = getLocaleMessage(targetLocale);
+      return resolveValue(message, key) !== null;
+    }
+    function resolveMessages(key) {
+      let messages22 = null;
+      const locales = getLocaleChain(_context, _fallbackLocale.value, _locale.value);
+      for (let i2 = 0; i2 < locales.length; i2++) {
+        const targetLocaleMessages = _messages.value[locales[i2]] || {};
+        const messageValue = resolveValue(targetLocaleMessages, key);
+        if (messageValue != null) {
+          messages22 = messageValue;
+          break;
+        }
+      }
+      return messages22;
+    }
+    function tm(key) {
+      const messages22 = resolveMessages(key);
+      return messages22 != null ? messages22 : __root ? __root.tm(key) || {} : {};
+    }
+    function getLocaleMessage(locale2) {
+      return _messages.value[locale2] || {};
+    }
+    function setLocaleMessage(locale2, message) {
+      _messages.value[locale2] = message;
+      _context.messages = _messages.value;
+    }
+    function mergeLocaleMessage(locale2, message) {
+      _messages.value[locale2] = _messages.value[locale2] || {};
+      deepCopy(message, _messages.value[locale2]);
+      _context.messages = _messages.value;
+    }
+    function getDateTimeFormat(locale2) {
+      return _datetimeFormats.value[locale2] || {};
+    }
+    function setDateTimeFormat(locale2, format2) {
+      _datetimeFormats.value[locale2] = format2;
+      _context.datetimeFormats = _datetimeFormats.value;
+      clearDateTimeFormat(_context, locale2, format2);
+    }
+    function mergeDateTimeFormat(locale2, format2) {
+      _datetimeFormats.value[locale2] = assign(_datetimeFormats.value[locale2] || {}, format2);
+      _context.datetimeFormats = _datetimeFormats.value;
+      clearDateTimeFormat(_context, locale2, format2);
+    }
+    function getNumberFormat(locale2) {
+      return _numberFormats.value[locale2] || {};
+    }
+    function setNumberFormat(locale2, format2) {
+      _numberFormats.value[locale2] = format2;
+      _context.numberFormats = _numberFormats.value;
+      clearNumberFormat(_context, locale2, format2);
+    }
+    function mergeNumberFormat(locale2, format2) {
+      _numberFormats.value[locale2] = assign(_numberFormats.value[locale2] || {}, format2);
+      _context.numberFormats = _numberFormats.value;
+      clearNumberFormat(_context, locale2, format2);
+    }
+    composerID++;
+    if (__root) {
+      vue.watch(__root.locale, (val) => {
+        if (_inheritLocale) {
+          _locale.value = val;
+          _context.locale = val;
+          updateFallbackLocale(_context, _locale.value, _fallbackLocale.value);
+        }
+      });
+      vue.watch(__root.fallbackLocale, (val) => {
+        if (_inheritLocale) {
+          _fallbackLocale.value = val;
+          _context.fallbackLocale = val;
+          updateFallbackLocale(_context, _locale.value, _fallbackLocale.value);
+        }
+      });
+    }
+    const composer = {
+      id: composerID,
+      locale,
+      fallbackLocale,
+      get inheritLocale() {
+        return _inheritLocale;
+      },
+      set inheritLocale(val) {
+        _inheritLocale = val;
+        if (val && __root) {
+          _locale.value = __root.locale.value;
+          _fallbackLocale.value = __root.fallbackLocale.value;
+          updateFallbackLocale(_context, _locale.value, _fallbackLocale.value);
+        }
+      },
+      get availableLocales() {
+        return Object.keys(_messages.value).sort();
+      },
+      messages: messages2,
+      datetimeFormats,
+      numberFormats,
+      get modifiers() {
+        return _modifiers;
+      },
+      get pluralRules() {
+        return _pluralRules || {};
+      },
+      get isGlobal() {
+        return _isGlobal;
+      },
+      get missingWarn() {
+        return _missingWarn;
+      },
+      set missingWarn(val) {
+        _missingWarn = val;
+        _context.missingWarn = _missingWarn;
+      },
+      get fallbackWarn() {
+        return _fallbackWarn;
+      },
+      set fallbackWarn(val) {
+        _fallbackWarn = val;
+        _context.fallbackWarn = _fallbackWarn;
+      },
+      get fallbackRoot() {
+        return _fallbackRoot;
+      },
+      set fallbackRoot(val) {
+        _fallbackRoot = val;
+      },
+      get fallbackFormat() {
+        return _fallbackFormat;
+      },
+      set fallbackFormat(val) {
+        _fallbackFormat = val;
+        _context.fallbackFormat = _fallbackFormat;
+      },
+      get warnHtmlMessage() {
+        return _warnHtmlMessage;
+      },
+      set warnHtmlMessage(val) {
+        _warnHtmlMessage = val;
+        _context.warnHtmlMessage = val;
+      },
+      get escapeParameter() {
+        return _escapeParameter;
+      },
+      set escapeParameter(val) {
+        _escapeParameter = val;
+        _context.escapeParameter = val;
+      },
+      t: t2,
+      rt,
+      d: d2,
+      n: n2,
+      te: te2,
+      tm,
+      getLocaleMessage,
+      setLocaleMessage,
+      mergeLocaleMessage,
+      getDateTimeFormat,
+      setDateTimeFormat,
+      mergeDateTimeFormat,
+      getNumberFormat,
+      setNumberFormat,
+      mergeNumberFormat,
+      getPostTranslationHandler,
+      setPostTranslationHandler,
+      getMissingHandler,
+      setMissingHandler,
+      [TransrateVNodeSymbol]: transrateVNode,
+      [NumberPartsSymbol]: numberParts,
+      [DatetimePartsSymbol]: datetimeParts,
+      [SetPluralRulesSymbol]: setPluralRules,
+      [InejctWithOption]: options2.__injectWithOption
+      // eslint-disable-line @typescript-eslint/no-explicit-any
+    };
+    {
+      composer[EnableEmitter] = (emitter) => {
+        _context.__v_emitter = emitter;
+      };
+      composer[DisableEmitter] = () => {
+        _context.__v_emitter = void 0;
+      };
+    }
+    return composer;
+  }
+  function convertComposerOptions(options2) {
+    const locale = isString(options2.locale) ? options2.locale : "en-US";
+    const fallbackLocale = isString(options2.fallbackLocale) || isArray(options2.fallbackLocale) || isPlainObject(options2.fallbackLocale) || options2.fallbackLocale === false ? options2.fallbackLocale : locale;
+    const missing = isFunction(options2.missing) ? options2.missing : void 0;
+    const missingWarn = isBoolean(options2.silentTranslationWarn) || isRegExp(options2.silentTranslationWarn) ? !options2.silentTranslationWarn : true;
+    const fallbackWarn = isBoolean(options2.silentFallbackWarn) || isRegExp(options2.silentFallbackWarn) ? !options2.silentFallbackWarn : true;
+    const fallbackRoot = isBoolean(options2.fallbackRoot) ? options2.fallbackRoot : true;
+    const fallbackFormat = !!options2.formatFallbackMessages;
+    const modifiers = isPlainObject(options2.modifiers) ? options2.modifiers : {};
+    const pluralizationRules = options2.pluralizationRules;
+    const postTranslation = isFunction(options2.postTranslation) ? options2.postTranslation : void 0;
+    const warnHtmlMessage = isString(options2.warnHtmlInMessage) ? options2.warnHtmlInMessage !== "off" : true;
+    const escapeParameter = !!options2.escapeParameterHtml;
+    const inheritLocale = isBoolean(options2.sync) ? options2.sync : true;
+    if (options2.formatter) {
+      warn(getWarnMessage(
+        8
+        /* NOT_SUPPORTED_FORMATTER */
+      ));
+    }
+    if (options2.preserveDirectiveContent) {
+      warn(getWarnMessage(
+        9
+        /* NOT_SUPPORTED_PRESERVE_DIRECTIVE */
+      ));
+    }
+    let messages2 = options2.messages;
+    if (isPlainObject(options2.sharedMessages)) {
+      const sharedMessages = options2.sharedMessages;
+      const locales = Object.keys(sharedMessages);
+      messages2 = locales.reduce((messages22, locale2) => {
+        const message = messages22[locale2] || (messages22[locale2] = {});
+        assign(message, sharedMessages[locale2]);
+        return messages22;
+      }, messages2 || {});
+    }
+    const { __i18n, __root, __injectWithOption } = options2;
+    const datetimeFormats = options2.datetimeFormats;
+    const numberFormats = options2.numberFormats;
+    const flatJson = options2.flatJson;
+    return {
+      locale,
+      fallbackLocale,
+      messages: messages2,
+      flatJson,
+      datetimeFormats,
+      numberFormats,
+      missing,
+      missingWarn,
+      fallbackWarn,
+      fallbackRoot,
+      fallbackFormat,
+      modifiers,
+      pluralRules: pluralizationRules,
+      postTranslation,
+      warnHtmlMessage,
+      escapeParameter,
+      inheritLocale,
+      __i18n,
+      __root,
+      __injectWithOption
+    };
+  }
+  function createVueI18n(options2 = {}) {
+    const composer = createComposer(convertComposerOptions(options2));
+    const vueI18n = {
+      // id
+      id: composer.id,
+      // locale
+      get locale() {
+        return composer.locale.value;
+      },
+      set locale(val) {
+        composer.locale.value = val;
+      },
+      // fallbackLocale
+      get fallbackLocale() {
+        return composer.fallbackLocale.value;
+      },
+      set fallbackLocale(val) {
+        composer.fallbackLocale.value = val;
+      },
+      // messages
+      get messages() {
+        return composer.messages.value;
+      },
+      // datetimeFormats
+      get datetimeFormats() {
+        return composer.datetimeFormats.value;
+      },
+      // numberFormats
+      get numberFormats() {
+        return composer.numberFormats.value;
+      },
+      // availableLocales
+      get availableLocales() {
+        return composer.availableLocales;
+      },
+      // formatter
+      get formatter() {
+        warn(getWarnMessage(
+          8
+          /* NOT_SUPPORTED_FORMATTER */
+        ));
+        return {
+          interpolate() {
+            return [];
+          }
+        };
+      },
+      set formatter(val) {
+        warn(getWarnMessage(
+          8
+          /* NOT_SUPPORTED_FORMATTER */
+        ));
+      },
+      // missing
+      get missing() {
+        return composer.getMissingHandler();
+      },
+      set missing(handler) {
+        composer.setMissingHandler(handler);
+      },
+      // silentTranslationWarn
+      get silentTranslationWarn() {
+        return isBoolean(composer.missingWarn) ? !composer.missingWarn : composer.missingWarn;
+      },
+      set silentTranslationWarn(val) {
+        composer.missingWarn = isBoolean(val) ? !val : val;
+      },
+      // silentFallbackWarn
+      get silentFallbackWarn() {
+        return isBoolean(composer.fallbackWarn) ? !composer.fallbackWarn : composer.fallbackWarn;
+      },
+      set silentFallbackWarn(val) {
+        composer.fallbackWarn = isBoolean(val) ? !val : val;
+      },
+      // modifiers
+      get modifiers() {
+        return composer.modifiers;
+      },
+      // formatFallbackMessages
+      get formatFallbackMessages() {
+        return composer.fallbackFormat;
+      },
+      set formatFallbackMessages(val) {
+        composer.fallbackFormat = val;
+      },
+      // postTranslation
+      get postTranslation() {
+        return composer.getPostTranslationHandler();
+      },
+      set postTranslation(handler) {
+        composer.setPostTranslationHandler(handler);
+      },
+      // sync
+      get sync() {
+        return composer.inheritLocale;
+      },
+      set sync(val) {
+        composer.inheritLocale = val;
+      },
+      // warnInHtmlMessage
+      get warnHtmlInMessage() {
+        return composer.warnHtmlMessage ? "warn" : "off";
+      },
+      set warnHtmlInMessage(val) {
+        composer.warnHtmlMessage = val !== "off";
+      },
+      // escapeParameterHtml
+      get escapeParameterHtml() {
+        return composer.escapeParameter;
+      },
+      set escapeParameterHtml(val) {
+        composer.escapeParameter = val;
+      },
+      // preserveDirectiveContent
+      get preserveDirectiveContent() {
+        warn(getWarnMessage(
+          9
+          /* NOT_SUPPORTED_PRESERVE_DIRECTIVE */
+        ));
+        return true;
+      },
+      set preserveDirectiveContent(val) {
+        warn(getWarnMessage(
+          9
+          /* NOT_SUPPORTED_PRESERVE_DIRECTIVE */
+        ));
+      },
+      // pluralizationRules
+      get pluralizationRules() {
+        return composer.pluralRules || {};
+      },
+      // for internal
+      __composer: composer,
+      // t
+      t(...args) {
+        const [arg1, arg2, arg3] = args;
+        const options22 = {};
+        let list = null;
+        let named = null;
+        if (!isString(arg1)) {
+          throw createI18nError(
+            15
+            /* INVALID_ARGUMENT */
+          );
+        }
+        const key = arg1;
+        if (isString(arg2)) {
+          options22.locale = arg2;
+        } else if (isArray(arg2)) {
+          list = arg2;
+        } else if (isPlainObject(arg2)) {
+          named = arg2;
+        }
+        if (isArray(arg3)) {
+          list = arg3;
+        } else if (isPlainObject(arg3)) {
+          named = arg3;
+        }
+        return composer.t(key, list || named || {}, options22);
+      },
+      rt(...args) {
+        return composer.rt(...args);
+      },
+      // tc
+      tc(...args) {
+        const [arg1, arg2, arg3] = args;
+        const options22 = { plural: 1 };
+        let list = null;
+        let named = null;
+        if (!isString(arg1)) {
+          throw createI18nError(
+            15
+            /* INVALID_ARGUMENT */
+          );
+        }
+        const key = arg1;
+        if (isString(arg2)) {
+          options22.locale = arg2;
+        } else if (isNumber(arg2)) {
+          options22.plural = arg2;
+        } else if (isArray(arg2)) {
+          list = arg2;
+        } else if (isPlainObject(arg2)) {
+          named = arg2;
+        }
+        if (isString(arg3)) {
+          options22.locale = arg3;
+        } else if (isArray(arg3)) {
+          list = arg3;
+        } else if (isPlainObject(arg3)) {
+          named = arg3;
+        }
+        return composer.t(key, list || named || {}, options22);
+      },
+      // te
+      te(key, locale) {
+        return composer.te(key, locale);
+      },
+      // tm
+      tm(key) {
+        return composer.tm(key);
+      },
+      // getLocaleMessage
+      getLocaleMessage(locale) {
+        return composer.getLocaleMessage(locale);
+      },
+      // setLocaleMessage
+      setLocaleMessage(locale, message) {
+        composer.setLocaleMessage(locale, message);
+      },
+      // mergeLocaleMessage
+      mergeLocaleMessage(locale, message) {
+        composer.mergeLocaleMessage(locale, message);
+      },
+      // d
+      d(...args) {
+        return composer.d(...args);
+      },
+      // getDateTimeFormat
+      getDateTimeFormat(locale) {
+        return composer.getDateTimeFormat(locale);
+      },
+      // setDateTimeFormat
+      setDateTimeFormat(locale, format2) {
+        composer.setDateTimeFormat(locale, format2);
+      },
+      // mergeDateTimeFormat
+      mergeDateTimeFormat(locale, format2) {
+        composer.mergeDateTimeFormat(locale, format2);
+      },
+      // n
+      n(...args) {
+        return composer.n(...args);
+      },
+      // getNumberFormat
+      getNumberFormat(locale) {
+        return composer.getNumberFormat(locale);
+      },
+      // setNumberFormat
+      setNumberFormat(locale, format2) {
+        composer.setNumberFormat(locale, format2);
+      },
+      // mergeNumberFormat
+      mergeNumberFormat(locale, format2) {
+        composer.mergeNumberFormat(locale, format2);
+      },
+      // getChoiceIndex
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      getChoiceIndex(choice, choicesLength) {
+        warn(getWarnMessage(
+          10
+          /* NOT_SUPPORTED_GET_CHOICE_INDEX */
+        ));
+        return -1;
+      },
+      // for internal
+      __onComponentInstanceCreated(target) {
+        const { componentInstanceCreatedListener } = options2;
+        if (componentInstanceCreatedListener) {
+          componentInstanceCreatedListener(target, vueI18n);
+        }
+      }
+    };
+    {
+      vueI18n.__enableEmitter = (emitter) => {
+        const __composer = composer;
+        __composer[EnableEmitter] && __composer[EnableEmitter](emitter);
+      };
+      vueI18n.__disableEmitter = () => {
+        const __composer = composer;
+        __composer[DisableEmitter] && __composer[DisableEmitter]();
+      };
+    }
+    return vueI18n;
+  }
+  const baseFormatProps = {
+    tag: {
+      type: [String, Object]
+    },
+    locale: {
+      type: String
+    },
+    scope: {
+      type: String,
+      validator: (val) => val === "parent" || val === "global",
+      default: "parent"
+    },
+    i18n: {
+      type: Object
+    }
+  };
+  const Translation = {
+    /* eslint-disable */
+    name: "i18n-t",
+    props: assign({
+      keypath: {
+        type: String,
+        required: true
+      },
+      plural: {
+        type: [Number, String],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        validator: (val) => isNumber(val) || !isNaN(val)
+      }
+    }, baseFormatProps),
+    /* eslint-enable */
+    setup(props2, context) {
+      const { slots, attrs } = context;
+      const i18n2 = props2.i18n || useI18n({
+        useScope: props2.scope,
+        __useComponent: true
+      });
+      const keys = Object.keys(slots).filter((key) => key !== "_");
+      return () => {
+        const options2 = {};
+        if (props2.locale) {
+          options2.locale = props2.locale;
+        }
+        if (props2.plural !== void 0) {
+          options2.plural = isString(props2.plural) ? +props2.plural : props2.plural;
+        }
+        const arg = getInterpolateArg(context, keys);
+        const children = i18n2[TransrateVNodeSymbol](props2.keypath, arg, options2);
+        const assignedAttrs = assign({}, attrs);
+        return isString(props2.tag) ? vue.h(props2.tag, assignedAttrs, children) : isObject$1(props2.tag) ? vue.h(props2.tag, assignedAttrs, children) : vue.h(vue.Fragment, assignedAttrs, children);
+      };
+    }
+  };
+  function getInterpolateArg({ slots }, keys) {
+    if (keys.length === 1 && keys[0] === "default") {
+      return slots.default ? slots.default() : [];
+    } else {
+      return keys.reduce((arg, key) => {
+        const slot = slots[key];
+        if (slot) {
+          arg[key] = slot();
+        }
+        return arg;
+      }, {});
+    }
+  }
+  function renderFormatter(props2, context, slotKeys, partFormatter) {
+    const { slots, attrs } = context;
+    return () => {
+      const options2 = { part: true };
+      let overrides = {};
+      if (props2.locale) {
+        options2.locale = props2.locale;
+      }
+      if (isString(props2.format)) {
+        options2.key = props2.format;
+      } else if (isObject$1(props2.format)) {
+        if (isString(props2.format.key)) {
+          options2.key = props2.format.key;
+        }
+        overrides = Object.keys(props2.format).reduce((options22, prop) => {
+          return slotKeys.includes(prop) ? assign({}, options22, { [prop]: props2.format[prop] }) : options22;
+        }, {});
+      }
+      const parts = partFormatter(...[props2.value, options2, overrides]);
+      let children = [options2.key];
+      if (isArray(parts)) {
+        children = parts.map((part, index2) => {
+          const slot = slots[part.type];
+          return slot ? slot({ [part.type]: part.value, index: index2, parts }) : [part.value];
+        });
+      } else if (isString(parts)) {
+        children = [parts];
+      }
+      const assignedAttrs = assign({}, attrs);
+      return isString(props2.tag) ? vue.h(props2.tag, assignedAttrs, children) : isObject$1(props2.tag) ? vue.h(props2.tag, assignedAttrs, children) : vue.h(vue.Fragment, assignedAttrs, children);
+    };
+  }
+  const NUMBER_FORMAT_KEYS = [
+    "localeMatcher",
+    "style",
+    "unit",
+    "unitDisplay",
+    "currency",
+    "currencyDisplay",
+    "useGrouping",
+    "numberingSystem",
+    "minimumIntegerDigits",
+    "minimumFractionDigits",
+    "maximumFractionDigits",
+    "minimumSignificantDigits",
+    "maximumSignificantDigits",
+    "notation",
+    "formatMatcher"
+  ];
+  const NumberFormat = {
+    /* eslint-disable */
+    name: "i18n-n",
+    props: assign({
+      value: {
+        type: Number,
+        required: true
+      },
+      format: {
+        type: [String, Object]
+      }
+    }, baseFormatProps),
+    /* eslint-enable */
+    setup(props2, context) {
+      const i18n2 = props2.i18n || useI18n({ useScope: "parent", __useComponent: true });
+      return renderFormatter(props2, context, NUMBER_FORMAT_KEYS, (...args) => (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        i18n2[NumberPartsSymbol](...args)
+      ));
+    }
+  };
+  const DATETIME_FORMAT_KEYS = [
+    "dateStyle",
+    "timeStyle",
+    "fractionalSecondDigits",
+    "calendar",
+    "dayPeriod",
+    "numberingSystem",
+    "localeMatcher",
+    "timeZone",
+    "hour12",
+    "hourCycle",
+    "formatMatcher",
+    "weekday",
+    "era",
+    "year",
+    "month",
+    "day",
+    "hour",
+    "minute",
+    "second",
+    "timeZoneName"
+  ];
+  const DatetimeFormat = {
+    /* eslint-disable */
+    name: "i18n-d",
+    props: assign({
+      value: {
+        type: [Number, Date],
+        required: true
+      },
+      format: {
+        type: [String, Object]
+      }
+    }, baseFormatProps),
+    /* eslint-enable */
+    setup(props2, context) {
+      const i18n2 = props2.i18n || useI18n({ useScope: "parent", __useComponent: true });
+      return renderFormatter(props2, context, DATETIME_FORMAT_KEYS, (...args) => (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        i18n2[DatetimePartsSymbol](...args)
+      ));
+    }
+  };
+  function getComposer$2(i18n2, instance) {
+    const i18nInternal = i18n2;
+    if (i18n2.mode === "composition") {
+      return i18nInternal.__getInstance(instance) || i18n2.global;
+    } else {
+      const vueI18n = i18nInternal.__getInstance(instance);
+      return vueI18n != null ? vueI18n.__composer : i18n2.global.__composer;
+    }
+  }
+  function vTDirective(i18n2) {
+    const bind = (el, { instance, value: value2, modifiers }) => {
+      if (!instance || !instance.$) {
+        throw createI18nError(
+          22
+          /* UNEXPECTED_ERROR */
+        );
+      }
+      const composer = getComposer$2(i18n2, instance.$);
+      if (modifiers.preserve) {
+        warn(getWarnMessage(
+          7
+          /* NOT_SUPPORTED_PRESERVE */
+        ));
+      }
+      const parsedValue = parseValue(value2);
+      el.textContent = composer.t(...makeParams(parsedValue));
+    };
+    return {
+      beforeMount: bind,
+      beforeUpdate: bind
+    };
+  }
+  function parseValue(value2) {
+    if (isString(value2)) {
+      return { path: value2 };
+    } else if (isPlainObject(value2)) {
+      if (!("path" in value2)) {
+        throw createI18nError(19, "path");
+      }
+      return value2;
+    } else {
+      throw createI18nError(
+        20
+        /* INVALID_VALUE */
+      );
+    }
+  }
+  function makeParams(value2) {
+    const { path, locale, args, choice, plural } = value2;
+    const options2 = {};
+    const named = args || {};
+    if (isString(locale)) {
+      options2.locale = locale;
+    }
+    if (isNumber(choice)) {
+      options2.plural = choice;
+    }
+    if (isNumber(plural)) {
+      options2.plural = plural;
+    }
+    return [path, named, options2];
+  }
+  function apply(app, i18n2, ...options2) {
+    const pluginOptions = isPlainObject(options2[0]) ? options2[0] : {};
+    const useI18nComponentName = !!pluginOptions.useI18nComponentName;
+    const globalInstall = isBoolean(pluginOptions.globalInstall) ? pluginOptions.globalInstall : true;
+    if (globalInstall && useI18nComponentName) {
+      warn(getWarnMessage(11, {
+        name: Translation.name
+      }));
+    }
+    if (globalInstall) {
+      app.component(!useI18nComponentName ? Translation.name : "i18n", Translation);
+      app.component(NumberFormat.name, NumberFormat);
+      app.component(DatetimeFormat.name, DatetimeFormat);
+    }
+    app.directive("t", vTDirective(i18n2));
+  }
+  const VUE_I18N_COMPONENT_TYPES = "vue-i18n: composer properties";
+  let devtoolsApi;
+  async function enableDevTools(app, i18n2) {
+    return new Promise((resolve, reject) => {
+      try {
+        setupDevtoolsPlugin({
+          id: "vue-devtools-plugin-vue-i18n",
+          label: VueDevToolsLabels[
+            "vue-devtools-plugin-vue-i18n"
+            /* PLUGIN */
+          ],
+          packageName: "vue-i18n",
+          homepage: "https://vue-i18n.intlify.dev",
+          logo: "https://vue-i18n.intlify.dev/vue-i18n-devtools-logo.png",
+          componentStateTypes: [VUE_I18N_COMPONENT_TYPES],
+          app
+        }, (api) => {
+          devtoolsApi = api;
+          api.on.visitComponentTree(({ componentInstance, treeNode }) => {
+            updateComponentTreeTags(componentInstance, treeNode, i18n2);
+          });
+          api.on.inspectComponent(({ componentInstance, instanceData }) => {
+            if (componentInstance.vnode.el.__VUE_I18N__ && instanceData) {
+              if (i18n2.mode === "legacy") {
+                if (componentInstance.vnode.el.__VUE_I18N__ !== i18n2.global.__composer) {
+                  inspectComposer(instanceData, componentInstance.vnode.el.__VUE_I18N__);
+                }
+              } else {
+                inspectComposer(instanceData, componentInstance.vnode.el.__VUE_I18N__);
+              }
+            }
+          });
+          api.addInspector({
+            id: "vue-i18n-resource-inspector",
+            label: VueDevToolsLabels[
+              "vue-i18n-resource-inspector"
+              /* CUSTOM_INSPECTOR */
+            ],
+            icon: "language",
+            treeFilterPlaceholder: VueDevToolsPlaceholders[
+              "vue-i18n-resource-inspector"
+              /* CUSTOM_INSPECTOR */
+            ]
+          });
+          api.on.getInspectorTree((payload) => {
+            if (payload.app === app && payload.inspectorId === "vue-i18n-resource-inspector") {
+              registerScope(payload, i18n2);
+            }
+          });
+          api.on.getInspectorState((payload) => {
+            if (payload.app === app && payload.inspectorId === "vue-i18n-resource-inspector") {
+              inspectScope(payload, i18n2);
+            }
+          });
+          api.on.editInspectorState((payload) => {
+            if (payload.app === app && payload.inspectorId === "vue-i18n-resource-inspector") {
+              editScope(payload, i18n2);
+            }
+          });
+          api.addTimelineLayer({
+            id: "vue-i18n-timeline",
+            label: VueDevToolsLabels[
+              "vue-i18n-timeline"
+              /* TIMELINE */
+            ],
+            color: VueDevToolsTimelineColors[
+              "vue-i18n-timeline"
+              /* TIMELINE */
+            ]
+          });
+          resolve(true);
+        });
+      } catch (e2) {
+        console.error(e2);
+        reject(false);
+      }
+    });
+  }
+  function updateComponentTreeTags(instance, treeNode, i18n2) {
+    const global2 = i18n2.mode === "composition" ? i18n2.global : i18n2.global.__composer;
+    if (instance && instance.vnode.el.__VUE_I18N__) {
+      if (instance.vnode.el.__VUE_I18N__ !== global2) {
+        const label = instance.type.name || instance.type.displayName || instance.type.__file;
+        const tag = {
+          label: `i18n (${label} Scope)`,
+          textColor: 0,
+          backgroundColor: 16764185
+        };
+        treeNode.tags.push(tag);
+      }
+    }
+  }
+  function inspectComposer(instanceData, composer) {
+    const type2 = VUE_I18N_COMPONENT_TYPES;
+    instanceData.state.push({
+      type: type2,
+      key: "locale",
+      editable: true,
+      value: composer.locale.value
+    });
+    instanceData.state.push({
+      type: type2,
+      key: "availableLocales",
+      editable: false,
+      value: composer.availableLocales
+    });
+    instanceData.state.push({
+      type: type2,
+      key: "fallbackLocale",
+      editable: true,
+      value: composer.fallbackLocale.value
+    });
+    instanceData.state.push({
+      type: type2,
+      key: "inheritLocale",
+      editable: true,
+      value: composer.inheritLocale
+    });
+    instanceData.state.push({
+      type: type2,
+      key: "messages",
+      editable: false,
+      value: getLocaleMessageValue(composer.messages.value)
+    });
+    instanceData.state.push({
+      type: type2,
+      key: "datetimeFormats",
+      editable: false,
+      value: composer.datetimeFormats.value
+    });
+    instanceData.state.push({
+      type: type2,
+      key: "numberFormats",
+      editable: false,
+      value: composer.numberFormats.value
+    });
+  }
+  function getLocaleMessageValue(messages2) {
+    const value2 = {};
+    Object.keys(messages2).forEach((key) => {
+      const v2 = messages2[key];
+      if (isFunction(v2) && "source" in v2) {
+        value2[key] = getMessageFunctionDetails(v2);
+      } else if (isObject$1(v2)) {
+        value2[key] = getLocaleMessageValue(v2);
+      } else {
+        value2[key] = v2;
+      }
+    });
+    return value2;
+  }
+  const ESC = {
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "&": "&amp;"
+  };
+  function escape(s2) {
+    return s2.replace(/[<>"&]/g, escapeChar);
+  }
+  function escapeChar(a2) {
+    return ESC[a2] || a2;
+  }
+  function getMessageFunctionDetails(func2) {
+    const argString = func2.source ? `("${escape(func2.source)}")` : `(?)`;
+    return {
+      _custom: {
+        type: "function",
+        display: `<span>ƒ</span> ${argString}`
+      }
+    };
+  }
+  function registerScope(payload, i18n2) {
+    payload.rootNodes.push({
+      id: "global",
+      label: "Global Scope"
+    });
+    const global2 = i18n2.mode === "composition" ? i18n2.global : i18n2.global.__composer;
+    for (const [keyInstance, instance] of i18n2.__instances) {
+      const composer = i18n2.mode === "composition" ? instance : instance.__composer;
+      if (global2 === composer) {
+        continue;
+      }
+      const label = keyInstance.type.name || keyInstance.type.displayName || keyInstance.type.__file;
+      payload.rootNodes.push({
+        id: composer.id.toString(),
+        label: `${label} Scope`
+      });
+    }
+  }
+  function getComposer$1(nodeId, i18n2) {
+    if (nodeId === "global") {
+      return i18n2.mode === "composition" ? i18n2.global : i18n2.global.__composer;
+    } else {
+      const instance = Array.from(i18n2.__instances.values()).find((item) => item.id.toString() === nodeId);
+      if (instance) {
+        return i18n2.mode === "composition" ? instance : instance.__composer;
+      } else {
+        return null;
+      }
+    }
+  }
+  function inspectScope(payload, i18n2) {
+    const composer = getComposer$1(payload.nodeId, i18n2);
+    if (composer) {
+      payload.state = makeScopeInspectState(composer);
+    }
+  }
+  function makeScopeInspectState(composer) {
+    const state = {};
+    const localeType = "Locale related info";
+    const localeStates = [
+      {
+        type: localeType,
+        key: "locale",
+        editable: true,
+        value: composer.locale.value
+      },
+      {
+        type: localeType,
+        key: "fallbackLocale",
+        editable: true,
+        value: composer.fallbackLocale.value
+      },
+      {
+        type: localeType,
+        key: "availableLocales",
+        editable: false,
+        value: composer.availableLocales
+      },
+      {
+        type: localeType,
+        key: "inheritLocale",
+        editable: true,
+        value: composer.inheritLocale
+      }
+    ];
+    state[localeType] = localeStates;
+    const localeMessagesType = "Locale messages info";
+    const localeMessagesStates = [
+      {
+        type: localeMessagesType,
+        key: "messages",
+        editable: false,
+        value: getLocaleMessageValue(composer.messages.value)
+      }
+    ];
+    state[localeMessagesType] = localeMessagesStates;
+    const datetimeFormatsType = "Datetime formats info";
+    const datetimeFormatsStates = [
+      {
+        type: datetimeFormatsType,
+        key: "datetimeFormats",
+        editable: false,
+        value: composer.datetimeFormats.value
+      }
+    ];
+    state[datetimeFormatsType] = datetimeFormatsStates;
+    const numberFormatsType = "Datetime formats info";
+    const numberFormatsStates = [
+      {
+        type: numberFormatsType,
+        key: "numberFormats",
+        editable: false,
+        value: composer.numberFormats.value
+      }
+    ];
+    state[numberFormatsType] = numberFormatsStates;
+    return state;
+  }
+  function addTimelineEvent(event, payload) {
+    if (devtoolsApi) {
+      let groupId;
+      if (payload && "groupId" in payload) {
+        groupId = payload.groupId;
+        delete payload.groupId;
+      }
+      devtoolsApi.addTimelineEvent({
+        layerId: "vue-i18n-timeline",
+        event: {
+          title: event,
+          groupId,
+          time: Date.now(),
+          meta: {},
+          data: payload || {},
+          logType: event === "compile-error" ? "error" : event === "fallback" || event === "missing" ? "warning" : "default"
+        }
+      });
+    }
+  }
+  function editScope(payload, i18n2) {
+    const composer = getComposer$1(payload.nodeId, i18n2);
+    if (composer) {
+      const [field] = payload.path;
+      if (field === "locale" && isString(payload.state.value)) {
+        composer.locale.value = payload.state.value;
+      } else if (field === "fallbackLocale" && (isString(payload.state.value) || isArray(payload.state.value) || isObject$1(payload.state.value))) {
+        composer.fallbackLocale.value = payload.state.value;
+      } else if (field === "inheritLocale" && isBoolean(payload.state.value)) {
+        composer.inheritLocale = payload.state.value;
+      }
+    }
+  }
+  function defineMixin(vuei18n, composer, i18n2) {
+    return {
+      beforeCreate() {
+        const instance = vue.getCurrentInstance();
+        if (!instance) {
+          throw createI18nError(
+            22
+            /* UNEXPECTED_ERROR */
+          );
+        }
+        const options2 = this.$options;
+        if (options2.i18n) {
+          const optionsI18n = options2.i18n;
+          if (options2.__i18n) {
+            optionsI18n.__i18n = options2.__i18n;
+          }
+          optionsI18n.__root = composer;
+          if (this === this.$root) {
+            this.$i18n = mergeToRoot(vuei18n, optionsI18n);
+          } else {
+            optionsI18n.__injectWithOption = true;
+            this.$i18n = createVueI18n(optionsI18n);
+          }
+        } else if (options2.__i18n) {
+          if (this === this.$root) {
+            this.$i18n = mergeToRoot(vuei18n, options2);
+          } else {
+            this.$i18n = createVueI18n({
+              __i18n: options2.__i18n,
+              __injectWithOption: true,
+              __root: composer
+            });
+          }
+        } else {
+          this.$i18n = vuei18n;
+        }
+        vuei18n.__onComponentInstanceCreated(this.$i18n);
+        i18n2.__setInstance(instance, this.$i18n);
+        this.$t = (...args) => this.$i18n.t(...args);
+        this.$rt = (...args) => this.$i18n.rt(...args);
+        this.$tc = (...args) => this.$i18n.tc(...args);
+        this.$te = (key, locale) => this.$i18n.te(key, locale);
+        this.$d = (...args) => this.$i18n.d(...args);
+        this.$n = (...args) => this.$i18n.n(...args);
+        this.$tm = (key) => this.$i18n.tm(key);
+      },
+      mounted() {
+        {
+          this.$el.__VUE_I18N__ = this.$i18n.__composer;
+          const emitter = this.__v_emitter = createEmitter();
+          const _vueI18n = this.$i18n;
+          _vueI18n.__enableEmitter && _vueI18n.__enableEmitter(emitter);
+          emitter.on("*", addTimelineEvent);
+        }
+      },
+      beforeUnmount() {
+        const instance = vue.getCurrentInstance();
+        if (!instance) {
+          throw createI18nError(
+            22
+            /* UNEXPECTED_ERROR */
+          );
+        }
+        {
+          if (this.__v_emitter) {
+            this.__v_emitter.off("*", addTimelineEvent);
+            delete this.__v_emitter;
+          }
+          const _vueI18n = this.$i18n;
+          _vueI18n.__disableEmitter && _vueI18n.__disableEmitter();
+          delete this.$el.__VUE_I18N__;
+        }
+        delete this.$t;
+        delete this.$rt;
+        delete this.$tc;
+        delete this.$te;
+        delete this.$d;
+        delete this.$n;
+        delete this.$tm;
+        i18n2.__deleteInstance(instance);
+        delete this.$i18n;
+      }
+    };
+  }
+  function mergeToRoot(root, options2) {
+    root.locale = options2.locale || root.locale;
+    root.fallbackLocale = options2.fallbackLocale || root.fallbackLocale;
+    root.missing = options2.missing || root.missing;
+    root.silentTranslationWarn = options2.silentTranslationWarn || root.silentFallbackWarn;
+    root.silentFallbackWarn = options2.silentFallbackWarn || root.silentFallbackWarn;
+    root.formatFallbackMessages = options2.formatFallbackMessages || root.formatFallbackMessages;
+    root.postTranslation = options2.postTranslation || root.postTranslation;
+    root.warnHtmlInMessage = options2.warnHtmlInMessage || root.warnHtmlInMessage;
+    root.escapeParameterHtml = options2.escapeParameterHtml || root.escapeParameterHtml;
+    root.sync = options2.sync || root.sync;
+    root.__composer[SetPluralRulesSymbol](options2.pluralizationRules || root.pluralizationRules);
+    const messages2 = getLocaleMessages(root.locale, {
+      messages: options2.messages,
+      __i18n: options2.__i18n
+    });
+    Object.keys(messages2).forEach((locale) => root.mergeLocaleMessage(locale, messages2[locale]));
+    if (options2.datetimeFormats) {
+      Object.keys(options2.datetimeFormats).forEach((locale) => root.mergeDateTimeFormat(locale, options2.datetimeFormats[locale]));
+    }
+    if (options2.numberFormats) {
+      Object.keys(options2.numberFormats).forEach((locale) => root.mergeNumberFormat(locale, options2.numberFormats[locale]));
+    }
+    return root;
+  }
+  function createI18n(options2 = {}) {
+    const __legacyMode = isBoolean(options2.legacy) ? options2.legacy : true;
+    const __globalInjection = !!options2.globalInjection;
+    const __instances = /* @__PURE__ */ new Map();
+    const __global = __legacyMode ? createVueI18n(options2) : createComposer(options2);
+    const symbol = makeSymbol("vue-i18n");
+    const i18n2 = {
+      // mode
+      get mode() {
+        return __legacyMode ? "legacy" : "composition";
+      },
+      // install plugin
+      async install(app, ...options22) {
+        {
+          app.__VUE_I18N__ = i18n2;
+        }
+        app.__VUE_I18N_SYMBOL__ = symbol;
+        app.provide(app.__VUE_I18N_SYMBOL__, i18n2);
+        if (!__legacyMode && __globalInjection) {
+          injectGlobalFields(app, i18n2.global);
+        }
+        {
+          apply(app, i18n2, ...options22);
+        }
+        if (__legacyMode) {
+          app.mixin(defineMixin(__global, __global.__composer, i18n2));
+        }
+        {
+          const ret = await enableDevTools(app, i18n2);
+          if (!ret) {
+            throw createI18nError(
+              21
+              /* CANNOT_SETUP_VUE_DEVTOOLS_PLUGIN */
+            );
+          }
+          const emitter = createEmitter();
+          if (__legacyMode) {
+            const _vueI18n = __global;
+            _vueI18n.__enableEmitter && _vueI18n.__enableEmitter(emitter);
+          } else {
+            const _composer = __global;
+            _composer[EnableEmitter] && _composer[EnableEmitter](emitter);
+          }
+          emitter.on("*", addTimelineEvent);
+        }
+      },
+      // global accessor
+      get global() {
+        return __global;
+      },
+      // @internal
+      __instances,
+      // @internal
+      __getInstance(component) {
+        return __instances.get(component) || null;
+      },
+      // @internal
+      __setInstance(component, instance) {
+        __instances.set(component, instance);
+      },
+      // @internal
+      __deleteInstance(component) {
+        __instances.delete(component);
+      }
+    };
+    return i18n2;
+  }
+  function useI18n(options2 = {}) {
+    const instance = vue.getCurrentInstance();
+    if (instance == null) {
+      throw createI18nError(
+        16
+        /* MUST_BE_CALL_SETUP_TOP */
+      );
+    }
+    if (!instance.appContext.app.__VUE_I18N_SYMBOL__) {
+      throw createI18nError(
+        17
+        /* NOT_INSLALLED */
+      );
+    }
+    const i18n2 = vue.inject(instance.appContext.app.__VUE_I18N_SYMBOL__);
+    if (!i18n2) {
+      throw createI18nError(
+        22
+        /* UNEXPECTED_ERROR */
+      );
+    }
+    const global2 = i18n2.mode === "composition" ? i18n2.global : i18n2.global.__composer;
+    const scope = isEmptyObject(options2) ? "__i18n" in instance.type ? "local" : "global" : !options2.useScope ? "local" : options2.useScope;
+    if (scope === "global") {
+      let messages2 = isObject$1(options2.messages) ? options2.messages : {};
+      if ("__i18nGlobal" in instance.type) {
+        messages2 = getLocaleMessages(global2.locale.value, {
+          messages: messages2,
+          __i18n: instance.type.__i18nGlobal
+        });
+      }
+      const locales = Object.keys(messages2);
+      if (locales.length) {
+        locales.forEach((locale) => {
+          global2.mergeLocaleMessage(locale, messages2[locale]);
+        });
+      }
+      if (isObject$1(options2.datetimeFormats)) {
+        const locales2 = Object.keys(options2.datetimeFormats);
+        if (locales2.length) {
+          locales2.forEach((locale) => {
+            global2.mergeDateTimeFormat(locale, options2.datetimeFormats[locale]);
+          });
+        }
+      }
+      if (isObject$1(options2.numberFormats)) {
+        const locales2 = Object.keys(options2.numberFormats);
+        if (locales2.length) {
+          locales2.forEach((locale) => {
+            global2.mergeNumberFormat(locale, options2.numberFormats[locale]);
+          });
+        }
+      }
+      return global2;
+    }
+    if (scope === "parent") {
+      let composer2 = getComposer(i18n2, instance, options2.__useComponent);
+      if (composer2 == null) {
+        {
+          warn(getWarnMessage(
+            12
+            /* NOT_FOUND_PARENT_SCOPE */
+          ));
+        }
+        composer2 = global2;
+      }
+      return composer2;
+    }
+    if (i18n2.mode === "legacy") {
+      throw createI18nError(
+        18
+        /* NOT_AVAILABLE_IN_LEGACY_MODE */
+      );
+    }
+    const i18nInternal = i18n2;
+    let composer = i18nInternal.__getInstance(instance);
+    if (composer == null) {
+      const type2 = instance.type;
+      const composerOptions = assign({}, options2);
+      if (type2.__i18n) {
+        composerOptions.__i18n = type2.__i18n;
+      }
+      if (global2) {
+        composerOptions.__root = global2;
+      }
+      composer = createComposer(composerOptions);
+      setupLifeCycle(i18nInternal, instance, composer);
+      i18nInternal.__setInstance(instance, composer);
+    }
+    return composer;
+  }
+  function getComposer(i18n2, target, useComponent = false) {
+    let composer = null;
+    const root = target.root;
+    let current = target.parent;
+    while (current != null) {
+      const i18nInternal = i18n2;
+      if (i18n2.mode === "composition") {
+        composer = i18nInternal.__getInstance(current);
+      } else {
+        const vueI18n = i18nInternal.__getInstance(current);
+        if (vueI18n != null) {
+          composer = vueI18n.__composer;
+        }
+        if (useComponent && composer && !composer[InejctWithOption]) {
+          composer = null;
+        }
+      }
+      if (composer != null) {
+        break;
+      }
+      if (root === current) {
+        break;
+      }
+      current = current.parent;
+    }
+    return composer;
+  }
+  function setupLifeCycle(i18n2, target, composer) {
+    let emitter = null;
+    vue.onMounted(() => {
+      if (target.vnode.el) {
+        target.vnode.el.__VUE_I18N__ = composer;
+        emitter = createEmitter();
+        const _composer = composer;
+        _composer[EnableEmitter] && _composer[EnableEmitter](emitter);
+        emitter.on("*", addTimelineEvent);
+      }
+    }, target);
+    vue.onUnmounted(() => {
+      if (target.vnode.el && target.vnode.el.__VUE_I18N__) {
+        emitter && emitter.off("*", addTimelineEvent);
+        const _composer = composer;
+        _composer[DisableEmitter] && _composer[DisableEmitter]();
+        delete target.vnode.el.__VUE_I18N__;
+      }
+      i18n2.__deleteInstance(target);
+    }, target);
+  }
+  const globalExportProps = [
+    "locale",
+    "fallbackLocale",
+    "availableLocales"
+  ];
+  const globalExportMethods = ["t", "rt", "d", "n", "tm"];
+  function injectGlobalFields(app, composer) {
+    const i18n2 = /* @__PURE__ */ Object.create(null);
+    globalExportProps.forEach((prop) => {
+      const desc = Object.getOwnPropertyDescriptor(composer, prop);
+      if (!desc) {
+        throw createI18nError(
+          22
+          /* UNEXPECTED_ERROR */
+        );
+      }
+      const wrap = vue.isRef(desc.value) ? {
+        get() {
+          return desc.value.value;
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        set(val) {
+          desc.value.value = val;
+        }
+      } : {
+        get() {
+          return desc.get && desc.get();
+        }
+      };
+      Object.defineProperty(i18n2, prop, wrap);
+    });
+    app.config.globalProperties.$i18n = i18n2;
+    globalExportMethods.forEach((method) => {
+      const desc = Object.getOwnPropertyDescriptor(composer, method);
+      if (!desc || !desc.value) {
+        throw createI18nError(
+          22
+          /* UNEXPECTED_ERROR */
+        );
+      }
+      Object.defineProperty(app.config.globalProperties, `$${method}`, desc);
+    });
+  }
+  {
+    initFeatureFlags();
+  }
+  {
+    const target = getGlobalThis();
+    target.__INTLIFY__ = true;
+    setDevToolsHook(target.__INTLIFY_DEVTOOLS_GLOBAL_HOOK__);
+  }
+  const hello$2 = "Hello";
+  const welcome$2 = "Welcome to DigitalShield Wallet";
+  const button$2 = {
+    confirm: "Confirm",
+    cancel: "Cancel"
+  };
+  const en = {
+    hello: hello$2,
+    welcome: welcome$2,
+    button: button$2
+  };
+  const hello$1 = "你好";
+  const welcome$1 = "欢迎使用DigitalShield钱包";
+  const button$1 = {
+    confirm: "确定",
+    cancel: "取消"
+  };
+  const zhHans = {
+    hello: hello$1,
+    welcome: welcome$1,
+    button: button$1
+  };
+  const hello = "你好";
+  const welcome = "欢迎使用DigitalShield钱包";
+  const button = {
+    confirm: "确定",
+    cancel: "取消"
+  };
+  const zhHant = {
+    hello,
+    welcome,
+    button
+  };
+  const messages = {
+    en,
+    "zh-Hans": zhHans,
+    "zh-Hant": zhHant
+  };
+  let i18nConfig = {
+    locale: uni.getLocale(),
+    // 获取已设置的语言
+    messages
+  };
+  formatAppLog("log", "at locale/index.js:19", "获取到当前语言设置", uni.getLocale());
+  const i18n = createI18n(i18nConfig);
   function createApp() {
     const app = vue.createVueApp(App);
     app.use(uviewPlus);
+    app.use(createPinia());
+    app.use(i18n);
     return {
-      app
+      app,
+      Pinia
     };
   }
   const { app: __app__, Vuex: __Vuex__, Pinia: __Pinia__ } = createApp();
