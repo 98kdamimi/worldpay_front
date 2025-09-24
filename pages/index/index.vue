@@ -2,28 +2,21 @@
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
 		<view class="text-area">
-			<text class="title">{{title}}</text>
+			<text class="title">{{token}}</text>
 		</view>
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+<script setup>
+	import { ref } from 'vue'
+	import {useUserStore} from '@/stores/user.js'
+	import { storeToRefs } from "pinia";
+	const title = ref('Hello')
+	const userStore = useUserStore()
+	const {token} = storeToRefs(userStore)
 </script>
 
-<style>
+<style lang="scss">
 	.content {
 		display: flex;
 		flex-direction: column;
