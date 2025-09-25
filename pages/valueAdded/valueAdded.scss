@@ -4,20 +4,19 @@
 	font-size: 28rpx;
 	color: #ffffff;
 }
-.button {
-	position: fixed;
-	left: 32rpx;
-	right: 32rpx;
-	bottom: 32rpx;
-	width: 686rpx;
-	height: 88rpx;
-	background: #1e3ad6;
-	border-radius: 44rpx;
+.title {
 	font-family: PingFangSC, PingFang SC;
 	font-weight: 500;
 	font-size: 32rpx;
 	color: #ffffff;
+	margin: 32rpx 32rpx 0;
+}
+
+.box {
+	padding: 36rpx 24rpx;
+	background: #16171a;
+	border-radius: 24rpx;
+	margin: 24rpx 32rpx 0;
 	display: flex;
-	justify-content: center;
 	align-items: center;
 }

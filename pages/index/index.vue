@@ -42,7 +42,7 @@
 			</view>
 			<!-- 增资 钱包 卡片申请入口 -->
 			<view class="wallet wallet1">
-				<view class="valueAddedIcon">
+				<view class="valueAddedIcon" @click="goToPage('/pages/topUp/index')">
 					<span>增值</span>
 				</view>
 				<view class="walletIcon">
@@ -64,7 +64,7 @@
 				</view>
 			</view>
 			<view class="wallet wallet2">
-				<view class="valueAddedIconNull">
+				<view class="valueAddedIconNull" @click="goToPage('/pages/topUp/index')">
 					<view class="valueAddedIconNull-left">
 						<image src="@/static/image/index/valueAddedIconNullicon.png" mode=""></image>
 					</view>
@@ -94,7 +94,7 @@
 		<view class="transactionRecords">
 			<!-- 吸顶标题 -->
 			<up-sticky :offset-top="notchHeight">
-				<view class="transactionRecords-title" :class="{ 'sticky': isStickyActive }">
+				<view class="transactionRecords-title">
 					<view>交易记录</view>
 					<view class="transactionRecords-title-right">全部</view>
 				</view>
@@ -158,6 +158,12 @@
 	const applyShow = ref(false)
 	// 刘海高度
 	const notchHeight = ref(0);
+
+	const goToPage = (address) => {
+		uni.navigateTo({
+			url: address
+		});
+	};
 
 	// 打开是否申请弹窗
 	function openApplyModal() {

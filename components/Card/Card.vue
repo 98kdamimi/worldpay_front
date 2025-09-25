@@ -2,10 +2,7 @@
 	<view
 		:class="type == 0 ? 'cardpopup-item cardpopup-item-bg1' : type == 1 ? 'cardpopup-item cardpopup-item-bg2' : type == 2 ? 'cardpopup-item cardpopup-item-bg3' : 'cardpopup-item cardpopup-item-bg4'">
 		<view class="cardpopup-cardNumber">
-			<span>9999</span>
-			<span>9999</span>
-			<span>9999</span>
-			<span>9999</span>
+			<span>{{ formattedCard('9999999999999999') }}</span>
 		</view>
 		<view class="cardpopup-time">
 			10/25 10/30
@@ -15,6 +12,9 @@
 </template>
 
 <script setup>
+	import {
+		formattedCard
+	} from '@/utils/common.js'
 	const props = defineProps({
 		type: {
 			type: String,
@@ -51,6 +51,7 @@
 			bottom: 36rpx;
 			font-size: 24rpx;
 			font-style: normal;
+			color: #ffffff37;
 		}
 
 		.physicalCard {

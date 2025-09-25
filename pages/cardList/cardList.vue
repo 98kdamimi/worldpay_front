@@ -1,7 +1,10 @@
 <template>
 	<view class="viewBox">
-		<StatusBar></StatusBar>
-		<view class="nav"></view>
+		<Navbar title="卡片列表" :showBack="true">
+			<template #right>
+				<view class="header-right">申请记录</view>
+			</template>
+		</Navbar>
 		<up-sticky>
 			<view style="margin: 0 32rpx;">
 				<up-tabs :list="list1" @click="click" lineColor='#ffffff'
@@ -10,7 +13,7 @@
 			</view>
 		</up-sticky>
 		<view class="content" v-if="active == 0">
-			<view v-for="(item, index) in 3" :key="index">
+			<view v-for="(item, index) in 3" :key="index" @click='goToPage(" /pages/virtualCard/virtualCard")'>
 				<Card :type="index"></Card>
 			</view>
 		</view>
@@ -24,7 +27,6 @@
 </template>
 
 <script setup>
-	import Card from '@/components/Card/Card.vue'
 	import {
 		reactive,
 		ref
@@ -43,6 +45,11 @@
 	function click(item) {
 		active.value = item.index
 	}
+	const goToPage = (address) => {
+		uni.navigateTo({
+			url: address
+		});
+	};
 </script>
 
 <style lang="scss" scoped>

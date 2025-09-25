@@ -1,13 +1,13 @@
 <template>
 	<view class="viewBox">
-		<StatusBar></StatusBar>
-		<view class="nav"></view>
+		<Navbar title="增值" :showBack="true">
+			<template #right>
+				<SvgIcon name="kefu" width="40" height="40"/>
+			</template>
+		</Navbar>
 		<view class="card">
 			<view class="card-cardNumber">
-				<span>9999</span>
-				<span>9999</span>
-				<span>9999</span>
-				<span>9999</span>
+				<span>{{ formattedCard('9999999999999999') }}</span>
 			</view>
 			<view class="card-time">
 				10/25 10/30
@@ -24,7 +24,10 @@
 			<view>账号电话</view>
 			<view class="bankRight bankRightRow">
 				<view>478-000674187</view>
-				<view class="copyIcon"></view>
+				<up-copy content="478-000674187">
+					<SvgIcon class="copyIcon" name="copy"></SvgIcon>
+				</up-copy>
+				<!-- <view class="copyIcon"></view> -->
 			</view>
 		</view>
 		<view class="bank lastBank">
@@ -49,14 +52,9 @@
 </template>
 
 <script setup>
-	import Card from '@/components/Card/Card.vue'
-	const rightClick = () => {
-		console.log('rightClick');
-	};
-
-	const leftClick = () => {
-		console.log('leftClick');
-	};
+	import {
+		formattedCard
+	} from '@/utils/common.js'
 </script>
 
 <style lang="scss" scoped>

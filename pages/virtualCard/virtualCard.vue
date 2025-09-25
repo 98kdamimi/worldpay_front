@@ -1,7 +1,10 @@
 <template>
 	<view class="viewBox">
-		<StatusBar></StatusBar>
-		<view class="nav"></view>
+		<Navbar title="虚拟卡" :showBack="true">
+			<template #right>
+				<SvgIcon name="add" width="40" height="40" />
+			</template>
+		</Navbar>
 		<view class="cardInfo">
 			<view class="cardInfo-left">
 				<view class="cardInfo-active"></view>
@@ -16,13 +19,10 @@
 			<view class="worldpay-cardNumber">
 				<view>
 					<view>
-						<span>9999</span>
-						<span>9999</span>
-						<span>9999</span>
-						<span>9999</span>
+						<span>{{ formattedCard('9999999999999999') }}</span>
 					</view>
 					<view>
-						<up-copy content="999999999999999">
+						<up-copy content="9999999999999999">
 							<SvgIcon name="copy" width="36" height="36"></SvgIcon>
 						</up-copy>
 					</view>
@@ -95,7 +95,9 @@
 	import {
 		ref
 	} from 'vue';
-	import TransactionRecordsVue from '@/components/TransactionRecords/TransactionRecords.vue';
+	import {
+		formattedCard
+	} from '@/utils/common.js'
 	const recordsList = ref([])
 	const isEye = ref(true)
 	const rchargeShow = ref(false)
