@@ -160,7 +160,6 @@
 				</view>
 			</view>
 		</up-modal>
-		<Tabbar></Tabbar>
 	</view>
 </template>
 

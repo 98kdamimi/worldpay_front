@@ -135,7 +135,7 @@
 			background-color: #fff;
 			
 			&__item-wrapper {
-				height: 50px;
+				height: 120rpx;
 				@include flex(row);
 				justify-content: space-around;
 			}

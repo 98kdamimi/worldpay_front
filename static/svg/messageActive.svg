@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 63</title>
+    <defs>
+        <path d="M42.6315514,3.33183403 C40.4796641,1.19159891 37.5515569,-0.00812878001 34.4999368,4.14580509e-05 L11.4999789,4.14580509e-05 C5.14871595,4.14580509e-05 0,5.09283343 0,11.375059 L0,27.6250243 C0,33.9072499 5.14871595,39 11.4999789,39 L34.4999368,39 C40.8511998,39 45.9999581,33.9072499 45.9999581,27.6250243 L45.9999581,11.375059 C46.0082181,8.35660966 44.7953062,5.46033061 42.6315514,3.33183403 Z" id="path-1"></path>
+        <filter x="-20.7%" y="-21.8%" width="141.3%" height="148.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="消息" transform="translate(-343, -1516)">
+            <g id="导航" transform="translate(0, 1504)">
+                <g id="编组-63" transform="translate(343, 12)">
+                    <rect id="矩形" x="0" y="0" width="64" height="64"></rect>
+                    <g id="编组" transform="translate(9, 13)">
+                        <g id="形状">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use fill="#FEFEFE" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                        <path d="M24.3732471,5.29695556 L37.3427957,17.5459737 C38.1458322,18.3043971 38.1819983,19.5702105 37.4235749,20.3732471 C37.0457553,20.7732914 36.519806,21 35.9695486,21 L10.0304514,21 C8.92588189,21 8.03045139,20.1045695 8.03045139,19 C8.03045139,18.4497427 8.25715999,17.9237933 8.65720432,17.5459737 L21.6267529,5.29695556 C22.3975393,4.56899064 23.6024607,4.56899064 24.3732471,5.29695556 Z" id="三角形" fill="#4A4D52" transform="translate(23, 12.5) scale(1, -1) translate(-23, -12.5)"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

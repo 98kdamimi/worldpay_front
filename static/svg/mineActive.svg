@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 64</title>
+    <defs>
+        <path d="M23.0051397,-9.34795135e-16 C10.2998883,-9.34795135e-16 1.40234937e-15,10.2987376 1.40234937e-15,23.0025695 C1.40234937e-15,35.7064015 10.2998883,46 23,46 C35.7001117,46 46,35.7012624 46,23.0025695 C46,10.3038767 35.7103911,-9.34795135e-16 23.0051397,-9.34795135e-16" id="path-1"></path>
+        <filter x="-20.7%" y="-18.5%" width="141.3%" height="141.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="我的" transform="translate(-606, -1516)">
+            <g id="导航" transform="translate(0, 1504)">
+                <g id="编组-64" transform="translate(606, 12)">
+                    <rect id="矩形" x="0" y="0" width="64" height="64"></rect>
+                    <g id="编组" transform="translate(9, 9)">
+                        <g id="形状">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use fill="#FEFEFE" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                        <path d="M23.0051397,35.5470897 C16.4623464,35.5470897 11.0913966,30.5416155 10.5106145,24.1537258 C10.4540782,23.537035 10.9372067,23.0025695 11.5591061,23.0025695 L34.4511732,23.0025695 C35.067933,23.0025695 35.5562011,23.537035 35.4996648,24.1537258 C34.9188827,30.5416155 29.5427933,35.5470897 23.0051397,35.5470897" id="路径" fill="#4A4D52"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

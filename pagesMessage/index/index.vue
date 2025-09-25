@@ -1,0 +1,16 @@
+<template>
+	<view>
+		<view class="" style="color: aliceblue">消息</view>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {};
+	},
+	methods: {}
+};
+</script>
+
+<style></style>

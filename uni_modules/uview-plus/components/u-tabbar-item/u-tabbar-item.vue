@@ -154,7 +154,7 @@
 
 		&__text {
 			margin-top: 2px;
-			font-size: 12px;
+			font-size: 20rpx;
 			color: $u-content-color;
 		}
 	}

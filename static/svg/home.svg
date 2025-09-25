@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="64px" height="62px" viewBox="0 0 64 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>编组 18</title>
-    <defs>
-        <rect id="path-1" x="0" y="0" width="46" height="42" rx="12"></rect>
-        <filter x="-20.7%" y="-20.2%" width="141.3%" height="145.2%" filterUnits="objectBoundingBox" id="filter-2">
-            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-        </filter>
-    </defs>
     <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="首页" transform="translate(-80, -1517)">
+        <g id="消息" transform="translate(-80, -1517)">
             <g id="导航" transform="translate(0, 1504)">
                 <g id="编组-62" transform="translate(80, 13)">
                     <rect id="矩形" x="0" y="0" width="64" height="62"></rect>
-                    <g id="编组-58" transform="translate(9, 10)">
-                        <g id="矩形">
-                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                            <use fill="#FEFEFE" fill-rule="evenodd" xlink:href="#path-1"></use>
-                        </g>
-                        <path d="M46,28 L33,28 C29.1340068,28 26,24.8659932 26,21 C26,17.1340068 29.1340068,14 33,14 L46,14 L46,14" id="路径" fill="#4A4D52"></path>
+                    <g id="编组-58" transform="translate(9, 10)" fill-rule="nonzero">
+                        <rect id="矩形" fill="#2C2E32" x="0" y="0" width="46" height="42" rx="12"></rect>
+                        <path d="M46,28 L33,28 C29.1340068,28 26,24.8659932 26,21 C26,17.1340068 29.1340068,14 33,14 L46,14 L46,14" id="路径" fill="#828487"></path>
                     </g>
                 </g>
             </g>

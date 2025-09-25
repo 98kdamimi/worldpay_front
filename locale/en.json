@@ -1,8 +1,5 @@
 {
-  "hello": "Hello",
-  "welcome": "Welcome to DigitalShield Wallet",
-  "button": {
-    "confirm": "Confirm",
-    "cancel": "Cancel"
-  }
+	"tabbar.home": "home",
+	"tabbar.message": "message",
+	"tabbar.mine": "mine"
 }
