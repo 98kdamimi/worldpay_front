@@ -150,9 +150,7 @@
 		<up-modal :show="applyShow" :showConfirmButton='false' bgColor='#141414'>
 			<view class="applyModal">
 				<view class="applyModal-title">
-					<view>
-						<SvgIcon name="hint" width="36" height="36"></SvgIcon>
-					</view>
+					<SvgIcon class="svg-icon" name="hint" width="36" height="36"></SvgIcon>
 					<view>提示</view>
 				</view>
 				<view class="applyModal-txt">检测到您未持有任何卡片，请先申请卡片</view>

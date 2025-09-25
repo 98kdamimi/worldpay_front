@@ -388,8 +388,14 @@
 		align-items: center;
 		font-weight: 500;
 		font-size: 36rpx;
-		> view:first-child {
-			margin-right: 24rpx;
+		column-gap: 24rpx;
+		.svg-icon {
+			/* #ifdef APP */
+			margin-top: 5rpx;
+			/* #endif */
+			/* #ifdef H5 */
+			margin-top: -5rpx;
+			/* #endif */
 		}
 	}
 	.applyModal-txt {

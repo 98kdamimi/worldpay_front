@@ -41,7 +41,7 @@
 				<slot name="confirmButton"></slot>
 			</view>
 			<template v-else>
-				<u-line></u-line>
+				<!-- <u-line></u-line> -->
 				<view
 					class="u-modal__button-group"
 					:style="{
