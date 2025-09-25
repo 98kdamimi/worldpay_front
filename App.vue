@@ -37,4 +37,8 @@
 		width: 100% !important;
 		height: 100% !important;
 	}
+
+	.viewBox {
+		width: 100vw;
+	}
 </style>

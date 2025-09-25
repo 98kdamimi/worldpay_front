@@ -1,0 +1,108 @@
+.nav {
+	width: 100vw;
+	height: 88rpx;
+}
+.card {
+	width: 690rpx;
+	height: 280rpx;
+	margin: 24rpx auto 0;
+	background: url('@/static/image/topUpCard.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	font-family: SFMono, SFMono;
+	color: #ffffff;
+	font-weight: 600;
+	.card-cardNumber {
+		position: absolute;
+		left: 36rpx;
+		bottom: 96rpx;
+		font-size: 36rpx;
+		letter-spacing: 3px;
+
+		span {
+			margin-right: 32rpx;
+		}
+	}
+
+	.card-time {
+		position: absolute;
+		left: 36rpx;
+		bottom: 36rpx;
+		font-size: 24rpx;
+		font-style: normal;
+	}
+}
+.bank {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 120rpx;
+	padding: 0rpx 24rpx;
+	background: #16171a;
+	margin: 0 32rpx 2rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 30rpx;
+	color: #9191aa;
+	.bankRight {
+		width: 460rpx;
+		font-weight: 400;
+		font-size: 30rpx;
+		color: #ffffff;
+		text-align: right;
+
+		.txt {
+			margin: 8rpx 0 0;
+			font-size: 20rpx;
+		}
+	}
+	.bankRightRow {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		.copyIcon {
+			width: 24rpx;
+			height: 24rpx;
+			margin-left: 24rpx;
+		}
+	}
+}
+
+.lastBank {
+	border-radius: 0rpx 0rpx 36rpx 36rpx;
+}
+
+.txt-title {
+	margin: 32rpx 32rpx 0;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 32rpx;
+	color: #ffffff;
+}
+.prompt-text {
+	margin: 24rpx 32rpx 0;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 24rpx;
+	color: #ffffff;
+}
+.red {
+	color: #ff1919;
+}
+.button {
+	width: 654rpx;
+	height: 100rpx;
+	line-height: 100rpx;
+	background: #1e3ad6;
+	border-radius: 50rpx;
+	position: fixed;
+	left: 48rpx;
+	right: 48rpx;
+	bottom: 64rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 36rpx;
+	color: #ffffff;
+	text-align: center;
+}

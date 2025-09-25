@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 14</title>
+    <defs>
+        <filter x="-13.1%" y="-11.3%" width="126.2%" height="135.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页-卡片列表--U卡-选择充值方式" transform="translate(-239, -1492)">
+            <g id="编组-17" transform="translate(0, 1142)">
+                <g id="编组-16" transform="translate(32, 162)">
+                    <g id="编组-14" transform="translate(207, 188)">
+                        <rect id="矩形" x="0" y="0" width="48" height="48"></rect>
+                        <g id="编组" filter="url(#filter-1)" transform="translate(3, 9)" fill="#FFFFFF" fill-rule="nonzero">
+                            <path d="M26.5128889,21.7166923 L29.6271111,21.7166923 L29.6271111,25.2443333 L26.5128889,25.2443333 L26.5128889,21.7158974 L26.5128889,21.7166923 Z M30.3512222,21.7166923 L33.4654444,21.7166923 L33.4654444,25.2443333 L30.3512222,25.2443333 L30.3512222,21.7158974 L30.3512222,21.7166923 Z M34.3567778,21.7166923 L37.4717778,21.7166923 L37.4717778,25.2443333 L34.3575556,25.2443333 L34.3575556,21.7158974 L34.3567778,21.7166923 Z M0,27.2505897 C0,29.3093077 1.70022223,31 3.77922221,31 L38.2122222,31 C40.2912222,31 42,29.3172564 42,27.2505897 L42,11.4858974 L0,11.4858974 L0,27.2505897 Z M38.2122222,0 L3.78,0 C1.70022223,0 0,1.69069232 0,3.75735897 L0,7.94235897 L42,7.94235897 L42,3.75735897 C42,1.69069232 40.2997778,0 38.2122222,0 Z" id="形状"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

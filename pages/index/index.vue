@@ -99,22 +99,8 @@
 					<view class="transactionRecords-title-right">全部</view>
 				</view>
 			</up-sticky>
-			<view class="transactionRecords-list" v-if="recordsList.length">
-				<view class="transactionRecords-item" v-for="(item, index) in 20" :key="index">
-					<view class="transactionRecords-item-left">
-						<view>支付宝消费</view>
-						<view class="transactionRecords-item-time">2025/09/03 10:51</view>
-					</view>
-					<view class="transactionRecords-item-right">- $100</view>
-				</view>
-			</view>
-			<view v-else>
-				<view class="emty">
-					<view class="emtyIcon">
-						<image src="@/static/image/index/emty.png" alt="" mode="widthFix" />
-					</view>
-					<view>暂无数据</view>
-				</view>
+			<view class="transactionRecords-list">
+				<TransactionRecordsVue :list="recordsList"></TransactionRecordsVue>
 			</view>
 		</view>
 		<!-- 卡片弹窗 -->
@@ -129,19 +115,7 @@
 				</view>
 				<view class="cardpopup-list">
 					<view v-for="(item, index) in 4" :key="index">
-						<view
-							:class="index == 0 ? 'cardpopup-item cardpopup-item-bg1' : index == 1 ? 'cardpopup-item cardpopup-item-bg2' : index == 2 ? 'cardpopup-item cardpopup-item-bg3' : 'cardpopup-item cardpopup-item-bg4'">
-							<view class="cardpopup-cardNumber">
-								<span>9999</span>
-								<span>9999</span>
-								<span>9999</span>
-								<span>9999</span>
-							</view>
-							<view class="cardpopup-time">
-								10/25 10/30
-							</view>
-							<view class="physicalCard" v-if="index == 3">实体卡</view>
-						</view>
+						<Card :type='index'></Card>
 					</view>
 				</view>
 			</view>
@@ -164,6 +138,8 @@
 </template>
 
 <script setup>
+	import Card from '@/components/Card/Card.vue'
+	import TransactionRecordsVue from '@/components/TransactionRecords/TransactionRecords.vue';
 	import {
 		ref,
 		onMounted

@@ -241,45 +241,6 @@
 			box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.5);
 		}
 	}
-	.transactionRecords-list {
-		.transactionRecords-item {
-			margin: 12rpx 0;
-			padding: 32rpx 24rpx;
-			background: #16171a;
-			border-radius: 24rpx;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			.transactionRecords-item-left {
-				.transactionRecords-item-time {
-					font-weight: 400;
-					font-size: 24rpx;
-					color: #646479;
-					margin-top: 16rpx;
-				}
-			}
-			.transactionRecords-item-right {
-				font-weight: 500;
-				font-size: 36rpx;
-				color: #ff0707;
-			}
-		}
-	}
-	.emty {
-		margin: 90rpx auto;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		.emtyIcon {
-			width: 222rpx;
-			height: 142rpx;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-bottom: 24rpx;
-		}
-	}
 }
 // 卡片弹窗
 .cardpopup {
@@ -303,70 +264,6 @@
 			width: 40rpx;
 			height: 40rpx;
 			margin-left: 32rpx;
-		}
-	}
-
-	.cardpopup-list {
-		.cardpopup-item {
-			width: 686rpx;
-			height: 280rpx;
-			margin: 24rpx 32rpx;
-			position: relative;
-			font-family: SFMono, SFMono;
-			color: #ffffff;
-			font-weight: 600;
-			.cardpopup-cardNumber {
-				position: absolute;
-				left: 36rpx;
-				bottom: 96rpx;
-				font-size: 36rpx;
-				letter-spacing: 3px;
-				span {
-					margin-right: 32rpx;
-				}
-			}
-			.cardpopup-time {
-				position: absolute;
-				left: 36rpx;
-				bottom: 36rpx;
-				font-size: 24rpx;
-				font-style: normal;
-			}
-			.physicalCard {
-				position: absolute;
-				right: 0;
-				bottom: 0;
-				width: 200rpx;
-				height: 64rpx;
-				line-height: 64rpx;
-				text-align: center;
-				font-family: PingFangSC, PingFang SC;
-				font-weight: 600;
-				font-size: 32rpx;
-				color: #48453d;
-				letter-spacing: 3px;
-				font-style: normal;
-			}
-		}
-		.cardpopup-item-bg1 {
-			background: url('@/static/image/index/cardicon1.png');
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-		.cardpopup-item-bg2 {
-			background: url('@/static/image/index/cardicon2.png');
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-		.cardpopup-item-bg3 {
-			background: url('@/static/image/index/cardicon3.png');
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-		.cardpopup-item-bg4 {
-			background: url('@/static/image/index/cardicon4.png');
-			background-repeat: no-repeat;
-			background-size: cover;
 		}
 	}
 }

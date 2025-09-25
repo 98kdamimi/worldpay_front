@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120px" height="120px" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 5</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="51.4619146%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#36364A" stop-opacity="0.924388112" offset="0%"></stop>
+            <stop stop-color="#666681" stop-opacity="0.355659965" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-13.0%" y="-11.6%" width="125.9%" height="132.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页-卡片列表--U卡" transform="translate(-80, -784)">
+            <g id="编组-10" transform="translate(32, 760)">
+                <g id="编组-5" transform="translate(48, 24)">
+                    <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="120" height="120" rx="36"></rect>
+                    <g id="编组" filter="url(#filter-2)" transform="translate(33, 39)" fill="#FFFFFF" fill-rule="nonzero">
+                        <path d="M45.9,0 C50.3735065,0 54,3.60970421 54,8.06250001 L54,34.9375 C54,39.3902958 50.3735065,43 45.9,43 L8.09999999,43 C3.62649352,43 0,39.3902958 0,34.9375 L0,8.06250001 C0,3.60970421 3.62649352,0 8.09999999,0 L45.9,0 L45.9,0 Z M28.4067,11.153125 C27.6480711,10.679328 26.7001474,10.6196618 25.8876,10.9945625 L25.5906,11.1558125 L25.3152,11.3546875 L15.8004,19.1995 L15.5601,19.4225625 C14.651253,20.3834419 14.6071925,21.8687952 15.4575,22.881375 C16.2306968,23.801154 17.5309399,24.0840927 18.6192,23.569375 L18.9027,23.4135 L19.17,23.22 L24.246,19.032875 L24.246,32.3225625 L24.2622,32.62625 C24.4161,33.927 25.5312,34.9375 26.8812,34.9375 C28.2312001,34.9375 29.3463,33.927 29.5002,32.62625 L29.5164,32.3225625 L29.5164,18.839375 L34.83,23.22 L35.0973,23.4135 C36.0019696,23.9856805 37.1640673,23.958089 38.0403,23.343625 L38.313,23.1205625 L38.5425,22.8786875 L38.7369,22.6153125 C39.3127699,21.7186547 39.2839233,20.5637533 38.664,19.6966875 L38.4399,19.4225625 L38.1969,19.1995 L28.6848,11.352 L28.4067,11.153125 L28.4067,11.153125 Z" id="形状"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
