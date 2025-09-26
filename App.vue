@@ -28,7 +28,7 @@
 		padding: 0;
 	}
 
-	div {
+	view {
 		box-sizing: border-box;
 	}
 

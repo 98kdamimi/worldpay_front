@@ -23,7 +23,7 @@
 					</view>
 					<view>
 						<up-copy content="9999999999999999">
-							<SvgIcon name="copy" width="36" height="36"></SvgIcon>
+							<SvgIcon name="copy1" width="30" height="30"></SvgIcon>
 						</up-copy>
 					</view>
 				</view>

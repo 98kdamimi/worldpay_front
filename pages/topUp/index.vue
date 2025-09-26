@@ -25,7 +25,7 @@
 			<view class="bankRight bankRightRow">
 				<view>478-000674187</view>
 				<up-copy content="478-000674187">
-					<SvgIcon class="copyIcon" name="copy"></SvgIcon>
+					<SvgIcon class="copyIcon" name="copy1" width="30" height="30"></SvgIcon>
 				</up-copy>
 				<!-- <view class="copyIcon"></view> -->
 			</view>

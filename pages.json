@@ -9,36 +9,85 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			// 首页
 			"path": "pages/index/index",
+			"navigationBarTitleText": "首页",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			// 增值页面
 			"path": "pages/topUp/index",
+			"navigationBarTitleText": "增值",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			// 卡片列表 
 			"path": "pages/cardList/cardList",
+			"navigationBarTitleText": "卡片列表",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			// 虚拟卡
 			"path": "pages/virtualCard/virtualCard",
+			"navigationBarTitleText": "虚拟卡",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			// 充值
 			"path": "pages/valueAdded/valueAdded",
+			"navigationBarTitleText": "充值",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/cardDetail/cardDetail",
+			"navigationBarTitleText": "卡详情",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/applicationRecords/applicationRecords",
+			"navigationBarTitleText": "申请记录",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/applicationDetails/applicationDetails",
+			"navigationBarTitleText": "申请详情",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/cardApplication/cardApplication",
+			"navigationBarTitleText": "卡片申请",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/cardholder/cardholder",
+			"navigationBarTitleText": "持卡人 ",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/addCardholder/addCardholder",
+			"navigationBarTitleText": "新增持卡人 ",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/applyInfo/applyInfo",
+			"navigationBarTitleText": "确认申办信息 ",
 			"style": {
 				"navigationStyle": "custom"
 			}

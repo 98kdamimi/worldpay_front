@@ -1,0 +1,46 @@
+.top {
+	border-radius: 24rpx 24rpx 0rpx 0rpx;
+}
+.bottom {
+	border-radius: 0rpx 0rpx 24rpx 24rpx;
+}
+.box {
+	margin: 2rpx 32rpx;
+	padding: 38rpx 24rpx;
+	background: #16171a;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #9191aa;
+	> view {
+		width: 50%;
+	}
+	.txt {
+		text-align: right;
+		color: #ffffff;
+	}
+}
+.line {
+	width: 100vw;
+	height: 30rpx;
+	background: #0f0f0f;
+}
+.button {
+	position: fixed;
+	left: 48rpx;
+	right: 48rpx;
+	bottom: 54rpx;
+	width: 654rpx;
+	height: 100rpx;
+	line-height: 100rpx;
+	text-align: center;
+	background: #1e3ad6;
+	border-radius: 50rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 36rpx;
+	color: #ffffff;
+}

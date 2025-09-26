@@ -6,6 +6,8 @@
 		<view class="navbar-left" @click="handleBack" v-if="showBack">
 			<SvgIcon name="back" width="40" height="40" /> <!-- 用你的返回图标 -->
 		</view>
+		<!-- 左侧占位元素（用于保持标题居中） -->
+		<view class="navbar-left" v-else></view>
 
 		<!-- 中间：标题 -->
 		<view class="navbar-center">
@@ -25,7 +27,7 @@
 	} from 'vue'
 	import {
 		onLoad
-	} from '@dcloudio/uni-app'; // 引入你的 SVG 组件（若有）
+	} from '@dcloudio/uni-app';
 
 	// 接收页面传递的 props
 	const props = defineProps({
@@ -76,7 +78,6 @@
 		background-color: #0f0f0f; // 与你的 TabBar 背景色一致，统一风格
 		display: flex;
 		align-items: center; // 垂直居中
-		justify-content: space-between; // 左右两端对齐，中间标题居中
 		padding: 0 32rpx; // 左右内边距，避免内容贴边
 		box-sizing: border-box;
 		z-index: 999; // 确保导航栏在最上层，不被内容遮挡
@@ -85,16 +86,26 @@
 			display: flex;
 			align-items: center;
 			cursor: pointer;
+			width: 80rpx; // 固定宽度，确保标题居中
+			justify-content: flex-start;
 		}
 
 		.navbar-center {
-			flex: 1; // 占满中间空间，确保标题居中
-			text-align: center;
+			flex: 1; // 占据剩余空间
+			text-align: center; // 文本居中
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
 			.title-text {
 				font-size: 36rpx;
 				color: #FFFFFF; // 标题白色，适配深色背景
 				font-weight: 500;
+				display: inline-block;
+				max-width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 		}
 
@@ -103,6 +114,8 @@
 			align-items: center;
 			gap: 32rpx; // 若右侧有多个元素，设置间距
 			color: #FFFFFF;
+			width: 80rpx; // 固定宽度，确保标题居中
+			justify-content: flex-end;
 		}
 	}
 </style>

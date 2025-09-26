@@ -1,0 +1,123 @@
+.box {
+	width: 686rpx;
+	height: 144rpx;
+	background: #16171a;
+	border-radius: 32rpx;
+	margin: 32rpx 32rpx 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 32rpx;
+	.box-info {
+		display: flex;
+		align-items: center;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 600;
+		font-size: 32rpx;
+		color: #ffffff;
+		.box-txt {
+			font-weight: 400;
+			font-size: 24rpx;
+			color: #ffffff;
+			margin-top: 12rpx;
+		}
+	}
+	.box-del {
+		width: 100rpx;
+		height: 48rpx;
+		line-height: 48rpx;
+		text-align: center;
+		background: #ff2d2d;
+		border-radius: 8rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+		color: #ffffff;
+	}
+}
+
+.button {
+	position: fixed;
+	left: 48rpx;
+	right: 48rpx;
+	bottom: 30rpx;
+	width: 686rpx;
+	height: 88rpx;
+	line-height: 88rpx;
+	text-align: center;
+	background: #1e3ad6;
+	border-radius: 50rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 32rpx;
+	color: #ffffff;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+}
+.button-placeholder {
+	height: 88rpx;
+	margin: 32rpx;
+}
+
+.applyModal {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	color: #ffffff;
+
+	> view {
+		border: 0 !important;
+	}
+
+	.applyModal-title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 500;
+		font-size: 36rpx;
+		column-gap: 24rpx;
+
+		.svg-icon {
+			/* #ifdef APP */
+			margin-top: 5rpx;
+			/* #endif */
+			/* #ifdef H5 */
+			margin-top: -5rpx;
+			/* #endif */
+		}
+	}
+
+	.applyModal-txt {
+		font-weight: 400;
+		font-size: 30rpx;
+		margin: 64rpx 0 50rpx;
+		text-align: center;
+	}
+
+	.applyModal-button {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+
+		> view {
+			width: 252rpx;
+			padding: 28rpx 0;
+			text-align: center;
+			font-weight: 400;
+			font-size: 32rpx;
+			border-radius: 24rpx;
+		}
+
+		.cancel {
+			background: #868686;
+		}
+
+		.apply {
+			background: #1e3ad6;
+		}
+	}
+}

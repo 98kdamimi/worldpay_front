@@ -1,0 +1,208 @@
+.worldpay-banner {
+	width: 360rpx;
+	height: 180rpx;
+	margin: 32rpx auto 0;
+	background: url('@/static/image/applyInfo2.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.worldpay-txt {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 24rpx;
+	color: #999999;
+	margin: 24rpx 32rpx;
+	text-align: center;
+}
+
+.worldpay-title {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 30rpx;
+	color: #ffffff;
+	margin: 0 32rpx;
+	text-align: center;
+}
+
+.top {
+	border-radius: 24rpx 24rpx 0rpx 0rpx;
+}
+
+.bottom {
+	border-radius: 0rpx 0rpx 24rpx 24rpx;
+}
+
+.title {
+	margin: 32rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 32rpx;
+	color: #ffffff;
+}
+
+.boxItem {
+	background: #16171a;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 38rpx 24rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #9191aa;
+	margin: 1rpx 32rpx;
+
+	.boxItem-txt {
+		color: #ffffff;
+	}
+}
+
+.select-box {
+	background: #16171a;
+	border-radius: 24rpx;
+	margin: 24rpx 32rpx 0;
+	padding: 24rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #ffffff;
+	.select-box-right {
+		display: flex;
+		justify-content: center;
+		color: #9191aa;
+		input {
+			text-align: right;
+			font-weight: 400;
+			font-size: 28rpx;
+		}
+	}
+}
+
+.idCard {
+	display: flex;
+	justify-content: space-between;
+	margin: 24rpx 32rpx 0;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #9191aa;
+	text-align: center;
+	.idImage {
+		width: 336rpx;
+		height: 224rpx;
+		margin-bottom: 12rpx;
+	}
+}
+
+.uploadBox {
+	margin: 0 32rpx;
+	width: 202rpx;
+	height: 202rpx;
+	position: relative;
+	.SvgIcon2 {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+}
+
+.prompt {
+	width: 686rpx;
+	padding: 32rpx 24rpx;
+	background: #16171a;
+	border-radius: 24rpx;
+	margin: 24rpx 32rpx 0;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 24rpx;
+	color: #9191aa;
+
+	.promptBox {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 24rpx;
+	}
+
+	.promptBox:last-child {
+		margin-bottom: 0rpx;
+	}
+
+	.prompt-txt {
+		color: #ffffff;
+	}
+}
+
+.button {
+	position: fixed;
+	left: 48rpx;
+	right: 48rpx;
+	bottom: 42rpx;
+	width: 654rpx;
+	height: 100rpx;
+	line-height: 100rpx;
+	text-align: center;
+	background: #1e3ad6;
+	border-radius: 50rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 36rpx;
+	color: #ffffff;
+	margin: 0 auto;
+}
+
+.button-placeholder {
+	height: 100rpx;
+	margin: 42rpx auto;
+}
+
+.applyModal {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	color: #ffffff;
+	> view {
+		border: 0 !important;
+	}
+
+	.applyModal-title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 500;
+		font-size: 36rpx;
+		column-gap: 24rpx;
+		.svg-icon {
+			/* #ifdef APP */
+			margin-top: 5rpx;
+			/* #endif */
+			/* #ifdef H5 */
+			margin-top: -5rpx;
+			/* #endif */
+		}
+	}
+	.applyModal-txt {
+		font-weight: 400;
+		font-size: 30rpx;
+		margin: 64rpx 0 50rpx;
+		text-align: center;
+	}
+	.applyModal-button {
+		width: 536rpx;
+		height: 88rpx;
+		line-height: 88rpx;
+		text-align: center;
+		background: #1e3ad6;
+		border-radius: 24rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 32rpx;
+		color: #ffffff;
+	}
+}

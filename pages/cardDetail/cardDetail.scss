@@ -1,0 +1,94 @@
+.top {
+	border-radius: 24rpx 24rpx 0rpx 0rpx;
+}
+.bottom {
+	border-radius: 0rpx 0rpx 24rpx 24rpx;
+}
+.box {
+	background: #16171a;
+	padding: 32rpx 24rpx;
+	margin: 24rpx 32rpx 0;
+	.box-title {
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 24rpx;
+		color: #9191aa;
+	}
+	.box-txt {
+		margin: 12rpx 0 0;
+		display: flex;
+		align-items: center;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 32rpx;
+		color: #ffffff;
+	}
+}
+.smallBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 2rpx 32rpx;
+	> view {
+		width: 342rpx;
+		height: 144rpx;
+		background: #16171a;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding: 0 24rpx;
+		.smallBox-title {
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 24rpx;
+			color: #9191aa;
+		}
+		.smallBox-txt {
+			margin-top: 6rpx;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 32rpx;
+			color: #ffffff;
+		}
+	}
+}
+
+.bottomBox {
+	background: #16171a;
+	padding: 32rpx 24rpx;
+	margin: 2rpx 32rpx 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 24rpx;
+	color: #9191aa;
+	.name {
+		margin-top: 12rpx;
+		font-size: 32rpx;
+		color: #ffffff;
+	}
+}
+.title {
+	margin: 32rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 32rpx;
+	color: #ffffff;
+}
+.boxItem {
+	background: #16171a;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 38rpx 24rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #9191aa;
+	margin: 1rpx 32rpx;
+	.boxItem-txt {
+		color: #ffffff;
+	}
+}

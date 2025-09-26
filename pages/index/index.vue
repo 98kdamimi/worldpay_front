@@ -70,7 +70,7 @@
 					</view>
 					<view>增值</view>
 				</view>
-				<view class="cardIconNull">
+				<view class="cardIconNull" @click="goToPage('/pages/cardApplication/cardApplication')">
 					<view class="cardIconNull-left">
 						<image src="@/static/image/index/cardIconNullicon.png" mode=""></image>
 					</view>
@@ -130,7 +130,8 @@
 				<view class="applyModal-txt">检测到您未持有任何卡片，请先申请卡片</view>
 				<view class="applyModal-button">
 					<view class="cancel" @click="closeApplyModal">取消</view>
-					<view class="apply">立即申请</view>
+					<view class="apply" @click="goToPage('/pages/cardApplication/cardApplication'),closeApplyModal()">
+						立即申请</view>
 				</view>
 			</view>
 		</up-modal>
