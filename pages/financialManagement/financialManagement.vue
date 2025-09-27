@@ -1,15 +1,15 @@
 <template>
 	<view class="viewBox" style="padding-bottom: 32rpx;">
-		<Navbar title="金融理财" :showBack="true">
+		<Navbar :title="$t('finance.title')" :showBack="true">
 			<template #right>
-				<view class="header-right">理财记录</view>
+				<view class="header-right">{{ $t('finance.records') }}</view>
 			</template>
 		</Navbar>
 		<view class="balance">
-			<view class="balance-title">总持仓</view>
+			<view class="balance-title">{{ $t('finance.totalHoldings') }}</view>
 			<view class="balance-txt">$ 88.00</view>
 			<view class="balance-right">
-				<view>持仓明细</view>
+				<view>{{ $t('finance.holdingsDetails') }}</view>
 				<!-- #ifdef APP -->
 				<SvgIcon name="right1" width="24" height="24" style="margin: 5rpx 0 0 8rpx;"></SvgIcon>
 				<!-- #endif -->
@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<view class="worldpay">
-			<view class="worldpay-txt">为你量身打造理财项目～</view>
+			<view class="worldpay-txt">{{ $t('finance.customizedProjects') }}</view>
 		</view>
 		<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
 			<view style="margin: 0 32rpx;">
@@ -34,42 +34,42 @@
 					<view class="box-top displayRow">
 						<SvgIcon name="icon1" width="88" height="88"></SvgIcon>
 						<view class="box-top-left">
-							<view>定期USDT理财</view>
+							<view>{{ $t('finance.fixedTermUsdt') }}</view>
 							<view class="box-top-left-button">
-								<view class="red">定期</view>
+								<view class="red">{{ $t('finance.fixedTerm') }}</view>
 								<view class="green" style="margin-left: 12rpx;">USDT</view>
 							</view>
 						</view>
 					</view>
 					<view class="box-top-right">
 						<view>88%</view>
-						<view class="box-top-right-txt">年利率</view>
+						<view class="box-top-right-txt">{{ $t('finance.annualRate') }}</view>
 					</view>
 				</view>
 				<view class="box bottom">
 					<view class="list-item-txt displayRow">
-						<view>产品状态</view>
-						<view class="list-item-txt-right">已上架</view>
+						<view>{{ $t('finance.productStatus') }}</view>
+						<view class="list-item-txt-right">{{ $t('finance.onSale') }}</view>
 					</view>
 					<view class="list-item-txt displayRow">
-						<view>起购金额</view>
+						<view>{{ $t('finance.minimumPurchase') }}</view>
 						<view class="list-item-txt-right">10 USDT</view>
 					</view>
 					<view class="list-item-txt displayRow">
-						<view>理财时间</view>
+						<view>{{ $t('finance.investmentPeriod') }}</view>
 						<view class="list-item-txt-right">7日</view>
 					</view>
-					<view class="item-button" @click="passwordShow = true">申购</view>
+					<view class="item-button" @click="passwordShow = true">{{ $t('finance.purchase') }}</view>
 				</view>
 			</view>
 		</view>
 		<up-popup :show="passwordShow" mode="bottom" bgColor='#141414'>
 			<view class="passwordPopup">
-				<view class="passwordPopup-title">安全验证</view>
+				<view class="passwordPopup-title">{{ $t('finance.securityVerification') }}</view>
 				<view class="passwordPopup-off" @click="passwordShow = false">
 					<SvgIcon name="off" width="56" height="56"></SvgIcon>
 				</view>
-				<view class="passwordPopup-txt">输入密码</view>
+				<view class="passwordPopup-txt">{{ $t('finance.enterPassword') }}</view>
 				<view class="passwordPopup-input">
 					<up-code-input :maxlength="6" :dot="true" borderColor='#ffffff' color='#ffffff'
 						@finish='finish()'></up-code-input>

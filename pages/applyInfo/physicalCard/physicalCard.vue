@@ -1,102 +1,104 @@
 <template>
 	<view class="viewBox">
 		<view class="worldpay-banner"></view>
-		<view class="worldpay-txt">申办卡别</view>
-		<view class="worldpay-title">Worldpay 消费卡</view>
+		<view class="worldpay-txt">{{ $t('home.applyCardType') }}</view>
+		<view class="worldpay-title">{{ $t('home.worldpayConsumerCard') }}</view>
 		<view>
-			<view class="title">持卡人信息</view>
+			<view class="title">{{ $t('home.cardholderInfo') }}</view>
 			<view class="boxItem top">
-				<view>手机号</view>
+				<view>{{ $t('home.phoneNumber') }}</view>
 				<view class="boxItem-txt">+862 55555744</view>
 			</view>
 			<view class="boxItem">
-				<view>邮箱</view>
+				<view>{{ $t('home.email') }}</view>
 				<view class="boxItem-txt">sili75833@gamil.com</view>
 			</view>
 			<!-- #ifdef H5 -->
 			<view style="width: 100vw;height: 1rpx;background: #0f0f0f;"></view>
 			<!-- #endif -->
 			<view class="boxItem bottom">
-				<view>证件号码</view>
+				<view>{{ $t('home.idNumber') }}</view>
 				<view class="boxItem-txt">24153411111111111111</view>
 			</view>
 		</view>
 		<view>
-			<view class="title">卡规则</view>
+			<view class="title">{{ $t('home.cardRules') }}</view>
 			<view class="boxItem top">
-				<view>卡最大余额</view>
+				<view>{{ $t('home.maxCardBalance') }}</view>
 				<view class="boxItem-txt">100.000.00</view>
 			</view>
 			<view class="boxItem bottom">
-				<view>月服务费</view>
+				<view>{{ $t('home.monthlyServiceFee') }}</view>
 				<view class="boxItem-txt">1.00</view>
 			</view>
 		</view>
 		<view>
-			<view class="title">邮寄地址（卡片收件地址）</view>
+			<view class="title">{{ $t('home.mailingAddress') }}</view>
 			<view class="select-box">
-				<view>国家</view>
+				<view>{{ $t('home.country') }}</view>
 				<view class="select-box-right" @click="addressShow = true">
-					<view>请选择国家</view>
+					<view>{{ $t('home.selectCountry') }}</view>
 					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
 				</view>
 			</view>
 			<view class="select-box">
-				<view>省</view>
+				<view>{{ $t('home.province') }}</view>
 				<view class="select-box-right" @click="addressShow = true">
-					<view>请选择省份</view>
+					<view>{{ $t('home.selectProvince') }}</view>
 					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
 				</view>
 			</view>
 			<view class="select-box">
-				<view>市</view>
+				<view>{{ $t('home.city') }}</view>
 				<view class="select-box-right" @click="addressShow = true">
-					<view>请选择市区</view>
+					<view>{{ $t('home.selectCity') }}</view>
 					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
 				</view>
 			</view>
 			<view class="select-box">
-				<view>详细地址</view>
+				<view>{{ $t('home.detailedAddress') }}</view>
 				<view class="select-box-right">
-					<input type="text" placeholder="请输入详细地址" placeholder-style="color: #9191aa;" />
+					<input type="text" :placeholder="$t('home.enterDetailedAddress')"
+						placeholder-style="color: #9191aa;" />
 				</view>
 			</view>
 			<view class="select-box">
-				<view>邮政编码</view>
+				<view>{{ $t('home.postalCode') }}</view>
 				<view class="select-box-right">
-					<input type="text" placeholder="请输入邮政编码" placeholder-style="color: #9191aa;" />
+					<input type="text" :placeholder="$t('home.enterPostalCode')" placeholder-style="color: #9191aa;" />
 				</view>
 			</view>
 			<view class="select-box">
-				<view>收件人电话</view>
+				<view>{{ $t('home.recipientPhone') }}</view>
 				<view class="select-box-right">
-					<input type="text" placeholder="请输入收件人电话" placeholder-style="color: #9191aa;" />
+					<input type="text" :placeholder="$t('home.enterRecipientPhone')"
+						placeholder-style="color: #9191aa;" />
 				</view>
 			</view>
 		</view>
 		<view>
-			<view class="title">身份信息</view>
+			<view class="title">{{ $t('home.identityInfo') }}</view>
 			<view class="select-box">
-				<view>身份证件类型</view>
+				<view>{{ $t('home.idType') }}</view>
 				<view class="select-box-right" @click="addressShow = true">
-					<view>请选择类型</view>
+					<view>{{ $t('home.selectIdType') }}</view>
 					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
 				</view>
 			</view>
 			<view class="select-box">
-				<view>身份证号</view>
+				<view>{{ $t('home.idNumber') }}</view>
 				<view class="select-box-right">
-					<input type="text" placeholder="请输入身份证号" placeholder-style="color: #9191aa;" />
+					<input type="text" :placeholder="$t('home.enterIdNumber')" placeholder-style="color: #9191aa;" />
 				</view>
 			</view>
 			<view class="select-box">
-				<view>身份证有效日期</view>
+				<view>{{ $t('home.idValidDate') }}</view>
 				<view class="select-box-right" @click="addressShow = true">
-					<view>请选择日期</view>
+					<view>{{ $t('home.selectDate') }}</view>
 					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
 				</view>
 			</view>
-			<view class="title">上传身份证信息</view>
+			<view class="title">{{ $t('home.uploadIdInfo') }}</view>
 			<view class="idCard">
 				<view>
 					<view class="idImage">
@@ -104,7 +106,7 @@
 							<SvgIcon name="idcard2" width="336" height="224"></SvgIcon>
 						</up-upload>
 					</view>
-					<view>证件正面</view>
+					<view>{{ $t('home.idFront') }}</view>
 				</view>
 				<view>
 					<view class="idImage">
@@ -112,10 +114,10 @@
 							<SvgIcon name="idcard1" width="336" height="224"></SvgIcon>
 						</up-upload>
 					</view>
-					<view>证件反面</view>
+					<view>{{ $t('home.idBack') }}</view>
 				</view>
 			</view>
-			<view class="title">手持身份证图像</view>
+			<view class="title">{{ $t('home.holdIdImage') }}</view>
 			<view class="uploadBox">
 				<SvgIcon name="upload" width="202" height="202" class="SvgIcon1"></SvgIcon>
 				<SvgIcon name="uploadOff" width="36" height="36" class="SvgIcon2"></SvgIcon>
@@ -123,27 +125,27 @@
 		</view>
 		<view class="prompt">
 			<view class="promptBox">
-				<view>开卡费</view>
+				<view>{{ $t('home.cardOpeningFee') }}</view>
 				<view class="prompt-txt">3.00 USDT</view>
 			</view>
 			<view class="promptBox">
-				<view>预存费</view>
+				<view>{{ $t('home.prepaymentFee') }}</view>
 				<view class="prompt-txt">20.00 USDT</view>
 			</view>
 			<view class="promptBox">
-				<view>月服务费</view>
+				<view>{{ $t('home.monthlyServiceFee') }}</view>
 				<view class="prompt-txt">1.00 USDT</view>
 			</view>
 			<view class="promptBox">
-				<view class="prompt-txt">支付数量</view>
+				<view class="prompt-txt">{{ $t('home.paymentAmount') }}</view>
 				<view style="color: #FFE330;">24.00 USDT</view>
 			</view>
 			<view class="promptBox">
-				<view class="prompt-txt">邮费</view>
+				<view class="prompt-txt">{{ $t('home.shippingFee') }}</view>
 				<view style="color: #FFE330;">0.00 USDT</view>
 			</view>
 		</view>
-		<view class="button" @click="applyShow = true">确认申办</view>
+		<view class="button" @click="applyShow = true">{{ $t('home.confirmApplication') }}</view>
 		<view class="button-placeholder"></view>
 		<view>
 			<up-picker :show="addressShow" :columns="columns" @cancel="addressShow = false"
@@ -153,11 +155,10 @@
 			<view class="applyModal">
 				<view class="applyModal-title">
 					<SvgIcon class="svg-icon" name="hint" width="36" height="36"></SvgIcon>
-					<view>提示</view>
+					<view>{{ $t('home.hint') }}</view>
 				</view>
-				<view class="applyModal-txt">申请卡片需要大约十几分钟，您可以返回
-					其他页面进行操作，稍后会给您消息通知</view>
-				<view class="applyModal-button" @click="applyShow = false">我知道了</view>
+				<view class="applyModal-txt">{{ $t('home.cardApplicationTip') }}</view>
+				<view class="applyModal-button" @click="applyShow = false">{{ $t('home.iKnow') }}</view>
 			</view>
 		</up-modal>
 	</view>
@@ -179,6 +180,7 @@
 	const fileList1 = ref([]);
 	const fileList2 = ref([]);
 
+	// 保留原有注释代码，不改动逻辑
 	// // 删除图片
 	// const deletePic = (event) => {
 	// 	fileList1.value.splice(event.index, 1);

@@ -20,7 +20,7 @@
 				<view class="time">2025-07-04</view>
 				<view class="box">
 					<view>标题最多显示一行超出部标题最多显示一行超出部分…</view>
-					<view class="box-cont">活动简介：最多显示一行超出部分显示点点点带点…</view>
+					<view class="box-cont">{{ $t('message.activityIntro') }}</view>
 					<view class="box-time">2025-07-04</view>
 				</view>
 			</view>
@@ -29,7 +29,7 @@
 			<view class="emtyIcon">
 				<image src="@/static/image/index/emty.png" alt="" mode="widthFix" />
 			</view>
-			<view>暂无数据</view>
+			<view>{{ $t('message.empty') }}</view>
 		</view>
 	</view>
 </template>

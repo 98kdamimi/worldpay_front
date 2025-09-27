@@ -6,9 +6,9 @@
 		<view class="banner">
 			<image src="@/static/image/welcome.png" mode="aspectFill"></image>
 		</view>
-		<view class="title">欢迎使用 Worldpay</view>
-		<view class="title-txt">— 让我们去体验快捷、安全、便利的支付方式 —</view>
-		<view class="button">立即体验</view>
+		<view class="title">{{ $t('auth.welcome') }}</view>
+		<view class="title-txt">{{ $t('auth.tips') }}</view>
+		<view class="button">{{ $t('auth.tryItNow') }}</view>
 	</view>
 </template>
 

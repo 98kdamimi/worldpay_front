@@ -1,6 +1,6 @@
 <template>
   <view class="viewBox">
-    <Navbar title="交易记录" :showBack="true"></Navbar>
+    <Navbar :title="$t('transactionRecords.title')" :showBack="true"></Navbar>
     <!-- 交易记录 -->
     <view class="transactionRecords">
       <!-- 吸顶标题 -->

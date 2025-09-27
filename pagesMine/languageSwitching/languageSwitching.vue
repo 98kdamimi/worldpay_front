@@ -1,6 +1,6 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="语言切换" :showBack="true"></Navbar>
+		<Navbar :title="$t('languageSwitch.title')" :showBack="true"></Navbar>
 		<view class="box">
 			<view class="box-item" v-for="(item, index) in navList" :key="index">{{ item.name }}</view>
 		</view>

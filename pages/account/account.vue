@@ -1,21 +1,22 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="账户" :showBack="true"></Navbar>
-		<view class="title">*支付宝绑定的手机号</view>
+		<Navbar :title="$t('home.accountTitle')" :showBack="true"></Navbar>
+		<view class="title">{{ $t('home.alipayPhoneTitle') }}</view>
 		<view class="inputBox">
-			<input type="text" placeholder="请输入支付宝绑定的手机号" placeholder-style="color: #9191aa;" />
+			<input type="text" :placeholder="$t('home.alipayPhonePlaceholder')" placeholder-style="color: #9191aa;" />
 		</view>
-		<view class="title">*收款人姓名</view>
+		<view class="title">{{ $t('home.payeeNameTitle') }}</view>
 		<view class="inputBox">
-			<input type="text" placeholder="请输入收款人姓名" placeholder-style="color: #9191aa;" />
+			<input type="text" :placeholder="$t('home.payeeNamePlaceholder')" placeholder-style="color: #9191aa;" />
 		</view>
-		<view class="title">*转账金额</view>
+		<view class="title">{{ $t('home.transferAmountTitle') }}</view>
 		<view class="inputBox">
-			<input type="text" placeholder="请输入转账金额" placeholder-style="color: #9191aa;" />
+			<input type="text" :placeholder="$t('home.transferAmountPlaceholder')"
+				placeholder-style="color: #9191aa;" />
 			<span>USD</span>
 		</view>
-		<view class="title-txt">单笔固定手续费：8.00USD +2%</view>
-		<view class="button">锁汇</view>
+		<view class="title-txt">{{ $t('home.serviceFeeDesc') }}</view>
+		<view class="button">{{ $t('home.lockExchangeBtn') }}</view>
 		<view class="button-placeholder"></view>
 	</view>
 </template>

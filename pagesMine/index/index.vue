@@ -10,8 +10,8 @@
 			<SvgIcon name="avatar" width="160" height="160"></SvgIcon>
 			<view class="info-right">
 				<view>188 **** 8888</view>
-				<view class="info-txt">UID：888888</view>
-				<view class="info-txt">邀请码：88888</view>
+				<view class="info-txt">{{ $t('mine.uidLabel') }}888888</view>
+				<view class="info-txt">{{ $t('mine.invitationCode') }}88888</view>
 			</view>
 		</view>
 		<view class="kingKong">
@@ -19,25 +19,25 @@
 				<view>
 					<SvgIcon name="kingKong5" width="100" height="100" style="margin-bottom: 32rpx;"></SvgIcon>
 				</view>
-				<view>理财订单</view>
+				<view>{{ $t('mine.financialOrders') }}</view>
 			</view>
 			<view @click="goToPage('/pagesMine/logisticsInformation/logisticsInformation')">
 				<view>
 					<SvgIcon name="kingKong6" width="100" height="100" style="margin-bottom: 32rpx;"></SvgIcon>
 				</view>
-				<view>物流信息</view>
+				<view>{{ $t('mine.logisticsInfo') }}</view>
 			</view>
 			<view @click="goToPage('/pagesMine/transactionRecords/transactionRecords')">
 				<view>
 					<SvgIcon name="kingKong7" width="100" height="100" style="margin-bottom: 32rpx;"></SvgIcon>
 				</view>
-				<view>交易记录</view>
+				<view>{{ $t('mine.transactionRecords') }}</view>
 			</view>
 			<view @click="goToPage('/pagesMine/personalInformation/personalInformation')">
 				<view>
 					<SvgIcon name="kingKong8" width="100" height="100" style="margin-bottom: 32rpx;"></SvgIcon>
 				</view>
-				<view>个人信息</view>
+				<view>{{ $t('mine.personalInfo') }}</view>
 			</view>
 		</view>
 		<view>

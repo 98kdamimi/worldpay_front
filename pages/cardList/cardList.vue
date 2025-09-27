@@ -1,12 +1,15 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="卡片列表" :showBack="true">
+		<!-- 导航栏标题添加多语言 -->
+		<Navbar :title="$t('cardList.title')" :showBack="true">
 			<template #right>
-				<view class="header-right">申请记录</view>
+				<!-- 右上角“申请记录”添加多语言 -->
+				<view class="header-right">{{ $t('cardList.applicationRecords') }}</view>
 			</template>
 		</Navbar>
 		<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
 			<view style="margin: 0 32rpx;">
+				<!-- Tabs列表：使用多语言变量定义选项（保留原list1命名，仅修改内容） -->
 				<up-tabs :list="list1" @click="click" lineColor='#ffffff'
 					:activeStyle="{ color: '#ffffff',fontWeight: '500',fontSize: '30rpx' }"
 					:inactiveStyle="{ color: '#999999', fontWeight: '400',fontSize: '30rpx' }"></up-tabs>
@@ -20,12 +23,12 @@
 		<view class="content" v-if="active == 1">
 			<Card type="3"></Card>
 		</view>
+		<!-- 底部“新增卡片”按钮添加多语言 -->
 		<view class="button">
-			<view>新增卡片</view>
+			<view>{{ $t('cardList.addNewCard') }}</view>
 		</view>
 	</view>
 </template>
-
 <script setup>
 	import {
 		ref,

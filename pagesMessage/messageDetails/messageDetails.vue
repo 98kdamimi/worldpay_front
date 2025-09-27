@@ -1,6 +1,6 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="详情" :showBack="true"></Navbar>
+		<Navbar :title="$t('details.title')" :showBack="true"></Navbar>
 		<view class="time">2025-07-04</view>
 		<view class="up-content">
 			<up-parse :content="content"></up-parse>

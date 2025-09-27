@@ -1,8 +1,8 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="增值" :showBack="true">
+		<Navbar :title="$t('topUp.title')" :showBack="true">
 			<template #right>
-				<SvgIcon name="kefu" width="40" height="40"/>
+				<SvgIcon name="kefu" width="40" height="40" />
 			</template>
 		</Navbar>
 		<view class="card">
@@ -14,14 +14,14 @@
 			</view>
 		</view>
 		<view class="bank">
-			<view>银行名称</view>
+			<view>{{ $t('topUp.bankName') }}</view>
 			<view class="bankRight">
-				<view>星展银行(香港)有限公司</view>
-				<view class="txt">DBs Bank(Hong Kong)Limted(016)</view>
+				<view>{{ $t('topUp.dbsBank') }}</view>
+				<view class="txt">{{ $t('topUp.dbsBankEn') }}</view>
 			</view>
 		</view>
 		<view class="bank">
-			<view>账号电话</view>
+			<view>{{ $t('topUp.accountNumber') }}</view>
 			<view class="bankRight bankRightRow">
 				<view>478-000674187</view>
 				<up-copy content="478-000674187">
@@ -31,23 +31,20 @@
 			</view>
 		</view>
 		<view class="bank lastBank">
-			<view>账户地址</view>
-			<view class="bankRight">UPEEDPAY TREASRE GLOBAL FINTECH LIMTED</view>
+			<view>{{ $t('topUp.accountAddress') }}</view>
+			<view class="bankRight">{{ $t('topUp.accountAddressEn') }}</view>
 		</view>
-		<view class="txt-title">充值方式</view>
+		<view class="txt-title">{{ $t('topUp.rechargeMethod') }}</view>
 		<view class="prompt-text">
-			一.使用银行的手机程序或者掌上银行或者到银行，将款填入以上
-			银行账户
+			{{ $t('topUp.rechargeStep1') }}
 		</view>
 		<view class="prompt-text">
-			二.使用银行的手机程序或者掌上银行或者到银行，将款填入以上
-			银行账户使用银行的手机程序或者掌上银行或者到银行，将款填
-			入以上银行账户
+			{{ $t('topUp.rechargeStep2') }}
 		</view>
 		<view class="prompt-text red">
-			提示：充值手续费为金额的2%，最低收费为20元
+			{{ $t('topUp.rechargeFeeTip') }}
 		</view>
-		<view class="button">已完成充值</view>
+		<view class="button">{{ $t('topUp.completeRecharge') }}</view>
 	</view>
 </template>
 

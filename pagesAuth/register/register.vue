@@ -9,14 +9,18 @@
 			</SvgIcon>
 		</view>
 		<view class="box">
-			<view class="box-title">账号注册</view>
+			<!-- 多语言：账号注册 -->
+			<view class="box-title">{{ $t('auth.registerTitle') }}</view>
 			<view class="input-box">
 				<SvgIcon name="svg1" width="40" height="40"></SvgIcon>
-				<input type="text" placeholder="请输入邮箱账号" placeholder-style="color: #8f8f8f;" />
+				<!-- 复用原有多语言：请输入邮箱账号 -->
+				<input type="text" :placeholder="$t('auth.enterEmail')" placeholder-style="color: #8f8f8f;" />
 			</view>
 			<view class="input-box">
 				<SvgIcon name="svg2" width="40" height="40"></SvgIcon>
-				<input :type="eyeType1 ? 'password' : 'text'" placeholder="请输入密码" placeholder-style="color: #8f8f8f;" />
+				<!-- 复用原有多语言：请输入密码 -->
+				<input :type="eyeType1 ? 'password' : 'text'" :placeholder="$t('auth.enterPassword')"
+					placeholder-style="color: #8f8f8f;" />
 				<view @click="eyeType1 = !eyeType1">
 					<SvgIcon name="svg5" width="36" height="36" v-if="eyeType1"></SvgIcon>
 					<SvgIcon name="svg4" width="36" height="36" v-else></SvgIcon>
@@ -24,7 +28,8 @@
 			</view>
 			<view class="input-box">
 				<SvgIcon name="svg2" width="40" height="40"></SvgIcon>
-				<input :type="eyeType2 ? 'password' : 'text'" placeholder="请再次输入密码"
+				<!-- 多语言：请再次输入密码 -->
+				<input :type="eyeType2 ? 'password' : 'text'" :placeholder="$t('auth.reEnterPassword')"
 					placeholder-style="color: #8f8f8f;" />
 				<view @click="eyeType2 = !eyeType2">
 					<SvgIcon name="svg5" width="36" height="36" v-if="eyeType2"></SvgIcon>
@@ -34,16 +39,19 @@
 			<view class="small-input">
 				<view class="input-box">
 					<SvgIcon name="svg2" width="40" height="40"></SvgIcon>
-					<input :type="eyeType2 ? 'password' : 'text'" placeholder="请输入验证码"
+					<!-- 多语言：请输入验证码 -->
+					<input :type="eyeType2 ? 'password' : 'text'" :placeholder="$t('auth.enterVerifyCode')"
 						placeholder-style="color: #8f8f8f;" />
 				</view>
 				<view class="small-input-button"
 					:style="{ background: isCounting ? '#95969D' : '', color: isCounting ? '#fff' : '' }"
 					@click="sendCode">
-					{{ isCounting ? count + 's' : '发送' }}
+					<!-- 多语言：发送 / 倒计时（含秒单位） -->
+					{{ isCounting ? count + $t('auth.secondUnit') : $t('auth.sendCode') }}
 				</view>
 			</view>
-			<view class="loginBtton" @click="applyShow = true">登录</view>
+			<!-- 复用原有多语言：登录 -->
+			<view class="loginBtton">{{ $t('auth.registerButton') }}</view>
 			<view class="xieyi">
 				<view @click="xyType = !xyType">
 					<!-- #ifdef H5 -->
@@ -58,7 +66,8 @@
 					<!-- #endif -->
 				</view>
 				<view>
-					我已阅读并同意<span>《用户协议》</span><span>《隐私协议》</span>
+					<!-- 复用原有多语言：同意协议相关 -->
+					{{ $t('auth.agreeTerms') }}<span>{{ $t('auth.userAgreement') }}</span><span>{{ $t('auth.privacyPolicy') }}</span>
 				</view>
 			</view>
 		</view>
@@ -74,7 +83,7 @@
 	const eyeType2 = ref(true)
 	const xyType = ref(true)
 
-	// 倒计时相关
+	// 倒计时相关（原有逻辑不变）
 	const count = ref(60)
 	const isCounting = ref(false)
 	let timer = null
@@ -106,5 +115,5 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "./register.scss"
+	@import "./register.scss";
 </style>

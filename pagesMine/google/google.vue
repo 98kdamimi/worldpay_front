@@ -1,10 +1,10 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="谷歌验证码" :showBack="true"></Navbar>
+		<Navbar :title="$t('googleAuth.title')" :showBack="true"></Navbar>
 		<view>
-			<view class="title">谷歌验证码</view>
+			<view class="title">{{ $t('googleAuth.codeLabel') }}</view>
 			<view class="inputBox">
-				<input :type="passWordType ? 'password' : 'text'" placeholder="暂无谷歌验证码"
+				<input :type="passWordType ? 'password' : 'text'" :placeholder="$t('googleAuth.noCodePlaceholder')"
 					placeholder-style="color: #9191aa;" disabled />
 				<view @click="passWordType = !passWordType">
 					<SvgIcon name="eye3" width="36" height="36" v-if="passWordType"></SvgIcon>
@@ -12,10 +12,10 @@
 				</view>
 			</view>
 		</view>
-		<view class="button" v-if="isCode">申请验证码</view>
+		<view class="button" v-if="isCode">{{ $t('googleAuth.applyCode') }}</view>
 		<view class="button" v-else>
 			<up-copy content="uview-plus is great !">
-				<view>复制验证码</view>
+				<view>{{ $t('googleAuth.copyCode') }}</view>
 			</up-copy>
 		</view>
 		<view class="button-placeholder"></view>

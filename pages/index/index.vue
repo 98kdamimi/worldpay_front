@@ -16,9 +16,9 @@
 		<!-- 资产 -->
 		<view class="assets">
 			<view class="assets-title">
-				<view>卡片总资产</view>
+				<view>{{ $t('home.assetsTitle') }}</view>
 				<view class="assets-select">
-					<view>USD</view>
+					<view>{{ $t('home.currencyUsd') }}</view>
 					<view class="select-icon">
 						<image src="@/static/image/index/selectBottom.png" alt="" mode="widthFix" />
 					</view>
@@ -31,7 +31,7 @@
 		<view v-if="cardList && cardList.length">
 			<view class="cardDisplay cardDisplayBg">
 				<view class="cardDisplay-cardist" @click="openCardList()">
-					<view>卡片列表</view>
+					<view>{{ $t('home.cardList') }}</view>
 					<view class="cardDisplay-cardist-icon">
 						<image src="@/static/image/index/selectRight.png" alt="" mode="widthFix" />
 					</view>
@@ -40,13 +40,13 @@
 			<!-- 增资 钱包 卡片申请入口 -->
 			<view class="wallet wallet1">
 				<view class="valueAddedIcon" @click="goToPage('/pages/topUp/index')">
-					<span>增值</span>
+					<span>{{ $t('home.valueAdded') }}</span>
 				</view>
 				<view class="walletIcon">
-					<span>钱包</span>
+					<span>{{ $t('home.wallet') }}</span>
 				</view>
 				<view class="cardIcon">
-					<span>卡片申请</span>
+					<span>{{ $t('home.cardApplication') }}</span>
 				</view>
 			</view>
 		</view>
@@ -54,7 +54,7 @@
 		<view v-else>
 			<view class="cardDisplay cardDisplayBgNull">
 				<view class="cardDisplay-cardist" @click="openApplyModal()">
-					<view>卡片申请</view>
+					<view>{{ $t('home.cardApplication') }}</view>
 					<view class="cardDisplay-cardist-icon">
 						<image src="@/static/image/index/selectRight.png" alt="" mode="widthFix" />
 					</view>
@@ -65,13 +65,13 @@
 					<view class="valueAddedIconNull-left">
 						<image src="@/static/image/index/valueAddedIconNullicon.png" mode=""></image>
 					</view>
-					<view>增值</view>
+					<view>{{ $t('home.valueAdded') }}</view>
 				</view>
 				<view class="cardIconNull" @click="goToPage('/pages/cardApplication/cardApplication')">
 					<view class="cardIconNull-left">
 						<image src="@/static/image/index/cardIconNullicon.png" mode=""></image>
 					</view>
-					<view>卡片申请</view>
+					<view>{{ $t('home.cardApplication') }}</view>
 				</view>
 			</view>
 		</view>
@@ -81,7 +81,7 @@
 				<view class="introduce-left-icon">
 					<image src="@/static/image/index/logoTitle.png" alt="" mode="widthFix" />
 				</view>
-				<view class="introduce-left-txt">最受欢迎的一站式交易工具～</view>
+				<view class="introduce-left-txt">{{ $t('home.popularTool') }}</view>
 			</view>
 			<view class="introduce-right">
 				<image src="@/static/image/index/worldpay.png" alt="" mode="widthFix" />
@@ -93,8 +93,8 @@
 			<!-- 	<up-sticky :offset-top="notchHeight"> -->
 			<view class="stickyContent" :style="{ top: notchHeight + 'px' }" id="transactionRecords">
 				<view class="transactionRecords-title">
-					<view>交易记录</view>
-					<view class="transactionRecords-title-right">全部</view>
+					<view>{{ $t('home.transactionRecords') }}</view>
+					<view class="transactionRecords-title-right">{{ $t('home.all') }}</view>
 				</view>
 			</view>
 
@@ -110,7 +110,7 @@
 					<view class="closure" @click="closeCardList">
 						<image src="@/static/image/index/closure.png" mode=""></image>
 					</view>
-					<view>选择卡片</view>
+					<view>{{ $t('home.selectCard') }}</view>
 					<view class="closure"></view>
 				</view>
 				<view class="cardpopup-list">
@@ -125,12 +125,14 @@
 			<view class="applyModal">
 				<view class="applyModal-title">
 					<SvgIcon class="svg-icon" name="hint" width="36" height="36"></SvgIcon>
-					<view>提示</view>
+					<view>{{ $t('home.homeHint') }}</view>
 				</view>
-				<view class="applyModal-txt">检测到您未持有任何卡片，请先申请卡片</view>
+				<view class="applyModal-txt">{{ $t('home.noCardDetected') }}</view>
 				<view class="applyModal-button">
-					<view class="cancel" @click="closeApplyModal">取消</view>
-					<view class="apply" @click="goToPage('/pages/cardApplication/cardApplication'), closeApplyModal()">立即申请</view>
+					<view class="cancel" @click="closeApplyModal">{{ $t('home.cancel') }}</view>
+					<view class="apply" @click="goToPage('/pages/cardApplication/cardApplication'),closeApplyModal()">
+						{{ $t('home.applyNow') }}
+					</view>
 				</view>
 			</view>
 		</up-modal>

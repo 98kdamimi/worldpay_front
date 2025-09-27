@@ -1,40 +1,40 @@
 <template>
 	<view class="viewBox">
 		<view class="worldpay-banner"></view>
-		<view class="worldpay-txt">申办卡别</view>
-		<view class="worldpay-title">Worldpay 消费卡</view>
+		<view class="worldpay-txt">{{ $t('home.applyCardType') }}</view>
+		<view class="worldpay-title">{{ $t('home.worldpayConsumerCard') }}</view>
 		<view>
-			<view class="title">持卡人信息</view>
+			<view class="title">{{ $t('home.cardholderInfo') }}</view>
 			<view class="boxItem top">
-				<view>手机号</view>
+				<view>{{ $t('home.phoneNumber') }}</view>
 				<view class="boxItem-txt">+862 55555744</view>
 			</view>
 			<view class="boxItem">
-				<view>邮箱</view>
+				<view>{{ $t('home.email') }}</view>
 				<view class="boxItem-txt">sili75833@gamil.com</view>
 			</view>
 			<!-- #ifdef H5 -->
 			<view style="width: 100vw;height: 1rpx;background: #0f0f0f;"></view>
 			<!-- #endif -->
 			<view class="boxItem bottom">
-				<view>证件号码</view>
+				<view>{{ $t('home.idNumber') }}</view>
 				<view class="boxItem-txt">24153411111111111111</view>
 			</view>
 		</view>
 		<view>
-			<view class="title">卡规则</view>
+			<view class="title">{{ $t('home.cardRules') }}</view>
 			<view class="boxItem top">
-				<view>卡最大余额</view>
+				<view>{{ $t('home.maxCardBalance') }}</view>
 				<view class="boxItem-txt">100.000.00</view>
 			</view>
 			<view class="boxItem bottom">
-				<view>月服务费</view>
+				<view>{{ $t('home.monthlyServiceFee') }}</view>
 				<view class="boxItem-txt">1.00</view>
 			</view>
 		</view>
 		<!-- 虚拟卡 -->
 		<view>
-			<view class="title">申办费用</view>
+			<view class="title">{{ $t('home.applicationFee') }}</view>
 			<view class="boxItem top" style="padding: 24rpx;">
 				<view style="display: flex; align-items: center;">
 					<SvgIcon name="icon1" width="64" height="64"></SvgIcon>
@@ -45,7 +45,7 @@
 			<view style="width: 100vw;height: 1rpx;background: #0f0f0f;"></view>
 			<!-- #endif -->
 			<view class="boxItem bottom">
-				<view>可用</view>
+				<view>{{ $t('home.availableBalance') }}</view>
 				<view class="boxItem-txt" style="display: flex;">
 					<view style="margin-right: 12rpx;">6.00USDT</view>
 					<SvgIcon name="add" width="36" height="36"></SvgIcon>
@@ -54,35 +54,34 @@
 		</view>
 		<view class="prompt">
 			<view class="promptBox">
-				<view>开卡费</view>
+				<view>{{ $t('home.cardOpeningFee') }}</view>
 				<view class="prompt-txt">3.00 USDT</view>
 			</view>
 			<view class="promptBox">
-				<view>预存费</view>
+				<view>{{ $t('home.prepaymentFee') }}</view>
 				<view class="prompt-txt">20.00 USDT</view>
 			</view>
 			<view class="promptBox">
-				<view>月服务费</view>
+				<view>{{ $t('home.monthlyServiceFee') }}</view>
 				<view class="prompt-txt">1.00 USDT</view>
 			</view>
 			<view class="promptBox">
-				<view class="prompt-txt">支付数量</view>
+				<view class="prompt-txt">{{ $t('home.paymentAmount') }}</view>
 				<view style="color: #FFE330;">24.00 USDT</view>
 			</view>
 		</view>
-		<view class="button" @click="applyShow = true">确认申办</view>
+		<view class="button" @click="applyShow = true">{{ $t('home.confirmApplication') }}</view>
 		<view class="button-placeholder"></view>
 		<up-modal :show="applyShow" :showConfirmButton='false' bgColor='#141414'>
 			<view class="applyModal">
 				<view class="applyModal-title">
 					<SvgIcon class="svg-icon" name="hint" width="36" height="36"></SvgIcon>
-					<view>提示</view>
+					<view>{{ $t('home.hint') }}</view>
 				</view>
-				<view class="applyModal-txt">钱包余额不足，请先给钱包充值余额或
-					银行卡充值</view>
+				<view class="applyModal-txt">{{ $t('home.insufficientBalanceTip') }}</view>
 				<view class="applyModal-button">
-					<view class="cancel" @click="applyShow = false">银行卡充值</view>
-					<view class="apply" @click="applyShow = false">钱包充值</view>
+					<view class="cancel" @click="applyShow = false">{{ $t('home.bankCardRecharge') }}</view>
+					<view class="apply" @click="applyShow = false">{{ $t('home.walletRecharge') }}</view>
 				</view>
 			</view>
 		</up-modal>

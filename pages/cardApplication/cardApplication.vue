@@ -1,92 +1,106 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="卡片申请" :showBack="true"></Navbar>
+		<!-- 导航栏：标题多语言 -->
+		<Navbar :title="$t('cardApply.title')" :showBack="true"></Navbar>
+
+		<!-- 粘性Tabs：选项多语言 -->
 		<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
 			<view style="margin: 0 32rpx;">
-				<up-tabs :list="list1" @click="click" lineColor='#ffffff'
+				<up-tabs :list="tabList" @click="click" lineColor='#ffffff'
 					:activeStyle="{ color: '#ffffff',fontWeight: '500',fontSize: '30rpx' }"
 					:inactiveStyle="{ color: '#999999', fontWeight: '400',fontSize: '30rpx' }"></up-tabs>
 			</view>
 		</up-sticky>
+
+		<!-- 卡片轮播 -->
 		<view class="swiper-Box">
 			<CardSwiper :images="imgList"></CardSwiper>
 		</view>
+
+		<!-- 虚拟卡优势：文本多语言 -->
 		<view class="advantages" v-if="active == 0">
 			<view>
 				<view>
 					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>支持线上支付</view>
+					<view>{{ $t('cardApply.advantage.onlinePayment') }}</view>
 				</view>
 				<view>
 					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>快速卡片申请</view>
+					<view>{{ $t('cardApply.advantage.quickApplication') }}</view>
 				</view>
 			</view>
 			<view style="margin-top: 32rpx;">
 				<view>
 					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>快速充值</view>
+					<view>{{ $t('cardApply.advantage.quickRecharge') }}</view>
 				</view>
 				<view>
 					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>额度灵活</view>
+					<view>{{ $t('cardApply.advantage.flexibleLimit') }}</view>
 				</view>
 			</view>
 		</view>
+
+		<!-- 实体卡优势：文本多语言 -->
 		<view class="advantages" v-if="active == 1">
 			<view>
 				<view>
 					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>支持线上支付</view>
+					<view>{{ $t('cardApply.advantage.onlinePayment') }}</view>
 				</view>
 				<view>
 					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>快速卡片申请</view>
-				</view>
-			</view>
-			<view style="margin-top: 32rpx;">
-				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>快速充值</view>
-				</view>
-				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>额度灵活</view>
+					<view>{{ $t('cardApply.advantage.quickApplication') }}</view>
 				</view>
 			</view>
 			<view style="margin-top: 32rpx;">
 				<view>
 					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>快速取现</view>
+					<view>{{ $t('cardApply.advantage.quickRecharge') }}</view>
 				</view>
 				<view>
 					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					<view>卡片邮寄到家</view>
+					<view>{{ $t('cardApply.advantage.flexibleLimit') }}</view>
+				</view>
+			</view>
+			<view style="margin-top: 32rpx;">
+				<view>
+					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view>{{ $t('cardApply.advantage.quickWithdrawal') }}</view>
+				</view>
+				<view>
+					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view>{{ $t('cardApply.advantage.cardDelivery') }}</view>
 				</view>
 			</view>
 		</view>
-		<view class="rule-title">卡规则</view>
+
+		<!-- 卡规则区域：标题+内容多语言 -->
+		<view class="rule-title">{{ $t('home.cardRules') }}</view>
 		<view class="rule-box top">
-			<view>开卡费</view>
+			<view>{{ $t('home.cardOpeningFee') }}</view>
 			<view class="rule-box-txt">3.00</view>
 		</view>
 		<view class="rule-box">
-			<view>预存费</view>
+			<view>{{ $t('home.prepaymentFee') }}</view>
 			<view class="rule-box-txt">20.00</view>
 		</view>
 		<view class="rule-box bottom">
-			<view>月服务费</view>
+			<view>{{ $t('home.monthlyServiceFee') }}</view>
 			<view class="rule-box-txt">1.00</view>
 		</view>
+
+		<!-- 提示文本：多语言拆分（避免重复键） -->
 		<view class="hint-txt">
-			<span>Worldpay消费卡：具备广泛的消费场景，一卡在手
-				全球无忧！</span>
-			<span class="span-txt">1.适用在 淘宝 京东 拼多多 亚马逊 等各大电商平台、旅游平
-				台、日常生活类APP绑定使用。</span>
-			<span class="span-txt">1.适用在 淘宝 京东 拼多多 亚马逊 等各大电商平台、旅游平
-				台、日常生活类APP绑定使用。</span>
+			<span>{{ $t('cardApply.hint.txt1') }}</span>
+			<span class="span-txt">{{ $t('cardApply.hint.txt2') }}</span>
+			<span class="span-txt">{{ $t('cardApply.hint.txt2') }}</span>
 		</view>
-		<view class="button" @click="goToPage('/pages/cardholder/cardholder')">立即申请</view>
+
+		<!-- 立即申请按钮：文本多语言 -->
+		<view class="button" @click="goToPage('/pages/cardholder/cardholder')">
+			{{ $t('cardApply.applyNow') }}
+		</view>
 		<view class="button-placeholder"></view>
 	</view>
 </template>
@@ -99,29 +113,36 @@
 	import {
 		onReady
 	} from '@dcloudio/uni-app';
-	// tabs切换
-	const list1 = reactive([{
+
+	// Tabs列表：使用多语言变量定义选项（替代原list1，与多语言包对应）
+	const tabList = reactive([{
 			name: '虚拟卡'
 		},
 		{
 			name: '实体卡'
-		},
+		}
 	]);
+
+	// 轮播图数据（保持不变）
 	const imgList = [
 		'http://gips2.baidu.com/it/u=3944689179,983354166&fm=3028&app=3028&f=JPEG&fmt=auto?w=1024&h=1024',
 		'http://gips3.baidu.com/it/u=3886271102,3123389489&fm=3028&app=3028&f=JPEG&fmt=auto?w=1280&h=960',
 		'http://gips3.baidu.com/it/u=617385017,3644165978&fm=3028&app=3028&f=JPEG&fmt=auto?w=1280&h=960',
-	]
-	// tabs下标
-	const active = ref(0)
-	// 刘海高度
+	];
+
+	// Tabs激活下标（保持不变）
+	const active = ref(0);
+
+	// 刘海高度（保持不变）
 	const notchHeight = ref(0);
-	// 定义方法  
+
+	// Tabs切换方法（保持不变）
 	function click(item) {
-		active.value = item.index
+		active.value = item.index;
 	}
+
+	// 获取系统信息（保持不变）
 	onReady(() => {
-		// 获取刘海高度
 		uni.getSystemInfo({
 			success: (res) => {
 				notchHeight.value = res.safeArea?.top || 0;
@@ -134,6 +155,8 @@
 			}
 		});
 	});
+
+	// 页面跳转方法（保持不变）
 	const goToPage = (address) => {
 		uni.navigateTo({
 			url: address
@@ -149,7 +172,7 @@
 		box-sizing: border-box;
 	}
 
-	/* 自定义卡片样式（若使用自定义插槽） */
+	/* 自定义卡片样式（若使用自定义插槽，保持注释） */
 	/* .custom-card {
 	  width: 100%;
 	  height: 100%;

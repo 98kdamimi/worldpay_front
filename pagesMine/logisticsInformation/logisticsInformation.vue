@@ -1,11 +1,11 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="物流信息" :showBack="true"></Navbar>
+		<Navbar :title="$t('logisticsInfo.title')" :showBack="true"></Navbar>
 		<view class="emty">
 			<view class="emtyIcon">
 				<image src="@/static/image/index/emty.png" alt="" mode="widthFix" />
 			</view>
-			<view>暂无数据</view>
+			<view>{{ $t('logisticsInfo.empty') }}</view>
 		</view>
 	</view>
 </template>

@@ -1,16 +1,17 @@
 <template>
 	<view class="viewBox">
-		<Navbar :title="title" :showBack="true"></Navbar>
+		<Navbar :title="$t('passwordModify.title')" :showBack="true"></Navbar>
 		<view>
-			<view class="title">旧密码</view>
+			<view class="title">{{ $t('passwordModify.oldPassword') }}</view>
 			<view class="inputBox">
-				<input type="text" placeholder="请输入旧密码" placeholder-style="color: #9191aa;" />
+				<input type="text" :placeholder="$t('passwordModify.enterOldPassword')"
+					placeholder-style="color: #9191aa;" />
 			</view>
 		</view>
 		<view>
-			<view class="title">新密码</view>
+			<view class="title">{{ $t('passwordModify.newPassword') }}</view>
 			<view class="inputBox">
-				<input :type="passWordType ? 'password' : 'text'" placeholder="请输入新密码"
+				<input :type="passWordType ? 'password' : 'text'" :placeholder="$t('passwordModify.enterNewPassword')"
 					placeholder-style="color: #9191aa;" />
 				<view @click="passWordType = !passWordType">
 					<SvgIcon name="eye3" width="36" height="36" v-if="passWordType"></SvgIcon>
@@ -19,21 +20,23 @@
 			</view>
 		</view>
 		<view>
-			<view class="title">确认新密码</view>
+			<view class="title">{{ $t('passwordModify.confirmNewPassword') }}</view>
 			<view class="inputBox">
-				<input type="text" placeholder="请再次输入新密码" placeholder-style="color: #9191aa;" />
+				<input type="text" :placeholder="$t('passwordModify.reenterNewPassword')"
+					placeholder-style="color: #9191aa;" />
 			</view>
 		</view>
 		<view>
-			<view class="title">邮箱验证码</view>
+			<view class="title">{{ $t('passwordModify.emailVerificationCode') }}</view>
 			<view class="smallInput">
 				<view>
-					<input type="text" placeholder="请再次输入新密码" placeholder-style="color: #9191aa;" />
+					<input type="text" :placeholder="$t('passwordModify.reenterNewPassword')"
+						placeholder-style="color: #9191aa;" />
 				</view>
-				<view class="input-button">发送</view>
+				<view class="input-button">{{ $t('passwordModify.sendCode') }}</view>
 			</view>
 		</view>
-		<view class="button">确认修改</view>
+		<view class="button">{{ $t('passwordModify.confirmModify') }}</view>
 		<view class="button-placeholder"></view>
 	</view>
 </template>

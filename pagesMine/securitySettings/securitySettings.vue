@@ -1,6 +1,6 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="安全设置" :showBack="true"></Navbar>
+		<Navbar :title="$t('securitySettings.title')" :showBack="true"></Navbar>
 		<view style="margin-top: 32rpx;">
 			<view class="box" v-for="(item, index) in navList" :key="index" @click="goToPage(item.href)">
 				<view>{{ item.name }}</view>
@@ -8,8 +8,8 @@
 			</view>
 		</view>
 		<view class="button">
-			<view>退出登录</view>
-			<view class="red">注销账号</view>
+			<view>{{ $t('securitySettings.logout') }}</view>
+			<view class="red">{{ $t('securitySettings.cancelAccount') }}</view>
 		</view>
 	</view>
 </template>

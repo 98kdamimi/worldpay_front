@@ -1,10 +1,11 @@
 <template>
 	<view class="viewBox">
-		<Navbar title="国际汇款" :showBack="true"></Navbar>
+		<Navbar :title="$t('remittance.title')" :showBack="true"></Navbar>
 		<view class="searchBox">
 			<SvgIcon name="search" width="56" height="56"></SvgIcon>
 			<view>
-				<input type="text" placeholder="请输入关键词查找钱包" placeholder-style="color: #999999;" />
+				<input type="text" :placeholder="$t('remittance.searchPlaceholder')"
+					placeholder-style="color: #999999;" />
 			</view>
 		</view>
 		<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
@@ -15,8 +16,8 @@
 			</view>
 			<view class="transactionRecords">
 				<view class="transactionRecords-title">
-					<view>钱包名称</view>
-					<view class="transactionRecords-title-right">单笔限额</view>
+					<view>{{ $t('remittance.walletName') }}</view>
+					<view class="transactionRecords-title-right">{{ $t('remittance.singleLimit') }}</view>
 				</view>
 			</view>
 		</up-sticky>
@@ -26,7 +27,7 @@
 					<view>
 						<image src="@/static/image/zfb.png" mode=""></image>
 					</view>
-					<view>支付宝钱包</view>
+					<view>{{ $t('remittance.alipayWallet') }}</view>
 				</view>
 				<view class="box-item-right">
 					<view>4K USD</view>
@@ -37,17 +38,18 @@
 		<up-modal :show="applyShow" :showConfirmButton='false' bgColor='#141414'>
 			<view class="applyModal">
 				<view class="applyModal-title">
-					<view>用户须知</view>
+					<view>{{ $t('remittance.userNotice') }}</view>
 				</view>
 				<view class="applyModal-txt">
-					<span>1.付款成功当日到账</span>
-					<span>2.部分情况需要手动收款</span>
-					<span>3.预计到账时间为24小时</span>
-					<span>4.支付失败，将于3日内退还本金和手续费</span>
+					<span>{{ $t('remittance.notice1') }}</span>
+					<span>{{ $t('remittance.notice2') }}</span>
+					<span>{{ $t('remittance.notice3') }}</span>
+					<span>{{ $t('remittance.notice4') }}</span>
 				</view>
 				<view class="applyModal-button">
-					<view class="cancel" @click="applyShow = false">取消</view>
-					<view class="apply" @click="goToPage('/pages/account/account')">确认</view>
+					<view class="cancel" @click="applyShow = false">{{ $t('remittance.cancel') }}</view>
+					<view class="apply" @click="goToPage('/pages/account/account')">{{ $t('remittance.confirm') }}
+					</view>
 				</view>
 			</view>
 		</up-modal>
