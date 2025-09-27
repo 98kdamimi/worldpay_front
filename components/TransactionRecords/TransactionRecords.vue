@@ -29,6 +29,7 @@
 
 <style lang="scss" scoped>
 	.transactionRecords-list {
+		color: #FFFFFF;
 		.transactionRecords-item {
 			margin: 12rpx 0;
 			padding: 32rpx 24rpx;

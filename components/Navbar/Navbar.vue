@@ -80,7 +80,7 @@
 		align-items: center; // 垂直居中
 		padding: 0 32rpx; // 左右内边距，避免内容贴边
 		box-sizing: border-box;
-		z-index: 999; // 确保导航栏在最上层，不被内容遮挡
+		z-index: 9999; // 确保导航栏在最上层，不被内容遮挡
 
 		.navbar-left {
 			display: flex;

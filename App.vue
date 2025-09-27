@@ -41,4 +41,9 @@
 	.viewBox {
 		width: 100vw;
 	}
+	.stickyContent{
+		position: sticky;
+		background: #0f0f0f;
+		z-index: 999;
+	}
 </style>
