@@ -8,6 +8,7 @@
 		</view>
 		<view class="title">欢迎使用 Worldpay</view>
 		<view class="title-txt">— 让我们去体验快捷、安全、便利的支付方式 —</view>
+		<view class="button">立即体验</view>
 	</view>
 </template>
 
@@ -44,5 +45,19 @@
 		font-weight: 400;
 		font-size: 30rpx;
 		color: #FFFFFF80;
+	}
+
+	.button {
+		margin: 130rpx auto 0;
+		width: 654rpx;
+		height: 100rpx;
+		line-height: 100rpx;
+		text-align: center;
+		background: #FFFFFF;
+		border-radius: 50rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 36rpx;
+		color: #333333;
 	}
 </style>

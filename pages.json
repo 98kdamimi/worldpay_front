@@ -138,12 +138,27 @@
 	"subPackages": [{
 		"root": "pagesAuth",
 		"pages": [{
-			"path": "index/index",
-			"navigationBarTitleText": "欢迎页面",
-			"style": {
-				"navigationStyle": "custom"
+				"path": "index/index",
+				"navigationBarTitleText": "欢迎页面",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "login/login",
+				"navigationBarTitleText": "登录",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "register/register",
+				"navigationBarTitleText": "注册",
+				"style": {
+					"navigationStyle": "custom"
+				}
 			}
-		}]
+		]
 	}, {
 		"root": "pagesMessage",
 		"pages": [{
@@ -220,6 +235,13 @@
 			{
 				"path": "financialDetails/financialDetails",
 				"navigationBarTitleText": "理财详情",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path" : "google/google",
+				"navigationBarTitleText": "谷歌验证码",
 				"style": {
 					"navigationStyle": "custom"
 				}

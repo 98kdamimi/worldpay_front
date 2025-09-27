@@ -29,7 +29,7 @@
 		},
 		{
 			name: '谷歌验证码',
-			href: ''
+			href: '/pagesMine/google/google'
 		}
 	]);
 	const goToPage = (address) => {
