@@ -1,0 +1,174 @@
+.balance {
+	width: 686rpx;
+	height: 238rpx;
+	background: #16171a;
+	border-radius: 24rpx;
+	margin: 24rpx 32rpx 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	.balance-title {
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 30rpx;
+		color: #ffffff;
+	}
+	.balance-txt {
+		margin-top: 24rpx;
+		font-family: BMDoHyeon, BMDoHyeon;
+		font-weight: normal;
+		font-size: 64rpx;
+		color: #ffffff;
+	}
+	.balance-right {
+		position: absolute;
+		top: 32rpx;
+		right: 24rpx;
+		padding: 6rpx 12rpx;
+		background: #3f3f3f;
+		border-radius: 24rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 24rpx;
+		color: #ffffff;
+	}
+}
+.worldpay {
+	width: 686rpx;
+	height: 160rpx;
+	margin: 32rpx 32rpx 0;
+	background: url('@/static/image/worldpay1.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	.worldpay-txt {
+		position: absolute;
+		left: 24rpx;
+		bottom: 24rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+		color: #ffffff;
+	}
+}
+.top {
+	border-radius: 24rpx 24rpx 0rpx 0rpx;
+}
+.bottom {
+	border-radius: 0rpx 0rpx 24rpx 24rpx;
+}
+.displayRow {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.list {
+	.list-item {
+		margin: 32rpx 32rpx 0;
+		.box {
+			background: #16171a;
+			padding: 32rpx 24rpx;
+			margin: 2rpx 0;
+			.box-top {
+				font-family: PingFangSC, PingFang SC;
+				font-weight: 400;
+				font-size: 30rpx;
+				color: #ffffff;
+				.box-top-left {
+					margin-left: 12rpx;
+					.box-top-left-button {
+						display: flex;
+						align-items: center;
+						> view {
+							font-family: PingFangSC, PingFang SC;
+							font-weight: 400;
+							font-size: 24rpx;
+							padding: 2rpx 24rpx;
+							margin-top: 12rpx;
+						}
+						.red {
+							color: #841a1a;
+							border-radius: 8rpx;
+							border: 2rpx solid #841a1a;
+						}
+						.green {
+							color: #1a8429;
+							border-radius: 8rpx;
+							border: 2rpx solid #1a8429;
+						}
+					}
+				}
+			}
+			.box-top-right {
+				font-family: BMDoHyeon, BMDoHyeon;
+				font-weight: normal;
+				font-size: 48rpx;
+				color: #12c11c;
+				text-align: right;
+				.box-top-right-txt {
+					font-family: PingFangSC, PingFang SC;
+					font-weight: 400;
+					font-size: 28rpx;
+					color: #12c11c;
+				}
+			}
+		}
+		.list-item-txt {
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 24rpx;
+			color: #9191aa;
+			margin-bottom: 24rpx;
+			.list-item-txt-right {
+				color: #ffffff;
+			}
+		}
+		.item-button {
+			width: 536rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			background: #1e3ad6;
+			border-radius: 50rpx;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 500;
+			font-size: 36rpx;
+			color: #ffffff;
+			margin: 32rpx auto 0;
+		}
+	}
+}
+
+.passwordPopup {
+	position: relative;
+	padding-bottom: 50rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	color: #ffffff;
+	.passwordPopup-title {
+		padding: 40rpx 0 54rpx;
+		font-size: 36rpx;
+		text-align: center;
+	}
+	.passwordPopup-off {
+		position: absolute;
+		top: 30rpx;
+		right: 32rpx;
+	}
+	.passwordPopup-txt {
+		font-weight: 400;
+		font-size: 30rpx;
+		color: #ffffff;
+		margin: 0 32rpx;
+	}
+	.passwordPopup-input {
+		display: flex;
+		justify-content: center;
+		margin: 32rpx 32rpx 0;
+	}
+}

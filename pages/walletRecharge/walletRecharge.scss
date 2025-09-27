@@ -1,0 +1,63 @@
+.top {
+	border-radius: 24rpx 24rpx 0rpx 0rpx;
+}
+.bottom {
+	border-radius: 0rpx 0rpx 24rpx 24rpx;
+}
+.title {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #ffffff;
+	margin: 32rpx 32rpx 0;
+}
+.selectCurrency {
+	background: #16171a;
+	border-radius: 24rpx;
+	margin: 24rpx 32rpx;
+	padding: 18rpx 24rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	view {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		span {
+			margin-left: 12rpx;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 30rpx;
+			color: #ffffff;
+		}
+	}
+}
+.qrPadding {
+	padding: 48rpx 173rpx;
+}
+.box {
+	background: #16171a;
+	margin: 2rpx 32rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 32rpx;
+	color: #ffffff;
+	.qrCode {
+		width: 340rpx;
+		height: 340rpx;
+	}
+}
+.hint {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 24rpx;
+	color: #ffffff;
+	margin: 40rpx 32rpx;
+	span {
+		display: block;
+		margin-bottom: 24rpx;
+	}
+}

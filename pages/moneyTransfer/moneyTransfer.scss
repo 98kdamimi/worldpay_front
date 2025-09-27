@@ -1,0 +1,116 @@
+.searchBox {
+	display: flex;
+	align-items: center;
+	background: #16171a;
+	border-radius: 40rpx;
+	margin: 16rpx 32rpx 0;
+	padding: 12rpx;
+	input {
+		padding-left: 24rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+	}
+}
+.transactionRecords {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #ffffff;
+	margin: 32rpx 32rpx 24rpx;
+	padding-bottom: 6rpx;
+	.transactionRecords-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 0 0 12rpx;
+	}
+}
+.box {
+	.box-item {
+		background: #16171a;
+		border-radius: 24rpx;
+		padding: 32rpx 24rpx;
+		margin: 16rpx 32rpx 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.box-item-left {
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 500;
+			font-size: 32rpx;
+			color: #ffffff;
+			display: flex;
+			align-items: center;
+			> view:first-child {
+				width: 80rpx;
+				height: 80rpx;
+				margin-right: 16rpx;
+			}
+		}
+		.box-item-right {
+			text-align: right;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 500;
+			font-size: 32rpx;
+			color: #ffe330;
+			> view:last-child {
+				font-weight: 400;
+				font-size: 20rpx;
+			}
+		}
+	}
+}
+
+.applyModal {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	color: #ffffff;
+
+	.applyModal-title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 500;
+		font-size: 36rpx;
+		column-gap: 24rpx;
+	}
+
+	.applyModal-txt {
+		margin: 50rpx 0;
+		span {
+			display: block;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 30rpx;
+			color: #ffffff;
+			margin-bottom: 24rpx;
+		}
+	}
+
+	.applyModal-button {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+
+		> view {
+			width: 252rpx;
+			padding: 28rpx 0;
+			text-align: center;
+			font-weight: 400;
+			font-size: 32rpx;
+			border-radius: 24rpx;
+		}
+
+		.cancel {
+			background: #868686;
+		}
+
+		.apply {
+			background: #1e3ad6;
+		}
+	}
+}

@@ -1,0 +1,167 @@
+.title {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #ffffff;
+	margin: 32rpx 32rpx 0;
+}
+.inputBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #16171a;
+	border-radius: 24rpx;
+	margin: 24rpx 32rpx 0;
+	padding: 24rpx;
+	input {
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+		color: #ffffff;
+	}
+	.placeholderClass {
+		color: #9191aa;
+	}
+	.inputBox-right {
+		width: 88rpx;
+		height: 40rpx;
+		line-height: 40rpx;
+		text-align: center;
+		background: #ffffff;
+		border-radius: 8rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 24rpx;
+		color: #333333;
+	}
+}
+.title-txt {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 24rpx;
+	color: #9191aa;
+	margin: 24rpx 32rpx 0;
+}
+.box {
+	border: 2rpx solid #16171a;
+	background: #16171a;
+	border-radius: 24rpx;
+	margin: 24rpx 32rpx 0;
+	padding: 32rpx 24rpx;
+	display: flex;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 30rpx;
+	color: #ffffff;
+	position: relative;
+	.box-txt {
+		margin: 12rpx 0 0;
+		font-weight: 400;
+		font-size: 28rpx;
+	}
+	.switch-button {
+		position: absolute;
+		top: 36rpx;
+		right: 24rpx;
+		width: 88rpx;
+		height: 40rpx;
+		line-height: 40rpx;
+		text-align: center;
+		background: #ffffff;
+		border-radius: 8rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 24rpx;
+		color: #333333;
+	}
+}
+
+.button {
+	position: fixed;
+	left: 48rpx;
+	right: 48rpx;
+	bottom: 40rpx;
+	width: 654rpx;
+	height: 100rpx;
+	line-height: 100rpx;
+	text-align: center;
+	background: #1e3ad6;
+	border-radius: 50rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 36rpx;
+	color: #ffffff;
+	margin: 0 auto;
+}
+.button-placeholder {
+	height: 100rpx;
+	margin: 32rpx;
+}
+.cardpopup {
+	width: 750rpx;
+	padding-bottom: 24rpx;
+	background: #0f0f0f;
+
+	.cardpopup-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 36rpx;
+		color: #ffffff;
+		padding: 32rpx 32rpx;
+	}
+	.cardActive {
+		border: 2rpx solid #ffffff;
+	}
+	.top {
+		border-radius: 24rpx 24rpx 0rpx 0rpx;
+	}
+	.bottom {
+		border-radius: 0rpx 0rpx 24rpx 24rpx;
+	}
+	.infoBox {
+		background: #16171a;
+		margin: 2rpx 32rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+		color: #9191aa;
+		padding: 32rpx 24rpx;
+	}
+}
+// 密码验证
+.passwordPopup {
+	position: relative;
+	padding-bottom: 16rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	color: #ffffff;
+	padding-bottom: 48rpx;
+	.passwordPopup-title {
+		padding: 40rpx 0 54rpx;
+		font-size: 36rpx;
+		text-align: center;
+	}
+	.passwordPopup-off {
+		position: absolute;
+		top: 30rpx;
+		right: 32rpx;
+	}
+	.passwordPopup-txt {
+		font-weight: 400;
+		font-size: 30rpx;
+		color: #ffffff;
+		margin: 0 32rpx;
+	}
+	.passwordPopup-input {
+		display: flex;
+		justify-content: center;
+		margin: 32rpx 32rpx 0;
+	}
+}

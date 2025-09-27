@@ -1,0 +1,64 @@
+.title {
+	margin: 32rpx 32rpx 0;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 30rpx;
+	color: #ffffff;
+}
+.balance {
+	font-family: BMDoHyeon, BMDoHyeon;
+	font-weight: normal;
+	font-size: 64rpx;
+	color: #ffffff;
+	margin: 48rpx 32rpx 0;
+	span {
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 32rpx;
+		color: #9191aa;
+	}
+}
+.kingKong {
+	margin: 32rpx 32rpx 0;
+	padding: 24rpx 48rpx;
+	background: #16171a;
+	border-radius: 24rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #ffffff;
+	text-align: center;
+	view {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+}
+// 交易记录
+.transactionRecords {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 30rpx;
+	color: #ffffff;
+	margin: 32rpx 32rpx 0;
+	padding-bottom: 6rpx;
+	.transactionRecords-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 0 0 12rpx;
+		.transactionRecords-title-right {
+			font-weight: 400;
+			font-size: 24rpx;
+		}
+		// 吸顶核心样式
+		&.sticky {
+			background: #0f0f0f;
+			box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.5);
+		}
+	}
+}

@@ -28,8 +28,8 @@
 
 <script setup>
 	import {
-		reactive,
-		ref
+		ref,
+		reactive
 	} from 'vue';
 	// tabs切换
 	const list1 = reactive([{

@@ -65,7 +65,7 @@
 				</view>
 			</up-sticky>
 			<view class="transactionRecords-list">
-				<TransactionRecordsVue :list="recordsList"></TransactionRecordsVue>
+				<TransactionRecords :list="recordsList"></TransactionRecords>
 			</view>
 		</view>
 		<up-popup :show="rchargeShow" mode="bottom" bgColor='#141414'>

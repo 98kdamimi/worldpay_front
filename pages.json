@@ -91,16 +91,66 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/walletManagement/walletManagement",
+			"navigationBarTitleText": "钱包管理 ",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/walletRecharge/walletRecharge",
+			"navigationBarTitleText": "充值",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/transfer/transfer",
+			"navigationBarTitleText": "转账",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/moneyTransfer/moneyTransfer",
+			"navigationBarTitleText": "国际汇款",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/account/account",
+			"navigationBarTitleText": "账户",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/financialManagement/financialManagement",
+			"navigationBarTitleText": "金融理财",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [{
 		"root": "pagesMessage",
 		"pages": [{
-			"path": "index/index",
-			"style": {
-				"navigationStyle": "custom"
+				"path": "index/index",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "messageDetails/messageDetails",
+				"navigationBarTitleText": "详情",
+				"style": {
+					"navigationStyle": "custom"
+				}
 			}
-		}]
+		]
 	}, {
 		"root": "pagesMine",
 		"pages": [{

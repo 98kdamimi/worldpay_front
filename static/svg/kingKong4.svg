@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 7</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="51.4619146%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#36364A" stop-opacity="0.924388112" offset="0%"></stop>
+            <stop stop-color="#666681" stop-opacity="0.355659965" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页-钱包" transform="translate(-570, -406)">
+            <g id="编组-10" transform="translate(32, 382)">
+                <g id="编组-7" transform="translate(538, 24)">
+                    <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="100" height="100" rx="36"></rect>
+                    <g id="编组" transform="translate(23, 26)" fill="#FFFFFF" fill-rule="nonzero">
+                        <path d="M9.68713045,30.5499392 L0,20.5812591 L3.15547825,16.6779168 L9.50400002,23.0511041 L21.9052174,10.4198793 L29.1905217,17.7471647 L42.890087,3.6048928 L39.9036522,0 L54,0.0704998384 L29.1928696,25.13555 L21.9052174,17.8317645 L12.15,27.9038445 L12.1664348,27.9179444 L9.68713045,30.5499392 Z M29.444087,33.0526842 L22.233913,25.1590499 L10.1355652,37.5435253 L0,28.1999439 L0,44.0577123 C0.0103423915,45.6921149 1.34179436,47.0090194 2.97469565,46.9999535 L51.0253044,46.9999535 C52.6687826,46.9999535 54,45.6839091 54,44.0577123 L54,9.39998128 L29.4417391,33.0526842 L29.444087,33.0526842 Z" id="形状"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

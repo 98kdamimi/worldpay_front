@@ -115,6 +115,7 @@
 			gap: 32rpx; // 若右侧有多个元素，设置间距
 			color: #FFFFFF;
 			width: 80rpx; // 固定宽度，确保标题居中
+			white-space: nowrap; 
 			justify-content: flex-end;
 		}
 	}

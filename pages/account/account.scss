@@ -1,0 +1,56 @@
+.title {
+	margin: 32rpx 32rpx 0;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 28rpx;
+	color: #ffffff;
+}
+.inputBox {
+	background: #16171a;
+	border-radius: 24rpx;
+	margin: 24rpx 32rpx 0;
+	padding: 32rpx 24rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	input {
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+		color: #ffffff;
+	}
+	span {
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 30rpx;
+		color: #ffffff;
+	}
+}
+.title-txt {
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 400;
+	font-size: 24rpx;
+	color: #9191aa;
+	margin: 24rpx 32rpx;
+}
+.button {
+	position: fixed;
+	left: 48rpx;
+	right: 48rpx;
+	bottom: 42rpx;
+	width: 654rpx;
+	height: 100rpx;
+	line-height: 100rpx;
+	text-align: center;
+	background: #1e3ad6;
+	border-radius: 50rpx;
+	font-family: PingFangSC, PingFang SC;
+	font-weight: 500;
+	font-size: 36rpx;
+	color: #ffffff;
+	margin: 0 auto;
+}
+.button-placeholder {
+	height: 100rpx;
+	margin: 32rpx;
+}

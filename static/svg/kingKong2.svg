@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 5</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="51.4619146%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#36364A" stop-opacity="0.924388112" offset="0%"></stop>
+            <stop stop-color="#666681" stop-opacity="0.355659965" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-13.0%" y="-11.6%" width="125.9%" height="132.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页-钱包" transform="translate(-244, -406)">
+            <g id="编组-10" transform="translate(32, 382)">
+                <g id="编组-5" transform="translate(212, 24)">
+                    <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="100" height="100" rx="36"></rect>
+                    <g id="编组" filter="url(#filter-2)" transform="translate(23, 29)" fill="#FFFFFF" fill-rule="nonzero">
+                        <path d="M45.9,0 C50.3735065,0 54,3.60970421 54,8.06250001 L54,34.9375 C54,39.3902958 50.3735065,43 45.9,43 L8.09999999,43 C3.62649352,43 0,39.3902958 0,34.9375 L0,8.06250001 C0,3.60970421 3.62649352,0 8.09999999,0 L45.9,0 Z M38.9533805,24.9353666 L15.1685623,24.9353666 C14.3519236,24.9359404 13.6139925,25.4281339 13.2917915,26.187156 C12.8087952,27.0006007 12.9352131,28.0421769 13.5983926,28.7132895 L19.1952577,34.3745353 C19.709087,34.9084887 20.4672184,35.1214635 21.1796748,34.9319991 C21.8921313,34.7425348 22.4486803,34.1799456 22.636448,33.4594157 C22.8242157,32.7388858 22.6141504,31.9718969 22.0865996,31.4518138 L19.7341325,29.0704066 L38.9533805,29.0704066 C40.0821627,29.0702748 40.9971523,28.1446532 40.9971523,27.0028866 C40.9971523,25.86112 40.0821627,24.9354984 38.9533805,24.9353666 Z M34.8021864,8.62451298 C34.2880179,8.09089353 33.5297512,7.87841155 32.8174151,8.06833911 C32.105079,8.25826667 31.5488875,8.82121784 31.3615779,9.54186986 C31.1742682,10.2625219 31.3848212,11.0293742 31.9127027,11.549114 L34.2651698,13.9286417 L15.0440636,13.9286417 C13.9151893,13.9286417 13.0000558,14.8543019 13.0000558,15.9961617 C13.0000558,17.1380215 13.9151893,18.0636821 15.0440636,18.0636821 L38.8288818,18.0636821 C39.6457511,18.0641819 40.3844762,17.5726852 40.7075108,16.8137719 C41.1914897,15.9998945 41.0650267,14.9571716 40.4009097,14.2857588 Z" id="形状结合"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

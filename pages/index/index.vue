@@ -100,7 +100,7 @@
 				</view>
 			</up-sticky>
 			<view class="transactionRecords-list">
-				<TransactionRecordsVue :list="recordsList"></TransactionRecordsVue>
+				<TransactionRecords :list="recordsList"></TransactionRecords>
 			</view>
 		</view>
 		<!-- 卡片弹窗 -->
@@ -140,7 +140,6 @@
 
 <script setup>
 	import Card from '@/components/Card/Card.vue'
-	import TransactionRecordsVue from '@/components/TransactionRecords/TransactionRecords.vue';
 	import {
 		ref,
 		onMounted
