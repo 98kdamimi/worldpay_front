@@ -136,6 +136,15 @@
 		}
 	],
 	"subPackages": [{
+		"root": "pagesAuth",
+		"pages": [{
+			"path": "index/index",
+			"navigationBarTitleText": "欢迎页面",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}]
+	}, {
 		"root": "pagesMessage",
 		"pages": [{
 				"path": "index/index",
@@ -154,11 +163,68 @@
 	}, {
 		"root": "pagesMine",
 		"pages": [{
-			"path": "index/index",
-			"style": {
-				"navigationStyle": "custom"
+				"path": "index/index",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "personalInformation/personalInformation",
+				"navigationBarTitleText": "个人信息",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "securitySettings/securitySettings",
+				"navigationBarTitleText": "安全设置",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "languageSwitching/languageSwitching",
+				"navigationBarTitleText": "语言切换",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "changePassword/changePassword",
+				"navigationBarTitleText": "修改登录密码/支付密码",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "financialManagementOrders/financialManagementOrders",
+				"navigationBarTitleText": "理财订单",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "transactionRecords/transactionRecords",
+				"navigationBarTitleText": "交易记录",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "logisticsInformation/logisticsInformation",
+				"navigationBarTitleText": "物流信息",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "financialDetails/financialDetails",
+				"navigationBarTitleText": "理财详情",
+				"style": {
+					"navigationStyle": "custom"
+				}
 			}
-		}]
+		]
 	}],
 	"tabBar": {
 		"color": "#7A7E83",

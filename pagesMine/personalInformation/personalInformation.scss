@@ -1,0 +1,24 @@
+.infoBox {
+	margin: 32rpx;
+	.top {
+		border-radius: 24rpx 24rpx 0rpx 0rpx;
+	}
+	.bottom {
+		border-radius: 0rpx 0rpx 24rpx 24rpx;
+	}
+	.infoBox-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+		color: #9191aa;
+		padding: 38rpx 24rpx;
+		background: #16171a;
+		margin: 2rpx 0;
+		.infoBox-item-right {
+			color: #ffffff;
+		}
+	}
+}

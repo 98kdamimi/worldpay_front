@@ -21,7 +21,7 @@
 		<view class="worldpay">
 			<view class="worldpay-txt">为你量身打造理财项目～</view>
 		</view>
-		<up-sticky>
+		<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
 			<view style="margin: 0 32rpx;">
 				<up-tabs :list="list1" @click="click" lineColor='#ffffff'
 					:activeStyle="{ color: '#ffffff',fontWeight: '500',fontSize: '30rpx' }"
@@ -84,6 +84,9 @@
 		ref,
 		reactive
 	} from 'vue';
+	import {
+		onReady
+	} from '@dcloudio/uni-app';
 	// tabs切换
 	const list1 = reactive([{
 			name: '全部'
@@ -102,14 +105,29 @@
 	const passwordShow = ref(false)
 	// tabs下标
 	const active = ref(0)
+	// 刘海高度
+	const notchHeight = ref(0);
 	// 定义方法  
 	function click(item) {
 		active.value = item.index
 	}
-
 	const finish = (e) => {
 		passwordShow.value = false
 	};
+	onReady(() => {
+		// 获取刘海高度
+		uni.getSystemInfo({
+			success: (res) => {
+				notchHeight.value = res.safeArea?.top || 0;
+				if (!notchHeight.value) {
+					notchHeight.value = res.statusBarHeight || 0;
+				}
+			},
+			fail: () => {
+				notchHeight.value = 20;
+			}
+		});
+	});
 </script>
 
 <style lang="scss" scoped>

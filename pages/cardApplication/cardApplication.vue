@@ -1,7 +1,7 @@
 <template>
 	<view class="viewBox">
 		<Navbar title="卡片申请" :showBack="true"></Navbar>
-		<up-sticky>
+		<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
 			<view style="margin: 0 32rpx;">
 				<up-tabs :list="list1" @click="click" lineColor='#ffffff'
 					:activeStyle="{ color: '#ffffff',fontWeight: '500',fontSize: '30rpx' }"
@@ -93,9 +93,12 @@
 
 <script setup>
 	import {
-		reactive,
-		ref
+		ref,
+		reactive
 	} from 'vue';
+	import {
+		onReady
+	} from '@dcloudio/uni-app';
 	// tabs切换
 	const list1 = reactive([{
 			name: '虚拟卡'
@@ -105,17 +108,32 @@
 		},
 	]);
 	const imgList = [
-		'@/static/image/apply1.png',
-		'@/static/image/apply2.png',
-		'@/static/image/apply1.png',
-		'@/static/image/apply2.png',
+		'http://gips2.baidu.com/it/u=3944689179,983354166&fm=3028&app=3028&f=JPEG&fmt=auto?w=1024&h=1024',
+		'http://gips3.baidu.com/it/u=3886271102,3123389489&fm=3028&app=3028&f=JPEG&fmt=auto?w=1280&h=960',
+		'http://gips3.baidu.com/it/u=617385017,3644165978&fm=3028&app=3028&f=JPEG&fmt=auto?w=1280&h=960',
 	]
 	// tabs下标
 	const active = ref(0)
+	// 刘海高度
+	const notchHeight = ref(0);
 	// 定义方法  
 	function click(item) {
 		active.value = item.index
 	}
+	onReady(() => {
+		// 获取刘海高度
+		uni.getSystemInfo({
+			success: (res) => {
+				notchHeight.value = res.safeArea?.top || 0;
+				if (!notchHeight.value) {
+					notchHeight.value = res.statusBarHeight || 0;
+				}
+			},
+			fail: () => {
+				notchHeight.value = 20;
+			}
+		});
+	});
 	const goToPage = (address) => {
 		uni.navigateTo({
 			url: address

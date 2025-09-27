@@ -139,7 +139,6 @@
 </template>
 
 <script setup>
-	import Card from '@/components/Card/Card.vue'
 	import {
 		ref,
 		onMounted

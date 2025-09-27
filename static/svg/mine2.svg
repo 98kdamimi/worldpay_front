@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 5</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="我的" transform="translate(-68, -896)">
+            <g id="编组-30" transform="translate(32, 720)">
+                <g id="编组-25" transform="translate(0, 136)">
+                    <g id="编组-14" transform="translate(36, 40)">
+                        <g id="编组-5" transform="translate(2, 2)">
+                            <circle id="椭圆形" stroke="#FFFFFF" stroke-width="3" cx="18" cy="18" r="16.5"></circle>
+                            <ellipse id="椭圆形" stroke="#FFFFFF" stroke-width="3" cx="18" cy="18" rx="8.21428571" ry="15.5"></ellipse>
+                            <rect id="矩形" fill="#FFFFFF" x="2.42857143" y="11.5238095" width="31" height="3"></rect>
+                            <rect id="矩形" fill="#FFFFFF" x="2.42857143" y="22.8571429" width="31" height="3"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

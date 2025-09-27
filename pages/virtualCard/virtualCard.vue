@@ -58,7 +58,7 @@
 		<!-- 交易记录 -->
 		<view class="transactionRecords">
 			<!-- 吸顶标题 -->
-			<up-sticky :offset-top="notchHeight">
+			<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
 				<view class="transactionRecords-title" :class="{ 'sticky': isStickyActive }">
 					<view>交易记录</view>
 					<view class="transactionRecords-title-right">全部</view>
@@ -98,13 +98,32 @@
 	import {
 		formattedCard
 	} from '@/utils/common.js'
+	import {
+		onReady
+	} from '@dcloudio/uni-app';
 	const recordsList = ref([])
 	const isEye = ref(true)
 	const rchargeShow = ref(false)
+	// 刘海高度
+	const notchHeight = ref(0);
 
 	function setEye() {
 		isEye.value = !isEye.value;
 	}
+	onReady(() => {
+		// 获取刘海高度
+		uni.getSystemInfo({
+			success: (res) => {
+				notchHeight.value = res.safeArea?.top || 0;
+				if (!notchHeight.value) {
+					notchHeight.value = res.statusBarHeight || 0;
+				}
+			},
+			fail: () => {
+				notchHeight.value = 20;
+			}
+		});
+	});
 </script>
 
 <style lang="scss" scoped>

@@ -55,11 +55,17 @@
 		}
 
 		.emty {
+			flex: 1;
+			height: 750rpx;
 			margin: 90rpx auto;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 24rpx;
+			color: #FFFFFF;
 
 			.emtyIcon {
 				width: 222rpx;

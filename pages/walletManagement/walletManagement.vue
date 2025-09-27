@@ -35,7 +35,7 @@
 		<!-- 交易记录 -->
 		<view class="transactionRecords">
 			<!-- 吸顶标题 -->
-			<up-sticky :offset-top="notchHeight">
+			<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
 				<view class="transactionRecords-title">
 					<view>交易记录</view>
 					<view class="transactionRecords-title-right">全部</view>
@@ -52,8 +52,28 @@
 	import {
 		ref
 	} from 'vue';
+	import {
+		onReady
+	} from '@dcloudio/uni-app';
 
 	const recordsList = ref([])
+	// 刘海高度
+	const notchHeight = ref(0);
+
+	onReady(() => {
+		// 获取刘海高度
+		uni.getSystemInfo({
+			success: (res) => {
+				notchHeight.value = res.safeArea?.top || 0;
+				if (!notchHeight.value) {
+					notchHeight.value = res.statusBarHeight || 0;
+				}
+			},
+			fail: () => {
+				notchHeight.value = 20;
+			}
+		});
+	});
 
 	const goToPage = (address) => {
 		uni.navigateTo({

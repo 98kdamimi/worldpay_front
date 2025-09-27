@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 9</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="51.4619146%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#36364A" stop-opacity="0.924388112" offset="0%"></stop>
+            <stop stop-color="#666681" stop-opacity="0.355659965" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="我的" transform="translate(-407, -500)">
+            <g id="编组-10" transform="translate(32, 477)">
+                <g id="编组-9" transform="translate(375, 23)">
+                    <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="100" height="100" rx="36"></rect>
+                    <g id="编组" transform="translate(25, 25)" fill="#FFFFFF" fill-rule="nonzero">
+                        <path d="M23.3177083,3.35972497 C10.4375,3.35972497 0,13.8035212 0,26.6798625 C0,39.5614126 10.4427083,50 23.3177083,50 C36.1979167,50 46.6354167,39.5562038 46.6354167,26.6798625 L23.3177083,26.6798625 L23.3177083,3.35972497 Z M26.6822917,-9.03595935e-16 L26.6822917,23.3201375 L50,23.3201375 C50,10.4437962 39.5572917,-9.03595935e-16 26.6822917,-9.03595935e-16 Z" id="形状"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
