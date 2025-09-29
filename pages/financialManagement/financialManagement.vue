@@ -87,18 +87,26 @@
 	import {
 		onReady
 	} from '@dcloudio/uni-app';
+	import {
+		useI18n
+	} from 'vue-i18n'
+
+	const {
+		t
+	} = useI18n()
+
 	// tabs切换
 	const list1 = reactive([{
-			name: '全部'
+			name: t('financeTabs.all') // 全部
 		},
 		{
-			name: '定期'
+			name: t('financeTabs.fixedTerm') // 定期
 		},
 		{
-			name: '活期'
+			name: t('financeTabs.currentTerm') // 活期
 		},
 		{
-			name: '余额宝'
+			name: t('financeTabs.balanceTreasure') // 余额宝
 		}
 	]);
 	const applyShow = ref(false)

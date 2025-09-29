@@ -3,10 +3,13 @@
 }
 // 标题
 .header {
+	position: sticky;
+	background: #0f0f0f;
 	padding: 12rpx 32rpx;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	z-index: 999;
 	.header-left-logo {
 		display: flex;
 		justify-content: center;
@@ -113,6 +116,23 @@
 }
 .cardDisplayBgNull {
 	background-image: url('@/static/image/index/cardNull.png');
+	.cardDisplayBgNull-txt {
+		position: absolute;
+		top: 260rpx;
+		width: 100%;
+		text-align: center;
+		font-family: Helvetica, Helvetica;
+		font-weight: bold;
+		font-size: 40rpx;
+		letter-spacing: 4rpx;
+		color: #ffffff;
+		// @font-face {
+		// 	font-family: '阿里妈妈方圆体 VF Regular';
+		// 	src: url('//at.alicdn.com/wf/webfont/KtSTnfPmhfKv/gaydv0RnBDda.woff2') format('woff2'), url('//at.alicdn.com/wf/webfont/KtSTnfPmhfKv/yMFN9YTpINBt.woff') format('woff');
+		// 	font-variation-settings: 'BEVL' 1, 'wght' 200;
+		// 	font-display: swap;
+		// }
+	}
 }
 // 增资 钱包 卡片申请入口
 .wallet {
@@ -156,13 +176,17 @@
 	> view {
 		display: flex;
 		justify-content: center;
-		width: 180rpx;
+		width: 200rpx;
 		height: 160rpx;
 		position: relative;
+		.svg {
+			position: absolute;
+			top: 36rpx;
+		}
 		span {
 			display: block;
 			position: absolute;
-			bottom: 30rpx;
+			top: 96rpx;
 		}
 	}
 }
@@ -180,7 +204,9 @@
 			width: 48rpx;
 			height: 36rpx;
 			margin-right: 24rpx;
-			margin-top: 2rpx;
+			/* #ifdef APP */
+			margin-top: -4rpx;
+			/* #endif */
 		}
 	}
 }
@@ -224,13 +250,13 @@
 	font-weight: 500;
 	font-size: 30rpx;
 	color: #ffffff;
-	margin: 32rpx 32rpx 0;
-	padding-bottom: 6rpx;
+	margin: 0rpx 32rpx;
 	.transactionRecords-title {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		margin: 0 0 12rpx;
+		padding: 32rpx 0 6rpx;
 		.transactionRecords-title-right {
 			font-weight: 400;
 			font-size: 24rpx;

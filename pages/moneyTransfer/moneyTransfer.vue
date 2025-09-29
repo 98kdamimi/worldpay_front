@@ -64,15 +64,22 @@
 	import {
 		onReady
 	} from '@dcloudio/uni-app';
+	import {
+		useI18n
+	} from 'vue-i18n'
+
+	const {
+		t
+	} = useI18n()
 	// tabs切换
 	const list1 = reactive([{
-			name: '钱包'
+			name: t('list.wallet') // 钱包
 		},
 		{
-			name: '国家'
+			name: t('list.country') // 国家
 		},
 		{
-			name: '家用'
+			name: t('list.household') // 家用
 		}
 	]);
 	const applyShow = ref(false)

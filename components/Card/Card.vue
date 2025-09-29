@@ -7,7 +7,8 @@
 		<view class="cardpopup-time">
 			10/25 10/30
 		</view>
-		<view class="physicalCard" v-if="type == 3">实体卡</view>
+		<!-- 替换“实体卡”为多语言变量，复用现有多语言键名 -->
+		<view class="physicalCard" v-if="type == 3">{{ $t('home.physicalCard') }}</view>
 	</view>
 </template>
 

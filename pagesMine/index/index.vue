@@ -65,33 +65,41 @@
 		ref,
 		reactive
 	} from 'vue';
+	import {
+		useI18n
+	} from 'vue-i18n'
+
+	const {
+		t
+	} = useI18n()
+
 	const navList = reactive([{
 			svg: 'mine1',
-			name: '安全设置',
+			name: t('mineNav.securitySettings'), // 安全设置
 			right: '',
 			href: '/pagesMine/securitySettings/securitySettings'
 		},
 		{
 			svg: 'mine2',
-			name: '语言切换',
-			right: '中文简体',
+			name: t('mineNav.languageSwitch'), // 语言切换
+			right: t('mineNav.languageCN'), // 中文简体
 			href: '/pagesMine/languageSwitching/languageSwitching'
 		},
 		{
 			svg: 'mine3',
-			name: '关于我们',
+			name: t('mineNav.aboutUs'), // 关于我们
 			right: '',
 			href: ''
 		},
 		{
 			svg: 'mine4',
-			name: '联系我们',
+			name: t('mineNav.contactUs'), // 联系我们
 			right: '',
 			href: ''
 		},
 		{
 			svg: 'mine5',
-			name: '帮助中心',
+			name: t('mineNav.helpCenter'), // 帮助中心
 			right: '',
 			href: ''
 		},

@@ -20,7 +20,7 @@
 }
 .kingKong {
 	margin: 32rpx 32rpx 0;
-	padding: 24rpx 48rpx;
+	padding: 24rpx 16rpx;
 	background: #16171a;
 	border-radius: 24rpx;
 	display: flex;
@@ -32,6 +32,7 @@
 	color: #ffffff;
 	text-align: center;
 	view {
+		width: 160rpx;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

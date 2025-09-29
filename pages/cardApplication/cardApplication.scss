@@ -19,10 +19,17 @@
 		justify-content: space-between;
 		align-items: center;
 		> view {
-			width: 40%;
+			width: 48%;
 			display: flex;
 			justify-content: flex-start;
-			align-items: center;
+			.svg {
+				/* #ifdef APP */
+				margin-top: -5rpx;
+				/* #endif */
+				/* #ifdef H5 */
+				margin-top: -1rpx;
+				/* #endif */
+			}
 		}
 	}
 }

@@ -1,75 +1,93 @@
 <template>
 	<view class="viewBox">
-		<!-- 导航栏：标题多语言 -->
+		<!-- 导航栏 -->
+		<!-- <view class="stickyContent" :style="{ top: notchHeight + 'px' }"> -->
 		<Navbar :title="$t('cardApply.title')" :showBack="true"></Navbar>
-
-		<!-- 粘性Tabs：选项多语言 -->
-		<up-sticky :offset-top="notchHeight" bgColor="#0f0f0f">
-			<view style="margin: 0 32rpx;">
-				<up-tabs :list="tabList" @click="click" lineColor='#ffffff'
-					:activeStyle="{ color: '#ffffff',fontWeight: '500',fontSize: '30rpx' }"
-					:inactiveStyle="{ color: '#999999', fontWeight: '400',fontSize: '30rpx' }"></up-tabs>
-			</view>
-		</up-sticky>
+		<view class="stickyContent" style="padding: 0 32rpx;" :style="{ top: notchHeight + 44 + 'px' }">
+			<up-tabs :list="tabList" @click="setActive" lineColor='#ffffff'
+				:activeStyle="{ color: '#ffffff',fontWeight: '500',fontSize: '30rpx' }"
+				:inactiveStyle="{ color: '#999999', fontWeight: '400',fontSize: '30rpx' }"></up-tabs>
+		</view>
+		<!-- </view> -->
 
 		<!-- 卡片轮播 -->
 		<view class="swiper-Box">
 			<CardSwiper :images="imgList"></CardSwiper>
 		</view>
 
-		<!-- 虚拟卡优势：文本多语言 -->
+		<!-- 虚拟卡 -->
 		<view class="advantages" v-if="active == 0">
 			<view>
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.onlinePayment') }}</view>
 				</view>
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.quickApplication') }}</view>
 				</view>
 			</view>
 			<view style="margin-top: 32rpx;">
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.quickRecharge') }}</view>
 				</view>
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.flexibleLimit') }}</view>
 				</view>
 			</view>
 		</view>
 
-		<!-- 实体卡优势：文本多语言 -->
+		<!-- 实体卡 -->
 		<view class="advantages" v-if="active == 1">
 			<view>
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.onlinePayment') }}</view>
 				</view>
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.quickApplication') }}</view>
 				</view>
 			</view>
 			<view style="margin-top: 32rpx;">
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.quickRecharge') }}</view>
 				</view>
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.flexibleLimit') }}</view>
 				</view>
 			</view>
 			<view style="margin-top: 32rpx;">
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.quickWithdrawal') }}</view>
 				</view>
 				<view>
-					<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					<view class="svg">
+						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
+					</view>
 					<view>{{ $t('cardApply.advantage.cardDelivery') }}</view>
 				</view>
 			</view>
@@ -97,7 +115,7 @@
 			<span class="span-txt">{{ $t('cardApply.hint.txt2') }}</span>
 		</view>
 
-		<!-- 立即申请按钮：文本多语言 -->
+		<!-- 立即申请按钮 -->
 		<view class="button" @click="goToPage('/pages/cardholder/cardholder')">
 			{{ $t('cardApply.applyNow') }}
 		</view>
@@ -113,36 +131,58 @@
 	import {
 		onReady
 	} from '@dcloudio/uni-app';
+	import {
+		useI18n
+	} from 'vue-i18n'
+
+	const {
+		t
+	} = useI18n()
 
 	// Tabs列表：使用多语言变量定义选项（替代原list1，与多语言包对应）
 	const tabList = reactive([{
-			name: '虚拟卡'
+			name: t('cardType.virtualCard') // 虚拟卡
 		},
 		{
-			name: '实体卡'
+			name: t('cardType.physicalCard') // 实体卡
 		}
 	]);
 
-	// 轮播图数据（保持不变）
-	const imgList = [
-		'http://gips2.baidu.com/it/u=3944689179,983354166&fm=3028&app=3028&f=JPEG&fmt=auto?w=1024&h=1024',
-		'http://gips3.baidu.com/it/u=3886271102,3123389489&fm=3028&app=3028&f=JPEG&fmt=auto?w=1280&h=960',
-		'http://gips3.baidu.com/it/u=617385017,3644165978&fm=3028&app=3028&f=JPEG&fmt=auto?w=1280&h=960',
-	];
-
-	// Tabs激活下标（保持不变）
+	// Tabs激活下标
 	const active = ref(0);
 
-	// 刘海高度（保持不变）
+	// 刘海高度
 	const notchHeight = ref(0);
 
-	// Tabs切换方法（保持不变）
-	function click(item) {
+	// 轮播图数据
+	const imgList = ref([
+		'/static/image/card/worldpay1.png',
+		'/static/image/card/worldpay2.png',
+		'/static/image/card/worldpay3.png',
+	]);
+
+	// Tabs切换方法
+	function setActive(item) {
+		console.log(1111)
 		active.value = item.index;
+		if (item.index == 0) {
+			imgList.value = [
+				'/static/image/card/worldpay1.png',
+				'/static/image/card/worldpay2.png',
+				'/static/image/card/worldpay3.png',
+			];
+		}
+		if (item.index == 1) {
+			imgList.value = [
+				'/static/image/card/worldpay4.png',
+				'/static/image/card/worldpay5.png',
+			];
+		}
 	}
 
-	// 获取系统信息（保持不变）
+	// 获取系统信息
 	onReady(() => {
+		// 获取刘海高度
 		uni.getSystemInfo({
 			success: (res) => {
 				notchHeight.value = res.safeArea?.top || 0;
@@ -151,12 +191,15 @@
 				}
 			},
 			fail: () => {
-				notchHeight.value = 20;
+				// #ifdef APP-ANDROID
+				notchHeight.value = 40;
+				// #endif
+				notchHeight.value = 0;
 			}
 		});
 	});
 
-	// 页面跳转方法（保持不变）
+	// 页面跳转方法
 	const goToPage = (address) => {
 		uni.navigateTo({
 			url: address

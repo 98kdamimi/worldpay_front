@@ -13,7 +13,8 @@
 			<view class="emtyIcon">
 				<image src="@/static/image/index/emty.png" alt="" mode="widthFix" />
 			</view>
-			<view>暂无数据</view>
+			<!-- 替换“暂无数据”为多语言变量，兼容i18n语法 -->
+			<view>{{ $t('common.emptyData') }}</view>
 		</view>
 	</view>
 </template>
@@ -30,6 +31,7 @@
 <style lang="scss" scoped>
 	.transactionRecords-list {
 		color: #FFFFFF;
+
 		.transactionRecords-item {
 			margin: 12rpx 0;
 			padding: 32rpx 24rpx;

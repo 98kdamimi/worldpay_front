@@ -11,25 +11,33 @@
 				<view>
 					<SvgIcon name="kingKong1" width="100" height="100" style="margin-bottom: 32rpx;"></SvgIcon>
 				</view>
-				<view>{{ $t('walletManagement.recharge') }}</view>
+				<view class="marquee-text" :class="{ scroll: rechargeScroll }" id="rechargeText">
+					<span>{{ $t('walletManagement.recharge') }}</span>
+				</view>
 			</view>
 			<view @click="goToPage('/pages/transfer/transfer')">
 				<view>
 					<SvgIcon name="kingKong2" width="100" height="100" style="margin-bottom: 32rpx;"></SvgIcon>
 				</view>
-				<view>{{ $t('walletManagement.transfer') }}</view>
+				<view class="marquee-text" :class="{ scroll: transferScroll }" id="transferText">
+					<span>{{ $t('walletManagement.transfer') }}</span>
+				</view>
 			</view>
 			<view @click="goToPage('/pages/moneyTransfer/moneyTransfer')">
 				<view>
 					<SvgIcon name="kingKong3" width="100" height="100" style="margin-bottom: 32rpx;"></SvgIcon>
 				</view>
-				<view>{{ $t('walletManagement.internationalRemittance') }}</view>
+				<view class="marquee-text" :class="{ scroll: remitScroll }" id="remitText">
+					<span>{{ $t('walletManagement.internationalRemittance') }}</span>
+				</view>
 			</view>
 			<view @click="goToPage('/pages/financialManagement/financialManagement')">
 				<view>
 					<SvgIcon name="kingKong4" width="100" height="100" style="margin-bottom: 32rpx;"></SvgIcon>
 				</view>
-				<view>{{ $t('walletManagement.financialManagement') }}</view>
+				<view class="marquee-text" :class="{ scroll: financeScroll }" id="financeText">
+					<span>{{ $t('walletManagement.financialManagement') }}</span>
+				</view>
 			</view>
 		</view>
 		<!-- 交易记录 -->
@@ -50,15 +58,25 @@
 
 <script setup>
 	import {
-		ref
+		ref,
+		nextTick,
+		onUnmounted
 	} from 'vue';
 	import {
 		onReady
 	} from '@dcloudio/uni-app';
+	import {
+		checkOverflow
+	} from '@/utils/common.js'
 
 	const recordsList = ref([])
 	// 刘海高度
 	const notchHeight = ref(0);
+	// 跑马灯滚动状态
+	const rechargeScroll = ref(false)
+	const transferScroll = ref(false)
+	const remitScroll = ref(false)
+	const financeScroll = ref(false)
 
 	onReady(() => {
 		// 获取刘海高度
@@ -73,7 +91,21 @@
 				notchHeight.value = 20;
 			}
 		});
+		// 检查所有跑马灯内容是否超出
+		nextTick(() => {
+			checkOverflow('rechargeText', rechargeScroll)
+			checkOverflow('transferText', transferScroll)
+			checkOverflow('remitText', remitScroll)
+			checkOverflow('financeText', financeScroll)
+		})
 	});
+
+	onUnmounted(() => {
+		rechargeScroll.value = false
+		transferScroll.value = false
+		remitScroll.value = false
+		financeScroll.value = false
+	})
 
 	const goToPage = (address) => {
 		uni.navigateTo({

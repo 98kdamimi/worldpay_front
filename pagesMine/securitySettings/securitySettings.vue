@@ -19,16 +19,24 @@
 		ref,
 		reactive
 	} from 'vue';
+	import {
+		useI18n
+	} from 'vue-i18n'
+
+	const {
+		t
+	} = useI18n()
+
 	const navList = reactive([{
-			name: '修改登录密码',
+			name: t('securityNav.changeLoginPwd'), // 修改登录密码
 			href: '/pagesMine/changePassword/changePassword'
 		},
 		{
-			name: '支付密码设置',
+			name: t('securityNav.setPaymentPwd'), // 支付密码设置
 			href: '/pagesMine/changePassword/changePassword'
 		},
 		{
-			name: '谷歌验证码',
+			name: t('securityNav.googleAuth'), // 谷歌验证码
 			href: '/pagesMine/google/google'
 		}
 	]);

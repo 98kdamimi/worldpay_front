@@ -1,8 +1,7 @@
 <template>
 	<view class="home-container">
-		<StatusBar v-if="!ifFixedStatusBar"></StatusBar>
-		<FixedStatusBar v-else></FixedStatusBar>
-		<view class="header">
+		<FixedStatusBar></FixedStatusBar>
+		<view class="header" :style="{ top: notchHeight + 'px' }">
 			<view class="header-left-logo">
 				<image src="@/static/image/index/logoTitle.png" alt="" mode="widthFix" />
 			</view>
@@ -40,13 +39,16 @@
 			<!-- 增资 钱包 卡片申请入口 -->
 			<view class="wallet wallet1">
 				<view class="valueAddedIcon" @click="goToPage('/pages/topUp/index')">
+					<SvgIcon name="valueAdded" width="48" height="36" class='svg'></SvgIcon>
 					<span>{{ $t('home.valueAdded') }}</span>
 				</view>
-				<view class="walletIcon">
+				<view class="walletIcon" @click="goToPage('/pages/walletManagement/walletManagement')">
+					<SvgIcon name="wallet1" width="48" height="36" class='svg'></SvgIcon>
 					<span>{{ $t('home.wallet') }}</span>
 				</view>
-				<view class="cardIcon">
-					<span>{{ $t('home.cardApplication') }}</span>
+				<view class="cardIcon" @click="goToPage('/pages/cardApplication/cardApplication')">
+					<SvgIcon name="cardApplication" width="48" height="36" class='svg'></SvgIcon>
+					<span>{{ $t('home.apply') }}</span>
 				</view>
 			</view>
 		</view>
@@ -59,6 +61,7 @@
 						<image src="@/static/image/index/selectRight.png" alt="" mode="widthFix" />
 					</view>
 				</view>
+				<view class="cardDisplayBgNull-txt">{{ $t('home.pleaseApplyForAFardFirst') }}</view>
 			</view>
 			<view class="wallet wallet2">
 				<view class="valueAddedIconNull" @click="goToPage('/pages/topUp/index')">
@@ -88,17 +91,14 @@
 			</view>
 		</view>
 		<!-- 交易记录 -->
-		<view class="transactionRecords">
+		<view class="transactionRecords" style="padding-bottom: 32rpx;">
 			<!-- 吸顶标题 -->
-			<!-- 	<up-sticky :offset-top="notchHeight"> -->
-			<view class="stickyContent" :style="{ top: notchHeight + 'px' }" id="transactionRecords">
+			<view class="stickyContent" :style="{ top: (notchHeight + 40) + 'px' }" id="transactionRecords">
 				<view class="transactionRecords-title">
 					<view>{{ $t('home.transactionRecords') }}</view>
 					<view class="transactionRecords-title-right">{{ $t('home.all') }}</view>
 				</view>
 			</view>
-
-			<!-- </up-sticky> -->
 			<view class="transactionRecords-list">
 				<TransactionRecords :list="recordsList"></TransactionRecords>
 			</view>
@@ -140,74 +140,79 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { onReady, onPageScroll } from '@dcloudio/uni-app';
+	import {
+		ref,
+		onMounted
+	} from 'vue';
+	import {
+		onReady,
+		onPageScroll
+	} from '@dcloudio/uni-app';
 
-// 卡片列表
-const cardList = ref([]);
-// 交易记录
-const recordsList = ref([]);
-// 卡片弹窗
-const cardShow = ref(false);
-// 是否申请卡片
-const applyShow = ref(false);
-// 刘海高度
-const notchHeight = ref(0);
-const ifFixedStatusBar = ref(false);
+	// 卡片列表
+	const cardList = ref([{}]);
+	// 交易记录
+	const recordsList = ref([{}, {}, {}, {}, {}, {}, {}, {}, {}]);
+	// 卡片弹窗
+	const cardShow = ref(false);
+	// 是否申请卡片
+	const applyShow = ref(false);
+	// 刘海高度
+	const notchHeight = ref(0);
+	const ifFixedStatusBar = ref(false);
 
-const goToPage = (address) => {
-	uni.navigateTo({
-		url: address
-	});
-};
+	const goToPage = (address) => {
+		uni.navigateTo({
+			url: address
+		});
+	};
 
-// 打开是否申请弹窗
-function openApplyModal() {
-	applyShow.value = true;
-}
-// 关闭是否申请弹窗
-function closeApplyModal() {
-	applyShow.value = false;
-}
-// 打开卡片列表弹窗
-function openCardList() {
-	cardShow.value = true;
-}
-// 关闭卡片列表弹窗
-function closeCardList() {
-	cardShow.value = false;
-}
-onReady(() => {
-	// 获取刘海高度
-	uni.getSystemInfo({
-		success: (res) => {
-			notchHeight.value = res.safeArea?.top || 0;
-			if (!notchHeight.value) {
-				notchHeight.value = res.statusBarHeight || 0;
+	// 打开是否申请弹窗
+	function openApplyModal() {
+		applyShow.value = true;
+	}
+	// 关闭是否申请弹窗
+	function closeApplyModal() {
+		applyShow.value = false;
+	}
+	// 打开卡片列表弹窗
+	function openCardList() {
+		cardShow.value = true;
+	}
+	// 关闭卡片列表弹窗
+	function closeCardList() {
+		cardShow.value = false;
+	}
+	onReady(() => {
+		// 获取刘海高度
+		uni.getSystemInfo({
+			success: (res) => {
+				notchHeight.value = res.safeArea?.top || 0;
+				if (!notchHeight.value) {
+					notchHeight.value = res.statusBarHeight || 0;
+				}
+			},
+			fail: () => {
+				notchHeight.value = 20;
 			}
-		},
-		fail: () => {
-			notchHeight.value = 20;
-		}
+		});
 	});
-});
 
-onPageScroll(() => {
-	const query = uni.createSelectorQuery().in(this);
-	query
-		.select('#transactionRecords')
-		.boundingClientRect((data) => {
-
-			if (data.top <= notchHeight.value) {
-				ifFixedStatusBar.value = true;
-				return
-			}
-			ifFixedStatusBar.value = false;
-		})
-		.exec();
-});
+	onPageScroll(() => {
+		const query = uni.createSelectorQuery().in(this);
+		query
+			.select('#transactionRecords')
+			.boundingClientRect((data) => {
+				if (data.top <= notchHeight.value) {
+					ifFixedStatusBar.value = true;
+					return
+				}
+				ifFixedStatusBar.value = false;
+			})
+			.exec();
+	});
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+	@import './index.scss';
 </style>

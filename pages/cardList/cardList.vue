@@ -37,13 +37,20 @@
 	import {
 		onReady
 	} from '@dcloudio/uni-app';
-	// tabs切换
-	const list1 = reactive([{
-			name: '虚拟卡'
+	import {
+		useI18n
+	} from 'vue-i18n'
+
+	const {
+		t
+	} = useI18n()
+	// Tabs列表：使用多语言变量定义选项（替代原list1，与多语言包对应）
+	const tabList = reactive([{
+			name: t('cardType.virtualCard') // 虚拟卡
 		},
 		{
-			name: '实体卡'
-		},
+			name: t('cardType.physicalCard') // 实体卡
+		}
 	]);
 	// tabs下标
 	const active = ref(0)

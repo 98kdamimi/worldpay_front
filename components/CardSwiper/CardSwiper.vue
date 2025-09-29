@@ -2,14 +2,16 @@
 	<view class="carousel-container">
 		<!-- 轮播图组件 -->
 		<swiper class="carousel-swiper" :previous-margin="0" :next-margin="nextMargin" :current="currentIndex"
-			@change="handleChange" circular indicator-dots indicator-active-color="#ffffff"
-			indicator-color="rgba(255,255,255,0.5)" :indicator-dots-styles="indicatorStyles">
+			@change="handleChange" circular>
 			<swiper-item v-for="(item, index) in images" :key="index" class="carousel-item">
 				<view class="img-wrapper" :class="{ active: currentIndex === index }">
 					<image :src="item" class="carousel-img" mode="aspectFill" />
 				</view>
 			</swiper-item>
 		</swiper>
+		<view class="custom-dots">
+			<view v-for="(item, idx) in images" :key="idx" class="dot" :class="{ active: currentIndex === idx }"></view>
+		</view>
 	</view>
 </template>
 
@@ -63,6 +65,7 @@
 
 	.img-wrapper {
 		width: 560rpx;
+		height: 280rpx;
 		transition: all 0.3s ease;
 		margin: 0 0 0 32rpx;
 	}
@@ -80,5 +83,30 @@
 		height: 280rpx;
 		border-radius: 36rpx;
 		display: block;
+	}
+
+	.custom-dots {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		bottom: -24rpx;
+		margin-top: -20rpx;
+	}
+
+	.dot {
+		width: 24rpx;
+		height: 8rpx;
+		background: #FFFFFF;
+		border-radius: 5rpx;
+		opacity: 0.5;
+		margin: 0 8rpx;
+		transition: background 0.2s, width 0.2s;
+	}
+
+	.dot.active {
+		width: 48rpx;
+		background: #fff;
+		opacity: 1;
 	}
 </style>

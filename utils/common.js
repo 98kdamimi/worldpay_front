@@ -32,3 +32,26 @@ export const formatDate = (timestamp) => {
 
 	return `${year}-${month}-${day}`;
 };
+
+// 检查文字是否超出
+export const checkOverflow = (id, flagRef) => {
+	uni.createSelectorQuery()
+		.select(`#${id}`)
+		.boundingClientRect(rect => {
+			if (rect) {
+				uni.createSelectorQuery()
+					.select(`#${id} span`)
+					.boundingClientRect(spanRect => {
+						if (spanRect && spanRect.width > rect.width) {
+							flagRef.value = true
+							console.log(id, '需要滚动')
+						} else {
+							flagRef.value = false
+							console.log(id, '不需要滚动')
+						}
+					})
+					.exec()
+			}
+		})
+		.exec()
+}

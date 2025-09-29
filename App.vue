@@ -41,9 +41,38 @@
 	.viewBox {
 		width: 100vw;
 	}
-	.stickyContent{
+
+	.stickyContent {
 		position: sticky;
 		background: #0f0f0f;
 		z-index: 999;
+	}
+
+	.marquee-text {
+		overflow: hidden;
+		white-space: nowrap;
+		position: relative;
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.marquee-text span {
+		display: inline-block;
+	}
+
+	.marquee-text.scroll span {
+		animation: marquee 4s linear infinite;
+	}
+
+	@keyframes marquee {
+		0% {
+			transform: translateX(100%);
+		}
+
+		100% {
+			transform: translateX(-100%);
+		}
 	}
 </style>
