@@ -38,22 +38,29 @@
 
 .button {
 	position: fixed;
-	left: 48rpx;
-	right: 48rpx;
-	bottom: 30rpx;
-	width: 686rpx;
-	height: 88rpx;
-	line-height: 88rpx;
-	text-align: center;
-	background: #1e3ad6;
-	border-radius: 50rpx;
-	font-family: PingFangSC, PingFang SC;
-	font-weight: 500;
-	font-size: 32rpx;
-	color: #ffffff;
-	margin: 0 auto;
+	left: 0rpx;
+	right: 0rpx;
+	bottom: 0rpx;
+	padding: 30rpx 0;
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	background: #0f0f0f;
+	> view {
+		width: 686rpx;
+		height: 88rpx;
+		line-height: 88rpx;
+		text-align: center;
+		background: #1e3ad6;
+		border-radius: 50rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 32rpx;
+		color: #ffffff;
+		margin: 0 auto;
+		display: flex;
+		justify-content: center;
+	}
 }
 .button-placeholder {
 	height: 88rpx;

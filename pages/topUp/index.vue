@@ -52,6 +52,12 @@
 	import {
 		formattedCard
 	} from '@/utils/common.js'
+	import {
+		onReady
+	} from '@dcloudio/uni-app';
+	import {
+		findByUid
+	} from '@/request/api.js'
 </script>
 
 <style lang="scss" scoped>

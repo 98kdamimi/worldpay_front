@@ -1,7 +1,6 @@
 <template>
 	<view class="carousel-container">
-		<!-- 轮播图组件 -->
-		<swiper class="carousel-swiper" :previous-margin="0" :next-margin="nextMargin" :current="currentIndex"
+		<swiper class="carousel-swiper" previous-margin="0" :next-margin="nextMargin" :current="currentIndex"
 			@change="handleChange" circular>
 			<swiper-item v-for="(item, index) in images" :key="index" class="carousel-item">
 				<view class="img-wrapper" :class="{ active: currentIndex === index }">
@@ -17,29 +16,33 @@
 
 <script>
 	export default {
-		name: 'CardCarousel',
+		name: 'CardSwiper',
 		props: {
 			images: {
 				type: Array,
 				required: true,
 				default: () => []
+			},
+			current: {
+				type: Number,
+				default: 0
 			}
 		},
 		data() {
 			return {
-				currentIndex: 0,
-				nextMargin: '168rpx', // 右侧边距，让后面的图片显示30%
-				indicatorStyles: {
-					bottom: '20rpx',
-					width: '12rpx',
-					height: '12rpx',
-					borderRadius: '6rpx'
-				}
+				currentIndex: this.current,
+				nextMargin: '168rpx'
 			};
+		},
+		watch: {
+			current(val) {
+				this.currentIndex = val
+			}
 		},
 		methods: {
 			handleChange(e) {
 				this.currentIndex = e.detail.current;
+				this.$emit('change', this.currentIndex);
 			}
 		}
 	};

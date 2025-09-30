@@ -48,20 +48,27 @@
 
 .button {
 	position: fixed;
-	left: 48rpx;
-	right: 48rpx;
-	bottom: 42rpx;
-	width: 654rpx;
-	height: 100rpx;
-	line-height: 100rpx;
-	text-align: center;
-	background: #1e3ad6;
-	border-radius: 50rpx;
-	font-family: PingFangSC, PingFang SC;
-	font-weight: 500;
-	font-size: 36rpx;
-	color: #ffffff;
-	margin: 0 auto;
+	left: 0rpx;
+	right: 0rpx;
+	bottom: 0rpx;
+	padding: 24rpx 0 42rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #0f0f0f;
+	> view {
+		width: 654rpx;
+		height: 100rpx;
+		line-height: 100rpx;
+		text-align: center;
+		background: #1e3ad6;
+		border-radius: 50rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 36rpx;
+		color: #ffffff;
+		margin: 0 auto;
+	}
 }
 .button-placeholder {
 	height: 100rpx;

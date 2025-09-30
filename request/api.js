@@ -48,3 +48,24 @@ export const findUserCardList = (data) => {
 		showLoading: false,
 	});
 };
+
+// 查询银行卡信息列表
+export const findList = (data) => {
+	return http.post('/ucard/card/findList', data, {
+		showLoading: false,
+	});
+};
+
+// 查询用户持卡人
+export const findByUid = (data) => {
+	return http.get('/ucard/cardholder/findByUid', data, {
+		showLoading: false,
+	});
+};
+
+// 新增持卡人
+export const cardholderAdd = (data) => {
+	return http.post('/ucard/cardholder/add', data, {
+		showLoading: false,
+	});
+};

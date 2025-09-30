@@ -12,83 +12,17 @@
 
 		<!-- 卡片轮播 -->
 		<view class="swiper-Box">
-			<CardSwiper :images="imgList"></CardSwiper>
+			<CardSwiper :images="imgList" :current="swiperIndex" @change="onSwiperChange" />
 		</view>
 
 		<!-- 虚拟卡 -->
-		<view class="advantages" v-if="active == 0">
+		<view class="advantages" v-if="dataList[swiperIndex]?.lableList?.length">
 			<view>
-				<view>
+				<view v-for="(item, index) in dataList[swiperIndex].lableList" :key="index">
 					<view class="svg">
 						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
 					</view>
-					<view>{{ $t('cardApply.advantage.onlinePayment') }}</view>
-				</view>
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.quickApplication') }}</view>
-				</view>
-			</view>
-			<view style="margin-top: 32rpx;">
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.quickRecharge') }}</view>
-				</view>
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.flexibleLimit') }}</view>
-				</view>
-			</view>
-		</view>
-
-		<!-- 实体卡 -->
-		<view class="advantages" v-if="active == 1">
-			<view>
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.onlinePayment') }}</view>
-				</view>
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.quickApplication') }}</view>
-				</view>
-			</view>
-			<view style="margin-top: 32rpx;">
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.quickRecharge') }}</view>
-				</view>
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.flexibleLimit') }}</view>
-				</view>
-			</view>
-			<view style="margin-top: 32rpx;">
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.quickWithdrawal') }}</view>
-				</view>
-				<view>
-					<view class="svg">
-						<SvgIcon name="advantages" width="40" height="40"></SvgIcon>
-					</view>
-					<view>{{ $t('cardApply.advantage.cardDelivery') }}</view>
+					<view>{{ item.name }}</view>
 				</view>
 			</view>
 		</view>
@@ -97,27 +31,26 @@
 		<view class="rule-title">{{ $t('home.cardRules') }}</view>
 		<view class="rule-box top">
 			<view>{{ $t('home.cardOpeningFee') }}</view>
-			<view class="rule-box-txt">3.00</view>
+			<view class="rule-box-txt">{{ dataList[swiperIndex]?.openCardCost }}</view>
 		</view>
 		<view class="rule-box">
 			<view>{{ $t('home.prepaymentFee') }}</view>
-			<view class="rule-box-txt">20.00</view>
+			<view class="rule-box-txt">{{ dataList[swiperIndex]?.preSaveCost }}</view>
 		</view>
 		<view class="rule-box bottom">
 			<view>{{ $t('home.monthlyServiceFee') }}</view>
-			<view class="rule-box-txt">1.00</view>
+			<view class="rule-box-txt">{{ dataList[swiperIndex]?.monthFee }}</view>
 		</view>
 
 		<!-- 提示文本：多语言拆分（避免重复键） -->
-		<view class="hint-txt">
-			<span>{{ $t('cardApply.hint.txt1') }}</span>
-			<span class="span-txt">{{ $t('cardApply.hint.txt2') }}</span>
-			<span class="span-txt">{{ $t('cardApply.hint.txt2') }}</span>
+		<view class="hint-txt" v-if="dataList[swiperIndex]?.synopsisData?.length">
+			<span>{{ dataList[swiperIndex]?.synopsisData?.title }}</span>
+			<span class="span-txt">{{ dataList[swiperIndex]?.synopsisData?.content }}</span>
 		</view>
 
 		<!-- 立即申请按钮 -->
 		<view class="button" @click="goToPage('/pages/cardholder/cardholder')">
-			{{ $t('cardApply.applyNow') }}
+			<view>{{ $t('cardApply.applyNow') }}</view>
 		</view>
 		<view class="button-placeholder"></view>
 	</view>
@@ -134,6 +67,9 @@
 	import {
 		useI18n
 	} from 'vue-i18n'
+	import {
+		findList
+	} from '@/request/api.js'
 
 	const {
 		t
@@ -150,19 +86,19 @@
 
 	// Tabs激活下标
 	const active = ref(0);
+	// 当前轮播下标
+	const swiperIndex = ref(0)
 
 	// 刘海高度
 	const notchHeight = ref(0);
 
 	// 轮播图数据
-	const imgList = ref([
-		'/static/image/card/worldpay1.png',
-		'/static/image/card/worldpay2.png',
-		'/static/image/card/worldpay3.png',
-	]);
+	const imgList = ref([]);
+	const dataList = ref([])
 
 	// 获取系统信息
 	onReady(() => {
+		getFindList()
 		// 获取刘海高度
 		uni.getSystemInfo({
 			success: (res) => {
@@ -180,22 +116,36 @@
 		});
 	});
 
+	// 查询银行卡信息列表
+	const getFindList = async () => {
+		try {
+			const res = await findList({
+				bankCardNature: active.value == 0 ? "VIRTUAL" : "PHYSICAL"
+			})
+			if (res.rtncode == 200) {
+				dataList.value = res.data
+				imgList.value = []
+				res.data.forEach(item => {
+					if (item.img) {
+						imgList.value.push(item.img)
+					}
+				})
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	// 轮播图切换时，更新下标并处理数据
+	function onSwiperChange(idx) {
+		swiperIndex.value = idx
+	}
+
 	// Tabs切换方法
 	function setActive(item) {
 		active.value = item.index;
-		if (item.index == 0) {
-			imgList.value = [
-				'/static/image/card/worldpay1.png',
-				'/static/image/card/worldpay2.png',
-				'/static/image/card/worldpay3.png',
-			];
-		}
-		if (item.index == 1) {
-			imgList.value = [
-				'/static/image/card/worldpay4.png',
-				'/static/image/card/worldpay5.png',
-			];
-		}
+		swiperIndex.value = 0
+		getFindList()
 	}
 
 	// 页面跳转方法

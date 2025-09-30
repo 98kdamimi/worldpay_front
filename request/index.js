@@ -49,6 +49,7 @@ const request = (params) => {
 	const token = uni.getStorageSync('token');
 	// 3. 构建请求头（优先级：自定义header > 默认header）
 	const defaultHeader = {
+		'language': 'zh',
 		'Content-Type': isFormData ?
 			'multipart/form-data' // 文件上传用FormData
 			:
