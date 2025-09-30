@@ -74,3 +74,59 @@
 	height: 100rpx;
 	margin: 42rpx auto;
 }
+
+.country-popup {
+	background: #0f0f0f;
+	border-top-left-radius: 24rpx;
+	border-top-right-radius: 24rpx;
+	padding-bottom: 32rpx;
+	.country-popup-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 32rpx 32rpx 0 32rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 30rpx;
+		color: #ffffff;
+	}
+
+	.country-popup-title {
+		font-size: 32rpx;
+		font-weight: bold;
+	}
+
+	.country-popup-close {
+		font-size: 40rpx;
+		color: #fff;
+		cursor: pointer;
+	}
+
+	.country-popup-search {
+		margin: 24rpx 32rpx;
+		width: 686rpx;
+		padding: 24rpx 0;
+		border-radius: 24rpx;
+		border: 1rpx solid #999;
+
+		input {
+			padding: 0 24rpx;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 28rpx;
+			color: #9191aa;
+		}
+	}
+
+	.country-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 24rpx 32rpx;
+		font-size: 30rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 28rpx;
+		color: #ffffff;
+	}
+}

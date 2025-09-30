@@ -346,5 +346,7 @@
 	"securityNav.googleAuth": "谷歌验证码",
 	"recordType.wallet": "钱包记录",
 	"recordType.card": "卡片记录",
-	"home.pleaseApplyForAFardFirst": "请先申请卡片！"
+	"home.pleaseApplyForAFardFirst": "请先申请卡片！",
+	"select.countryRegios": "选择国家/地区",
+	"select.countryRegiosCode": "请输入国家或区号"
 }

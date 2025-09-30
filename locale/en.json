@@ -346,5 +346,7 @@
 	"securityNav.googleAuth": "Google Verification Code",
 	"recordType.wallet": "Wallet Records",
 	"recordType.card": "Card Records",
-	"home.pleaseApplyForAFardFirst": "Please apply for a card first!"
+	"home.pleaseApplyForAFardFirst": "Please apply for a card first!",
+	"select.countryRegios": "Select Country/Region",
+	"select.countryRegiosCode": "Please enter the country or area code"
 }
