@@ -23,32 +23,17 @@
 					</view>
 				</view>
 			</view>
-			<view class="assets-approximately">≈ $ 0.00</view>
-			<view class="assets-exchange-approximately">≈0.00 USDT</view>
+			<view class="assets-approximately">$ {{ totalCardAssets }}</view>
+			<!-- <view class="assets-exchange-approximately">≈0.00 USDT</view> -->
 		</view>
 		<!-- 卡片展示 -->
-		<view v-if="cardList && cardList.length">
+		<view v-if="cardData && cardData.list.length">
 			<view class="cardDisplay cardDisplayBg">
 				<view class="cardDisplay-cardist" @click="openCardList()">
 					<view>{{ $t('home.cardList') }}</view>
 					<view class="cardDisplay-cardist-icon">
 						<image src="@/static/image/index/selectRight.png" alt="" mode="widthFix" />
 					</view>
-				</view>
-			</view>
-			<!-- 增资 钱包 卡片申请入口 -->
-			<view class="wallet wallet1">
-				<view class="valueAddedIcon" @click="goToPage('/pages/topUp/index')">
-					<SvgIcon name="valueAdded" width="48" height="36" class='svg'></SvgIcon>
-					<span>{{ $t('home.valueAdded') }}</span>
-				</view>
-				<view class="walletIcon" @click="goToPage('/pages/walletManagement/walletManagement')">
-					<SvgIcon name="wallet1" width="48" height="36" class='svg'></SvgIcon>
-					<span>{{ $t('home.wallet') }}</span>
-				</view>
-				<view class="cardIcon" @click="goToPage('/pages/cardApplication/cardApplication')">
-					<SvgIcon name="cardApplication" width="48" height="36" class='svg'></SvgIcon>
-					<span>{{ $t('home.apply') }}</span>
 				</view>
 			</view>
 		</view>
@@ -63,19 +48,34 @@
 				</view>
 				<view class="cardDisplayBgNull-txt">{{ $t('home.pleaseApplyForAFardFirst') }}</view>
 			</view>
-			<view class="wallet wallet2">
-				<view class="valueAddedIconNull" @click="goToPage('/pages/topUp/index')">
-					<view class="valueAddedIconNull-left">
-						<image src="@/static/image/index/valueAddedIconNullicon.png" mode=""></image>
-					</view>
-					<view>{{ $t('home.valueAdded') }}</view>
+		</view>
+		<!-- 增资 钱包 卡片申请入口 -->
+		<view class="wallet wallet1" v-if="userInfo.walletState">
+			<view class="valueAddedIcon" @click="goToPage('/pages/topUp/index')">
+				<SvgIcon name="valueAdded" width="48" height="36" class='svg'></SvgIcon>
+				<span>{{ $t('home.valueAdded') }}</span>
+			</view>
+			<view class="walletIcon" @click="goToPage('/pages/walletManagement/walletManagement')">
+				<SvgIcon name="wallet1" width="48" height="36" class='svg'></SvgIcon>
+				<span>{{ $t('home.wallet') }}</span>
+			</view>
+			<view class="cardIcon" @click="goToPage('/pages/cardApplication/cardApplication')">
+				<SvgIcon name="cardApplication" width="48" height="36" class='svg'></SvgIcon>
+				<span>{{ $t('home.apply') }}</span>
+			</view>
+		</view>
+		<view class="wallet wallet2" v-else>
+			<view class="valueAddedIconNull" @click="goToPage('/pages/topUp/index')">
+				<view class="valueAddedIconNull-left">
+					<image src="@/static/image/index/valueAddedIconNullicon.png" mode=""></image>
 				</view>
-				<view class="cardIconNull" @click="goToPage('/pages/cardApplication/cardApplication')">
-					<view class="cardIconNull-left">
-						<image src="@/static/image/index/cardIconNullicon.png" mode=""></image>
-					</view>
-					<view>{{ $t('home.cardApplication') }}</view>
+				<view>{{ $t('home.valueAdded') }}</view>
+			</view>
+			<view class="cardIconNull" @click="goToPage('/pages/cardApplication/cardApplication')">
+				<view class="cardIconNull-left">
+					<image src="@/static/image/index/cardIconNullicon.png" mode=""></image>
 				</view>
+				<view>{{ $t('home.cardApplication') }}</view>
 			</view>
 		</view>
 		<!-- 介绍 -->
@@ -148,11 +148,21 @@
 		onReady,
 		onPageScroll
 	} from '@dcloudio/uni-app';
+	import {
+		findUserCardAssets,
+		findUserCardList
+	} from '@/request/api.js'
+	import {
+		useUserStore
+	} from '@/stores/user';
+	const userStore = useUserStore();
 
 	// 卡片列表
-	const cardList = ref([{}]);
+	const cardData = ref({
+		list: []
+	});
 	// 交易记录
-	const recordsList = ref([{}, {}, {}, {}, {}, {}, {}, {}, {}]);
+	const recordsList = ref([]);
 	// 卡片弹窗
 	const cardShow = ref(false);
 	// 是否申请卡片
@@ -160,12 +170,50 @@
 	// 刘海高度
 	const notchHeight = ref(0);
 	const ifFixedStatusBar = ref(false);
+	// 个人信息
+	const userInfo = ref({})
+	// 卡片总资产
+	const totalCardAssets = ref()
 
-	const goToPage = (address) => {
-		uni.navigateTo({
-			url: address
+	onReady(async () => {
+		userInfo.value = await userStore.fetchUserInfoByToken();
+		getFindUserCardAssets()
+		getFindUserCardList()
+		// 获取刘海高度
+		uni.getSystemInfo({
+			success: (res) => {
+				notchHeight.value = res.safeArea?.top || 0;
+				if (!notchHeight.value) {
+					notchHeight.value = res.statusBarHeight || 0;
+				}
+			},
+			fail: () => {
+				notchHeight.value = 20;
+			}
 		});
-	};
+	});
+	// 获取卡片总资产
+	const getFindUserCardAssets = async () => {
+		try {
+			const res = await findUserCardAssets({
+				uid: userInfo.value.uid
+			})
+			totalCardAssets.value = res.data
+		} catch (error) {
+			console.error(error)
+		}
+	}
+	// 查询用户所有卡片
+	const getFindUserCardList = async () => {
+		try {
+			const res = await findUserCardList({
+				uid: userInfo.value.uid
+			})
+			cardData.value = res.data
+		} catch (error) {
+			console.error(error)
+		}
+	}
 
 	// 打开是否申请弹窗
 	function openApplyModal() {
@@ -183,20 +231,6 @@
 	function closeCardList() {
 		cardShow.value = false;
 	}
-	onReady(() => {
-		// 获取刘海高度
-		uni.getSystemInfo({
-			success: (res) => {
-				notchHeight.value = res.safeArea?.top || 0;
-				if (!notchHeight.value) {
-					notchHeight.value = res.statusBarHeight || 0;
-				}
-			},
-			fail: () => {
-				notchHeight.value = 20;
-			}
-		});
-	});
 
 	onPageScroll(() => {
 		const query = uni.createSelectorQuery().in(this);
@@ -211,6 +245,12 @@
 			})
 			.exec();
 	});
+
+	const goToPage = (address) => {
+		uni.navigateTo({
+			url: address
+		});
+	};
 </script>
 
 <style lang="scss" scoped>

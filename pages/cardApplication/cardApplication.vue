@@ -139,7 +139,7 @@
 		t
 	} = useI18n()
 
-	// Tabs列表：使用多语言变量定义选项（替代原list1，与多语言包对应）
+	// Tabs列表
 	const tabList = reactive([{
 			name: t('cardType.virtualCard') // 虚拟卡
 		},
@@ -161,25 +161,6 @@
 		'/static/image/card/worldpay3.png',
 	]);
 
-	// Tabs切换方法
-	function setActive(item) {
-		console.log(1111)
-		active.value = item.index;
-		if (item.index == 0) {
-			imgList.value = [
-				'/static/image/card/worldpay1.png',
-				'/static/image/card/worldpay2.png',
-				'/static/image/card/worldpay3.png',
-			];
-		}
-		if (item.index == 1) {
-			imgList.value = [
-				'/static/image/card/worldpay4.png',
-				'/static/image/card/worldpay5.png',
-			];
-		}
-	}
-
 	// 获取系统信息
 	onReady(() => {
 		// 获取刘海高度
@@ -198,6 +179,24 @@
 			}
 		});
 	});
+
+	// Tabs切换方法
+	function setActive(item) {
+		active.value = item.index;
+		if (item.index == 0) {
+			imgList.value = [
+				'/static/image/card/worldpay1.png',
+				'/static/image/card/worldpay2.png',
+				'/static/image/card/worldpay3.png',
+			];
+		}
+		if (item.index == 1) {
+			imgList.value = [
+				'/static/image/card/worldpay4.png',
+				'/static/image/card/worldpay5.png',
+			];
+		}
+	}
 
 	// 页面跳转方法
 	const goToPage = (address) => {

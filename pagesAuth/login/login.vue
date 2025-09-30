@@ -10,12 +10,13 @@
 			<view class="box-title">{{ $t('auth.welcomeWorldpay') }}</view>
 			<view class="input-box">
 				<SvgIcon name="svg1" width="40" height="40"></SvgIcon>
-				<input type="text" :placeholder="$t('auth.enterEmail')" placeholder-style="color: #8f8f8f;" />
+				<input type="text" :placeholder="$t('auth.enterEmail')" placeholder-style="color: #8f8f8f;"
+					v-model="email" />
 			</view>
 			<view class="input-box">
 				<SvgIcon name="svg2" width="40" height="40"></SvgIcon>
 				<input :type="eyeType ? 'password' : 'text'" :placeholder="$t('auth.enterPassword')"
-					placeholder-style="color: #8f8f8f;" />
+					placeholder-style="color: #8f8f8f;" v-model="password" />
 				<view @click="eyeType = !eyeType">
 					<SvgIcon name="svg5" width="36" height="36" v-if="eyeType"></SvgIcon>
 					<SvgIcon name="svg4" width="36" height="36" v-else></SvgIcon>
@@ -26,7 +27,7 @@
 				<view @click="goToPage('/pagesMine/changePassword/changePassword')">{{ $t('auth.forgotPassword') }}
 				</view>
 			</view>
-			<view class="loginBtton" @click="applyShow = true">{{ $t('auth.login') }}</view>
+			<view class="loginBtton" @click="handleLogin">{{ $t('auth.login') }}</view>
 			<view class="xieyi">
 				<view @click="xyType = !xyType">
 					<!-- #ifdef H5 -->
@@ -37,7 +38,7 @@
 					<!-- #ifdef APP -->
 					<SvgIcon name="svg3" width="28" height="28" style="margin: 1rpx 12rpx 0 0;" v-if="!xyType">
 					</SvgIcon>
-					<SvgIcon name="svg3" width="28" height="28" style="margin: 1rpx 12rpx 0 0;" v-else></SvgIcon>
+					<SvgIcon name="svg6" width="28" height="28" style="margin: 1rpx 12rpx 0 0;" v-else></SvgIcon>
 					<!-- #endif -->
 				</view>
 				<view>
@@ -66,10 +67,66 @@
 	import {
 		ref
 	} from 'vue';
+	import {
+		login
+	} from '@/request/api.js'
+	import {
+		useUserStore
+	} from '@/stores/user';
+	const userStore = useUserStore();
 
 	const eyeType = ref(true)
 	const xyType = ref(true)
 	const applyShow = ref(false)
+
+	const email = ref('')
+	const password = ref('')
+
+	// 登录按钮校验
+	const handleLogin = async () => {
+		if (xyType.value) {
+			uni.showToast({
+				title: '请阅读并同意协议',
+				icon: 'none'
+			})
+			return
+		}
+		if (!email.value) {
+			uni.showToast({
+				title: '请输入账号',
+				icon: 'none'
+			})
+			return
+		}
+		if (!password.value) {
+			uni.showToast({
+				title: '请输入密码',
+				icon: 'none'
+			})
+			return
+		}
+		try {
+			const res = await login({
+				userEmail: email.value,
+				userPassword: password.value,
+			})
+			if (res.rtncode == 200) {
+				const newUserInfo = await userStore.setToken(res.data);
+				if (newUserInfo) {
+					if (newUserInfo.googleState) {
+						uni.hideLoading()
+						applyShow.value = true
+					} else {
+						setTimeout(() => {
+							goToSwitch()
+						}, 1000)
+					}
+				}
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
 
 	const goToPage = (address) => {
 		uni.navigateTo({

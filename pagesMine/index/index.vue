@@ -68,10 +68,22 @@
 	import {
 		useI18n
 	} from 'vue-i18n'
+	// import {
+	// 	useUserStore
+	// } from '@/stores/user';
+	// const userStore = useUserStore();
 
 	const {
 		t
 	} = useI18n()
+
+	// 编辑昵称后，主动调用 findToken 刷新用户信息
+	// const refreshUserInfo = async () => {
+	// 	await userStore.fetchUserInfoByToken();
+	// 	uni.showToast({
+	// 		title: '用户信息已更新'
+	// 	});
+	// };
 
 	const navList = reactive([{
 			svg: 'mine1',
