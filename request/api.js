@@ -69,3 +69,10 @@ export const cardholderAdd = (data) => {
 		showLoading: false,
 	});
 };
+
+// 查询理财订单
+export const orderList = (data) => {
+	return http.post('/ucard/product/orderList', data, {
+		showLoading: false,
+	});
+};

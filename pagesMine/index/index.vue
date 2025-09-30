@@ -9,9 +9,9 @@
 		<view class="mine-info">
 			<SvgIcon name="avatar" width="160" height="160"></SvgIcon>
 			<view class="info-right">
-				<view>188 **** 8888</view>
-				<view class="info-txt">{{ $t('mine.uidLabel') }}888888</view>
-				<view class="info-txt">{{ $t('mine.invitationCode') }}88888</view>
+				<view>{{ userInfo.userEmail }}</view>
+				<view class="info-txt">{{ $t('mine.uidLabel') }}{{ userInfo.uid }}</view>
+				<!-- <view class="info-txt">{{ $t('mine.invitationCode') }}88888</view> -->
 			</view>
 		</view>
 		<view class="kingKong">
@@ -66,24 +66,24 @@
 		reactive
 	} from 'vue';
 	import {
+		onReady
+	} from '@dcloudio/uni-app';
+	import {
 		useI18n
 	} from 'vue-i18n'
-	// import {
-	// 	useUserStore
-	// } from '@/stores/user';
-	// const userStore = useUserStore();
+	import {
+		useUserStore
+	} from '@/stores/user';
+	const userStore = useUserStore();
 
 	const {
 		t
 	} = useI18n()
+	const userInfo = ref({})
 
-	// 编辑昵称后，主动调用 findToken 刷新用户信息
-	// const refreshUserInfo = async () => {
-	// 	await userStore.fetchUserInfoByToken();
-	// 	uni.showToast({
-	// 		title: '用户信息已更新'
-	// 	});
-	// };
+	onReady(async () => {
+		userInfo.value = await userStore.fetchUserInfoByToken();
+	});
 
 	const navList = reactive([{
 			svg: 'mine1',

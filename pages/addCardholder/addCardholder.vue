@@ -115,7 +115,7 @@
 	})
 
 	onReady(() => {
-		loadCountryList()
+
 	});
 
 	// 新增持卡人
