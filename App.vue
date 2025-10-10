@@ -1,33 +1,16 @@
-<script>
-export default {
-	onLaunch: function () {
-		console.log('App Launch');
-		// const isFirstLanunch = uni.getStorageSync('isFirstLaunch');
-		// if (!isFirstLanunch) {
-		// 	uni.setStorageSync('isFirstLaunch', true);
-		// 	uni.reLaunch({
-		// 		url: '/pagesAuth/index/index'
-		// 	});
-		// } else if (!token) {
-		// 	uni.reLaunch({
-		// 		url: '/pagesAuth/login/login'
-		// 	});
-		// } else {
-		// 	uni.reLaunch({
-		// 		url: '/pages/index/index'
-		// 	});
-		// }
-			uni.reLaunch({
-				url: '/pagesAuth/login/login'
-			});
-	},
-	onShow: function () {
-		console.log('App Show');
-	},
-	onHide: function () {
-		console.log('App Hide');
-	}
-};
+<script setup>
+import { onLaunch } from '@dcloudio/uni-app';
+onLaunch(() => {
+	console.log("app启动");
+	uni.getPushClientId({
+		success: (res) => {
+			uni.setStorageSync('ClientId', res.cid);
+		},
+		fail(err) {
+			console.log(err);
+		}
+	});
+});
 </script>
 
 <style lang="scss">

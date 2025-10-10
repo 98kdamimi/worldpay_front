@@ -1,144 +1,184 @@
 /**
- * 封装uni.request网络请求
+ * @description 封装 uni.request 网络请求模块
  * 功能特性：
  * 1. 统一基础路径与超时时间
- * 2. 自动携带Token（从Storage获取）
+ * 2. 自动携带最新 Token（从 Pinia 实时获取）
  * 3. 统一错误提示（业务错误/网络错误）
- * 4. Token失效自动跳登录页
-
- * @param {Object} params - 请求参数
- * @param {string} params.url - 接口路径（相对路径，如'/api/user/register'）
- * @param {string} [params.method='get'] - 请求方法（get/post/put/delete）
- * @param {Object} [params.data={}] - 请求数据
- * @param {Object} [params.header={}] - 自定义请求头（会覆盖默认头）
- * @returns {Promise<Object>} - 接口返回的业务数据（data.data）
+ * 4. Token 失效自动跳登录页（防抖处理，防止多次跳转）
+ * 5. 支持文件上传、国际化语言头
  */
-
-
 
 import {
 	useUserStore
-} from "@/stores/user.js"
+} from '@/stores/user.js'
+
+import {
+	normalizeLang
+} from '@/utils/common.js'
+
+import {
+	useAppStore
+} from '@/stores/app.js'
+
+import {
+	storeToRefs
+} from 'pinia'
+
+// ------------------------- 常量定义 -------------------------
+const BASE_URL = 'http://192.168.3.9:8063'
+const DEFAULT_TIMEOUT = 10000
 
 
 
-const BASE_URL = 'http://f46ddc66.natappfree.cc';
 
-// 请求拦截器
-function requestInterceptor(config) {
+// 防止 403 重复跳转登录页
+let isNavigatingLogin = false
+
+// ------------------------- Token 失效统一处理 -------------------------
+function handleTokenInvalid(msg) {
+	if (isNavigatingLogin) return
+	isNavigatingLogin = true
+
 	const userStore = useUserStore()
-	const token = userStore.token;
-	if (token) {
-		config.header = {
-			...config.header,
-			token,
-		};
-	}
-	config.data = {
-		...config.data,
-	};
-	// 默认超时 10 秒，可在请求中自定义
-	if (!config.timeout) config.timeout = 10000;
-	console.log('请求拦截器处理后的config:', config);
-	return config;
+	userStore.logout?.() // 可选：如果你的 store 有 logout 方法
+
+	uni.removeStorageSync('token')
+	uni.showToast({
+		title: msg || '登录已过期，请重新登录',
+		icon: 'none',
+		duration: 1500,
+	})
+
+	setTimeout(() => {
+		uni.reLaunch({
+			url: '/pagesAuth/login/login',
+		})
+		isNavigatingLogin = false
+	}, 1500)
 }
 
+// ------------------------- 请求拦截器 -------------------------
+function requestInterceptor(config) {
+	const userStore = useUserStore()
+	const appStore = useAppStore()
 
+	const {
+		language
+	} = storeToRefs(appStore)
 
+	const token = userStore.token
 
-// 封装请求函数
+	// header 默认设置
+	config.header = {
+		'language': normalizeLang(language.value),
+		...config.header,
+	}
+
+	// 动态添加 Token（实时取 store 值）
+	if (token) {
+		config.header.token = token
+	}
+
+	// 默认超时时间
+	if (!config.timeout) config.timeout = DEFAULT_TIMEOUT
+
+	return config
+}
+
+// ------------------------- 响应拦截器 -------------------------
+function responseInterceptor(response) {
+	const {
+		data: res
+	} = response
+
+	// 后端返回结构中建议有 rtncode/msg/data
+	switch (res.rtncode) {
+		case 200:
+			return res.data
+
+		case 403:
+			handleTokenInvalid(res.msg)
+			throw new Error(res.msg || 'Token 失效')
+
+		default:
+			uni.showToast({
+				title: res.msg || '请求错误',
+				icon: 'none',
+				duration: 2000,
+			})
+			throw new Error(res.msg || '请求错误')
+	}
+}
+
+// ------------------------- 核心请求函数 -------------------------
 const request = (options) => {
-	const config = requestInterceptor(options);
-
+	const config = requestInterceptor(options)
+	
 	return new Promise((resolve, reject) => {
 		uni.request({
-			// 拼接完整URL（处理相对路径开头的'/'，避免重复）
 			url: BASE_URL + config.url,
-			method: (config.method || 'GET').toUpperCase() // 统一转为大写（避免大小写问题）
+			method: (config.method || 'GET').toUpperCase(),
 			data: config.data || {},
 			header: config.header || {},
 			timeout: config.timeout,
 
-
-			// 5. 成功回调（处理HTTP状态码和业务状态码）
-			success: (response) => {
-				const {
-					data: res
-				} = response;
-
-				console.log("调用接口", res)
-
-				// 200=成功，403=Token失效，其他=业务错误
-				switch (res.rtncode) {
-					case 200:
-						resolve(res.data || {}); // 仅返回业务数据（简化调用层处理）
-						break;
-					case 403:
-						// Token失效：清除无效Token + 跳登录页（避免重复跳转）
-						uni.removeStorageSync('token');
-						uni.navigateTo({
-							url: '/pagesAuth/login/login',
-							success: () => {
-								uni.showToast({
-									title: res.msg || "Error",
-									icon: 'none',
-									duration: 2000
-								});
-							}
-						});
-
-						reject(new Error(res.msg || "Error"));
-						break;
-					default:
-						uni.showToast({
-							title: res.msg || "Error",
-							icon: 'none',
-							duration: 2000
-						});
-						reject(new Error(res.msg || "Error"));
-						break;
+			success: (res) => {
+				try {
+					const result = responseInterceptor(res)
+					resolve(result)
+				} catch (err) {
+					reject(err)
 				}
 			},
 
-			// 6. 失败回调（处理网络错误，如断网、超时）
 			fail: (err) => {
-				const errorMsg = err.errMsg && err.errMsg.includes('timeout') ?
+				const errorMsg = err.errMsg?.includes('timeout') ?
 					'请求超时，请检查网络' :
-					'网络异常，请稍后重试';
+					'网络异常，请稍后重试'
+
 				uni.showToast({
 					title: errorMsg,
 					icon: 'none',
-					duration: 2000
-				});
-				reject(new Error(errorMsg));
+					duration: 2000,
+				})
+				reject(new Error(errorMsg))
 			},
-		});
-	});
-};
+		})
+	})
+}
 
-// 导出常用请求方法（简化调用，可选）
+// ------------------------- 请求方法快捷导出 -------------------------
 export const http = {
-	// GET请求
-	get: (url, params = {}) => {
+	// GET 请求
+	get: (url, params = {}, config = {}) => {
 		return request({
 			url,
 			method: 'GET',
 			data: params,
-		});
+			...config
+		})
 	},
 
-	// POST请求（默认JSON格式）
-	post: (url, data = {}) => {
+	// POST 请求（默认 application/json）
+	post: (url, data = {}, config = {}) => {
 		return request({
 			url,
 			method: 'POST',
 			data,
-		});
+			...config
+		})
 	},
 
+	// // PUT 请求
+	// put: (url, data = {}, config = {}) => {
+	// 	return request({ url, method: 'PUT', data, ...config })
+	// },
 
+	// // DELETE 请求
+	// delete: (url, data = {}, config = {}) => {
+	// 	return request({ url, method: 'DELETE', data, ...config })
+	// },
+}
 
-};
-
-// 导出默认请求函数（兼容灵活调用场景）
-export default request;
+// 默认导出主函数
+export default request

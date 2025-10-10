@@ -9,6 +9,12 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/launch/launch",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"navigationBarTitleText": "首页",
 			"style": {
@@ -134,6 +140,7 @@
 				"navigationStyle": "custom"
 			}
 		}
+
 	],
 	"subPackages": [{
 		"root": "pagesAuth",
@@ -240,7 +247,7 @@
 				}
 			},
 			{
-				"path" : "google/google",
+				"path": "google/google",
 				"navigationBarTitleText": "谷歌验证码",
 				"style": {
 					"navigationStyle": "custom"

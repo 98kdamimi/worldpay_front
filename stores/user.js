@@ -6,139 +6,106 @@ import {
 	defineStore
 } from "pinia";
 import {
+	loginApi,
+	signOutApi,
+	logoutApi,
 	findToken
 } from "@/request/api.js";
+import {
+	useAppStore
+} from "./app";
+
+
 
 export const useUserStore = defineStore("user", () => {
-	// 1. 状态初始化：兼容旧数据
-	const initUserInfo = (() => {
-		const storedData = uni.getStorageSync('userInfo');
-		return storedData ? (storedData.data !== undefined ? storedData.data : storedData) : null;
-	})();
+	const appStore = useAppStore();
+	const {
+		setLanguage
+	} = appStore;
 
 	// 状态定义
 	const token = ref(uni.getStorageSync('token') || '');
-	const userInfo = ref(initUserInfo);
+	const userInfo = ref(uni.getStorageSync('userInfo') || "");
+
+
 	// 加载状态：用于标识是否正在获取用户信息（避免重复请求）
 	const isLoadingUserInfo = ref(false);
 
-	// 2. 核心方法：获取/更新用户信息
+	// 获取用户信息
 	const fetchUserInfoByToken = async () => {
-		// 避免重复请求
+
 		if (isLoadingUserInfo.value) {
 			return null;
 		}
 
-		try {
-			isLoadingUserInfo.value = true; // 开始加载
+		isLoadingUserInfo.value = true;
 
-			if (!token.value) {
-				uni.showToast({
-					title: '请先登录',
-					icon: 'none',
-					duration: 1500
-				});
-				return null;
-			}
-
-			const res = await findToken({
-				token: token.value
-			});
-
-			if (!res) {
-				uni.showToast({
-					title: '接口响应异常',
-					icon: 'none',
-					duration: 1500
-				});
-				return null;
-			}
-
-			if (res.rtncode === 200) {
-				if (!res.data || typeof res.data !== 'object') {
-					uni.showToast({
-						title: '用户信息格式错误',
-						icon: 'none',
-						duration: 1500
-					});
-					return null;
-				}
-
-				// 合并/更新用户信息
-				const hasLocalInfo = !!userInfo.value;
-				userInfo.value = hasLocalInfo ? {
-						...userInfo.value,
-						...res.data
-					} :
-					res.data;
-
-				// 同步到本地存储
-				uni.setStorageSync('userInfo', userInfo.value);
-				return userInfo.value; // 返回最新用户信息
-			} else {
-				const errorMsg = res.msg || `获取失败（${res.rtncode}）`;
-				uni.showToast({
-					title: errorMsg,
-					icon: 'none',
-					duration: 1500
-				});
-
-				if (res.rtncode === 401) {
-					await clearUserInfo(); // Token无效时清除信息
-				}
-				return null;
-			}
-		} catch (error) {
-			console.error('获取用户信息异常:', error);
+		if (!token.value) {
 			uni.showToast({
-				title: '获取用户信息失败，请重试',
-				icon: 'none',
-				duration: 1500
-			});
-			return null;
-		} finally {
-			isLoadingUserInfo.value = false; // 结束加载（无论成功失败）
-		}
-	};
-
-	// 3. 改造setToken：返回用户信息的Promise
-	const setToken = async (val) => {
-		// 入参校验
-		if (!val || typeof val !== 'string' || val.trim() === '') {
-			uni.showToast({
-				title: 'Token格式错误',
+				title: '请先登录',
 				icon: 'none',
 				duration: 1500
 			});
 			return null;
 		}
 
-		try {
-			// 存储Token
-			token.value = val;
-			uni.setStorageSync('token', val);
+		const res = await findToken({
+			token: token.value
+		});
+		
 
-			// 等待用户信息加载完成，并返回结果
-			const newUserInfo = await fetchUserInfoByToken();
-			return newUserInfo; // 关键：返回最新用户信息
-		} catch (error) {
-			console.error('setToken过程中发生错误:', error);
-			return null;
-		}
+		// 更新用户信息
+		userInfo.value = res;
+
+		// 同步到本地存储
+		uni.setStorageSync('userInfo', userInfo.value);
+
+		isLoadingUserInfo.value = false;
+
+		return userInfo.value; // 返回最新用户信息
 	};
 
-	// 4. 清除用户信息
+
+
+
+
+	// 清除用户信息
 	const clearUserInfo = async () => {
 		token.value = '';
 		userInfo.value = null;
 		uni.removeStorageSync('token');
 		uni.removeStorageSync('userInfo');
-		uni.navigateTo({
+		uni.reLaunch({
 			url: '/pagesAuth/login/login'
 		});
 	};
 
-	// 5. 计算属性
+	// 定义登录方法
+	const login = async (userEmail, userPassword,cid) => {
+		const res = await loginApi(userEmail, userPassword,cid);
+		token.value = res;
+		uni.setStorageSync('token', res);
+		const userinfo = await fetchUserInfoByToken()
+		return userinfo
+	};
+	
+	// 退出登录
+	const logout = async () => {
+		await signOutApi();
+		clearUserInfo();
+	};
+	
+	// 注销账户
+	const deleteAccount = async () => {
+		// TODO: 实现注销账户的逻辑
+		const params = {
+			uid: userInfo.value.uid
+		}
+		await logoutApi(params)
+		clearUserInfo();
+	}
+
+	//  计算属性
 	const userNickname = computed(() => {
 		return userInfo.value?.nickname ||
 			userInfo.value?.userEmail ||
@@ -154,14 +121,15 @@ export const useUserStore = defineStore("user", () => {
 		return !!token.value && !!userInfo.value;
 	});
 
+
 	return {
 		token,
 		userInfo,
-		isLoadingUserInfo, // 暴露加载状态（可选）
+		login,
+		logout,
 		userNickname,
 		userAvatar,
 		isLogin,
-		setToken, // 现在返回用户信息的Promise
 		clearUserInfo,
 		fetchUserInfoByToken
 	};

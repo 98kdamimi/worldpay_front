@@ -12,12 +12,9 @@ const messages = {
 }
 
 let i18nConfig = {
-	locale: uni.getLocale(), // 获取已设置的语言
-	// locale: en,
+	locale: uni.getStorageSync("language")||uni.getLocale(), // 获取已设置的语言
 	messages
 }
-
-console.log("获取到当前语言设置", uni.getLocale())
 
 const i18n = createI18n(i18nConfig)
 

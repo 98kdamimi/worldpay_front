@@ -14,9 +14,18 @@ export const signUp = (data) => {
 };
 
 // 用户登录
-export const login = (data) => {
+export const loginApi = (data) => {
 	return http.post('/ucard/appUser/login', data);
 };
+// 退出登录
+export const signOutApi = (data) => {
+	return http.get('/ucard/appUserSys/signOut', data);
+}
+// 注销账户
+export const logoutApi = (data) => {
+	return http.get('/ucard/appUserSys/logout', data);
+}
+
 
 // 获取用户信息
 export const findToken = (data) => {

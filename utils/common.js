@@ -55,3 +55,19 @@ export const checkOverflow = (id, flagRef) => {
 		})
 		.exec()
 }
+
+
+//处理多语言
+export function normalizeLang(locale) {
+	if (!locale) return 'en'
+	const lower = locale.toLowerCase()
+	if (lower.startsWith('zh')) {
+		// 中文简体（zh-Hans）、繁体（zh-Hant）统一处理
+		if (lower.includes('hant') || lower.includes('tw') || lower.includes('hk')) {
+			return 'tw'
+		}
+		return 'zh'
+	}
+	if (lower.startsWith('en')) return 'en'
+	return 'en' // 默认英文
+}

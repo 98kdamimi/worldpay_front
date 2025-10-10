@@ -1,94 +1,108 @@
-.topBg {
-	width: 750rpx;
-	height: 580rpx;
-	background: url('@/static/image/loginBg.png');
-	background-repeat: no-repeat;
-	background-size: cover;
-	padding: 210rpx 0 0;
+.loginContainer {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	.logo {
-		width: 160rpx;
-		height: 160rpx;
-	}
-	.logo-title {
-		margin: 32rpx 0 0;
-		text-align: center;
-		font-family: PingFangSC, PingFang SC;
-		font-weight: 600;
-		font-size: 36rpx;
-		color: #ffffff;
-	}
-}
-.box {
-	width: 100vw;
-	height: calc(100vh - 544rpx);
-	background: #ffffff;
-	border-radius: 48rpx 48rpx 0rpx 0rpx;
-	margin-top: -36rpx;
-	padding-top: 60rpx;
-	.box-title {
-		font-family: PingFangSC, PingFang SC;
-		font-weight: 500;
-		font-size: 40rpx;
-		color: #333333;
-		margin: 0rpx 48rpx 64rpx;
-	}
-	.input-box {
-		background: #ffffff;
-		border-radius: 24rpx;
-		border: 2rpx solid #e5e6e8;
-		padding: 30rpx 24rpx;
-		margin: 0 48rpx 48rpx;
+	height: 100vh;
+	.topBg {
+		width: 750rpx;
+		height: 580rpx;
+		background: url('@/static/image/loginBg.png');
+		background-repeat: no-repeat;
+		background-size: cover;
 		display: flex;
-		justify-content: space-between;
+		flex-direction: column;
 		align-items: center;
-		input {
-			flex: 1;
+		justify-content: center;
+		.logo {
+			width: 160rpx;
+			height: 160rpx;
+		}
+		.logo-title {
+			margin: 32rpx 0 0;
+			text-align: center;
 			font-family: PingFangSC, PingFang SC;
-			font-weight: 400;
-			font-size: 30rpx;
-			padding: 0 24rpx;
+			font-weight: 600;
+			font-size: 36rpx;
+			color: #ffffff;
 		}
 	}
-	.title-txt {
-		font-family: PingFangSC, PingFang SC;
-		font-weight: 400;
-		font-size: 28rpx;
-		color: #333333;
-		margin: 0 48rpx;
+	.loginBox {
+		width: 100vw;
+		flex: 1;
+		background: #ffffff;
+		border-radius: 48rpx 48rpx 0rpx 0rpx;
+		
+			padding: 48rpx 48rpx 30rpx 48rpx;
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-	.loginBtton {
-		width: 654rpx;
-		height: 100rpx;
-		line-height: 100rpx;
-		text-align: center;
-		background: #020202;
-		border-radius: 50rpx;
-		font-family: PingFangSC, PingFang SC;
-		font-weight: 500;
-		font-size: 36rpx;
-		color: #ffffff;
-		margin: 200rpx auto 0;
-	}
-	.xieyi {
-		margin: 102rpx 83rpx 64rpx;
-		font-family: PingFangSC, PingFang SC;
-		font-weight: 400;
-		font-size: 28rpx;
-		color: #cccccc;
-		display: flex;
-		// align-items: center;
-		span {
-			color: #020202;
+		flex-direction: column;
+		.loginFormArea {
+			display: flex;
+			flex-direction: column;
+			row-gap: 50rpx;
+			flex: 1;
+			.box-title {
+				font-family: PingFangSC, PingFang SC;
+				font-weight: 500;
+				font-size: 40rpx;
+				color: #333333;
+			}
+			.input-box {
+				background: #ffffff;
+				border-radius: 24rpx;
+				border: 2rpx solid #e5e6e8;
+				padding: 30rpx 24rpx;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				input {
+					flex: 1;
+					font-family: PingFangSC, PingFang SC;
+					font-weight: 400;
+					font-size: 30rpx;
+					padding: 0 24rpx;
+				}
+			}
+			.title-txt {
+				font-family: PingFangSC, PingFang SC;
+				font-weight: 400;
+				font-size: 28rpx;
+				color: #333333;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+		}
+		.loginConfirmArea {
+			max-height: 250rpx;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-between;
+			.loginBtton {
+				width: 654rpx;
+				height: 100rpx;
+				line-height: 100rpx;
+				text-align: center;
+				background: #020202;
+				border-radius: 50rpx;
+				font-weight: 500;
+				font-size: 36rpx;
+				color: #ffffff;
+			}
+			.xieyi {
+				font-family: PingFangSC, PingFang SC;
+				font-weight: 400;
+				font-size: 28rpx;
+				color: #cccccc;
+				display: flex;
+				justify-content: center;
+				span {
+					color: #020202;
+				}
+			}
 		}
 	}
 }
-
 .applyModal {
 	flex: 1;
 	display: flex;
