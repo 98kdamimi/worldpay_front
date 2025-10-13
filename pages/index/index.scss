@@ -214,7 +214,11 @@
 .introduce {
 	margin: 32rpx 32rpx 0;
 	padding: 8rpx 24rpx;
-	background: linear-gradient(179deg, rgba(102, 102, 129, 0.1) 0%, rgba(54, 54, 74, 0.1) 100%);
+	background: linear-gradient(
+		179deg,
+		rgba(102, 102, 129, 0.1) 0%,
+		rgba(54, 54, 74, 0.1) 100%
+	);
 	border-radius: 24rpx;
 	border: 1rpx solid #97979747;
 	overflow: hidden;
@@ -272,6 +276,7 @@
 .cardpopup {
 	width: 750rpx;
 	padding-bottom: 24rpx;
+
 	background: #0f0f0f;
 
 	.cardpopup-title {
@@ -291,6 +296,10 @@
 			height: 40rpx;
 			margin-left: 32rpx;
 		}
+	}
+	.cardpopup-list {
+		padding: 0 32rpx;
+		max-height: 800rpx;
 	}
 }
 // 是否申请卡片

@@ -1,23 +1,37 @@
+.viewBox{
+	padding: 0 32rpx;
+}
 .header-right {
 	font-family: PingFangSC, PingFang SC;
 	font-weight: 400;
 	font-size: 28rpx;
 	color: #ffffff;
 }
-.button {
+.layoutBottom {
 	position: fixed;
-	left: 32rpx;
-	right: 32rpx;
-	bottom: 32rpx;
-	width: 686rpx;
-	height: 88rpx;
-	background: #1e3ad6;
-	border-radius: 44rpx;
-	font-family: PingFangSC, PingFang SC;
-	font-weight: 500;
-	font-size: 32rpx;
-	color: #ffffff;
+	bottom: 0;
+	width: 100vw;
+	height: 142rpx;;
+	background-color: #0f0f0f;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	.button {
+		width: 686rpx;
+		height: 88rpx;
+		background: #1e3ad6;
+		border-radius: 44rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 500;
+		font-size: 32rpx;
+		color: #ffffff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+.bottomPlaceholder {
+	width: 100vw;
+	height: 142rpx;;
+
 }

@@ -2,19 +2,19 @@
 	<view class="viewBox">
 		<Navbar :title="$t('financialOrders.title')" :showBack="true"></Navbar>
 		<view class="box" v-if="dataList?.list?.length">
-			<view class="box-item" v-for="(item,index) in 5" :key="index"
+			<view class="box-item" v-for="(item,index) in dataList?.list" :key="index"
 				@click="goToPage('/pagesMine/financialDetails/financialDetails')">
 				<view class="box-item-left">
 					<view>
 						<SvgIcon name="icon1" width="88" height="88"></SvgIcon>
 					</view>
 					<view>
-						<view>{{ $t('financialOrders.alipayWallet') }}</view>
-						<view class="box-item-left-txt">2025/02/01 14:14:21</view>
+						<view>{{ item.productName }}</view>
+						<view class="box-item-left-txt">{{item.payTime}}</view>
 					</view>
 				</view>
 				<view class="box-item-right">
-					<view>88%</view>
+					<view>{{toPercent(item.interestRate)}}</view>
 					<view>{{ $t('financialOrders.annualRate') }}</view>
 				</view>
 			</view>
@@ -35,6 +35,7 @@
 	import {
 		orderList
 	} from '@/request/api.js'
+	import {toPercent} from '@/utils/common'
 
 	const dataList = ref({})
 
@@ -45,12 +46,12 @@
 	const getOrderList = async () => {
 		try {
 			const res = await orderList({
-				uid: uni.getStorageSync('userInfo').uid
+				uid: uni.getStorageSync('userInfo').uid,
+				pageNum:1,
+				pageSize:999999999
 			})
-			console.log("理财订单", res)
-			if (res.rtncode == 200) {
-				dataList.value = res.data
-			}
+			console.log('获取到理财订单',res)
+			dataList.value = res
 		} catch (error) {
 			console.error(error)
 		}

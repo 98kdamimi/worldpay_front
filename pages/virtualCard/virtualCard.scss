@@ -1,7 +1,13 @@
+.viewBox {
+	padding: 32rpx;
+	display: flex;
+	flex-direction: column;
+	row-gap: 30rpx;
+}
 .cardInfo {
-	margin: 32rpx 32rpx 0;
 	padding: 32rpx;
 	background: linear-gradient(116deg, #2d2d2d 0%, #141414 100%);
+	width: 100%;
 	border-radius: 32rpx;
 	display: flex;
 	justify-content: space-between;
@@ -45,13 +51,12 @@
 	}
 }
 .worldpay {
-	width: 686rpx;
+	width: 100%;
 	height: 360rpx;
-	margin: 24rpx auto 0;
-	background: url('@/static/image/worldpay.png');
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
+	border-radius: 40rpx;
 	.worldpay-cardNumber {
 		position: absolute;
 		left: 36rpx;
@@ -64,11 +69,13 @@
 		font-weight: 600;
 		font-size: 36rpx;
 		color: #ffffff;
-		> view:first-child {
+		.cardNumber-left {
 			display: flex;
 			align-items: center;
-			span {
-				margin-right: 24rpx;
+			gap: 20rpx;
+			.star {
+				 display: inline-block;
+				transform: translateY(4rpx); /* 微调星号 */
 			}
 		}
 	}
@@ -80,6 +87,7 @@
 		font-weight: 600;
 		font-size: 24rpx;
 		color: #ffffff;
+		white-space: pre;
 	}
 	.worldpay-Balance {
 		position: absolute;
@@ -92,7 +100,6 @@
 	}
 }
 .kingKongDistrict {
-	margin: 24rpx 32rpx 0;
 	background: #16171a;
 	border-radius: 24rpx;
 	padding: 24rpx 48rpx;
@@ -119,7 +126,6 @@
 	font-weight: 500;
 	font-size: 30rpx;
 	color: #ffffff;
-	margin: 24rpx 32rpx 0;
 	padding-bottom: 6rpx;
 	.transactionRecords-title {
 		display: flex;

@@ -32,22 +32,44 @@ export const findToken = (data) => {
 	return http.get('/ucard/appUser/findToken', data);
 };
 
-// 银行卡总资产
+// 查询用户持有银行卡总资产
 export const findUserCardAssets = (data) => {
 	return http.get('/ucard/appUserCard/findUserCardAssets', data);
 };
 
-// 查询用户持有银行卡
+// 查询用户持有全部银行卡列表
 export const findUserCardList = (data) => {
 	return http.post('/ucard/appUserCard/findUserCardList', data);
 };
+// 查询用户持有银行卡详情
+export const findUserCardInfo = (data) => {
+	return http.get('/ucard/appUserCard/findUserCardInfo', data);
+};
 
-// 查询银行卡信息列表
+// 查询银行卡详情
+export const findById = (data) => {
+	return http.get('/ucard/card/findById', data);
+};
+
+// 查询充值账户详情
+export const findFirmAccount = (data) => {
+	return http.get('/ucard/firmAccount/find', data);
+};
+
+// 查询开卡银行卡信息列表
 export const findList = (data) => {
 	return http.post('/ucard/card/findList', data);
 };
+// 查询用户银行卡到期时间
+export const findCardExpirationTime = (data) => {
+	return http.get('/ucard/appUserCard/findCardExpirationTime', data);
+};
+// 查询用户银行卡安全码
+export const findCardCvv = (data) => {
+	return http.get('/ucard/appUserCard/findCardCvv', data);
+};
 
-// 查询用户持卡人
+// 查询持卡人信息列表
 export const findByUid = (data) => {
 	return http.get('/ucard/cardholder/findByUid', data);
 };
@@ -59,10 +81,14 @@ export const cardholderAdd = (data) => {
 
 // 删除持卡人
 export const cardholderDelete = (data) => {
-	return http.get('/ucard/cardholder/delete', data, );
+	return http.get('/ucard/cardholder/delete', data);
 };
 
 // 查询理财订单
 export const orderList = (data) => {
 	return http.post('/ucard/product/orderList', data);
+};
+// 查询交易记录
+export const findTransaction = (data) => {
+	return http.post('/ucard/appUserCard/findTransaction', data);
 };

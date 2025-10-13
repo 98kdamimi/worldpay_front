@@ -2,14 +2,21 @@
 	<view class="viewBox">
 		<Navbar :title="$t('securitySettings.title')" :showBack="true"></Navbar>
 		<view style="margin-top: 32rpx">
-			<view class="box" v-for="(item, index) in navList" :key="index" @click="goToPage(item.href)">
+			<view
+				class="box"
+				v-for="(item, index) in navList"
+				:key="index"
+				@click="goToPage(item.href)"
+			>
 				<view>{{ item.name }}</view>
 				<SvgIcon name="right" width="36" height="36"></SvgIcon>
 			</view>
 		</view>
 		<view class="button">
 			<view @click="logout">{{ $t('securitySettings.logout') }}</view>
-			<view class="red">{{ $t('securitySettings.cancelAccount') }}</view>
+			<view class="red" @click="deleteAccount">
+				{{ $t('securitySettings.cancelAccount') }}
+			</view>
 		</view>
 	</view>
 </template>
@@ -20,7 +27,7 @@ import { useI18n } from 'vue-i18n';
 import { useUserStore } from '@/stores/user.js';
 
 const userStore = useUserStore();
-const { logout } = userStore;
+const { logout, deleteAccount } = userStore;
 
 const { t } = useI18n();
 

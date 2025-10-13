@@ -6,7 +6,6 @@
 	width: 690rpx;
 	height: 280rpx;
 	margin: 24rpx auto 0;
-	background: url('@/static/image/topUpCard.png');
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
@@ -32,6 +31,7 @@
 		font-size: 24rpx;
 		font-style: normal;
 		color: #ffffff37;
+		white-space: pre;
 	}
 }
 .bank {
@@ -52,6 +52,9 @@
 		font-size: 30rpx;
 		color: #ffffff;
 		text-align: right;
+		word-wrap: break-word; /* ✅ 自动换行 */
+		word-break: break-all; /* ✅ 超长英文/数字也能断行 */
+		white-space: normal;
 
 		.txt {
 			margin: 8rpx 0 0;

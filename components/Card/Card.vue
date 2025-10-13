@@ -1,98 +1,89 @@
 <template>
 	<view
-		:class="type == 0 ? 'cardpopup-item cardpopup-item-bg1' : type == 1 ? 'cardpopup-item cardpopup-item-bg2' : type == 2 ? 'cardpopup-item cardpopup-item-bg3' : 'cardpopup-item cardpopup-item-bg4'">
+		class="cardpopup-item cardpopup-item"
+		:style="{ backgroundImage: `url(${listItem.cardData.img})` }"
+	>
 		<view class="cardpopup-cardNumber">
-			<span>{{ formattedCard('9999999999999999') }}</span>
+			<span>{{ formattedCard(listItem.cardNo) }}</span>
 		</view>
 		<view class="cardpopup-time">
-			10/25 10/30
+			{{ `${formatToMonthDay(listItem.setTime)}       ${time}` }}
 		</view>
+
 		<!-- 替换“实体卡”为多语言变量，复用现有多语言键名 -->
-		<view class="physicalCard" v-if="type == 3">{{ $t('home.physicalCard') }}</view>
+		<view class="physicalCard" v-if="listItem.cardType == 'PHYSICAL'">
+			{{ $t('home.physicalCard') }}
+		</view>
 	</view>
 </template>
 
 <script setup>
-	import {
-		formattedCard
-	} from '@/utils/common.js'
-	const props = defineProps({
-		type: {
-			type: String,
-			required: true
-		},
-	});
+import { ref } from 'vue';
+import { formattedCard, formatToMonthDay } from '@/utils/common.js';
+import { findCardExpirationTime } from '@/request/api.js';
+const props = defineProps({
+	listItem: {
+		type: Object,
+		required: true
+	}
+});
+const time = ref();
+findCardExpirationTime({ id: props.listItem.id }).then((res) => {
+	time.value = res;
+});
 </script>
 
 <style lang="scss" scoped>
-	.cardpopup-item {
-		width: 686rpx;
-		height: 280rpx;
-		margin: 24rpx 32rpx;
-		position: relative;
-		font-family: SFMono, SFMono;
+.cardpopup-item {
+	width: 686rpx;
+	height: 280rpx;
+	position: relative;
+	font-family: SFMono, SFMono;
+	color: #ffffff;
+	font-weight: 600;
+	border-radius: 30rpx;
+
+	.cardpopup-cardNumber {
+		position: absolute;
+		left: 36rpx;
+		bottom: 96rpx;
+		font-size: 36rpx;
+		letter-spacing: 3px;
+
+		span {
+			margin-right: 32rpx;
+		}
+	}
+
+	.cardpopup-time {
+		position: absolute;
+		left: 36rpx;
+		bottom: 36rpx;
+		font-size: 24rpx;
+		font-style: normal;
 		color: #ffffff;
+		white-space: pre;
+	}
+
+	.physicalCard {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: 200rpx;
+		height: 64rpx;
+		line-height: 64rpx;
+		text-align: center;
+		font-family: PingFangSC, PingFang SC;
 		font-weight: 600;
-
-		.cardpopup-cardNumber {
-			position: absolute;
-			left: 36rpx;
-			bottom: 96rpx;
-			font-size: 36rpx;
-			letter-spacing: 3px;
-
-			span {
-				margin-right: 32rpx;
-			}
-		}
-
-		.cardpopup-time {
-			position: absolute;
-			left: 36rpx;
-			bottom: 36rpx;
-			font-size: 24rpx;
-			font-style: normal;
-			color: #ffffff37;
-		}
-
-		.physicalCard {
-			position: absolute;
-			right: 0;
-			bottom: 0;
-			width: 200rpx;
-			height: 64rpx;
-			line-height: 64rpx;
-			text-align: center;
-			font-family: PingFangSC, PingFang SC;
-			font-weight: 600;
-			font-size: 32rpx;
-			color: #48453d;
-			letter-spacing: 3px;
-			font-style: normal;
-		}
+		font-size: 32rpx;
+		color: #48453d;
+		letter-spacing: 3px;
+		font-style: normal;
 	}
+}
 
-	.cardpopup-item-bg1 {
-		background: url('@/static/image/index/cardicon1.png');
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-
-	.cardpopup-item-bg2 {
-		background: url('@/static/image/index/cardicon2.png');
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-
-	.cardpopup-item-bg3 {
-		background: url('@/static/image/index/cardicon3.png');
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-
-	.cardpopup-item-bg4 {
-		background: url('@/static/image/index/cardicon4.png');
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
+.cardpopup-item {
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 </style>

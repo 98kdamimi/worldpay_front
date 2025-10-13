@@ -20,7 +20,7 @@
 		align-items: center;
 		font-family: PingFangSC, PingFang SC;
 		font-weight: 400;
-		font-size: 32rpx;
+		font-size: 36rpx;
 		color: #ffffff;
 	}
 }
@@ -42,14 +42,19 @@
 			font-weight: 400;
 			font-size: 24rpx;
 			color: #9191aa;
+			margin-bottom: 6rpx;
 		}
 		.smallBox-txt {
-			margin-top: 6rpx;
 			font-family: PingFangSC, PingFang SC;
 			font-weight: 400;
 			font-size: 32rpx;
 			color: #ffffff;
 		}
+	}
+	.smallBox-cvv {
+		display: flex;
+		gap: 20rpx;
+		align-items: center;
 	}
 }
 

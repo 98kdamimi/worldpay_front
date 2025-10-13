@@ -26,22 +26,22 @@
 				<view>{{ $t('home.assetsTitle') }}</view>
 				<view class="assets-select">
 					<view>{{ $t('home.currencyUsd') }}</view>
-					<view class="select-icon">
+					<!-- <view class="select-icon">
 						<image
 							src="@/static/image/index/selectBottom.png"
 							alt=""
 							mode="widthFix"
 						/>
-					</view>
+					</view> -->
 				</view>
 			</view>
-			<view class="assets-approximately">$ {{ totalCardAssets }}</view>
+			<view class="assets-approximately">≈ $ {{ formatBalance(totalCardAssets) }}</view>
 			<!-- <view class="assets-exchange-approximately">≈0.00 USDT</view> -->
 		</view>
 		<!-- 卡片展示 -->
-		<view v-if="cardData && cardData.list.length">
+		<view v-if="cardData && cardData.length" @click="toCardlist">
 			<view class="cardDisplay cardDisplayBg">
-				<view class="cardDisplay-cardist" @click="openCardList()">
+				<view class="cardDisplay-cardist">
 					<view>{{ $t('home.cardList') }}</view>
 					<view class="cardDisplay-cardist-icon">
 						<image
@@ -73,10 +73,7 @@
 		</view>
 		<!-- 增资 钱包 卡片申请入口 -->
 		<view class="wallet wallet1" v-if="userInfo.walletState">
-			<view
-				class="valueAddedIcon"
-				@click="goToPage('/pages/topUp/index')"
-			>
+			<view class="valueAddedIcon" @click="openCardList()">
 				<SvgIcon
 					name="valueAdded"
 					width="48"
@@ -176,76 +173,90 @@
 				<TransactionRecords :list="recordsList"></TransactionRecords>
 			</view>
 		</view>
-		<!-- 卡片弹窗 -->
-		<up-popup :show="cardShow" mode="bottom" @close="closeCardList">
-			<view class="cardpopup">
-				<view class="cardpopup-title">
-					<view class="closure" @click="closeCardList">
-						<image
-							src="@/static/image/index/closure.png"
-							mode=""
-						></image>
-					</view>
-					<view>{{ $t('home.selectCard') }}</view>
-					<view class="closure"></view>
-				</view>
-				<view class="cardpopup-list">
-					<view v-for="(item, index) in 4" :key="index">
-						<Card :type="index"></Card>
-					</view>
-				</view>
-			</view>
-		</up-popup>
-		<!-- 是否申请卡片 -->
-		<up-modal
-			:show="applyShow"
-			:showConfirmButton="false"
-			bgColor="#141414"
-		>
-			<view class="applyModal">
-				<view class="applyModal-title">
-					<SvgIcon
-						class="svg-icon"
-						name="hint"
-						width="36"
-						height="36"
-					></SvgIcon>
-					<view>{{ $t('home.homeHint') }}</view>
-				</view>
-				<view class="applyModal-txt">
-					{{ $t('home.noCardDetected') }}
-				</view>
-				<view class="applyModal-button">
-					<view class="cancel" @click="closeApplyModal">
-						{{ $t('home.cancel') }}
-					</view>
-					<view
-						class="apply"
-						@click="
-							goToPage('/pages/cardApplication/cardApplication'),
-								closeApplyModal()
-						"
-					>
-						{{ $t('home.applyNow') }}
-					</view>
-				</view>
-			</view>
-		</up-modal>
 	</view>
+	<!-- 卡片弹窗 -->
+	<up-popup
+		:show="cardShow"
+		mode="bottom"
+		@close="closeCardList"
+		@touchmove.stop.prevent
+	>
+		<view class="cardpopup">
+			<view class="cardpopup-title">
+				<view class="closure" @click="closeCardList">
+					<image
+						src="@/static/image/index/closure.png"
+						mode=""
+					></image>
+				</view>
+				<view>{{ $t('home.selectCard') }}</view>
+				<view class="closure"></view>
+			</view>
+			<scroll-view
+				class="cardpopup-list"
+				scroll-y="true"
+				:show-scrollbar="false"
+				@touchmove.stop.prevent
+			>
+				<view
+					style="margin-bottom: 30rpx"
+					v-for="(item, index) in cardData"
+					:key="index"
+					@click="goToTopUp(item.id)"
+				>
+					<Card :list-item="item"></Card>
+				</view>
+			</scroll-view>
+		</view>
+	</up-popup>
+	<!-- 是否申请卡片 -->
+	<up-modal :show="applyShow" :showConfirmButton="false" bgColor="#141414">
+		<view class="applyModal">
+			<view class="applyModal-title">
+				<SvgIcon
+					class="svg-icon"
+					name="hint"
+					width="36"
+					height="36"
+				></SvgIcon>
+				<view>{{ $t('home.homeHint') }}</view>
+			</view>
+			<view class="applyModal-txt">
+				{{ $t('home.noCardDetected') }}
+			</view>
+			<view class="applyModal-button">
+				<view class="cancel" @click="closeApplyModal">
+					{{ $t('home.cancel') }}
+				</view>
+				<view
+					class="apply"
+					@click="
+						goToPage('/pages/cardApplication/cardApplication'),
+							closeApplyModal()
+					"
+				>
+					{{ $t('home.applyNow') }}
+				</view>
+			</view>
+		</view>
+	</up-modal>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { onReady, onPageScroll, onLoad } from '@dcloudio/uni-app';
-import { findUserCardAssets, findUserCardList } from '@/request/api.js';
+import {
+	findUserCardAssets,
+	findUserCardList,
+	findTransaction
+} from '@/request/api.js';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
+import {formatBalance} from '@/utils/common.js'
 const userStore = useUserStore();
 
 // 卡片列表
-const cardData = ref({
-	list: []
-});
+const cardData = ref({});
 // 交易记录
 const recordsList = ref([]);
 // 卡片弹窗
@@ -266,7 +277,7 @@ const getFindUserCardAssets = async () => {
 		const res = await findUserCardAssets({
 			uid: userInfo.value.uid
 		});
-		totalCardAssets.value = res;
+		totalCardAssets.value =res
 	} catch (error) {
 		console.error(error);
 	}
@@ -275,13 +286,41 @@ const getFindUserCardAssets = async () => {
 const getFindUserCardList = async () => {
 	try {
 		const res = await findUserCardList({
-			uid: userInfo.value.uid
+			uid: userInfo.value.uid,
+			pageNum: 1,
+			pageSize: 9999
 		});
 		console.log('获取到卡片列表', res);
-		cardData.value = res;
+		cardData.value = res.list;
 	} catch (error) {
 		console.error(error);
 	}
+};
+
+const getfindTransaction = async () => {
+	try {
+		const res = await findTransaction({
+			uid: userInfo.value.uid,
+			pageNum: 1,
+			pageSize: 99999
+		});
+		console.log('获取到交易记录', res);
+		recordsList.value = res.list;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+const goToTopUp = (id) => {
+	cardShow.value = false;
+	uni.navigateTo({
+		url: `/pages/topUp/index?id=${id}`
+	});
+};
+const toCardlist = () => {
+	uni.navigateTo({
+		url: '/pages/cardList/cardList'
+	});
 };
 
 // 打开是否申请弹窗
@@ -304,6 +343,7 @@ function closeCardList() {
 onLoad(async () => {
 	await getFindUserCardAssets();
 	await getFindUserCardList();
+	await getfindTransaction();
 });
 
 onReady(async () => {

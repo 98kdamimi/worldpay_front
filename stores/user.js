@@ -49,9 +49,7 @@ export const useUserStore = defineStore("user", () => {
 			return null;
 		}
 
-		const res = await findToken({
-			token: token.value
-		});
+		const res = await findToken();
 		
 
 		// 更新用户信息
@@ -97,7 +95,6 @@ export const useUserStore = defineStore("user", () => {
 	
 	// 注销账户
 	const deleteAccount = async () => {
-		// TODO: 实现注销账户的逻辑
 		const params = {
 			uid: userInfo.value.uid
 		}
@@ -127,6 +124,7 @@ export const useUserStore = defineStore("user", () => {
 		userInfo,
 		login,
 		logout,
+		deleteAccount,
 		userNickname,
 		userAvatar,
 		isLogin,
