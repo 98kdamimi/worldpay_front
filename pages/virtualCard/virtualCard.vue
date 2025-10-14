@@ -135,7 +135,7 @@
 					</view>
 					<view>{{ $t('virtualCard.walletRecharge') }}</view>
 				</view>
-				<view class="rchargePopup-item">
+				<view class="rchargePopup-item" @click="toRecharge">
 					<view>
 						<SvgIcon
 							name="bankIcon"
@@ -206,11 +206,10 @@ function setEye() {
 //获取交易记录
 const getfindTransaction = async () => {
 	try {
-		const res = await findTransaction(requestParams);
+		const { data } = await findTransaction(requestParams);
 		console.log('交易记录参数', requestParams);
-		console.log('获取到交易记录', res);
-		recordsList.value = [...recordsList.value, ...res.list];
-		requestParams.total = res.total;
+		recordsList.value = [...data.list, ...recordsList.value];
+		requestParams.total = data.total;
 	} catch (error) {
 		console.error(error);
 	}
@@ -218,12 +217,10 @@ const getfindTransaction = async () => {
 //获取用户持有银行卡详情
 const getFindUserCardInfo = async () => {
 	try {
-		const res = await findUserCardInfo({
+		const { data } = await findUserCardInfo({
 			id: requestParams.id
 		});
-		console.log('获取到卡片信息', res);
-		cardInfo.value = res;
-		// cardID.value = res.id;
+		cardInfo.value = data;
 	} catch (error) {
 		console.error(error);
 	}
@@ -252,10 +249,17 @@ const goCardDetail = () => {
 		url: `/pages/cardDetail/cardDetail?id=${requestParams.id}`
 	});
 };
-//千万充值页面
+//前往充值页面
 const toWalletRecharge = () => {
+	rchargeShow.value = false;
 	uni.navigateTo({
 		url: `/pages/valueAdded/valueAdded?id=${requestParams.id}`
+	});
+};
+const toRecharge = () => {
+	rchargeShow.value = false;
+	uni.navigateTo({
+		url: `/pages/topUp/index?id=${requestParams.id}`
 	});
 };
 
@@ -275,14 +279,13 @@ onReady(() => {
 });
 
 onLoad(async (option) => {
-	requestParams.pageNumber= 1,
-	requestParams.total=0
+	(requestParams.pageNumber = 1), (requestParams.total = 0);
 	requestParams.userBankcardId = option.userBankcardId;
 	requestParams.id = option.id;
 	await getFindUserCardInfo();
 	await getfindTransaction();
 	findCardExpirationTime({ id: option.id }).then((res) => {
-		endTime.value = res;
+		endTime.value = res.data;
 	});
 });
 

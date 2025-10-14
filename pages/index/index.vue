@@ -35,7 +35,9 @@
 					</view> -->
 				</view>
 			</view>
-			<view class="assets-approximately">≈ $ {{ formatBalance(totalCardAssets) }}</view>
+			<view class="assets-approximately">
+				≈ $ {{ formatBalance(totalCardAssets) }}
+			</view>
 			<!-- <view class="assets-exchange-approximately">≈0.00 USDT</view> -->
 		</view>
 		<!-- 卡片展示 -->
@@ -252,8 +254,9 @@ import {
 } from '@/request/api.js';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
-import {formatBalance} from '@/utils/common.js'
+import { formatBalance } from '@/utils/common.js';
 const userStore = useUserStore();
+const {fetchUserInfoByToken} =userStore
 
 // 卡片列表
 const cardData = ref({});
@@ -274,10 +277,10 @@ const totalCardAssets = ref();
 // 获取卡片总资产
 const getFindUserCardAssets = async () => {
 	try {
-		const res = await findUserCardAssets({
+		const { data } = await findUserCardAssets({
 			uid: userInfo.value.uid
 		});
-		totalCardAssets.value =res
+		totalCardAssets.value = data;
 	} catch (error) {
 		console.error(error);
 	}
@@ -285,13 +288,13 @@ const getFindUserCardAssets = async () => {
 // 查询用户所有卡片
 const getFindUserCardList = async () => {
 	try {
-		const res = await findUserCardList({
+		const { data } = await findUserCardList({
 			uid: userInfo.value.uid,
-			pageNum: 1,
+			pageNumber: 1,
 			pageSize: 9999
 		});
-		console.log('获取到卡片列表', res);
-		cardData.value = res.list;
+		console.log('获取到卡片列表', data);
+		cardData.value = data.list;
 	} catch (error) {
 		console.error(error);
 	}
@@ -299,13 +302,13 @@ const getFindUserCardList = async () => {
 
 const getfindTransaction = async () => {
 	try {
-		const res = await findTransaction({
+		const { data } = await findTransaction({
 			uid: userInfo.value.uid,
-			pageNum: 1,
+			pageNumber: 1,
 			pageSize: 99999
 		});
-		console.log('获取到交易记录', res);
-		recordsList.value = res.list;
+		console.log('获取到交易记录', data);
+		recordsList.value = data.list;
 	} catch (error) {
 		console.error(error);
 	}
@@ -333,7 +336,11 @@ function closeApplyModal() {
 }
 // 打开卡片列表弹窗
 function openCardList() {
-	cardShow.value = true;
+	if (cardData.value.length === 0) {
+		openApplyModal();
+	} else {
+		cardShow.value = true;
+	}
 }
 // 关闭卡片列表弹窗
 function closeCardList() {
@@ -341,6 +348,7 @@ function closeCardList() {
 }
 
 onLoad(async () => {
+	await fetchUserInfoByToken()
 	await getFindUserCardAssets();
 	await getFindUserCardList();
 	await getfindTransaction();

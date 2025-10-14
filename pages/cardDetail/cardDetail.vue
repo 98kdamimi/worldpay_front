@@ -146,11 +146,11 @@ onLoad(async (options) => {
 	data.id = options.id;
 	try {
 		const res = await findUserCardInfo({ id: options.id });
-		data.cardInfo = res;
+		data.cardInfo = res.data;
 		const endtime = await findCardExpirationTime({ id: options.id });
-		data.endtime = endtime;
+		data.endtime = endtime.data;
 		const cvv = await findCardCvv({ id: options.id });
-		data.cvv = cvv;
+		data.cvv = cvv.data;
 	} catch (err) {
 		console.log(err);
 	}

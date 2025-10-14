@@ -200,7 +200,7 @@
 	"transfer.transferAmount": "Transfer Amount",
 	"transfer.enterAmountPlaceholder": "Please enter transfer amount",
 	"transfer.all": "All",
-	"transfer.walletBalance": "Wallet Balance: 0.00 USD",
+	"transfer.walletBalance": "Wallet Balance:",
 	"transfer.rechargeCardNumber": "Recharge Card Number",
 	"transfer.worldpayVirtualCard": "Worldpay Virtual Card",
 	"transfer.switch": "Switch",

@@ -1,3 +1,7 @@
+.viewBox{
+	padding: 32rpx;
+}
+
 .top {
 	border-radius: 24rpx 24rpx 0rpx 0rpx;
 }
@@ -9,12 +13,12 @@
 	font-weight: 400;
 	font-size: 28rpx;
 	color: #ffffff;
-	margin: 32rpx 32rpx 0;
+	margin-bottom: 32rpx;
 }
 .selectCurrency {
+	margin-bottom: 32rpx;
 	background: #16171a;
 	border-radius: 24rpx;
-	margin: 24rpx 32rpx;
 	padding: 18rpx 24rpx;
 	display: flex;
 	justify-content: space-between;
@@ -32,12 +36,9 @@
 		}
 	}
 }
-.qrPadding {
-	padding: 48rpx 173rpx;
-}
+
 .box {
 	background: #16171a;
-	margin: 2rpx 32rpx;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -45,9 +46,23 @@
 	font-weight: 400;
 	font-size: 32rpx;
 	color: #ffffff;
+	
+}
+.qrCodeBox{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #16171a;
+	height: 436rpx;
+	border-bottom: 1rpx solid #0f0f0f;
 	.qrCode {
+		border-radius: 30rpx;
+		background-color: #ffffff;
 		width: 340rpx;
 		height: 340rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 }
 .hint {

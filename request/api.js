@@ -68,6 +68,10 @@ export const findCardExpirationTime = (data) => {
 export const findCardCvv = (data) => {
 	return http.get('/ucard/appUserCard/findCardCvv', data);
 };
+// 钱包充值到银行卡
+export const topUp = (data) => {
+	return http.post('/ucard/card/topUp', data);
+};
 
 // 查询持卡人信息列表
 export const findByUid = (data) => {
@@ -92,3 +96,27 @@ export const orderList = (data) => {
 export const findTransaction = (data) => {
 	return http.post('/ucard/appUserCard/findTransaction', data);
 };
+
+// 查询钱包交易记录
+export const walletLog = (data) => {
+	return http.post('/ucard/wallet/walletLog', data);
+
+}
+// 获取usdt地址
+export const topinUsdtAddress = (data) => {
+	return http.get('/ucard/wallet/topinUsdtAddress', data);
+
+}
+// 获取用户持仓总资产
+export const userAssets = (data) => {
+	return http.get('/ucard/product/userAssets', data);
+}
+//获取国家->省->市级联
+export const findCountry = (data) => {
+	return http.get('/ucard/dic/findCountry', data);
+}
+
+//申请开卡
+export const openCardApply = (data) => {
+	return http.post('/ucard/card/openCardApply', data);
+}

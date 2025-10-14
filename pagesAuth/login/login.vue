@@ -169,6 +169,7 @@ const handleLogin = async () => {
 			userPassword: password.value,
 			cid: uni.getStorageSync('ClientId')
 		});
+		console.log(res);
 		if (res.googleState) {
 			uni.hideLoading();
 			applyShow.value = true;

@@ -15,7 +15,7 @@
 				class="box"
 				v-for="(item, index) in dataList"
 				:key="index"
-				@click="goToPage('/pages/applyInfo/applyInfo')"
+				@click="toApply(item)"
 			>
 				<view class="box-info">
 					<SvgIcon
@@ -50,20 +50,10 @@
 		>
 			<view>
 				<!-- #ifdef APP -->
-				<SvgIcon
-					name="addto"
-					width="32"
-					height="32"
-					style="margin-top: 5rpx; margin-right: 12rpx"
-				></SvgIcon>
+				<SvgIcon name="addto" width="32" height="32"></SvgIcon>
 				<!-- #endif -->
 				<!-- #ifdef H5 -->
-				<SvgIcon
-					name="addto"
-					width="32"
-					height="32"
-					style="margin-top: 4rpx; margin-right: 12rpx"
-				></SvgIcon>
+				<SvgIcon name="addto" width="32" height="32"></SvgIcon>
 				<!-- #endif -->
 				<view>{{ $t('cardholderSelect.addCardholder') }}</view>
 			</view>
@@ -110,6 +100,11 @@ import { ref } from 'vue';
 import { onShow } from '@dcloudio/uni-app';
 import { findByUid, cardholderDelete } from '@/request/api.js';
 import { useI18n } from 'vue-i18n';
+import { useCardStore } from '@/stores/card.js';
+
+
+const cardStore = useCardStore();
+const { setCardHolderInfo } = cardStore;
 
 const { t } = useI18n();
 const operationType = ref(true);
@@ -127,12 +122,12 @@ onShow(() => {
 // 查询银行卡信息列表
 const getFindByUid = async () => {
 	try {
-		const res = await findByUid({
+		const { data } = await findByUid({
 			uid: uni.getStorageSync('userInfo').uid,
-			pageNum: 1,
+			pageNumber: 1,
 			pageSize: 99999999
 		});
-		dataList.value = res;
+		dataList.value = data;
 	} catch (error) {
 		console.error(error);
 	}
@@ -141,7 +136,7 @@ const getFindByUid = async () => {
 // 删除持卡人
 const getCardholderDelete = async () => {
 	try {
-		const res = await cardholderDelete({
+		await cardholderDelete({
 			id: currentSelection.value.id
 		});
 		applyShow.value = false;
@@ -153,6 +148,12 @@ const getCardholderDelete = async () => {
 	} catch (error) {
 		console.error(error);
 	}
+};
+
+const toApply = (item) => {
+	setCardHolderInfo(item);
+	console.log('item',item);
+	goToPage('/pages/applyInfo/applyInfo');
 };
 
 const editFunct = () => {

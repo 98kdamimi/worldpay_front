@@ -49,11 +49,12 @@ export const useUserStore = defineStore("user", () => {
 			return null;
 		}
 
-		const res = await findToken();
+		const {data} = await findToken();
+		console.log('用户数据',data)
 		
 
 		// 更新用户信息
-		userInfo.value = res;
+		userInfo.value = data;
 
 		// 同步到本地存储
 		uni.setStorageSync('userInfo', userInfo.value);
@@ -80,11 +81,12 @@ export const useUserStore = defineStore("user", () => {
 
 	// 定义登录方法
 	const login = async (userEmail, userPassword,cid) => {
-		const res = await loginApi(userEmail, userPassword,cid);
-		token.value = res;
-		uni.setStorageSync('token', res);
-		const userinfo = await fetchUserInfoByToken()
-		return userinfo
+		const {data} = await loginApi(userEmail, userPassword,cid);
+		token.value = data;
+		uni.setStorageSync('token', data);
+		const res = await fetchUserInfoByToken()
+		console.log('res',res)
+		return res
 	};
 	
 	// 退出登录

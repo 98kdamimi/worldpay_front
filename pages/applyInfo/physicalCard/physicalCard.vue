@@ -1,235 +1,606 @@
 <template>
 	<view class="viewBox">
-		<view class="worldpay-banner"></view>
-		<view class="worldpay-txt">{{ $t('home.applyCardType') }}</view>
-		<view class="worldpay-title">{{ $t('home.worldpayConsumerCard') }}</view>
 		<view>
-			<view class="title">{{ $t('home.cardholderInfo') }}</view>
-			<view class="boxItem top">
-				<view>{{ $t('home.phoneNumber') }}</view>
-				<view class="boxItem-txt">+862 55555744</view>
+			<view
+				class="worldpay-banner"
+				:style="{ backgroundImage: `url(${applyCardInfo.img})` }"
+			></view>
+			<view class="worldpay-txt">{{ $t('home.applyCardType') }}</view>
+			<view class="worldpay-title">
+				{{ applyCardInfo.title }}
 			</view>
-			<view class="boxItem">
-				<view>{{ $t('home.email') }}</view>
-				<view class="boxItem-txt">sili75833@gamil.com</view>
-			</view>
-			<!-- #ifdef H5 -->
-			<view style="width: 100vw;height: 1rpx;background: #0f0f0f;"></view>
-			<!-- #endif -->
-			<view class="boxItem bottom">
-				<view>{{ $t('home.idNumber') }}</view>
-				<view class="boxItem-txt">24153411111111111111</view>
-			</view>
-		</view>
-		<view>
-			<view class="title">{{ $t('home.cardRules') }}</view>
-			<view class="boxItem top">
-				<view>{{ $t('home.maxCardBalance') }}</view>
-				<view class="boxItem-txt">100.000.00</view>
-			</view>
-			<view class="boxItem bottom">
-				<view>{{ $t('home.monthlyServiceFee') }}</view>
-				<view class="boxItem-txt">1.00</view>
-			</view>
-		</view>
-		<view>
-			<view class="title">{{ $t('home.mailingAddress') }}</view>
-			<view class="select-box">
-				<view>{{ $t('home.country') }}</view>
-				<view class="select-box-right" @click="addressShow = true">
-					<view>{{ $t('home.selectCountry') }}</view>
-					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
-				</view>
-			</view>
-			<view class="select-box">
-				<view>{{ $t('home.province') }}</view>
-				<view class="select-box-right" @click="addressShow = true">
-					<view>{{ $t('home.selectProvince') }}</view>
-					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
-				</view>
-			</view>
-			<view class="select-box">
-				<view>{{ $t('home.city') }}</view>
-				<view class="select-box-right" @click="addressShow = true">
-					<view>{{ $t('home.selectCity') }}</view>
-					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
-				</view>
-			</view>
-			<view class="select-box">
-				<view>{{ $t('home.detailedAddress') }}</view>
-				<view class="select-box-right">
-					<input type="text" :placeholder="$t('home.enterDetailedAddress')"
-						placeholder-style="color: #9191aa;" />
-				</view>
-			</view>
-			<view class="select-box">
-				<view>{{ $t('home.postalCode') }}</view>
-				<view class="select-box-right">
-					<input type="text" :placeholder="$t('home.enterPostalCode')" placeholder-style="color: #9191aa;" />
-				</view>
-			</view>
-			<view class="select-box">
-				<view>{{ $t('home.recipientPhone') }}</view>
-				<view class="select-box-right">
-					<input type="text" :placeholder="$t('home.enterRecipientPhone')"
-						placeholder-style="color: #9191aa;" />
-				</view>
-			</view>
-		</view>
-		<view>
-			<view class="title">{{ $t('home.identityInfo') }}</view>
-			<view class="select-box">
-				<view>{{ $t('home.idType') }}</view>
-				<view class="select-box-right" @click="addressShow = true">
-					<view>{{ $t('home.selectIdType') }}</view>
-					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
-				</view>
-			</view>
-			<view class="select-box">
-				<view>{{ $t('home.idNumber') }}</view>
-				<view class="select-box-right">
-					<input type="text" :placeholder="$t('home.enterIdNumber')" placeholder-style="color: #9191aa;" />
-				</view>
-			</view>
-			<view class="select-box">
-				<view>{{ $t('home.idValidDate') }}</view>
-				<view class="select-box-right" @click="addressShow = true">
-					<view>{{ $t('home.selectDate') }}</view>
-					<SvgIcon name="bottom" width="36" height="36" style="margin-left: 24rpx;"></SvgIcon>
-				</view>
-			</view>
-			<view class="title">{{ $t('home.uploadIdInfo') }}</view>
-			<view class="idCard">
-				<view>
-					<view class="idImage">
-						<up-upload :fileList="fileList1" name="1" :maxCount="1">
-							<SvgIcon name="idcard2" width="336" height="224"></SvgIcon>
-						</up-upload>
+			<view>
+				<view class="title">{{ $t('home.cardholderInfo') }}</view>
+				<view class="boxItem top">
+					<view>{{ $t('home.phoneNumber') }}</view>
+					<view class="boxItem-txt">
+						{{ cardHolderInfo.userTel }}
 					</view>
-					<view>{{ $t('home.idFront') }}</view>
 				</view>
-				<view>
-					<view class="idImage">
-						<up-upload :fileList="fileList2" name="1" :maxCount="1">
-							<SvgIcon name="idcard1" width="336" height="224"></SvgIcon>
-						</up-upload>
+				<view class="boxItem">
+					<view>{{ $t('home.email') }}</view>
+					<view class="boxItem-txt">
+						{{ cardHolderInfo.userEmail }}
 					</view>
-					<view>{{ $t('home.idBack') }}</view>
+				</view>
+				<!-- #ifdef H5 -->
+				<view
+					style="width: 100vw; height: 1rpx; background: #0f0f0f"
+				></view>
+				<!-- #endif -->
+				<view class="boxItem bottom">
+					<view>{{ $t('home.idNumber') }}</view>
+					<view class="boxItem-txt">
+						{{ cardHolderInfo.userNumber }}
+					</view>
 				</view>
 			</view>
-			<view class="title">{{ $t('home.holdIdImage') }}</view>
-			<view class="uploadBox">
-				<SvgIcon name="upload" width="202" height="202" class="SvgIcon1"></SvgIcon>
-				<SvgIcon name="uploadOff" width="36" height="36" class="SvgIcon2"></SvgIcon>
+			<view>
+				<view class="title">{{ $t('home.cardRules') }}</view>
+				<view class="boxItem top">
+					<view>{{ $t('home.maxCardBalance') }}</view>
+					<view class="boxItem-txt">
+						{{ formatBalance(applyCardInfo.rechargeMaxLimit) }}
+						{{ applyCardInfo.ccy }}
+					</view>
+				</view>
+				<view class="boxItem bottom">
+					<view>{{ $t('home.monthlyServiceFee') }}</view>
+					<view class="boxItem-txt">
+						{{ formatBalance(applyCardInfo.monthFee) }}
+						{{ applyCardInfo.ccy }}
+					</view>
+				</view>
 			</view>
+			<view>
+				<view class="title">{{ $t('home.mailingAddress') }}</view>
+				<view class="select-box" @click="openNationPop">
+					<view>{{ $t('home.country') }}</view>
+					<view class="select-box-right">
+						<view v-if="mailingAddress.nation">
+							{{ mailingAddress.nation }}
+						</view>
+						<view v-else>{{ $t('home.selectCountry') }}</view>
+						<SvgIcon
+							name="bottom"
+							width="36"
+							height="36"
+							style="margin-left: 24rpx"
+						></SvgIcon>
+					</view>
+				</view>
+				<view class="select-box" @click="openProvincePop">
+					<view>{{ $t('home.province') }}</view>
+					<view class="select-box-right">
+						<view v-if="mailingAddress.province">
+							{{ mailingAddress.province }}
+						</view>
+						<view v-else>{{ $t('home.selectProvince') }}</view>
+						<SvgIcon
+							name="bottom"
+							width="36"
+							height="36"
+							style="margin-left: 24rpx"
+						></SvgIcon>
+					</view>
+				</view>
+				<view class="select-box" @click="openCityPop">
+					<view>{{ $t('home.city') }}</view>
+					<view class="select-box-right">
+						<view v-if="mailingAddress.city">
+							{{ mailingAddress.city }}
+						</view>
+						<view v-else>{{ $t('home.selectCity') }}</view>
+						<SvgIcon
+							name="bottom"
+							width="36"
+							height="36"
+							style="margin-left: 24rpx"
+						></SvgIcon>
+					</view>
+				</view>
+				<view class="select-box">
+					<view>{{ $t('home.detailedAddress') }}</view>
+					<view class="select-box-right">
+						<input
+							@blur="setAddressInfo"
+							type="text"
+							v-model="addressInfo"
+							:placeholder="$t('home.enterDetailedAddress')"
+							placeholder-style="color: #9191aa;"
+						/>
+					</view>
+				</view>
+				<view class="select-box">
+					<view>{{ $t('home.postalCode') }}</view>
+					<view class="select-box-right">
+						<input
+							@blur="setPostCode"
+							type="text"
+							v-model="postCode"
+							:placeholder="$t('home.enterPostalCode')"
+							placeholder-style="color: #9191aa;"
+						/>
+					</view>
+				</view>
+				<view class="select-box">
+					<view>{{ $t('home.recipientName') }}</view>
+					<view class="select-box-right">
+						<input
+							@blur="setCollectMan"
+							type="text"
+							v-model="collectMan"
+							:placeholder="$t('home.enterRecipientName')"
+							placeholder-style="color: #9191aa;"
+						/>
+					</view>
+				</view>
+				<view class="select-box">
+					<view>{{ $t('home.recipientPhone') }}</view>
+					<view class="select-box-right">
+						<input
+							@blur="setCollectTel"
+							type="text"
+							v-model="collectTel"
+							:placeholder="$t('home.enterRecipientPhone')"
+							placeholder-style="color: #9191aa;"
+						/>
+					</view>
+				</view>
+			</view>
+			<view>
+				<view class="title">{{ $t('home.identityInfo') }}</view>
+				<view class="select-box" @click="openPaperworkPop">
+					<view>{{ $t('home.idType') }}</view>
+
+					<view class="select-box-right">
+						<view v-if="kycData.paperworkType">
+							{{ kycData.paperworkTypeName }}
+						</view>
+						<view v-else>{{ $t('home.selectIdType') }}</view>
+						<SvgIcon
+							name="bottom"
+							width="36"
+							height="36"
+							style="margin-left: 24rpx"
+						></SvgIcon>
+					</view>
+				</view>
+				<view class="select-box">
+					<view>{{ $t('home.idNumber') }}</view>
+					<view class="select-box-right">
+						<input
+							v-model="paperworkNum"
+							@blur="setPaperworkNum"
+							type="text"
+							:placeholder="$t('home.enterIdNumber')"
+							placeholder-style="color: #9191aa;"
+						/>
+					</view>
+				</view>
+				<view class="select-box" @click="openEndTimePop">
+					<view>{{ $t('home.idValidDate') }}</view>
+					<view class="select-box-right">
+						<view v-if="kycData.expirationTime">
+							{{ kycData.expirationTime }}
+						</view>
+						<view v-else>{{ $t('home.selectDate') }}</view>
+						<SvgIcon
+							name="bottom"
+							width="36"
+							height="36"
+							style="margin-left: 24rpx"
+						></SvgIcon>
+					</view>
+				</view>
+				<view class="select-box" @click="toUploadImg">
+					<view>{{ $t('home.uploadIdInfo') }}</view>
+					<view class="select-box-right">
+						<view>{{ uploadProgress }}</view>
+						<SvgIcon
+							name="right"
+							width="36"
+							height="36"
+							style="margin-left: 24rpx"
+						></SvgIcon>
+					</view>
+				</view>
+			</view>
+			<view class="prompt">
+				<view class="promptBox">
+					<view>{{ $t('home.cardOpeningFee') }}</view>
+					<view class="prompt-txt">
+						{{ formatBalance(applyCardInfo.openCardCost) }}
+						{{ applyCardInfo.ccy }}
+					</view>
+				</view>
+				<view class="promptBox">
+					<view>{{ $t('home.prepaymentFee') }}</view>
+					<view class="prompt-txt">
+						{{ formatBalance(applyCardInfo.preSaveCost) }}
+						{{ applyCardInfo.ccy }}
+					</view>
+				</view>
+				<view class="promptBox">
+					<view>{{ $t('home.monthlyServiceFee') }}</view>
+					<view class="prompt-txt">
+						{{ formatBalance(applyCardInfo.monthFee) }}
+						{{ applyCardInfo.ccy }}
+					</view>
+				</view>
+				<view class="promptBox">
+					<view class="prompt-txt">
+						{{ $t('home.paymentAmount') }}
+					</view>
+					<view style="color: #ffe330">xxx</view>
+				</view>
+				<view class="promptBox">
+					<view class="prompt-txt">{{ $t('home.shippingFee') }}</view>
+					<view style="color: #ffe330">xxx</view>
+				</view>
+			</view>
+			<view class="button" @click="applyShow = true">
+				{{ $t('home.confirmApplication') }}
+			</view>
+			<view class="button-placeholder"></view>
 		</view>
-		<view class="prompt">
-			<view class="promptBox">
-				<view>{{ $t('home.cardOpeningFee') }}</view>
-				<view class="prompt-txt">3.00 USDT</view>
-			</view>
-			<view class="promptBox">
-				<view>{{ $t('home.prepaymentFee') }}</view>
-				<view class="prompt-txt">20.00 USDT</view>
-			</view>
-			<view class="promptBox">
-				<view>{{ $t('home.monthlyServiceFee') }}</view>
-				<view class="prompt-txt">1.00 USDT</view>
-			</view>
-			<view class="promptBox">
-				<view class="prompt-txt">{{ $t('home.paymentAmount') }}</view>
-				<view style="color: #FFE330;">24.00 USDT</view>
-			</view>
-			<view class="promptBox">
-				<view class="prompt-txt">{{ $t('home.shippingFee') }}</view>
-				<view style="color: #FFE330;">0.00 USDT</view>
-			</view>
+
+		<view class="select-Popup">
+			<!-- 国家选择 -->
+			<up-picker
+				v-model:show="nationShow"
+				:columns="nationList"
+				@confirm="setNation"
+				keyName="name"
+				valueName="id"
+			></up-picker>
+			<!-- 省选择 -->
+			<up-picker
+				v-model:show="provinceShow"
+				:columns="provinceList"
+				@confirm="setProvince"
+				keyName="name"
+				valueName="id"
+			></up-picker>
+			<!-- 市选择 -->
+			<up-picker
+				v-model:show="cityShow"
+				:columns="cityList"
+				@confirm="setCity"
+				keyName="name"
+				valueName="id"
+			></up-picker>
+			<!-- 证件类型选择 -->
+			<up-picker
+				v-model:show="typeShow"
+				:columns="paperworkTypeList"
+				@confirm="setPaperworkType"
+				keyName="name"
+				valueName="id"
+			></up-picker>
 		</view>
-		<view class="button" @click="applyShow = true">{{ $t('home.confirmApplication') }}</view>
-		<view class="button-placeholder"></view>
-		<view>
-			<up-picker :show="addressShow" :columns="columns" @cancel="addressShow = false"
-				@change="addressShow = false"></up-picker>
+
+		<view class="select-Date-Popup">
+			<up-datetime-picker
+				@cancel="endTimeShow = false"
+				v-model:show="endTimeShow"
+				v-model="dateOfBirth"
+				:minDate="4800000"
+				:maxDate="2786778555000"
+				confirmColor="#1e3ad6"
+				mode="date"
+				@confirm="setExpirationTime"
+			></up-datetime-picker>
 		</view>
-		<up-modal :show="applyShow" :showConfirmButton='false' bgColor='#141414'>
+		<up-modal
+			:show="applyShow"
+			:showConfirmButton="false"
+			bgColor="#141414"
+		>
 			<view class="applyModal">
 				<view class="applyModal-title">
-					<SvgIcon class="svg-icon" name="hint" width="36" height="36"></SvgIcon>
+					<SvgIcon
+						class="svg-icon"
+						name="hint"
+						width="36"
+						height="36"
+					></SvgIcon>
 					<view>{{ $t('home.hint') }}</view>
 				</view>
-				<view class="applyModal-txt">{{ $t('home.cardApplicationTip') }}</view>
-				<view class="applyModal-button" @click="applyShow = false">{{ $t('home.iKnow') }}</view>
+				<view class="applyModal-txt">
+					{{ $t('home.cardApplicationTip') }}
+				</view>
+				<view class="applyModal-button" @click="applyShow = false">
+					{{ $t('home.iKnow') }}
+				</view>
 			</view>
 		</up-modal>
 	</view>
 </template>
 
 <script setup>
-	import {
-		ref,
-		reactive
-	} from 'vue';
+import { ref, reactive, computed } from 'vue';
+import { onLoad } from '@dcloudio/uni-app';
+import { formatBalance, formatDate } from '@/utils/common.js';
+import { openCardApply, findCountry } from '@/request/api.js';
+import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
+import { useCardStore } from '@/stores/card.js';
+import { useUserStore } from '@/stores/user.js';
 
-	const addressShow = ref(false)
-	const applyShow = ref(false)
+const { t } = useI18n();
 
-	const columns = reactive([
-		['中国', '美国']
-	]);
+const cardStore = useCardStore();
+const userStore = useUserStore();
 
-	const fileList1 = ref([]);
-	const fileList2 = ref([]);
+const { applyCardInfo, cardHolderInfo, mailingAddress, kycData } =
+	storeToRefs(cardStore);
 
-	// 保留原有注释代码，不改动逻辑
-	// // 删除图片
-	// const deletePic = (event) => {
-	// 	fileList1.value.splice(event.index, 1);
-	// };
+const {
+	clearCardInfo,
+	clearCardHolderInfo,
+	setKycDataForKey,
+	setMailingAddressForKey
+} = cardStore;
 
-	// // 新增图片
-	// const afterRead = async (event) => {
-	// 	// 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-	// 	let lists = [].concat(event.file);
-	// 	let fileListLen = fileList1.value.length;
-	// 	lists.map((item) => {
-	// 		fileList1.value.push({
-	// 			...item,
-	// 			status: 'uploading',
-	// 			message: '上传中',
-	// 		});
-	// 	});
-	// 	for (let i = 0; i < lists.length; i++) {
-	// 		const result = await uploadFilePromise(lists[i].url);
-	// 		let item = fileList1.value[fileListLen];
-	// 		fileList1.value.splice(fileListLen, 1, {
-	// 			...item,
-	// 			status: 'success',
-	// 			message: '',
-	// 			url: result,
-	// 		});
-	// 		fileListLen++;
-	// 	}
-	// };
+const { userInfo } = storeToRefs(userStore);
 
-	// const uploadFilePromise = (url) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		let a = uni.uploadFile({
-	// 			url: 'http://192.168.2.21:7001/upload', // 仅为示例，非真实的接口地址
-	// 			filePath: url,
-	// 			name: 'file',
-	// 			formData: {
-	// 				user: 'test',
-	// 			},
-	// 			success: (res) => {
-	// 				setTimeout(() => {
-	// 					resolve(res.data.data);
-	// 				}, 1000);
-	// 			},
-	// 		});
-	// 	});
-	// };
+const applyShow = ref(false);
+
+//国家列表
+const nationList = ref([]);
+//是否展示国家列表
+const nationShow = ref(false);
+//省列表
+const provinceList = ref([]);
+//是否展示省列表
+const provinceShow = ref(false);
+//市列表
+const cityList = ref([]);
+//是否展示市列表
+const cityShow = ref(false);
+//证件类型列表
+const typeShow = ref(false);
+//证件到期时间expirationTime
+const endTimeShow = ref(false);
+
+//当前时间
+const dateOfBirth = ref(Date.now());
+//详细地址
+const addressInfo = ref(mailingAddress.value.addressInfo);
+//postCode邮编
+const postCode = ref(mailingAddress.value.postCode);
+//收件人
+const collectMan = ref(mailingAddress.value.collectMan);
+//收件人电话
+const collectTel = ref(mailingAddress.value.collectTel);
+//证件号码
+const paperworkNum = ref(kycData.value.paperworkNum);
+
+//paperworkTypeList
+const paperworkTypeList = ref([
+	[
+		{
+			id: 1,
+			name: '身份证',
+			value: 'NATIONAL_ID'
+		},
+		{
+			id: 2,
+			name: '护照',
+			value: 'PASSPORT'
+		}
+	]
+]);
+
+const availableBalance = computed(() => {
+	return (
+		parseFloat(userInfo.value.walletBalance) -
+		parseFloat(userInfo.value.freezeBalance)
+	);
+});
+
+const totalFee = computed(() => {
+	return (
+		parseFloat(applyCardInfo.value.openCardCost) +
+		parseFloat(applyCardInfo.value.preSaveCost) +
+		parseFloat(applyCardInfo.value.monthFee)
+	);
+});
+
+const uploadProgress = computed(() => {
+	const ids = [
+		kycData.value.frontPhotoId,
+		kycData.value.backPhotoId,
+		kycData.value.handheldPhotoId
+	];
+	const uploadedCount = ids.filter((id) => !!id).length;
+
+	if (uploadedCount === 0) return t('home.uploadIdInfoPlaceholder');
+	if (uploadedCount === 1) return '1/3';
+	if (uploadedCount === 2) return '2/3';
+	return "已上传";
+});
+
+//获取国家列表
+const getNationList = async () => {
+	const res = await findCountry();
+	nationList.value = [res.data];
+	provinceList.value = [];
+	cityList.value = [];
+};
+//获取省列表
+const getProvinceList = async (nationId) => {
+	const res = await findCountry({
+		parentId: nationId
+	});
+	provinceList.value = [res.data];
+	cityList.value = [];
+};
+//获取市列表
+const getCityList = async (provinceId) => {
+	const res = await findCountry({
+		parentId: provinceId
+	});
+	cityList.value = [res.data];
+};
+
+//打开国家选择
+const openNationPop = async () => {
+	await getNationList();
+	nationShow.value = true;
+};
+//打开省选择
+const openProvincePop = async () => {
+	provinceShow.value = true;
+};
+//打开市选择
+const openCityPop = async () => {
+	cityShow.value = true;
+};
+//打开证件类型选择
+const openPaperworkPop = async () => {
+	typeShow.value = true;
+};
+//打开时间选择
+const openEndTimePop = async () => {
+	endTimeShow.value = true;
+};
+
+//设置国家
+const setNation = (e) => {
+	setMailingAddressForKey('nation', e.value[0].name);
+	getProvinceList(e.value[0].id);
+};
+//设置省
+const setProvince = (e) => {
+	setMailingAddressForKey('province', e.value[0].name);
+	getCityList(e.value[0].id);
+};
+//设置市
+const setCity = (e) => {
+	setMailingAddressForKey('city', e.value[0].name);
+};
+//设置详细地址
+const setAddressInfo = (e) => {
+	setMailingAddressForKey('addressInfo', e.detail.value);
+};
+//设置邮编
+const setPostCode = (e) => {
+	setMailingAddressForKey('postCode', e.detail.value);
+};
+//设置收件人
+const setCollectMan = (e) => {
+	setMailingAddressForKey('collectMan', e.detail.value);
+};
+//设置收件人电话
+const setCollectTel = (e) => {
+	setMailingAddressForKey('collectTel', e.detail.value);
+};
+//设置证件类型
+const setPaperworkType = (e) => {
+	console.log(e.value[0]);
+	setKycDataForKey('paperworkType', e.value[0].value);
+	setKycDataForKey('paperworkTypeName', e.value[0].name);
+};
+//设置证件号码
+const setPaperworkNum = (e) => {
+	setKycDataForKey('paperworkNum', e.detail.value);
+};
+
+//设置证件到期时间
+const setExpirationTime = (e) => {
+	endTimeShow.value = false;
+	setKycDataForKey('expirationTime', formatDate(e.value));
+};
+
+const toUploadImg = () => {
+	uni.navigateTo({
+		url: '/pages/applyInfo/physicalCard/upLoadIdImg'
+	});
+};
+
+onLoad(() => {});
 </script>
 
 <style lang="scss" scoped>
-	@import './physicalCard.scss';
+@import './physicalCard.scss';
+
+.select-Popup {
+	:deep(.u-popup__content) {
+		background: #16171a;
+		border-radius: 30rpx;
+		.u-toolbar {
+			font-weight: 500;
+			.u-toolbar__wrapper__cancel {
+				padding: 0 40rpx;
+			}
+			.u-toolbar__wrapper__confirm {
+				padding: 0 40rpx;
+			}
+		}
+		.u-picker__view__column {
+			.u-picker__view__column__item {
+				color: #fff;
+			}
+
+			.uni-picker-view-mask {
+				background-image: none;
+			}
+			.uni-picker-view-indicator {
+				background-color: #88888830;
+				border-radius: 30rpx;
+				&::after {
+					border: none;
+				}
+				&::before {
+					border: none;
+				}
+			}
+		}
+	}
+}
+
+.select-Date-Popup {
+	:deep(.u-popup__content) {
+		background: #16171a;
+		border-radius: 30rpx;
+		.u-toolbar {
+			font-weight: 500;
+			.u-toolbar__wrapper__cancel {
+				padding: 0 40rpx;
+			}
+			.u-toolbar__wrapper__confirm {
+				padding: 0 40rpx;
+			}
+		}
+		.u-picker__view__column {
+			.u-picker__view__column__item {
+				color: #fff;
+			}
+			.uni-picker-view-mask {
+				background-image: none;
+			}
+			.uni-picker-view-indicator {
+				background-color: #88888830;
+				&::after {
+					border: none;
+				}
+				&::before {
+					border: none;
+				}
+			}
+			&:first-child {
+				.uni-picker-view-indicator {
+					border-radius: 30rpx 0 0 30rpx;
+				}
+			}
+			&:last-child {
+				.uni-picker-view-indicator {
+					border-radius: 0 30rpx 30rpx 0;
+				}
+			}
+		}
+	}
+}
 </style>

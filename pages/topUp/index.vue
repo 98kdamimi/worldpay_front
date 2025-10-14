@@ -51,7 +51,9 @@
 		<!-- <view class="prompt-text red">
 			{{ $t('topUp.rechargeFeeTip') }}
 		</view> -->
-		<view class="button" @click="goToBack">{{ $t('topUp.completeRecharge') }}</view>
+		<view class="button" @click="goToBack">
+			{{ $t('topUp.completeRecharge') }}
+		</view>
 	</view>
 </template>
 
@@ -69,25 +71,22 @@ const cardInfo = ref({});
 const time = ref();
 const FirmAccount = ref();
 const getCardInfo = async () => {
-	const res = await findUserCardInfo({ id: cardID.value });
-	cardInfo.value = res;
-	console.log('查询到卡详情', res);
+	const { data } = await findUserCardInfo({ id: cardID.value });
+	cardInfo.value = data;
 };
 const getFirmAccount = async () => {
-	const res = await findFirmAccount();
-	console.log('查询到公司账户', res);
-	FirmAccount.value = res;
+	const { data } = await findFirmAccount();
+	FirmAccount.value = data;
 };
 const goToBack = () => {
 	uni.navigateBack();
 };
 
 onLoad(async (options) => {
-	console.log('获取到页面数据', options);
 	cardID.value = options.id;
 	await getCardInfo();
 	await findCardExpirationTime({ id: cardID.value }).then((res) => {
-		time.value = res;
+		time.value = res.data;
 	});
 	await getFirmAccount();
 });

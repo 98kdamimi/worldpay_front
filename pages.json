@@ -139,6 +139,22 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path" : "pages/selectCard/selectCard",
+			"navigationBarTitleText": "钱包充值选择卡片",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/applyInfo/physicalCard/upLoadIdImg",
+			"navigationBarTitleText": "上传身份证信息",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
 		}
 
 	],

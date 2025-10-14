@@ -29,7 +29,7 @@ const props = defineProps({
 });
 const time = ref();
 findCardExpirationTime({ id: props.listItem.id }).then((res) => {
-	time.value = res;
+	time.value = res.data;
 });
 </script>
 

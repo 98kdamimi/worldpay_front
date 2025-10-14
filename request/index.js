@@ -25,7 +25,7 @@ import {
 } from 'pinia'
 
 // ------------------------- 常量定义 -------------------------
-const BASE_URL = 'http://192.168.3.9:8063'
+export const BASE_URL = 'http://192.168.3.9:8063'
 const DEFAULT_TIMEOUT = 10000
 
 
@@ -94,7 +94,7 @@ function responseInterceptor(response) {
 	// 后端返回结构中建议有 rtncode/msg/data
 	switch (res.rtncode) {
 		case 200:
-			return res.data
+			return res
 
 		case 403:
 			handleTokenInvalid(res.msg)
@@ -110,10 +110,39 @@ function responseInterceptor(response) {
 	}
 }
 
+
+
+// ------------------------- Loading 管理 -------------------------
+let loadingCount = 0 // 当前正在请求的数量
+
+function showLoading() {
+	if (loadingCount === 0) {
+		uni.showLoading({
+
+			mask: true,
+		})
+	}
+	loadingCount++
+}
+
+function hideLoading() {
+	if (loadingCount <= 0) return
+	loadingCount--
+	if (loadingCount === 0) {
+		uni.hideLoading()
+	}
+}
+
+
 // ------------------------- 核心请求函数 -------------------------
 const request = (options) => {
 	const config = requestInterceptor(options)
-	
+
+	// 默认是否显示 loading
+	const showLoadingFlag = config.showLoading !== false
+
+	if (showLoadingFlag) showLoading()
+
 	return new Promise((resolve, reject) => {
 		uni.request({
 			url: BASE_URL + config.url,
@@ -124,7 +153,8 @@ const request = (options) => {
 
 			success: (res) => {
 				try {
-					const result = responseInterceptor(res)
+					const result = responseInterceptor(
+						res)
 					resolve(result)
 				} catch (err) {
 					reject(err)
@@ -132,7 +162,8 @@ const request = (options) => {
 			},
 
 			fail: (err) => {
-				const errorMsg = err.errMsg?.includes('timeout') ?
+				const errorMsg = err.errMsg?.includes(
+						'timeout') ?
 					'请求超时，请检查网络' :
 					'网络异常，请稍后重试'
 
@@ -142,6 +173,9 @@ const request = (options) => {
 					duration: 2000,
 				})
 				reject(new Error(errorMsg))
+			},
+			complete: () => {
+				if (showLoadingFlag) hideLoading()
 			},
 		})
 	})

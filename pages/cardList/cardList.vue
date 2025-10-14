@@ -113,12 +113,12 @@ const getFindUserCardList = async () => {
 		refreshing.value = true;
 		// loading.value = true;
 		// 查询用户所有卡片
-		const res = await findUserCardList(requestParams);
+		const { data } = await findUserCardList(requestParams);
 		console.log('请求参数', requestParams);
-		console.log('请求到数据', res);
+		console.log('请求到数据', data);
 
-		cardList.value = [...cardList.value, ...res.list];
-		requestParams.total = res.total;
+		cardList.value = [...data.list, ...cardList.value];
+		requestParams.total = data.total;
 		await nextTick();
 		refreshing.value = false;
 		// setTimeout(() => {

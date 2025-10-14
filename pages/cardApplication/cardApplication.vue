@@ -62,27 +62,36 @@
 		<view class="rule-box top">
 			<view>{{ $t('home.cardOpeningFee') }}</view>
 			<view class="rule-box-txt">
-				{{ dataList[swiperIndex]?.openCardCost }}
+				{{
+					dataList[swiperIndex]?.openCardCost +
+					' ' +
+					dataList[swiperIndex]?.ccy
+				}}
 			</view>
 		</view>
 		<view class="rule-box">
 			<view>{{ $t('home.prepaymentFee') }}</view>
 			<view class="rule-box-txt">
-				{{ dataList[swiperIndex]?.preSaveCost }}
+				{{
+					dataList[swiperIndex]?.preSaveCost +
+					' ' +
+					dataList[swiperIndex]?.ccy
+				}}
 			</view>
 		</view>
 		<view class="rule-box bottom">
 			<view>{{ $t('home.monthlyServiceFee') }}</view>
 			<view class="rule-box-txt">
-				{{ dataList[swiperIndex]?.monthFee }}
+				{{
+					dataList[swiperIndex]?.monthFee +
+					' ' +
+					dataList[swiperIndex]?.ccy
+				}}
 			</view>
 		</view>
 
 		<!-- 提示文本：多语言拆分（避免重复键） -->
-		<view
-			class="hint-txt"
-			v-if="dataList[swiperIndex]?.synopsisData?.length"
-		>
+		<view class="hint-txt" v-if="dataList[swiperIndex]?.synopsisData">
 			<span>{{ dataList[swiperIndex]?.synopsisData?.title }}</span>
 			<span class="span-txt">
 				{{ dataList[swiperIndex]?.synopsisData?.content }}
@@ -102,7 +111,10 @@ import { ref, reactive } from 'vue';
 import { onReady } from '@dcloudio/uni-app';
 import { useI18n } from 'vue-i18n';
 import { findList } from '@/request/api.js';
+import { useCardStore } from '@/stores/card.js';
 
+const cardStore = useCardStore();
+const { setCardInfo } = cardStore;
 const { t } = useI18n();
 
 // Tabs列表
@@ -128,8 +140,7 @@ const imgList = ref([]);
 const dataList = ref([]);
 
 // 获取系统信息
-onReady(() => {
-	getFindList();
+onReady(async () => {
 	// 获取刘海高度
 	uni.getSystemInfo({
 		success: (res) => {
@@ -145,17 +156,19 @@ onReady(() => {
 			notchHeight.value = 0;
 		}
 	});
+	await getFindList();
+	setCardInfo(dataList.value[0]);
 });
 
 // 查询银行卡信息列表
 const getFindList = async () => {
 	try {
-		const res = await findList({
+		const { data } = await findList({
 			bankCardNature: active.value == 0 ? 'VIRTUAL' : 'PHYSICAL'
 		});
-		dataList.value = res;
+		dataList.value = data;
 		imgList.value = [];
-		res.forEach((item) => {
+		data.forEach((item) => {
 			if (item.img) {
 				imgList.value.push(item.img);
 			}
@@ -167,14 +180,17 @@ const getFindList = async () => {
 
 // 轮播图切换时，更新下标并处理数据
 function onSwiperChange(idx) {
+	console.log('onSwiperChange', idx);
 	swiperIndex.value = idx;
+	setCardInfo(dataList.value[idx]);
 }
 
 // Tabs切换方法
-function setActive(item) {
+async function setActive(item) {
 	active.value = item.index;
 	swiperIndex.value = 0;
-	getFindList();
+	await getFindList();
+	setCardInfo(dataList.value[0]);
 }
 
 // 页面跳转方法

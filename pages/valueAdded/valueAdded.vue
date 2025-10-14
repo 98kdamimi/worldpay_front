@@ -40,12 +40,7 @@
 					<view>
 						{{ $t('recharge.available') }}
 						<span>
-							{{
-								formatBalance(
-									parseFloat(userInfo.walletBalance) -
-										parseFloat(userInfo.freezeBalance)
-								)
-							}}
+							{{ availableBalance }}
 						</span>
 					</view>
 					<!-- <SvgIcon name="add" width="32" height="32"></SvgIcon> -->
@@ -74,12 +69,12 @@
 			</view>
 			<view class="box-input">
 				<view v-if="!amount.length">-</view>
-				<view v-else>{{ receiveAmount }}</view>
+				<view v-else>{{ targetAmount }}</view>
 			</view>
 			<view class="box-title">{{ $t('recharge.serviceFee') }}</view>
 			<view class="box-input" style="margin-bottom: 0">
 				<view v-if="!amount.length">-</view>
-				<view v-else>{{ rechargeFee }}</view>
+				<view v-else>{{ handlingFees }}</view>
 			</view>
 		</view>
 		<!-- <view class="hint">{{ $t('recharge.tipUsdtExchange') }}</view> -->
@@ -119,12 +114,19 @@
 				<view class="SafetyPopup-hint">
 					{{ $t('recharge.securityVerificationHint') }}
 				</view>
-				<view class="SafetyPopup-button" @click="passwordShow = true">
+				<view
+					class="SafetyPopup-button"
+					@click="
+						passwordShow = true;
+						SafetyShow = false;
+					"
+				>
 					{{ $t('recharge.rechargeBtn') }}
 				</view>
 			</view>
 		</up-popup>
-		<up-popup :show="passwordShow" mode="bottom" bgColor="#141414">
+		<PayPassword v-model:show="passwordShow" @finish="finish" />
+		<!-- <up-popup :show="passwordShow" mode="bottom" bgColor="#141414">
 			<view class="passwordPopup">
 				<view class="passwordPopup-title">
 					{{ $t('recharge.passwordVerification') }}
@@ -139,21 +141,20 @@
 					<up-code-input
 						:maxlength="6"
 						:dot="true"
-						borderColor="#ffffff"
-						color="#ffffff"
 						@finish="finish()"
 					></up-code-input>
 				</view>
 			</view>
-		</up-popup>
+		</up-popup> -->
 	</view>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
-import { findUserCardInfo } from '@/request/api.js';
+import { findUserCardInfo, topUp } from '@/request/api.js';
 import { useUserStore } from '@/stores/user.js';
+import { storeToRefs } from 'pinia';
 import {
 	maskBankCard,
 	formattedCard,
@@ -165,20 +166,27 @@ const userStore = useUserStore();
 
 const { fetchUserInfoByToken } = userStore;
 
+const { userInfo } = storeToRefs(userStore);
+
 const cardUniqueId = ref('');
 const cardInfo = ref('');
-
-const userInfo = ref({});
 
 const SafetyShow = ref(false);
 const passwordShow = ref(false);
 const amount = ref('');
 
-const receiveAmount = computed(() => {
+const availableBalance = computed(() => {
+	return formatBalance(
+		parseFloat(userInfo.value.walletBalance) -
+			parseFloat(userInfo.value.freezeBalance)
+	);
+});
+
+const targetAmount = computed(() => {
 	return formatBalance(parseFloat(amount.value));
 });
 
-const rechargeFee = computed(() => {
+const handlingFees = computed(() => {
 	return formatBalance(
 		parseFloat(amount.value) *
 			parseFloat(cardInfo.value?.cardData?.rechargeFee)
@@ -188,6 +196,7 @@ const rechargeFee = computed(() => {
 const finish = (e) => {
 	SafetyShow.value = false;
 	passwordShow.value = false;
+	toTopUp();
 };
 
 const goToPage = (address) => {
@@ -198,11 +207,37 @@ const goToPage = (address) => {
 //获取银行卡详情
 const getFindUserCardInfo = async () => {
 	try {
-		const res = await findUserCardInfo({
+		const {data} = await findUserCardInfo({
 			id: cardUniqueId.value
 		});
-		console.log('获取到卡片信息', res);
-		cardInfo.value = res;
+		cardInfo.value = data;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+// 充值
+const toTopUp = async () => {
+	console.log('充值', targetAmount.value);
+	try {
+		const res = await topUp({
+			amount: amount.value,
+			targetAmount: targetAmount.value,
+			handlingFees: handlingFees.value,
+			userBankcardId: cardInfo.value.userBankcardId,
+			payType: 1,
+			uid: userInfo.value.uid
+		});
+
+		await fetchUserInfoByToken();
+		uni.navigateBack({
+			success: () => {
+				uni.showToast({
+					title: res.msg,
+					icon: 'none'
+				});
+			}
+		});
 	} catch (error) {
 		console.error(error);
 	}
@@ -211,12 +246,14 @@ const getFindUserCardInfo = async () => {
 onLoad(async (option) => {
 	cardUniqueId.value = option.id;
 	await getFindUserCardInfo();
-	const res = await fetchUserInfoByToken();
-	userInfo.value = res;
-	console.log('获取用户信息', res);
+	await fetchUserInfoByToken();
 });
 </script>
 
 <style lang="scss" scoped>
 @import './valueAdded.scss';
+:deep(.u-code-input__item) {
+	background-color: #fff;
+	border-radius: 20rpx;
+}
 </style>

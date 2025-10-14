@@ -129,12 +129,13 @@
 			<view>{{ $t('home.save') }}</view>
 		</view>
 		<view class="button-placeholder"></view>
-		<view>
+		<view class="select-Popup">
 			<up-datetime-picker
-				:show="pickerShow"
+				v-model:show="pickerShow"
 				v-model="dateOfBirth"
 				:minDate="4800000"
 				:maxDate="1786778555000"
+				confirmColor="#1e3ad6"
 				mode="date"
 				@cancel="pickerShow = false"
 				@confirm="pickerShow = false"
@@ -315,4 +316,50 @@ const getCardholderAdd = async () => {
 
 <style lang="scss" scoped>
 @import './addCardholder.scss';
+.select-Popup {
+	:deep(.u-popup__content) {
+		background: #16171a;
+		border-radius: 30rpx;
+		// box-shadow: 0 0 10px 5px  #000000 ;
+		.u-toolbar{
+			font-weight: 500;
+			.u-toolbar__wrapper__cancel{
+				padding: 0 40rpx;
+			}
+			.u-toolbar__wrapper__confirm{
+				padding: 0 40rpx;
+			}
+		}
+		.u-picker__view__column {
+			.u-picker__view__column__item {
+				color: #fff;
+			}
+			// .u-picker__view__column__item--selected{
+			// 	color: red;
+			// }
+			.uni-picker-view-mask {
+				background-image: none;
+			}
+			.uni-picker-view-indicator {
+				background-color: #88888830;
+				&::after {
+					border: none;
+				}
+				&::before {
+					border: none;
+				}
+			}
+			&:first-child {
+				.uni-picker-view-indicator {
+					border-radius: 30rpx 0 0 30rpx;
+				}
+			}
+			&:last-child {
+				.uni-picker-view-indicator {
+					border-radius: 0 30rpx 30rpx 0;
+				}
+			}
+		}
+	}
+}
 </style>
