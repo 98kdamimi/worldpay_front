@@ -2,8 +2,12 @@
 	<view>
 		<Navbar :title="$t('home.uploadIdInfo')" :showBack="true"></Navbar>
 		<view class="id_info_container">
-			<view class="page_title item_title">实名认证</view>
-			<view class="item_title">证件正面照片</view>
+			<view class="page_title item_title">
+				{{ $t('card.realNameRecognition') }}
+			</view>
+			<view class="item_title">
+				{{ $t('card.realNameRecognitionImage1') }}
+			</view>
 			<view class="img_upload_container" @click="uploadImg(0)">
 				<view
 					class="img_container"
@@ -20,10 +24,14 @@
 						width="120"
 						height="120"
 					></SvgIcon>
-					<view class="img_upload_title">添加图片</view>
+					<view class="img_upload_title">
+						{{ $t('card.realNameRecognitionAddImage') }}
+					</view>
 				</view>
 			</view>
-			<view class="item_title">证件背面照片</view>
+			<view class="item_title">
+				{{ $t('card.realNameRecognitionImage2') }}
+			</view>
 			<view class="img_upload_container" @click="uploadImg(1)">
 				<view
 					class="img_container"
@@ -40,10 +48,14 @@
 						width="120"
 						height="120"
 					></SvgIcon>
-					<view class="img_upload_title">添加图片</view>
+					<view class="img_upload_title">
+						{{ $t('card.realNameRecognitionAddImage') }}
+					</view>
 				</view>
 			</view>
-			<view class="item_title">手持证件照片</view>
+			<view class="item_title">
+				{{ $t('card.realNameRecognitionImage3') }}
+			</view>
 			<view class="img_upload_container" @click="uploadImg(2)">
 				<view
 					class="img_container"
@@ -60,10 +72,14 @@
 						width="120"
 						height="120"
 					></SvgIcon>
-					<view class="img_upload_title">添加图片</view>
+					<view class="img_upload_title">
+						{{ $t('card.realNameRecognitionAddImage') }}
+					</view>
 				</view>
 			</view>
-			<view class="confirm_btn">提交</view>
+			<view class="confirm_btn">
+				{{ $t('card.realNameRecognitionConfirm') }}
+			</view>
 		</view>
 	</view>
 </template>
@@ -94,7 +110,6 @@ const uploadImg = (index) => {
 		sourceType: ['album', 'camera'],
 		extension: ['png', 'jpg', 'jpeg'],
 		success: function (res) {
-			
 			uni.uploadFile({
 				url: `${BASE_URL}/ucard/wiki/apiUploadImage`,
 				header: {

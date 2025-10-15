@@ -353,5 +353,11 @@
 	"recordType.card": "卡片记录",
 	"home.pleaseApplyForAFardFirst": "请先申请卡片！",
 	"select.countryRegios": "选择国家/地区",
-	"select.countryRegiosCode": "请输入国家或区号"
+	"select.countryRegiosCode": "请输入国家或区号",
+	"card.realNameRecognition":"实名认证",
+	"card.realNameRecognitionImage1":"证件证面照片",
+	"card.realNameRecognitionImage2":"证件背面照片",
+	"card.realNameRecognitionImage3":"手持证件照片",
+	"card.realNameRecognitionAddImage":"添加照片",
+	"card.realNameRecognitionConfirm":"确认"
 }

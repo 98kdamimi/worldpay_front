@@ -97,7 +97,8 @@ function responseInterceptor(response) {
 			return res
 
 		case 403:
-			handleTokenInvalid(res.msg)
+			// 异步触发，避免 Promise 链阻断
+			Promise.resolve().then(() => handleTokenInvalid(res.msg))
 			throw new Error(res.msg || 'Token 失效')
 
 		default:
