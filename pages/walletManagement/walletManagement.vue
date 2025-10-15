@@ -45,7 +45,7 @@
 					<span>{{ $t('walletManagement.transfer') }}</span>
 				</view>
 			</view>
-			<view @click="goToPage('/pages/moneyTransfer/moneyTransfer')">
+			<view @click="goToMoneyTransfer">
 				<view>
 					<SvgIcon
 						name="kingKong3"
@@ -119,7 +119,7 @@ import SvgIcon from '@/components/svgIcon/svgIcon.vue';
 //获取用户信息
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
-const {fetchUserInfoByToken} = useUserStore()
+const { fetchUserInfoByToken } = useUserStore();
 
 const navbarRef = ref(null);
 
@@ -130,8 +130,6 @@ const requestParams = reactive({
 	uid: userInfo.value.uid,
 	total: 0
 });
-
-
 
 const recordsList = ref([]);
 // 刘海高度
@@ -153,15 +151,25 @@ const goToPage = (address) => {
 const getRecordsList = async () => {
 	const { data } = await walletLog(requestParams);
 	console.log('获取到交易记录', data);
-	recordsList.value = [...data.list,...recordsList.value ];
+	recordsList.value = [...data.list, ...recordsList.value];
 	requestParams.total = data.total;
 };
 
-
 const goTotransfer = () => {
+	
 	uni.navigateTo({
 		url: `/pages/transfer/transfer`
 	});
+};
+
+const goToMoneyTransfer = () => {
+	uni.showToast({
+		title: '敬请期待',
+		icon: "none"
+	});
+	// uni.navigateTo({
+	// 	url: '/pages/moneyTransfer/moneyTransfer'
+	// });
 };
 
 // onReady(() => {
@@ -194,7 +202,7 @@ const loadMore = () => {
 };
 
 onLoad(async () => {
-	fetchUserInfoByToken()
+	fetchUserInfoByToken();
 	await nextTick();
 	notchHeight.value = navbarRef.value.navbarHeight;
 	getRecordsList();

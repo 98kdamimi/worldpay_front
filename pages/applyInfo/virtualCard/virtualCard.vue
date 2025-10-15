@@ -133,10 +133,7 @@
 					{{ $t('home.insufficientBalanceTip') }}
 				</view>
 				<view class="applyModal-button">
-					<view class="cancel" @click="applyShow = false">
-						{{ $t('home.bankCardRecharge') }}
-					</view>
-					<view class="apply" @click="applyShow = false">
+					<view class="apply" @click="toWalletRecharge">
 						{{ $t('home.walletRecharge') }}
 					</view>
 				</view>
@@ -148,14 +145,14 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { formatBalance } from '@/utils/common.js';
-import {openCardApply} from '@/request/api.js'
+import { openCardApply } from '@/request/api.js';
 import { storeToRefs } from 'pinia';
 import { useCardStore } from '@/stores/card.js';
 import { useUserStore } from '@/stores/user.js';
 const cardStore = useCardStore();
 const userStore = useUserStore();
 const { applyCardInfo, cardHolderInfo } = storeToRefs(cardStore);
-const {clearCardInfo,clearCardHolderInfo} = cardStore
+const { clearCardInfo, clearCardHolderInfo } = cardStore;
 const { userInfo } = storeToRefs(userStore);
 
 const availableBalance = computed(() => {
@@ -175,36 +172,41 @@ const totalFee = computed(() => {
 
 const toWalletRecharge = () => {
 	uni.reLaunch({
-		url: '/pages/walletRecharge/walletRecharge'
+		url: '/pages/walletRecharge/walletRecharge',
+		success: function () {
+			clearCardInfo();
+			clearCardHolderInfo();
+		}
 	});
 };
 
 const applyShow = ref(false);
 const confirmApplication = async () => {
 	// applyShow.value = true;
-	if (totalFee.value > userInfo.value.walletBalance) {
+	if (totalFee.value > availableBalance.value) {
 		applyShow.value = true;
-		return
+		return;
 	}
 	const params = {
-		cardId:applyCardInfo.value.id,
-		holderId:cardHolderInfo.value.id,
-		topupType:1,
-		uid:userInfo.value.uid
-	}
-	const res = await openCardApply(params)
-	uni.reLaunch({
-		url:'/pages/index/index',
-		success:function(){
-			clearCardInfo()
-			clearCardHolderInfo()
-			uni.showToast({
-				title: '已经为您提交申请，请等待审核',
-				icon: 'none'
-			});
-		}
-	})
-	
+		cardId: applyCardInfo.value.id,
+		holderId: cardHolderInfo.value.id,
+		topupType: 1,
+		uid: userInfo.value.uid
+	};
+	const res = await openCardApply(params);
+	uni.showToast({
+		title: t('home.cardApplicationTip'),
+		icon: 'none'
+	});
+	setTimeout(() => {
+		uni.reLaunch({
+			url: '/pages/index/index',
+			success: function () {
+				clearCardInfo();
+				clearCardHolderInfo();
+			}
+		});
+	}, 2000);
 };
 </script>
 
@@ -357,26 +359,16 @@ const confirmApplication = async () => {
 	}
 
 	.applyModal-button {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-
-		> view {
-			width: 252rpx;
-			padding: 28rpx 0;
-			text-align: center;
-			font-weight: 400;
-			font-size: 32rpx;
-			border-radius: 24rpx;
-		}
-
-		.cancel {
-			background: #868686;
-		}
-
-		.apply {
-			background: #1e3ad6;
-		}
+		width: 536rpx;
+		height: 88rpx;
+		line-height: 88rpx;
+		text-align: center;
+		background: #1e3ad6;
+		border-radius: 24rpx;
+		font-family: PingFangSC, PingFang SC;
+		font-weight: 400;
+		font-size: 32rpx;
+		color: #ffffff;
 	}
 }
 </style>

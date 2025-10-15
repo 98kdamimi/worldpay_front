@@ -77,7 +77,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="confirm_btn">
+			<view class="confirm_btn" @click="goBack">
 				{{ $t('card.realNameRecognitionConfirm') }}
 			</view>
 		</view>
@@ -179,6 +179,9 @@ const removeImg = (index) => {
 			setKycDataForKey('handheldPhotoUrl', '');
 			break;
 	}
+};
+const goBack = () => {
+	uni.navigateBack();
 };
 </script>
 

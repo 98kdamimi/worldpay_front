@@ -52,6 +52,41 @@
 					</view>
 				</view>
 			</view>
+			<!-- 费用 -->
+			<view>
+				<view class="title">{{ $t('home.applicationFee') }}</view>
+				<view class="boxItem top" style="padding: 24rpx">
+					<view style="display: flex; align-items: center">
+						<SvgIcon name="icon1" width="64" height="64"></SvgIcon>
+						<view
+							class="boxItem-txt"
+							style="font-weight: 500; margin-left: 12rpx"
+						>
+							USD
+						</view>
+					</view>
+				</view>
+				<!-- #ifdef H5 -->
+				<view
+					style="width: 100vw; height: 1rpx; background: #0f0f0f"
+				></view>
+				<!-- #endif -->
+				<view class="boxItem bottom">
+					<view>{{ $t('home.availableBalance') }}</view>
+					<view class="boxItem-txt" style="display: flex">
+						<view style="margin-right: 12rpx">
+							{{ formatBalance(availableBalance) }}
+							{{ applyCardInfo.ccy }}
+						</view>
+						<SvgIcon
+							name="add"
+							width="36"
+							height="36"
+							@click="toWalletRecharge"
+						></SvgIcon>
+					</view>
+				</view>
+			</view>
 			<view>
 				<view class="title">{{ $t('home.mailingAddress') }}</view>
 				<view class="select-box" @click="openNationPop">
@@ -148,7 +183,7 @@
 					</view>
 				</view>
 			</view>
-			<view>
+			<view v-if="userInfo.kycState == 1 || userInfo.kycState == 4">
 				<view class="title">{{ $t('home.identityInfo') }}</view>
 				<view class="select-box" @click="openPaperworkPop">
 					<view>{{ $t('home.idType') }}</view>
@@ -214,13 +249,13 @@
 						{{ applyCardInfo.ccy }}
 					</view>
 				</view>
-				<view class="promptBox">
+				<!-- <view class="promptBox">
 					<view>{{ $t('home.prepaymentFee') }}</view>
 					<view class="prompt-txt">
 						{{ formatBalance(applyCardInfo.preSaveCost) }}
 						{{ applyCardInfo.ccy }}
 					</view>
-				</view>
+				</view> -->
 				<view class="promptBox">
 					<view>{{ $t('home.monthlyServiceFee') }}</view>
 					<view class="prompt-txt">
@@ -232,14 +267,13 @@
 					<view class="prompt-txt">
 						{{ $t('home.paymentAmount') }}
 					</view>
-					<view style="color: #ffe330">xxx</view>
-				</view>
-				<view class="promptBox">
-					<view class="prompt-txt">{{ $t('home.shippingFee') }}</view>
-					<view style="color: #ffe330">xxx</view>
+					<view style="color: #ffe330">
+						{{ formatBalance(totalFee) }}
+						{{ applyCardInfo.ccy }}
+					</view>
 				</view>
 			</view>
-			<view class="button" @click="applyShow = true">
+			<view class="button" @click="confirmApplication">
 				{{ $t('home.confirmApplication') }}
 			</view>
 			<view class="button-placeholder"></view>
@@ -292,6 +326,7 @@
 				@confirm="setExpirationTime"
 			></up-datetime-picker>
 		</view>
+		//余额不足
 		<up-modal
 			:show="applyShow"
 			:showConfirmButton="false"
@@ -308,10 +343,12 @@
 					<view>{{ $t('home.hint') }}</view>
 				</view>
 				<view class="applyModal-txt">
-					{{ $t('home.cardApplicationTip') }}
+					{{ $t('home.insufficientBalanceTip') }}
 				</view>
-				<view class="applyModal-button" @click="applyShow = false">
-					{{ $t('home.iKnow') }}
+				<view class="applyModal-button">
+					<view class="apply" @click="toWalletRecharge">
+						{{ $t('home.walletRecharge') }}
+					</view>
 				</view>
 			</view>
 		</up-modal>
@@ -340,7 +377,8 @@ const {
 	clearCardInfo,
 	clearCardHolderInfo,
 	setKycDataForKey,
-	setMailingAddressForKey
+	setMailingAddressForKey,
+	clearApplyCardData
 } = cardStore;
 
 const { userInfo } = storeToRefs(userStore);
@@ -382,12 +420,12 @@ const paperworkTypeList = ref([
 	[
 		{
 			id: 1,
-			name: '身份证',
+			name: t('card.realNameRecognitionIDCard'),
 			value: 'NATIONAL_ID'
 		},
 		{
 			id: 2,
-			name: '护照',
+			name: t('card.realNameRecognitionPassport'),
 			value: 'PASSPORT'
 		}
 	]
@@ -403,7 +441,6 @@ const availableBalance = computed(() => {
 const totalFee = computed(() => {
 	return (
 		parseFloat(applyCardInfo.value.openCardCost) +
-		parseFloat(applyCardInfo.value.preSaveCost) +
 		parseFloat(applyCardInfo.value.monthFee)
 	);
 });
@@ -419,7 +456,7 @@ const uploadProgress = computed(() => {
 	if (uploadedCount === 0) return t('home.uploadIdInfoPlaceholder');
 	if (uploadedCount === 1) return '1/3';
 	if (uploadedCount === 2) return '2/3';
-	return "已上传";
+	return t('card.realNameRecognitionProgressSuccess');
 });
 
 //获取国家列表
@@ -518,6 +555,99 @@ const toUploadImg = () => {
 	uni.navigateTo({
 		url: '/pages/applyInfo/physicalCard/upLoadIdImg'
 	});
+};
+
+//校验用户是否填写完整
+const isValid = (kycData, mailingAddress) => {
+	// 如果两个对象任意一个为空，直接 false
+	if (!kycData || !mailingAddress) return false;
+
+	// 获取两个对象的所有值
+	const kycValues = Object.values(kycData);
+	const addressValues = Object.values(mailingAddress);
+
+	// 检查是否存在任意一个为假值（null、undefined、空字符串等）
+	const hasEmptyKyc = kycValues.some(
+		(v) => v === null || v === undefined || v === ''
+	);
+	const hasEmptyAddress = addressValues.some(
+		(v) => v === null || v === undefined || v === ''
+	);
+
+	// 如果任意对象有空值，返回 false
+	return !(hasEmptyKyc || hasEmptyAddress);
+};
+const isValidMailingAddress = (mailingAddress) => {
+	// 如果对象任意一个为空，直接 false
+	if (!mailingAddress) return false;
+
+	// 获取对象的所有值
+	const addressValues = Object.values(mailingAddress);
+
+	// 检查是否存在任意一个为假值（null、undefined、空字符串等）
+
+	const hasEmptyAddress = addressValues.some(
+		(v) => v === null || v === undefined || v === ''
+	);
+
+	// 如果任意对象有空值，返回 false
+	return !hasEmptyAddress;
+};
+const toWalletRecharge = () => {
+	uni.reLaunch({
+		url: '/pages/walletRecharge/walletRecharge',
+		success: function () {
+			clearCardInfo();
+			clearCardHolderInfo();
+			clearApplyCardData();
+		}
+	});
+};
+
+const confirmApplication = async () => {
+	console.log(totalFee.value);
+	console.log(availableBalance.value);
+	if (totalFee.value > availableBalance.value) {
+		applyShow.value = true;
+		return;
+	}
+	let isValidUser;
+	if (userInfo.value.kycState == 1 || userInfo.value.kycState == 4) {
+		isValidUser = isValid(kycData.value, mailingAddress.value);
+	} else {
+		isValidUser = isValidMailingAddress(mailingAddress.value);
+	}
+	if (!isValidUser) {
+		uni.showToast({
+			title: t('card.realNameRecognitionFillInAll'),
+			icon: 'none'
+		});
+		return;
+	}
+
+	const params = {
+		cardId: applyCardInfo.value.id,
+		holderId: cardHolderInfo.value.id,
+		topupType: 1,
+		uid: userInfo.value.uid,
+		kycData: kycData.value,
+		mailingAddress: mailingAddress.value
+	};
+	const res = await openCardApply(params);
+	uni.showToast({
+		title: t('home.cardApplicationTip'),
+		icon: 'none'
+	});
+	setTimeout(() => {
+		uni.reLaunch({
+			url: '/pages/index/index',
+			success: function () {
+				clearCardInfo();
+				clearCardHolderInfo();
+				clearApplyCardData();
+			}
+		});
+	}, 2000);
 };
 
 onLoad(() => {});

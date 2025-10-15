@@ -83,7 +83,7 @@
 	"home.paymentAmount": "支付数量",
 	"home.confirmApplication": "确认申办",
 	"home.hint": "提示",
-	"home.insufficientBalanceTip": "钱包余额不足，请先给钱包充值余额或银行卡充值",
+	"home.insufficientBalanceTip": "钱包余额不足，请先给钱包充值余额",
 	"home.bankCardRecharge": "银行卡充值",
 	"home.walletRecharge": "钱包充值",
 	"home.mailingAddress": "邮寄地址（卡片收件地址）",
@@ -359,5 +359,12 @@
 	"card.realNameRecognitionImage2":"证件背面照片",
 	"card.realNameRecognitionImage3":"手持证件照片",
 	"card.realNameRecognitionAddImage":"添加照片",
-	"card.realNameRecognitionConfirm":"确认"
+	"card.realNameRecognitionConfirm":"确认",
+	"card.realNameRecognitionIDCard":"身份证",
+	"card.realNameRecognitionPassport":"护照",
+	"card.realNameRecognitionProgressSuccess":"已上传",
+	"card.realNameRecognitionFillInAll":"请确认完整信息",
+	"card.realNameRecognitionInsufficientBalance":"请确认余额是否充足",
+	"valid.phoneNumber":"手机号格式错误",
+	"valid.email":"邮箱格式错误"
 }

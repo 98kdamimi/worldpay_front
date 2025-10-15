@@ -60,7 +60,7 @@
 				/>
 			</view>
 		</view>
-		<view class="box">
+		<!-- <view class="box">
 			<view class="box-title">{{ $t('home.idNumber') }}</view>
 			<view class="box-input">
 				<input
@@ -70,7 +70,7 @@
 					v-model="parameterData.userNumber"
 				/>
 			</view>
-		</view>
+		</view> -->
 		<view class="box displayRow">
 			<view class="small-box" @click="genderActive = 0">
 				<view class="box-title">{{ $t('home.gender') }}</view>
@@ -189,6 +189,7 @@ import { formatDate } from '@/utils/common.js';
 import { onReady } from '@dcloudio/uni-app';
 import { countrycode_zh, countrycode_en } from '@/utils/countrycode.js';
 import { useI18n } from 'vue-i18n';
+import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 
 const { t } = useI18n();
 
@@ -203,7 +204,7 @@ const parameterData = ref({
 	userTelCode: '',
 	userTel: '',
 	userEmail: '',
-	userNumber: '',
+	// userNumber: '',
 	userSex: '',
 	userAddress: '',
 	userBirthday: ''
@@ -221,6 +222,7 @@ const countryList = computed(() => {
 	return uni.getLocale() === 'en' ? countrycode_en : countrycode_zh;
 });
 
+// 根据搜索过滤国家列表
 const filteredCountryList = computed(() => {
 	if (!countrySearch.value) return countryList.value;
 	const keyword = countrySearch.value.trim().toLowerCase();
@@ -231,10 +233,30 @@ const filteredCountryList = computed(() => {
 	);
 });
 
+// 选择国家
 const selectCountry = (item) => {
 	selectedCountry.value = item;
 	showCountryModal.value = false;
 	countrySearch.value = '';
+};
+
+//校验手机号
+const validPhoneNumber = (value) => {
+	if (!value) return false; // 空值直接 false
+	const phone = value.toString().trim(); // 去空格
+	const phoneNumber = parsePhoneNumberFromString(
+		phone,
+		selectedCountry.value.code
+	);
+	console.log(phoneNumber);
+	console.log(phoneNumber.isValid());
+	return phoneNumber ? phoneNumber.isValid() : false;
+};
+//校验邮箱
+const isValidEmail = (email) => {
+	const regex =
+		/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$/;
+	return regex.test(email.trim());
 };
 
 // 新增持卡人
@@ -266,6 +288,14 @@ const getCardholderAdd = async () => {
 		return;
 	}
 
+	if (!validPhoneNumber(parameterData.value.userTel)) {
+		uni.showToast({
+			title: t('valid.phoneNumber'),
+			icon: 'none'
+		});
+		return;
+	}
+
 	// 邮箱
 	if (!parameterData.value.userEmail) {
 		uni.showToast({
@@ -274,15 +304,22 @@ const getCardholderAdd = async () => {
 		});
 		return;
 	}
-
-	// 身份证号
-	if (!parameterData.value.userNumber.trim()) {
+	if (!isValidEmail(parameterData.value.userEmail)) {
 		uni.showToast({
-			title: t('home.enterIdNumber'),
+			title: t('valid.email'),
 			icon: 'none'
 		});
 		return;
 	}
+
+	// 身份证号
+	// if (!parameterData.value.userNumber.trim()) {
+	// 	uni.showToast({
+	// 		title: t('home.enterIdNumber'),
+	// 		icon: 'none'
+	// 	});
+	// 	return;
+	// }
 
 	// 地址
 	if (!parameterData.value.userAddress.trim()) {
@@ -292,7 +329,8 @@ const getCardholderAdd = async () => {
 		});
 		return;
 	}
-
+	parameterData.value.userName = parameterData.value.userName.trim();
+	parameterData.value.userSurname = parameterData.value.userSurname.trim();
 	parameterData.value.userBirthday = formatDate(dateOfBirth.value);
 	parameterData.value.userSex = genderActive.value == 0 ? '男' : '女';
 	parameterData.value.userTelDialCode = selectedCountry.value.dial_code;
@@ -321,12 +359,12 @@ const getCardholderAdd = async () => {
 		background: #16171a;
 		border-radius: 30rpx;
 		// box-shadow: 0 0 10px 5px  #000000 ;
-		.u-toolbar{
+		.u-toolbar {
 			font-weight: 500;
-			.u-toolbar__wrapper__cancel{
+			.u-toolbar__wrapper__cancel {
 				padding: 0 40rpx;
 			}
-			.u-toolbar__wrapper__confirm{
+			.u-toolbar__wrapper__confirm {
 				padding: 0 40rpx;
 			}
 		}

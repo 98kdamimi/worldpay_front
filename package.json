@@ -3,6 +3,7 @@
     "clipboard": "^2.0.11",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.18",
+    "libphonenumber-js": "^1.12.24",
     "rollup-plugin-visualizer": "^6.0.3"
   }
 }

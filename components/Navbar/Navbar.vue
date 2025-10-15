@@ -46,6 +46,8 @@ const props = defineProps({
 		default: true
 	}
 });
+//  新增 emits 定义
+const emit = defineEmits(['back']);
 
 // 适配状态栏高度（不同设备状态栏高度不同，避免导航栏内容被刘海遮挡）
 const statusBarHeight = ref(0);
@@ -61,6 +63,10 @@ onLoad(() => {
 
 // 左侧返回按钮逻辑
 const handleBack = () => {
+	// 通知父组件触发返回事件
+	const result = emit('back');
+	// 如果父组件返回 false，则阻止默认返回逻辑
+	if (result === false) return;
 	// 返回上一页（若没有上一页，跳转到首页）
 	const pages = getCurrentPages();
 	if (pages.length > 1) {
