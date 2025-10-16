@@ -120,3 +120,13 @@ export const findCountry = (data) => {
 export const openCardApply = (data) => {
 	return http.post('/ucard/card/openCardApply', data);
 }
+
+//系统通知/活动通知
+export const findAll = (data) => {
+	return http.post('/ucard/notice/findAll', data);
+}
+
+//系统通知/活动通知 详情
+export const noticeFindById = (data) => {
+	return http.get('/ucard/notice/findById', data);
+}
