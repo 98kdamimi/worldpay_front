@@ -47,7 +47,7 @@
 					</view>
 					<view
 						@click="
-							goToPage('/pagesMine/changePassword/changePassword')
+							goToPage('/pagesAuth/changePassword/changePassword')
 						"
 					>
 						{{ $t('auth.forgotPassword') }}

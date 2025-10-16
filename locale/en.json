@@ -14,6 +14,7 @@
 	"auth.register": "Sign Up",
 	"auth.registerSuccess": "Registration Successful",
 	"auth.forgotPassword": "Forgot Password?",
+	"auth.forgotPassword1": "Forgot Password",
 	"auth.login": "Log In",
 	"auth.agreeTerms": "I have read and agree to",
 	"auth.userAgreement": "User Agreement",
@@ -303,7 +304,7 @@
 	"googleAuth.title": "Google Auth",
 	"googleAuth.codeLabel": "Auth Code",
 	"googleAuth.noCodePlaceholder": "No Code",
-	"googleAuth.applyCode": "Get Code",
+	"googleAuth.applyCode": "Bind current verification code",
 	"googleAuth.copyCode": "Copy Code",
 	"mine.financialOrders": "Investment Orders",
 	"mine.logisticsInfo": "Logistics Info",
@@ -377,5 +378,6 @@
 	"passwordModify.passwordChangedSuccessfully": "Password changed successfully",
 	"passwordModify.payPasswordMustBeSixDigits": "The password is six pure numeric characters",
 	"passwordModify.oldPasswordWasEnteredIncorrectly": "The old password was entered incorrectly.",
-	"googleAuth.applicationSuccessful": "Application successful"
+	"googleAuth.applicationSuccessful": "Application successful",
+	"auth.changePassword": "Change Password"
 }

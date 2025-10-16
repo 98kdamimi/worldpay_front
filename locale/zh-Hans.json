@@ -14,6 +14,7 @@
 	"auth.register": "用户注册",
 	"auth.registerSuccess": "注册成功",
 	"auth.forgotPassword": "忘记密码？",
+	"auth.forgotPassword1": "忘记密码",
 	"auth.login": "登录",
 	"auth.agreeTerms": "我已阅读并同意",
 	"auth.userAgreement": "《用户协议》",
@@ -303,7 +304,7 @@
 	"googleAuth.title": "谷歌验证码",
 	"googleAuth.codeLabel": "谷歌验证码",
 	"googleAuth.noCodePlaceholder": "暂无谷歌验证码",
-	"googleAuth.applyCode": "申请验证码",
+	"googleAuth.applyCode": "绑定当前验证码",
 	"googleAuth.copyCode": "复制验证码",
 	"mine.financialOrders": "理财订单",
 	"mine.logisticsInfo": "物流信息",
@@ -377,5 +378,6 @@
 	"passwordModify.passwordChangedSuccessfully": "密码修改成功",
 	"passwordModify.payPasswordMustBeSixDigits": "密码为六位纯数字字符",
 	"passwordModify.oldPasswordWasEnteredIncorrectly": "旧密码输入错误",
-	"googleAuth.applicationSuccessful": "申请成功"
+	"googleAuth.applicationSuccessful": "申请成功",
+	"auth.changePassword": "修改密码"
 }

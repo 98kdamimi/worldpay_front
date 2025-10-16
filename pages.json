@@ -148,18 +148,16 @@
 			}
 		},
 		{
-			"path" : "pages/selectCard/selectCard",
+			"path": "pages/selectCard/selectCard",
 			"navigationBarTitleText": "钱包充值选择卡片",
-			"style" : 
-			{
+			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path" : "pages/applyInfo/physicalCard/upLoadIdImg",
+			"path": "pages/applyInfo/physicalCard/upLoadIdImg",
 			"navigationBarTitleText": "上传身份证信息",
-			"style" : 
-			{
+			"style": {
 				"navigationStyle": "custom"
 			}
 		}
@@ -184,6 +182,13 @@
 			{
 				"path": "register/register",
 				"navigationBarTitleText": "注册",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "changePassword/changePassword",
+				"navigationBarTitleText": "忘记密码",
 				"style": {
 					"navigationStyle": "custom"
 				}

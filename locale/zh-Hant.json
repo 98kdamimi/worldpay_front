@@ -14,6 +14,7 @@
 	"auth.register": "用戶註冊",
 	"auth.registerSuccess": "註冊成功",
 	"auth.forgotPassword": "忘記密碼？",
+	"auth.forgotPassword1": "忘記密碼",
 	"auth.login": "登入",
 	"auth.agreeTerms": "我已閱讀並同意",
 	"auth.userAgreement": "《用戶協議》",
@@ -303,7 +304,7 @@
 	"googleAuth.title": "谷歌驗證碼",
 	"googleAuth.codeLabel": "谷歌驗證碼",
 	"googleAuth.noCodePlaceholder": "暫無谷歌驗證碼",
-	"googleAuth.applyCode": "申請驗證碼",
+	"googleAuth.applyCode": "綁定當前驗證碼",
 	"googleAuth.copyCode": "複製驗證碼",
 	"mine.financialOrders": "理財訂單",
 	"mine.logisticsInfo": "物流資訊",
@@ -377,5 +378,6 @@
 	"passwordModify.passwordChangedSuccessfully": "密碼修改成功",
 	"passwordModify.payPasswordMustBeSixDigits": "密碼為六位純數字字符",
 	"passwordModify.oldPasswordWasEnteredIncorrectly": "舊密碼輸入錯誤",
-	"googleAuth.applicationSuccessful": "申請成功"
+	"googleAuth.applicationSuccessful": "申請成功",
+	"auth.changePassword": "修改密碼"
 }
