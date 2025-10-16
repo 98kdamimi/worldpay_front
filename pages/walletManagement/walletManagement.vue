@@ -107,7 +107,6 @@
 </template>
 
 <script setup>
-import WalletTransactionList from './components/WalletTransactionList.vue';
 import { ref, reactive, nextTick, onUnmounted } from 'vue';
 import { onReady, onLoad, onReachBottom } from '@dcloudio/uni-app';
 import { checkOverflow, formatBalance } from '@/utils/common.js';

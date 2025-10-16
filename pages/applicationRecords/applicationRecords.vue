@@ -1,39 +1,23 @@
 <template>
 	<view class="viewBox">
-		<Navbar :title="$t('home.applicationRecordsTitle')" :showBack="true"></Navbar>
-		<view class="box virtualBox">
+		<Navbar
+			:title="$t('home.applicationRecordsTitle')"
+			:showBack="true"
+		></Navbar>
+		<view
+			class="box"
+			v-for="(item, index) in cardList"
+			:key="index"
+			:style="{ backgroundImage: `url(${item.cardData.img})` }"
+			@click="toApplicationDetails(item.id)"
+		>
 			<view class="cont">
-				<view>{{ $t('home.worldpayVirtualCard') }}</view>
+				<view>{{ item.cardData.title }}</view>
 				<view>
-					<view style="margin-right: 12rpx;">{{ $t('home.completed') }}</view>
-					<!-- #ifdef APP -->
-					<view style="margin-top: 5rpx;">
-						<SvgIcon name="right" width="36" height="36"></SvgIcon>
+					<view>
+						{{ applyState(item.applyState) }}
 					</view>
-					<!-- #endif -->
-					<!-- #ifdef H5 -->
-					<view style="margin-top: 2rpx;">
-						<SvgIcon name="right" width="36" height="36"></SvgIcon>
-					</view>
-					<!-- #endif -->
-				</view>
-			</view>
-		</view>
-		<view class="box entityBox">
-			<view class="cont">
-				<view>{{ $t('home.worldpayVirtualCard') }}</view>
-				<view>
-					<view style="margin-right: 12rpx;">{{ $t('home.applicationFailed') }}</view>
-					<!-- #ifdef APP -->
-					<view style="margin-top: 5rpx;">
-						<SvgIcon name="right" width="36" height="36"></SvgIcon>
-					</view>
-					<!-- #endif -->
-					<!-- #ifdef H5 -->
-					<view style="margin-top: 2rpx;">
-						<SvgIcon name="right" width="36" height="36"></SvgIcon>
-					</view>
-					<!-- #endif -->
+					<SvgIcon name="right" width="36" height="36"></SvgIcon>
 				</view>
 			</view>
 		</view>
@@ -41,9 +25,57 @@
 </template>
 
 <script setup>
+import { ref, reactive } from 'vue';
+import { openCardApply } from '@/request/lapi.js';
+import { onLoad, onReachBottom } from '@dcloudio/uni-app';
+import {useUserStore} from "@/stores/user.js"
+import {storeToRefs} from 'pinia'
+import {useI18n } from 'vue-i18n'
+const { t } = useI18n()
+const userStore = useUserStore()
+const {userInfo} = storeToRefs(userStore)
+const params = reactive({
+	uid: userInfo.value.uid,
+	pageNumber: 1,
+	pageSize: 10,
+	total: 0
+});
+const cardList = ref([]);
+const loadMore = () => {
+	if (cardList.value.length >= params.total) return;
+	params.pageNumber++;
+	getList();
+};
+const getList = async () => {
+	const { data } = await openCardApply(params);
+	cardList.value = [...data.list, ...cardList.value];
+	params.total = data.total;
+};
 
+const applyState = (state) => {
+	switch (state) {
+		case 1:
+			return t('applyState.one');
+		case 2:
+			return t('applyState.two');
+		case 3:
+			return t('applyState.three');
+	}
+};
+
+const toApplicationDetails = (id) => {
+	uni.navigateTo({
+		url: `/pages/applicationDetails/applicationDetails?id=${id}`
+	});
+};
+onLoad(async () => {
+	await getList();
+});
+onReachBottom(() => {
+	loadMore();
+});
 </script>
 
 <style lang="scss" scoped>
-	@import './applicationRecords.scss';
+@import './applicationRecords.scss';
 </style>

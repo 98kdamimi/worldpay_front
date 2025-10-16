@@ -19,14 +19,14 @@
 				<view class="boxItem-txt">{{ cardHolderInfo.userEmail }}</view>
 			</view>
 			<!-- #ifdef H5 -->
-			<view
+			<!-- <view
 				style="width: 100vw; height: 1rpx; background: #0f0f0f"
-			></view>
+			></view> -->
 			<!-- #endif -->
-			<view class="boxItem bottom">
+			<!-- <view class="boxItem bottom">
 				<view>{{ $t('home.idNumber') }}</view>
 				<view class="boxItem-txt">{{ cardHolderInfo.userNumber }}</view>
-			</view>
+			</view> -->
 		</view>
 		<view>
 			<view class="title">{{ $t('home.cardRules') }}</view>
@@ -149,11 +149,14 @@ import { openCardApply } from '@/request/api.js';
 import { storeToRefs } from 'pinia';
 import { useCardStore } from '@/stores/card.js';
 import { useUserStore } from '@/stores/user.js';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const cardStore = useCardStore();
 const userStore = useUserStore();
 const { applyCardInfo, cardHolderInfo } = storeToRefs(cardStore);
 const { clearCardInfo, clearCardHolderInfo } = cardStore;
 const { userInfo } = storeToRefs(userStore);
+
 
 const availableBalance = computed(() => {
 	return (

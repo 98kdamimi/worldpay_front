@@ -71,6 +71,13 @@
 			}
 		},
 		{
+			"path": "pages/logisticsInformation/logisticsInformation",
+			"navigationBarTitleText": "物流信息",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/cardApplication/cardApplication",
 			"navigationBarTitleText": "卡片申请",
 			"style": {
@@ -248,13 +255,7 @@
 					"navigationStyle": "custom"
 				}
 			},
-			{
-				"path": "logisticsInformation/logisticsInformation",
-				"navigationBarTitleText": "物流信息",
-				"style": {
-					"navigationStyle": "custom"
-				}
-			},
+			
 			{
 				"path": "financialDetails/financialDetails",
 				"navigationBarTitleText": "理财详情",

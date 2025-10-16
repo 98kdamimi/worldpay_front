@@ -1,4 +1,7 @@
 {
+	"applyState.one":"待激活",
+	"applyState.two":"激活中",
+	"applyState.three":"激活成功",
 	"tabbar.home": "Home",
 	"tabbar.message": "Messages",
 	"tabbar.mine": "My Account",
@@ -349,8 +352,8 @@
 	"securityNav.changeLoginPwd": "Change Login Password",
 	"securityNav.setPaymentPwd": "Set Payment Password",
 	"securityNav.googleAuth": "Google Auth",
-	"recordType.wallet": "Wallet Records",
-	"recordType.card": "Card Records",
+	"recordType.wallet": "Wallet",
+	"recordType.card": "Card",
 	"home.pleaseApplyForAFardFirst": "Please apply for a card first!",
 	"select.countryRegios": "Select Country/Region",
 	"select.countryRegiosCode": "Enter Country or Code",

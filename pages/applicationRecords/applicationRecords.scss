@@ -1,13 +1,4 @@
-.virtualBox {
-	background: url('@/static/image/apply1.png');
-	background-repeat: no-repeat;
-	background-size: cover;
-}
-.entityBox {
-	background: url('@/static/image/apply2.png');
-	background-repeat: no-repeat;
-	background-size: cover;
-}
+
 .box {
 	width: 686rpx;
 	height: 280rpx;
@@ -17,6 +8,10 @@
 	font-weight: 400;
 	font-size: 32rpx;
 	color: #ffffff;
+	border-radius: 30rpx;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-size: cover;
 
 	.cont {
 		position: absolute;

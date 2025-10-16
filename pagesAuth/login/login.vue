@@ -61,38 +61,18 @@
 				</view>
 				<view class="xieyi">
 					<view @click="xyType = !xyType">
-						<!-- #ifdef H5 -->
 						<SvgIcon
 							name="svg3"
 							width="28"
 							height="28"
-							style="margin: 3rpx 12rpx 0 0"
 							v-if="!xyType"
 						></SvgIcon>
 						<SvgIcon
 							name="svg6"
 							width="28"
 							height="28"
-							style="margin: 3rpx 12rpx 0 0"
 							v-else
 						></SvgIcon>
-						<!-- #endif -->
-						<!-- #ifdef APP -->
-						<SvgIcon
-							name="svg3"
-							width="28"
-							height="28"
-							style="margin: 1rpx 12rpx 0 0"
-							v-if="!xyType"
-						></SvgIcon>
-						<SvgIcon
-							name="svg6"
-							width="28"
-							height="28"
-							style="margin: 1rpx 12rpx 0 0"
-							v-else
-						></SvgIcon>
-						<!-- #endif -->
 					</view>
 					<view>
 						{{ $t('auth.agreeTerms') }}

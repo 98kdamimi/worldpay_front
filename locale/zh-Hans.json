@@ -1,4 +1,7 @@
 {
+	"applyState.one":"待激活",
+	"applyState.two":"激活中",
+	"applyState.three":"激活成功",
 	"tabbar.home": "首页",
 	"tabbar.message": "消息",
 	"tabbar.mine": "我的",
@@ -349,8 +352,8 @@
 	"securityNav.changeLoginPwd": "修改登录密码",
 	"securityNav.setPaymentPwd": "支付密码设置",
 	"securityNav.googleAuth": "谷歌验证码",
-	"recordType.wallet": "钱包记录",
-	"recordType.card": "卡片记录",
+	"recordType.wallet": "钱包",
+	"recordType.card": "卡片",
 	"home.pleaseApplyForAFardFirst": "请先申请卡片！",
 	"select.countryRegios": "选择国家/地区",
 	"select.countryRegiosCode": "请输入国家或区号",

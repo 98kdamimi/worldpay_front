@@ -15,8 +15,13 @@
 	font-weight: 400;
 	font-size: 28rpx;
 	color: #9191aa;
-	> view {
-		width: 50%;
+	// > view {
+	// 	width: 50%;
+	// }
+	.box-right{
+		display: flex;
+		align-items: center;
+		gap: 6rpx;
 	}
 	.txt {
 		text-align: right;

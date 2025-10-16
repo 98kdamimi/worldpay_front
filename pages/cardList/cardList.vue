@@ -3,7 +3,12 @@
 	<Navbar ref="navbarRef" :title="$t('cardList.title')" :showBack="true">
 		<template #right>
 			<!-- 右上角“申请记录”添加多语言 -->
-			<view class="header-right">
+			<view
+				class="header-right"
+				@click="
+					goToPage('/pages/applicationRecords/applicationRecords')
+				"
+			>
 				{{ $t('cardList.applicationRecords') }}
 			</view>
 		</template>
