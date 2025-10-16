@@ -130,3 +130,18 @@ export const findAll = (data) => {
 export const noticeFindById = (data) => {
 	return http.get('/ucard/notice/findById', data);
 }
+
+//修改密码
+export const updaePwd = (data) => {
+	return http.post('/ucard/appUserSys/updaePwd', data);
+}
+
+//签发谷歌验证密钥
+export const IssueGoogleSecretkey = (data) => {
+	return http.get('/ucard/appUserSys/IssueGoogleSecretkey', data);
+}
+
+//修改谷歌验证密钥
+export const upGoogleSecretkey = (data) => {
+	return http.get('/ucard/appUserSys/upGoogleSecretkey', data);
+}

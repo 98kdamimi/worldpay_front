@@ -366,5 +366,13 @@
 	"card.realNameRecognitionFillInAll": "Please complete all info",
 	"card.realNameRecognitionInsufficientBalance": "Check balance",
 	"valid.phoneNumber": "Invalid phone number format",
-	"valid.email": "Invalid email format"
+	"valid.email": "Invalid email format",
+	"passwordModify.emailPassword": "Please enter the email verification code",
+	"passwordModify.passwordInconsistency": "The new password does not match, please re-enter",
+	"passwordModify.setPaymentPassword": "Set payment password",
+	"passwordModify.passwordSetSuccessfully": "Password set successfully",
+	"passwordModify.passwordChangedSuccessfully": "Password changed successfully",
+	"passwordModify.payPasswordMustBeSixDigits": "The password is six pure numeric characters",
+	"passwordModify.oldPasswordWasEnteredIncorrectly": "The old password was entered incorrectly.",
+	"googleAuth.applicationSuccessful": "Application successful"
 }

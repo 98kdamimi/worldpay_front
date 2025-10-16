@@ -30,6 +30,7 @@
 		reactive
 	} from 'vue';
 	import {
+		onLoad,
 		onReady,
 		onReachBottom
 	} from '@dcloudio/uni-app';
@@ -84,8 +85,10 @@
 				notchHeight.value = 0;
 			}
 		});
-		getFindAll();
 	});
+	onLoad(() => {
+		getFindAll();
+	})
 
 	// 获取消息列表
 	const getFindAll = async () => {
@@ -135,10 +138,6 @@
 	// 触底加载更多
 	const loadMore = () => {
 		if (messageList.value?.list?.length >= requestParams.total) {
-			uni.showToast({
-				title: t('common.noMoreData'),
-				icon: 'none'
-			});
 			return;
 		}
 		requestParams.pageNumber += 1;

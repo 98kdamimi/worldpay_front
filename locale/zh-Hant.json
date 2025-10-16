@@ -366,5 +366,13 @@
 	"card.realNameRecognitionFillInAll": "請確認完整資訊",
 	"card.realNameRecognitionInsufficientBalance": "請確認餘額是否充足",
 	"valid.phoneNumber": "手機號格式錯誤",
-	"valid.email": "郵箱格式錯誤"
+	"valid.email": "郵箱格式錯誤",
+	"passwordModify.emailPassword": "請輸入信​​箱驗證碼",
+	"passwordModify.passwordInconsistency": "新密碼不一致，請重新輸入",
+	"passwordModify.setPaymentPassword": "設定支付密碼",
+	"passwordModify.passwordSetSuccessfully": "密碼設定成功",
+	"passwordModify.passwordChangedSuccessfully": "密碼修改成功",
+	"passwordModify.payPasswordMustBeSixDigits": "密碼為六位純數字字符",
+	"passwordModify.oldPasswordWasEnteredIncorrectly": "舊密碼輸入錯誤",
+	"googleAuth.applicationSuccessful": "申請成功"
 }

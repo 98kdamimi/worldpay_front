@@ -366,5 +366,13 @@
 	"card.realNameRecognitionFillInAll":"请确认完整信息",
 	"card.realNameRecognitionInsufficientBalance":"请确认余额是否充足",
 	"valid.phoneNumber":"手机号格式错误",
-	"valid.email":"邮箱格式错误"
+	"valid.email":"邮箱格式错误",
+	"passwordModify.emailPassword": "请输入邮箱验证码",
+	"passwordModify.passwordInconsistency": "新密码不一致，请重新输入",
+	"passwordModify.setPaymentPassword": "设置支付密码",
+	"passwordModify.passwordSetSuccessfully": "密码设置成功",
+	"passwordModify.passwordChangedSuccessfully": "密码修改成功",
+	"passwordModify.payPasswordMustBeSixDigits": "密码为六位纯数字字符",
+	"passwordModify.oldPasswordWasEnteredIncorrectly": "旧密码输入错误",
+	"googleAuth.applicationSuccessful": "申请成功"
 }
