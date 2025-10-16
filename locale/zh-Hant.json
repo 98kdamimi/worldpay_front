@@ -379,5 +379,6 @@
 	"passwordModify.payPasswordMustBeSixDigits": "密碼為六位純數字字符",
 	"passwordModify.oldPasswordWasEnteredIncorrectly": "舊密碼輸入錯誤",
 	"googleAuth.applicationSuccessful": "申請成功",
-	"auth.changePassword": "修改密碼"
+	"auth.changePassword": "修改密碼",
+	"googleAuth.saveTips": "請務必儲存當前驗證碼，該驗證碼將用於你下次登入帳號時的驗證步驟。"
 }

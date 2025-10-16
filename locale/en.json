@@ -379,5 +379,6 @@
 	"passwordModify.payPasswordMustBeSixDigits": "The password is six pure numeric characters",
 	"passwordModify.oldPasswordWasEnteredIncorrectly": "The old password was entered incorrectly.",
 	"googleAuth.applicationSuccessful": "Application successful",
-	"auth.changePassword": "Change Password"
+	"auth.changePassword": "Change Password",
+	"googleAuth.saveTips": "Please be sure to save the current verification code, which will be used for the verification step when you log in to your account next time."
 }

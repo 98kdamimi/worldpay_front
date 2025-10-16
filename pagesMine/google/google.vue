@@ -22,6 +22,27 @@
 			</up-copy>
 		</view>
 		<view class="button-placeholder"></view>
+		<up-modal :show="applyShow" :showConfirmButton="false" bgColor="#141414">
+			<view class="applyModal">
+				<view class="applyModal-title">
+					{{ $t('googleAuth.saveTips') }}
+				</view>
+				<view class="applyModal-input">
+					<input type="text" :placeholder="$t('auth.enterGoogleCode')" placeholder-style="color: #8f8f8f;"
+						disabled v-model="dataContent" />
+				</view>
+				<view class="applyModal-button">
+					<view class="cancel" @click="applyShow = false">
+						{{ $t('auth.cancel') }}
+					</view>
+					<view class="apply" @click="applyShow = false">
+						<up-copy :content="dataContent">
+							<view>{{ $t('googleAuth.copyCode') }}</view>
+						</up-copy>
+					</view>
+				</view>
+			</view>
+		</up-modal>
 	</view>
 </template>
 
@@ -67,6 +88,8 @@
 	const dataContent = ref("")
 	// 控制刷新图标旋转状态
 	const isRotating = ref(false);
+	// 保存验证码弹窗
+	const applyShow = ref(false)
 	onShow(() => {
 		isCode.value = !userInfo.value.googleState;
 		dataContent.value = userInfo.value.googleSecretkey;
@@ -120,6 +143,7 @@
 				icon: 'none'
 			});
 			fetchUserInfoByToken()
+			applyShow.value = true
 		} catch (error) {
 			console.error('获取通知列表失败:', error);
 		}

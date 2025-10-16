@@ -42,3 +42,59 @@
 	height: 100rpx;
 	margin: 32rpx;
 }
+
+.applyModal {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: PingFangSC, PingFang SC;
+	color: #ffffff;
+
+	.applyModal-title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 500;
+		font-size: 32rpx;
+		column-gap: 24rpx;
+	}
+
+	.applyModal-input {
+		width: 536rpx;
+		border-radius: 24rpx;
+		border: 1rpx solid #979797;
+		margin: 36rpx 0rpx 60rpx;
+		padding: 32rpx 32rpx;
+		input {
+			flex: 1;
+			font-family: PingFangSC, PingFang SC;
+			font-weight: 400;
+			font-size: 30rpx;
+		}
+	}
+
+	.applyModal-button {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+
+		> view {
+			width: 252rpx;
+			padding: 28rpx 0;
+			text-align: center;
+			font-weight: 400;
+			font-size: 32rpx;
+			border-radius: 24rpx;
+		}
+
+		.cancel {
+			background: #868686;
+		}
+
+		.apply {
+			background: #1e3ad6;
+		}
+	}
+}

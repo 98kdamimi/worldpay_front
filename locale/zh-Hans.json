@@ -379,5 +379,6 @@
 	"passwordModify.payPasswordMustBeSixDigits": "密码为六位纯数字字符",
 	"passwordModify.oldPasswordWasEnteredIncorrectly": "旧密码输入错误",
 	"googleAuth.applicationSuccessful": "申请成功",
-	"auth.changePassword": "修改密码"
+	"auth.changePassword": "修改密码",
+	"googleAuth.saveTips": "请务必保存当前验证码，该验证码将用于你下次登录账号时的验证步骤"
 }
