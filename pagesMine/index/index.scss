@@ -67,6 +67,11 @@
 	font-weight: 400;
 	font-size: 30rpx;
 	color: #ffffff;
+	.navBox-left{
+		display: flex;
+		align-items: center;
+		gap: 10rpx;
+	}
 	> view:first-child {
 		display: flex;
 	}

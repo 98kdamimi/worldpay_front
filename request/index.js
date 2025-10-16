@@ -40,9 +40,7 @@ function handleTokenInvalid(msg) {
 	isNavigatingLogin = true
 
 	const userStore = useUserStore()
-	userStore.logout?.() // 可选：如果你的 store 有 logout 方法
-
-	uni.removeStorageSync('token')
+	userStore.clearUserInfo?.() // 
 	uni.showToast({
 		title: msg || '登录已过期，请重新登录',
 		icon: 'none',

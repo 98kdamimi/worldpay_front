@@ -93,23 +93,9 @@
 				:key="index"
 				@click="goToPage(item.href)"
 			>
-				<view>
-					<!-- #ifdef APP -->
-					<SvgIcon
-						:name="item.svg"
-						width="40"
-						height="40"
-						style="margin: -5rpx 12rpx 0 0"
-					></SvgIcon>
-					<!-- #endif -->
-					<!-- #ifndef APP -->
-					<SvgIcon
-						:name="item.svg"
-						width="40"
-						height="40"
-						style="margin-right: 12rpx"
-					></SvgIcon>
-					<!-- #endif -->
+				<view class="navBox-left">
+					<SvgIcon :name="item.svg" width="40" height="40"></SvgIcon>
+
 					<view>{{ item.name }}</view>
 				</view>
 				<view>

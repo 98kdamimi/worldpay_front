@@ -20,7 +20,7 @@
 				<view>{{ $t('home.courierService') }}</view>
 				<view class="txt">-</view>
 			</view> -->
-			<view class="box bottom">
+			<view class="box radius">
 				<view>{{ $t('home.trackingNumber') }}</view>
 				<view
 					class="box-right"

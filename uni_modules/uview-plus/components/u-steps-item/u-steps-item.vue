@@ -4,7 +4,8 @@
 			:class="[`u-steps-item__line--${parentData.direction}`]" :style="[lineStyle]"></view>
 		<view class="u-steps-item__wrapper"
 			:class="[`u-steps-item__wrapper--${parentData.direction}`, parentData.dot && `u-steps-item__wrapper--${parentData.direction}--dot`]"
-			:style="[itemStyleInner]">
+			:style="[itemStyleInner,{backgroundColor: statusColor}]"
+			>
 			<slot name="icon">
 				<view class="u-steps-item__wrapper__dot" v-if="parentData.dot" :style="{
 						backgroundColor: statusColor
@@ -256,12 +257,12 @@
 			border-radius: 50px;
 
 			&--column {
-				width: 20px;
-				height: 20px;
+				width: 16px;
+				height: 16px;
 
 				&--dot {
-					height: 20px;
-					width: 20px;
+					height: 16px;
+					width: 16px;
 				}
 			}
 
@@ -342,7 +343,7 @@
 
 			&--column {
 				width: 1px;
-				left: 10px;
+				left: 8px;
 			}
 		}
 	}

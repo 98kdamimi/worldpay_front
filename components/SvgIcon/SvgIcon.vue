@@ -258,9 +258,9 @@ export default {
 ::v-deep svg {
 	width: 100% !important;
 	height: 100% !important;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	/* #ifdef APP */
+	margin-top: 2rpx;
+	/* #endif */
 }
 
 /* #ifdef MP */
