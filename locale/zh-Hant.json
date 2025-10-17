@@ -7,6 +7,7 @@
 	"logisticsStatus.three": "運輸中",
 	"logisticsStatus.four": "配送中",
 	"logisticsStatus.five": "完成",
+	"password.error":"密碼錯誤",
 	"tabbar.home": "首頁",
 	"tabbar.message": "消息",
 	"tabbar.mine": "我的",

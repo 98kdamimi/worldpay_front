@@ -49,7 +49,7 @@ const getFindUserCardList = async () => {
 		// 查询用户所有卡片
 		const { data } = await findUserCardList(requestParams);
 
-		cardList.value = [...data.list, ...cardList.value];
+		cardList.value = [...cardList.value, ...data.list];
 		requestParams.total = data.total;
 	} catch (error) {
 		console.error(error);

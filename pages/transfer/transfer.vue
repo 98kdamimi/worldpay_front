@@ -97,6 +97,7 @@ import { onLoad } from '@dcloudio/uni-app';
 import { findUserCardList, findUserCardInfo, topUp } from '@/request/api.js';
 import { useUserStore } from '@/stores/user.js';
 import { storeToRefs } from 'pinia';
+import {hasPayPassword,verifyPayPassword} from '@/utils/payPassword.js'
 
 const userStore = useUserStore();
 const { fetchUserInfoByToken } = userStore;
@@ -119,9 +120,15 @@ const popupShow = ref(false);
 const passwordShow = ref(false);
 
 const finish = (e) => {
-	passwordShow.value = false;
-	console.log(e)
-	toTopUp()
+	if(verifyPayPassword(e)){
+		toTopUp();
+		passwordShow.value = false;
+	}else{
+		uni.showToast({
+			title: t('password.error'),
+			icon: 'none'
+		});
+	}
 };
 
 const availableBalance = computed(() => {

@@ -30,10 +30,10 @@
 					</view>
 				</view>
 				<!-- 修改图标 -->
-				<view @click.stop="editFunct" v-if="operationType">
+				<!-- <view @click.stop="editFunct" v-if="operationType">
 					<SvgIcon name="revise" width="24" height="24"></SvgIcon>
-				</view>
-				<view class="box-del" @click.stop="delectFunct(item)" v-else>
+				</view> -->
+				<view class="box-del" @click.stop="delectFunct(item)" v-if="!operationType">
 					{{ $t('cardholderSelect.delete') }}
 				</view>
 			</view>
@@ -49,12 +49,7 @@
 			v-if="operationType"
 		>
 			<view>
-				<!-- #ifdef APP -->
-				<SvgIcon name="addto" width="32" height="32"></SvgIcon>
-				<!-- #endif -->
-				<!-- #ifdef H5 -->
-				<SvgIcon name="addto" width="32" height="32"></SvgIcon>
-				<!-- #endif -->
+				<!-- <SvgIcon name="addto" width="32" height="32"></SvgIcon> -->
 				<view>{{ $t('cardholderSelect.addCardholder') }}</view>
 			</view>
 		</view>

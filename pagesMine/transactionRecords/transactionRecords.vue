@@ -8,10 +8,7 @@
 		<!-- 交易记录 -->
 		<view class="transactionRecords">
 			<!-- 吸顶标题 -->
-			<view
-				class="stickyContent"
-				:style="{ top: `${notchHeight}px` }"
-			>
+			<view class="stickyContent" :style="{ top: `${notchHeight}px` }">
 				<up-tabs
 					@change="tabChange"
 					:list="tabList"
@@ -88,14 +85,14 @@ const tabChange = (e) => {
 const getCardTransaction = async () => {
 	const { data } = await findTransaction(requestParams);
 	console.log('获取到交易记录', data);
-	recordsList.value = [...data.list, ...recordsList.value];
+	recordsList.value = [...recordsList.value, ...data.list];
 	requestParams.total = data.total;
 };
 //获取钱包交易记录;
 const getWalletTransaction = async () => {
 	const { data } = await walletLog(requestParams);
 	console.log('获取到交易记录', data);
-	recordsList.value = [...data.list, ...recordsList.value];
+	recordsList.value = [...recordsList.value, ...data.list];
 	requestParams.total = data.total;
 };
 const loadMore = () => {

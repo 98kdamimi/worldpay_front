@@ -122,7 +122,7 @@ const getFindUserCardList = async () => {
 		console.log('请求参数', requestParams);
 		console.log('请求到数据', data);
 
-		cardList.value = [...data.list, ...cardList.value];
+		cardList.value = [...cardList.value, ...data.list];
 		requestParams.total = data.total;
 		await nextTick();
 		refreshing.value = false;

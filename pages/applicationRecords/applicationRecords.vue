@@ -26,52 +26,32 @@
 </template>
 
 <script setup>
-	import {
-		ref,
-		reactive
-	} from 'vue';
-	import {
-		openCardApply
-	} from '@/request/lapi.js';
-	import {
-		onLoad,
-		onReachBottom
-	} from '@dcloudio/uni-app';
-	import {
-		useUserStore
-	} from "@/stores/user.js"
-	import {
-		storeToRefs
-	} from 'pinia'
-	import {
-		useI18n
-	} from 'vue-i18n'
-	const {
-		t
-	} = useI18n()
-	const userStore = useUserStore()
-	const {
-		userInfo
-	} = storeToRefs(userStore)
-	const params = reactive({
-		uid: userInfo.value.uid,
-		pageNumber: 1,
-		pageSize: 10,
-		total: 0
-	});
-	const cardList = ref([]);
-	const loadMore = () => {
-		if (cardList.value.length >= params.total) return;
-		params.pageNumber++;
-		getList();
-	};
-	const getList = async () => {
-		const {
-			data
-		} = await openCardApply(params);
-		cardList.value = [...data.list, ...cardList.value];
-		params.total = data.total;
-	};
+import { ref, reactive } from 'vue';
+import { openCardApply } from '@/request/lapi.js';
+import { onLoad, onReachBottom } from '@dcloudio/uni-app';
+import { useUserStore } from '@/stores/user.js';
+import { storeToRefs } from 'pinia';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+const params = reactive({
+	uid: userInfo.value.uid,
+	pageNumber: 1,
+	pageSize: 10,
+	total: 0
+});
+const cardList = ref([]);
+const loadMore = () => {
+	if (cardList.value.length >= params.total) return;
+	params.pageNumber++;
+	getList();
+};
+const getList = async () => {
+	const { data } = await openCardApply(params);
+	cardList.value = [...cardList.value, ...data.list];
+	params.total = data.total;
+};
 
 	const applyState = (state) => {
 		switch (state) {

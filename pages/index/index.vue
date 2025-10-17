@@ -166,9 +166,9 @@
 			>
 				<view class="transactionRecords-title">
 					<view>{{ $t('home.transactionRecords') }}</view>
-					<view class="transactionRecords-title-right">
+					<!-- <view class="transactionRecords-title-right">
 						{{ $t('home.all') }}
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<view class="transactionRecords-list">
@@ -246,7 +246,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { onReady, onPageScroll, onLoad } from '@dcloudio/uni-app';
+import { onReady, onReachBottom, onLoad } from '@dcloudio/uni-app';
 import {
 	findUserCardAssets,
 	findUserCardList,
@@ -273,6 +273,12 @@ const notchHeight = ref(0);
 const { userInfo } = storeToRefs(userStore);
 // 卡片总资产
 const totalCardAssets = ref();
+const requestPamrams = ref({
+	uid: userInfo.value.uid,
+	pageNumber: 1,
+	pageSize: 10,
+	total: 0
+});
 
 // 获取卡片总资产
 const getFindUserCardAssets = async () => {
@@ -302,16 +308,20 @@ const getFindUserCardList = async () => {
 
 const getfindTransaction = async () => {
 	try {
-		const { data } = await findTransaction({
-			uid: userInfo.value.uid,
-			pageNumber: 1,
-			pageSize: 99999
-		});
+		const { data } = await findTransaction(requestPamrams.value);
 		console.log('获取到交易记录', data);
-		recordsList.value = data.list;
+		recordsList.value =[...recordsList.value,... data.list];
+		requestPamrams.value.total = data.total;
 	} catch (error) {
 		console.error(error);
 	}
+};
+const loadMore = () => {
+	if (recordsList.value.length >= requestPamrams.value.total) {
+		return;
+	}
+	requestPamrams.value.pageNumber++;
+	getfindTransaction();
 };
 
 const goToTopUp = (id) => {
@@ -346,6 +356,11 @@ function openCardList() {
 function closeCardList() {
 	cardShow.value = false;
 }
+const goToPage = (address) => {
+	uni.navigateTo({
+		url: address
+	});
+};
 
 onLoad(async () => {
 	await fetchUserInfoByToken()
@@ -369,11 +384,10 @@ onReady(async () => {
 	});
 });
 
-const goToPage = (address) => {
-	uni.navigateTo({
-		url: address
-	});
-};
+
+onReachBottom(() => {
+	loadMore();
+});
 </script>
 
 <style lang="scss" scoped>

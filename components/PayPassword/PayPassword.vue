@@ -13,6 +13,7 @@
 					:maxlength="6"
 					:dot="true"
 					:focus="true"
+					disabledDot
 					@finish="finishInput"
 				/>
 			</div>

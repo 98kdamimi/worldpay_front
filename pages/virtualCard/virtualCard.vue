@@ -1,9 +1,9 @@
 <template>
 	<view class="">
 		<Navbar :title="cardInfo?.cardData?.title" :showBack="true">
-			<template #right>
+			<!-- <template #right>
 				<SvgIcon name="add" width="40" height="40" />
-			</template>
+			</template> -->
 		</Navbar>
 		<view class="viewBox">
 			<view class="cardInfo">
@@ -167,6 +167,7 @@ import {
 	findUserCardInfo,
 	findCardExpirationTime
 } from '@/request/api.js';
+import { hasPayPassword } from '@/utils/payPassword.js';
 
 const userStore = useUserStore();
 
@@ -208,7 +209,7 @@ const getfindTransaction = async () => {
 	try {
 		const { data } = await findTransaction(requestParams);
 		console.log('交易记录参数', requestParams);
-		recordsList.value = [...data.list, ...recordsList.value];
+		recordsList.value = [...recordsList.value, ...data.list];
 		requestParams.total = data.total;
 	} catch (error) {
 		console.error(error);
@@ -252,8 +253,20 @@ const goCardDetail = () => {
 //前往充值页面
 const toWalletRecharge = () => {
 	rchargeShow.value = false;
+	if (hasPayPassword()) {
+		uni.navigateTo({
+			url: `/pages/valueAdded/valueAdded?id=${requestParams.id}`
+		});
+		return;
+	}
 	uni.navigateTo({
-		url: `/pages/valueAdded/valueAdded?id=${requestParams.id}`
+		url: `/pagesMine/changePassword/changePassword?pageType=2`,
+		success: function () {
+			uni.showToast({
+				title: '请先设置支付密码',
+				icon: 'none'
+			});
+		}
 	});
 };
 const toRecharge = () => {

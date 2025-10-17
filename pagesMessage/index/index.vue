@@ -132,6 +132,7 @@
 	// 下拉刷新
 	const reload = () => {
 		requestParams.pageNumber = 1;
+		messageList.value = {};
 		getFindAll();
 	};
 

@@ -7,6 +7,7 @@
 	"logisticsStatus.three": "In Transit",
 	"logisticsStatus.four": "Out for Delivery",
 	"logisticsStatus.five": "Delivered",
+	"password.error":"Incorrect Password",
 	"tabbar.home": "Home",
 	"tabbar.message": "Messages",
 	"tabbar.mine": "My Account",

@@ -12,7 +12,7 @@
 					{{ item.name }}
 				</view>
 				<SvgIcon
-					name="svg3"
+					name="select"
 					width="32"
 					height="32"
 					v-if="item.lang === language"

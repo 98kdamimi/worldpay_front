@@ -161,7 +161,10 @@ import {
 	toPercent,
 	formatBalance
 } from '@/utils/common.js';
+import {useI18n} from 'vue-i18n'
+import {verifyPayPassword} from '@/utils/payPassword.js'
 
+const {t} = useI18n()
 const userStore = useUserStore();
 
 const { fetchUserInfoByToken } = userStore;
@@ -195,8 +198,17 @@ const handlingFees = computed(() => {
 
 const finish = (e) => {
 	SafetyShow.value = false;
-	passwordShow.value = false;
-	toTopUp();
+	if(verifyPayPassword(e)){
+		toTopUp();
+		passwordShow.value = false;
+	}else{
+		uni.showToast({
+			title: t('password.error'),
+			icon: 'none'
+		});
+	}
+	
+	// toTopUp();
 };
 
 const goToPage = (address) => {

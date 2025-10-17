@@ -114,6 +114,7 @@ import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/user.js';
 import { walletLog } from '@/request/api.js';
 import SvgIcon from '@/components/svgIcon/svgIcon.vue';
+import { hasPayPassword } from '@/utils/payPassword.js';
 
 //获取用户信息
 const userStore = useUserStore();
@@ -150,21 +151,32 @@ const goToPage = (address) => {
 const getRecordsList = async () => {
 	const { data } = await walletLog(requestParams);
 	console.log('获取到交易记录', data);
-	recordsList.value = [...data.list, ...recordsList.value];
+	recordsList.value = [...recordsList.value, ...data.list];
 	requestParams.total = data.total;
 };
 
 const goTotransfer = () => {
-	
+	if (hasPayPassword()) {
+		uni.navigateTo({
+			url: `/pages/transfer/transfer`
+		});
+		return;
+	}
 	uni.navigateTo({
-		url: `/pages/transfer/transfer`
+		url: `/pagesMine/changePassword/changePassword?pageType=2`,
+		success: function () {
+			uni.showToast({
+				title: '请先设置支付密码',
+				icon: 'none'
+			});
+		}
 	});
 };
 
 const goToMoneyTransfer = () => {
 	uni.showToast({
 		title: '敬请期待',
-		icon: "none"
+		icon: 'none'
 	});
 	// uni.navigateTo({
 	// 	url: '/pages/moneyTransfer/moneyTransfer'

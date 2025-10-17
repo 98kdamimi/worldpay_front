@@ -106,7 +106,7 @@ const userStore = useUserStore();
 const uploadImg = (index) => {
 	uni.chooseImage({
 		count: 1,
-		sizeType: ['original', 'compressed'],
+		sizeType: ['compressed'],
 		sourceType: ['album', 'camera'],
 		extension: ['png', 'jpg', 'jpeg'],
 		success: function (res) {
