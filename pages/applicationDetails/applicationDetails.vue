@@ -1,9 +1,6 @@
 <template>
 	<view class="viewBox">
-		<Navbar
-			:title="$t('home.applicationDetailsTitle')"
-			:showBack="true"
-		></Navbar>
+		<Navbar :title="$t('home.applicationDetailsTitle')" :showBack="true"></Navbar>
 		<view class="line"></view>
 		<view class="box top">
 			<view>{{ $t('home.applicationStatus') }}</view>
@@ -22,11 +19,7 @@
 			</view> -->
 			<view class="box radius">
 				<view>{{ $t('home.trackingNumber') }}</view>
-				<view
-					class="box-right"
-					v-if="cardInfo?.userCardData?.logisticsNum"
-					@click="toLogisticsInformation"
-				>
+				<view class="box-right" v-if="cardInfo?.userCardData?.logisticsNum" @click="toLogisticsInformation">
 					<view class="txt">
 						{{ cardInfo?.userCardData?.logisticsNum }}
 					</view>
@@ -65,7 +58,7 @@
 				<view>{{ $t('home.phoneNumber') }}</view>
 				<view class="txt">{{ cardInfo?.applyManData?.userTel }}</view>
 			</view>
-			<view class="box">
+			<view class="box bottom">
 				<view>{{ $t('home.email') }}</view>
 				<view class="txt">{{ cardInfo?.applyManData?.userEmail }}</view>
 			</view>
@@ -79,42 +72,56 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { openCardApplyInfo } from '@/request/lapi.js';
-import { onLoad } from '@dcloudio/uni-app';
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
-const cardInfo = ref({});
-const applyState = (state) => {
-	switch (state) {
-		case 1:
-			return t('applyState.one');
-		case 2:
-			return t('applyState.two');
-		case 3:
-			return t('applyState.three');
-	}
-};
-const cardType = (type) => {
-	switch (type) {
-		case 'PHYSICAL':
-			return t('home.physicalCard');
-		case 'VIRTUAL':
-			return t('home.virtualCard');
-	}
-};
-const toLogisticsInformation = () => {
-	uni.navigateTo({
-		url: `/pages/logisticsInformation/logisticsInformation?logisticsNum=${cardInfo.value?.userCardData?.logisticsNum}`
-	});
-};
+	import {
+		ref
+	} from 'vue';
+	import {
+		openCardApplyInfo
+	} from '@/request/lapi.js';
+	import {
+		onLoad
+	} from '@dcloudio/uni-app';
+	import {
+		useI18n
+	} from 'vue-i18n';
+	const {
+		t
+	} = useI18n();
+	const cardInfo = ref({});
+	const applyState = (state) => {
+		switch (state) {
+			case 1:
+				return t('applyState.one');
+			case 2:
+				return t('applyState.two');
+			case 3:
+				return t('applyState.three');
+		}
+	};
+	const cardType = (type) => {
+		switch (type) {
+			case 'PHYSICAL':
+				return t('home.physicalCard');
+			case 'VIRTUAL':
+				return t('home.virtualCard');
+		}
+	};
+	const toLogisticsInformation = () => {
+		uni.navigateTo({
+			url: `/pages/logisticsInformation/logisticsInformation?logisticsNum=${cardInfo.value?.userCardData?.logisticsNum}`
+		});
+	};
 
-onLoad(async (opt) => {
-	const { data } = await openCardApplyInfo({ id: opt.id });
-	cardInfo.value = data;
-});
+	onLoad(async (opt) => {
+		const {
+			data
+		} = await openCardApplyInfo({
+			id: opt.id
+		});
+		cardInfo.value = data;
+	});
 </script>
 
 <style lang="scss" scoped>
-@import './applicationDetails.scss';
+	@import './applicationDetails.scss';
 </style>
